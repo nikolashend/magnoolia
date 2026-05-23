@@ -1,0 +1,48 @@
+body {
+  overflow-x: hidden;
+  direction: rtl;
+}
+
+.owl-carousel {
+  direction: ltr;
+}
+
+.owl-carousel .owl-nav,
+.owl-carousel .owl-dots,
+.owl-carousel .owl-item {
+  direction: rtl;
+}
+
+.contact__input-box .bootstrap-select .dropdown-menu,
+.bootstrap-select .dropdown-toggle .filter-option {
+  text-align: right;
+}
+
+.list-unstyled {
+  padding-right: 0;
+}
+
+.main-slider__shape,
+.room-one__list__item__shape::after,
+.city-house__custome-navs button,
+.topbar::before,
+.about-one__shape,
+.main-header__shape {
+  transform: rotateY(180deg);
+}
+
+.city-house__custome-navs button.owl-prev {
+  transform: rotateY(0deg);
+}
+
+.zoomvilla-btn {
+  clip-path: polygon(10% 0, 100% 0, 100% 50%, 100% 100%, 0 100%, 0 35%);
+}
+.zoomvilla-btn i, .zoomvilla-btn::after {
+  transform: rotateY(180deg);
+}
+
+.main-slider__title__text {
+  font-size: 65px;
+}
+/*# sourceMappingURL=zoomvilla-custom-rtl.css.map */
