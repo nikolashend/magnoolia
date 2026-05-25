@@ -1466,6 +1466,12 @@ a {
 .video-three__title { color: var(--mg-off-white); }
 .video-three__video a { color: var(--mg-muted-gold); border-color: var(--mg-muted-gold); }
 
+/* gallery-strip card image size */
+.city-house .city-house__card__image img {
+  width: 429px;
+  height: 469px;
+  object-fit: cover;
+}
 /* =================================================
    MAIN-SLIDER-TWO: static no-OWL override
    .active wrapper in HTML triggers Zoomvilla opacity rules.
