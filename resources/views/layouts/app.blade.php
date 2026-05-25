@@ -44,7 +44,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/zoomvilla.css') }}">
 
     <!-- Magnoolia Design System -->
-    <link rel="stylesheet" href="{{ asset('assets/css/magnoolia.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/magnoolia.css') }}?v={{ filemtime(public_path('assets/css/magnoolia.css')) }}">
 
     @stack('styles')
 </head>
