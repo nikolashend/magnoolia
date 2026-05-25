@@ -3,8 +3,8 @@
         <div class="container">
             <div class="row align-items-end gutter-y-30">
                 <div class="col-lg-6">
-                    <div class="about-two__thumb hover:shine">
-                        <img src="{{ asset('assets/images/about/about-2-1.jpg') }}" alt="image">
+                    <div class="about-two__thumb hover:shine" style="width:1075px;min-height:839px;">
+                        <img src="{{ asset('assets/images/magnoolia/Cam005.0000.jpg') }}" alt="Magnoolia A-energiaklassi kodud Vaela külas" style="width:100%;height:100%;min-height:839px;object-fit:cover;display:block;">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -12,18 +12,18 @@
                         <div class="sec-title text-start">
                             <div class="sec-title__top justify-content-start">
                                 <span class="line-left"></span>
-                                <h6 class="sec-title__tagline bw-split-in-right">Our About property</h6>
+                                <h6 class="sec-title__tagline bw-split-in-right">Magnoolia uusarendus</h6>
                             </div>
-                            <h3 class="sec-title__title bw-split-in-left">We Provide Thorough About <br> Customer Service Home.</h3>
+                            <h3 class="sec-title__title bw-split-in-left">Ridaelamu mugavus.<br> Eramaja privaatsus.</h3>
                         </div>
-                        <p class="about-two__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">Home tailored design, management &amp; support services business agency elit, sed do eiusmod tempor majority have in some we form by injected humour solution.</p>
+                        <p class="about-two__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">19 A-energiaklassi kodu Vaela külas, Kiili vallas. Iga kodu on privaatse hooviala ja terrassiga — 20 minutit Tallinnast.</p>
                         <ul class="about-two__list list-unstyled wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                            <li><div class="about-two__list__item"><i class="icon-house"></i><span>24X <br> BedRoom</span></div></li>
-                            <li><div class="about-two__list__item"><i class="icon-kitchen"></i><span>32X <br> Kitchens</span></div></li>
-                            <li><div class="about-two__list__item"><i class="icon-dumbbell"></i><span>24X <br> Fitness</span></div></li>
+                            <li><div class="about-two__list__item"><i class="icon-house"></i><span>4–5 <br> tuba</span></div></li>
+                            <li><div class="about-two__list__item"><i class="icon-kitchen"></i><span>129 m² <br> netopind</span></div></li>
+                            <li><div class="about-two__list__item"><i class="icon-bedroom"></i><span>Rõdu <br> + terrass</span></div></li>
                         </ul>
                         <div class="about-two__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                            Best Home tailored design, management &amp; support services business agency elit, sed do bulding <a href="#">SEE MORE</a>
+                            Maasoojuspump, ventilatsioon, päikesepaneelide valmidus ja EV laadimise valmidus. <a href="{{ route('apartments.index') }}">VAATA KODUSID</a>
                         </div>
                     </div>
                 </div>
@@ -35,26 +35,26 @@
                     <div class="about-two__funfact__card">
                         <div class="about-two__funfact__card__icon"><i class="icon-buildings"></i></div>
                         <div class="about-two__funfact__card__content">
-                            <h3 class="about-two__funfact__card__count">20k+</h3>
-                            <p class="about-two__funfact__card__text">Building Renovation</p>
+                            <h3 class="about-two__funfact__card__count">19</h3>
+                            <p class="about-two__funfact__card__text">Kodu</p>
                         </div>
                     </div>
                 </li>
                 <li class="about-two__funfact__item wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
                     <div class="about-two__funfact__card">
-                        <div class="about-two__funfact__card__icon"><i class="icon-support"></i></div>
+                        <div class="about-two__funfact__card__icon"><i class="icon-house"></i></div>
                         <div class="about-two__funfact__card__content">
-                            <h3 class="about-two__funfact__card__count">360k+</h3>
-                            <p class="about-two__funfact__card__text">Team Support</p>
+                            <h3 class="about-two__funfact__card__count">A</h3>
+                            <p class="about-two__funfact__card__text">Energiaklass</p>
                         </div>
                     </div>
                 </li>
                 <li class="about-two__funfact__item wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="500ms">
                     <div class="about-two__funfact__card">
-                        <div class="about-two__funfact__card__icon"><i class="icon-trophy"></i></div>
+                        <div class="about-two__funfact__card__icon"><i class="icon-pin"></i></div>
                         <div class="about-two__funfact__card__content">
-                            <h3 class="about-two__funfact__card__count">25k+</h3>
-                            <p class="about-two__funfact__card__text">Awards Won</p>
+                            <h3 class="about-two__funfact__card__count">20 min</h3>
+                            <p class="about-two__funfact__card__text">Tallinnast</p>
                         </div>
                     </div>
                 </li>
@@ -74,10 +74,10 @@
                 <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-4.png') }}" alt="image"><a href="#"><i class="fas fa-plus"></i></a></div>
             </div>
             <div class="about-two__happy-client__content">
-                <h4 class="about-two__happy-client__title">28k+ Happy Clients</h4>
+                <h4 class="about-two__happy-client__title">Valmib suvi 2027</h4>
                 <div class="about-two__happy-client__star">
                     <i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i>
-                    <span>(52K) Review</span>
+                    <span>Vaela küla, Kiili vald</span>
                 </div>
             </div>
         </div>

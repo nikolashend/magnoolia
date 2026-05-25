@@ -1397,33 +1397,6 @@ img, svg { max-width: 100%; height: auto; display: block; }
 @keyframes mgGalleryScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 @media (max-width: 768px) { .mg-gallery-strip__item img { width: 280px; height: 190px; } }
 
-/* =================================================
-   PHASE 2.6 FIX: about-two layout override
-   .about-two__thumb is position:absolute in zoomvilla.css � breaks grid
-   ================================================= */
-.about-two {
-  overflow: hidden;
-  padding-top: 80px !important;
-  padding-bottom: 80px !important;
-}
-.about-two .about-two__thumb {
-  position: relative !important;
-  top: auto !important;
-  left: auto !important;
-  z-index: 1 !important;
-  width: 100% !important;
-  overflow: hidden !important;
-}
-.about-two .about-two__content {
-  margin: 0 !important;
-  padding: 24px 0 !important;
-  position: relative;
-  z-index: 1;
-}
-.about-two .about-two__content::after {
-  display: none !important;
-}
-/* about-two decorative elements — visible */
 
 /* =================================================
    PHASE 2.6 FIX: .feature-two spacing
