@@ -4,10 +4,21 @@
     <div class="active">
         <div class="main-slider-two__item">
 
-            {{-- Background image placeholder (replace with real render) --}}
-            <div class="main-slider-two__bg"
-                 style="background-image: url('{{ asset('assets/images/backgrounds/slider-2-1.jpg') }}');">
-            </div>
+            {{-- Hero background: video → Cam001 desktop → Cam004 mobile --}}
+            @if(config('magnoolia.media.hero_video'))
+                <div class="main-slider-two__bg" style="background:none;overflow:hidden;">
+                    <video
+                        poster="{{ asset('assets/images/magnoolia/Cam001.0000.jpg') }}"
+                        autoplay muted loop playsinline
+                        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
+                        aria-hidden="true"
+                    >
+                        <source src="{{ asset(config('magnoolia.media.hero_video')) }}" type="video/mp4">
+                    </video>
+                </div>
+            @else
+                <div class="main-slider-two__bg main-slider-two__bg--photo"></div>
+            @endif
 
             <div class="container">
                 <div class="row gutter-y-40 align-items-end">

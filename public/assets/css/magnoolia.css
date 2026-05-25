@@ -1498,6 +1498,16 @@ a {
   transition-delay: 0ms !important;
 }
 
+/* Hero photo background: Cam001 desktop, Cam004 mobile */
+.main-slider-two__bg--photo {
+  background-image: url('../images/magnoolia/Cam001.0000.jpg') !important;
+}
+@media (max-width: 767px) {
+  .main-slider-two__bg--photo {
+    background-image: url('../images/magnoolia/Cam004.0000.jpg') !important;
+  }
+}
+
 /* Ghost variant for secondary hero CTA */
 .zoomvilla-btn--border {
   background: transparent !important;
