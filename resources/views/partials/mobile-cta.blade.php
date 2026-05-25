@@ -1,4 +1,4 @@
-﻿{{-- MAGNOOLIA MOBILE STICKY CTA --}}
+{{-- MAGNOOLIA MOBILE STICKY CTA --}}
 <div class="mg-sticky-cta" id="mg-sticky-cta" aria-label="Kiire kontaktmenüü">
     <a href="{{ route('apartments.index') }}" class="mg-btn mg-btn--secondary">
         <i class="fas fa-home" aria-hidden="true"></i>

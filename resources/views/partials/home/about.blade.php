@@ -1,4 +1,4 @@
-﻿{{-- MAGNOOLIA "MIKS MAGNOOLIA?" — Phase 2 --}}
+{{-- MAGNOOLIA "MIKS MAGNOOLIA?" — Phase 2 --}}
 <section class="mg-section" id="miks-magnoolia" aria-labelledby="about-title">
     <div class="mg-container">
         <div class="row gutter-y-50 align-items-center">

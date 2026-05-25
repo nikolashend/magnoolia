@@ -1,4 +1,4 @@
-﻿{{-- MAGNOOLIA HERO — Phase 2 --}}
+{{-- MAGNOOLIA HERO — Phase 2 --}}
 <section class="mg-hero" id="home" aria-label="Magnoolia peateade">
     <div class="mg-hero__bg" aria-hidden="true">
         {{-- Placeholder: hero background render --}}

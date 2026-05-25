@@ -1,4 +1,4 @@
-﻿{{-- MAGNOOLIA HEADER Phase 2 --}}
+{{-- MAGNOOLIA HEADER Phase 2 --}}
 <header class="mg-header" id="mg-header">
     <div class="mg-container">
         <div class="mg-header__inner">

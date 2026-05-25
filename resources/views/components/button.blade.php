@@ -1,4 +1,4 @@
-﻿@props(['href'=>'#', 'label'=>'', 'variant'=>'primary', 'size'=>'', 'type'=>'a', 'ctaId'=>''])
+@props(['href'=>'#', 'label'=>'', 'variant'=>'primary', 'size'=>'', 'type'=>'a', 'ctaId'=>''])
 @if($type === 'button')
   <button
     class="mg-btn mg-btn--{{ $variant }} {{ $size ? 'mg-btn--'.$size : '' }}"

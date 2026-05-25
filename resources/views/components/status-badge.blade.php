@@ -1,4 +1,4 @@
-﻿@props(['status'=>'available'])
+@props(['status'=>'available'])
 @php
 $map = [
     'available'  => ['class'=>'mg-badge--available', 'label'=>'Saadaval'],

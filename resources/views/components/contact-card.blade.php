@@ -1,4 +1,4 @@
-﻿@props(['name'=>'', 'role'=>'', 'photo'=>'', 'phone'=>'', 'email'=>''])
+@props(['name'=>'', 'role'=>'', 'photo'=>'', 'phone'=>'', 'email'=>''])
 <div class="mg-contact-card">
   <div class="mg-contact-card__photo">
     @if($photo)<img src="{{ $photo }}" alt="{{ $name }}">

@@ -1,4 +1,4 @@
-﻿{{-- MAGNOOLIA FACTS BAR — Phase 2 (replaces categories/demo icons) --}}
+{{-- MAGNOOLIA FACTS BAR — Phase 2 (replaces categories/demo icons) --}}
 <div class="mg-facts-bar" aria-label="Magnoolia faktid">
     <div class="mg-container">
         <div class="mg-facts-bar__grid">

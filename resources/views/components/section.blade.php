@@ -1,4 +1,4 @@
-﻿@props(['id'=>'', 'eyebrow'=>'', 'title'=>'', 'description'=>'', 'theme'=>'white', 'centered'=>false, 'narrow'=>false])
+@props(['id'=>'', 'eyebrow'=>'', 'title'=>'', 'description'=>'', 'theme'=>'white', 'centered'=>false, 'narrow'=>false])
 <section 
     class="mg-section mg-section--{{ $theme }} {{ $centered ? 'text-center' : '' }}"
     {{ $id ? 'id='.$id : '' }}

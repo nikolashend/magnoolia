@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Magnooolia Stilistika — Design System Preview')
 @section('meta_description', 'Internal design system styleguide. Not for public use.')

@@ -1,4 +1,4 @@
-﻿{{-- MAGNOOLIA BENEFIT CARDS + CTA — Phase 2 (replaces fake testimonials) --}}
+{{-- MAGNOOLIA BENEFIT CARDS + CTA — Phase 2 (replaces fake testimonials) --}}
 
 {{-- Benefits grid --}}
 <section class="mg-section mg-section--soft" id="eelised" aria-labelledby="benefits-title">
