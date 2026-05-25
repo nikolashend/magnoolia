@@ -1472,6 +1472,20 @@ a {
   height: 469px;
   object-fit: cover;
 }
+
+/* best-project-one carousel: fix active (center) slide height to prevent portrait overflow */
+.best-project-one__carousel.owl-carousel .owl-stage-outer,
+.best-project-one__carousel.owl-carousel .owl-stage {
+  height: 648px !important;
+}
+.best-project-one__carousel.owl-carousel .center .best-project-one__item {
+  height: 648px !important;
+}
+.best-project-one__carousel.owl-carousel .center .best-project-one__item img {
+  height: 648px !important;
+  width: 100% !important;
+  object-fit: cover !important;
+}
 /* =================================================
    MAIN-SLIDER-TWO: static no-OWL override
    .active wrapper in HTML triggers Zoomvilla opacity rules.
