@@ -7,25 +7,25 @@
                         <div class="sec-title text-start">
                             <div class="sec-title__top justify-content-start">
                                 <span class="line-left"></span>
-                                <h6 class="sec-title__tagline bw-split-in-right">Our Property plans</h6>
+                                <h6 class="sec-title__tagline bw-split-in-right">Korruste plaanid</h6>
                             </div>
-                            <h3 class="sec-title__title bw-split-in-left">Exhibition Large Open Space <br> With Minimal Distractions.</h3>
+                            <h3 class="sec-title__title bw-split-in-left">Läbimõeldud planeering. <br> Ruumi on kõigeks.</h3>
                         </div>
                         <ul class="property-plans__list list-unstyled wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
-                            <li class="property-plans__list__item"><span>Floor No</span><span>25</span></li>
-                            <li class="property-plans__list__item"><span>Rooms</span><span>08</span></li>
-                            <li class="property-plans__list__item"><span>Bathrooms</span><span>24</span></li>
-                            <li class="property-plans__list__item"><span>Total area, square</span><span>2000m</span></li>
-                            <li class="property-plans__list__item"><span>Parking</span><span>09</span></li>
-                            <li class="property-plans__list__item"><span>Pricing</span><span>$66/M4</span></li>
+                            <li class="property-plans__list__item"><span>Korruseid</span><span>2</span></li>
+                            <li class="property-plans__list__item"><span>Tube</span><span>4–5</span></li>
+                            <li class="property-plans__list__item"><span>Vannitube</span><span>2</span></li>
+                            <li class="property-plans__list__item"><span>Kogupindala</span><span>129 m²</span></li>
+                            <li class="property-plans__list__item"><span>Parkimiskohti</span><span>1–2</span></li>
+                            <li class="property-plans__list__item"><span>Energiaklass</span><span>A</span></li>
                         </ul>
                         <div class="property-plans__btn wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
-                            <a href="#" class="zoomvilla-btn">Schedule Visit Now <i class="icon-angle-small-right"></i></a>
+                            <a href="{{ route('apartments.index') }}" class="zoomvilla-btn">Vaata kodusid <i class="icon-angle-small-right"></i></a>
                             <div class="property-plans__btn__download">
                                 <div class="property-plans__btn__icon"><img src="{{ asset('assets/images/shapes/sheet-1-1.png') }}" alt></div>
                                 <div class="property-plans__btn__content">
-                                    <p class="property-plans__btn__text">Property Description</p>
-                                    <a href="#" download><span>Download File</span></a>
+                                    <p class="property-plans__btn__text">Korruse plaan</p>
+                                    <a href="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg') }}" download><span>Laadi alla</span></a>
                                 </div>
                             </div>
                         </div>
@@ -33,7 +33,9 @@
                 </div>
                 <div class="col-lg-6 wow fadeInRight" data-wow-duration="1500ms" data-wow-delay="300ms">
                     <div class="property-plans__image">
-                        <img src="{{ asset('assets/images/resources/proparty-plan.png') }}" alt="image">
+                        <a href="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg') }}" class="img-popup">
+                            <img src="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg') }}" alt="Esimese korruse plaan" style="width:614px;height:599px;object-fit:contain;">
+                        </a>
                     </div>
                 </div>
             </div>
@@ -45,41 +47,43 @@
             <div class="sec-title text-center">
                 <div class="sec-title__top justify-content-center">
                     <span class="line-left"></span>
-                    <h6 class="sec-title__tagline bw-split-in-right">Our Property plans</h6>
+                    <h6 class="sec-title__tagline bw-split-in-right">Teine korrus</h6>
                     <span class="line-right"></span>
                 </div>
-                <h3 class="sec-title__title bw-split-in-left">Exhibition Large Open Space <br> Minimal Distractions.</h3>
+                <h3 class="sec-title__title bw-split-in-left">Privaatne magamiskorrus <br> rõduga.</h3>
             </div>
             <div class="row gutter-y-30">
                 <div class="col-lg-4 wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
                     <div class="process-plan__left">
                         <ul class="process-plan__list list-unstyled">
-                            <li class="process-plan__list__item"><span>Floor No</span><span>25</span></li>
-                            <li class="process-plan__list__item"><span>Rooms</span><span>08</span></li>
-                            <li class="process-plan__list__item"><span>Bathrooms</span><span>24</span></li>
-                            <li class="process-plan__list__item"><span>Total area</span><span>1000m</span></li>
-                            <li class="process-plan__list__item"><span>Apartment</span><span>09</span></li>
-                            <li class="process-plan__list__item"><span>Pricing</span><span>\$66/M4</span></li>
-                            <li class="process-plan__list__item"><span>Parking</span><span>09</span></li>
+                            <li class="process-plan__list__item"><span>Magamistube</span><span>3–4</span></li>
+                            <li class="process-plan__list__item"><span>Vannitube</span><span>1</span></li>
+                            <li class="process-plan__list__item"><span>Rõdu</span><span>1</span></li>
+                            <li class="process-plan__list__item"><span>Pindala</span><span>~65 m²</span></li>
+                            <li class="process-plan__list__item"><span>Lagi</span><span>2,7 m</span></li>
+                            <li class="process-plan__list__item"><span>Põrandaküte</span><span>Jah</span></li>
+                            <li class="process-plan__list__item"><span>Ventilatsioon</span><span>Jah</span></li>
                         </ul>
                     </div>
-                    <a href="#" class="zoomvilla-btn">Schedule Visit Now <i class="icon-angle-small-right"></i></a>
+                    <a href="{{ route('apartments.index') }}" class="zoomvilla-btn">Vaata kodusid <i class="icon-angle-small-right"></i></a>
                 </div>
                 <div class="col-lg-4 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
                     <div class="process-plan__thumb hover:shine">
-                        <img src="{{ asset('assets/images/resources/proparty-plan-4-1.png') }}" alt="image">
+                        <a href="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg') }}" class="img-popup">
+                            <img src="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg') }}" alt="Teise korruse plaan" style="width:371px;height:428px;object-fit:contain;">
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-4 wow fadeInRight" data-wow-duration="1500ms" data-wow-delay="300ms">
                     <div class="process-plan__right">
-                        <p class="process-plan__text"><span class="process-plan__big-text">p</span>roperty tailored design, management &amp; best services business agency elit, sed eiusmod</p>
-                        <p class="process-plan__text">tempor majority have in some form bulding injected humour solution.</p>
-                        <p class="process-plan__text"><span class="process-plan__highlite">HOUSE:</span> Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <p class="process-plan__text"><span class="process-plan__big-text">M</span>agnoolia kodud on projekteeritud nii, et iga ruutmeeter on sisustatud otstarbekalt ja mugavalt.</p>
+                        <p class="process-plan__text">Teine korrus pakub privaatsust ja rahu — eraldi magamistoad, vannituba ja rõdu värskes õhus olemiseks.</p>
+                        <p class="process-plan__text"><span class="process-plan__highlite">KODU:</span> Iga Magnoolia kodu on omanäoline ja energiatõhus A-klassi ridaelamu Vaela külas.</p>
                         <div class="process-plan__btn__download">
                             <div class="process-plan__btn__icon"><img src="{{ asset('assets/images/shapes/sheet-1-1.png') }}" alt></div>
                             <div class="process-plan__btn__content">
-                                <p class="process-plan__btn__text">Property Description</p>
-                                <a href="#" download><span>Download File</span></a>
+                                <p class="process-plan__btn__text">Teise korruse plaan</p>
+                                <a href="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg') }}" download><span>Laadi alla</span></a>
                             </div>
                         </div>
                     </div>
