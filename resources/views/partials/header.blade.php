@@ -1,90 +1,46 @@
-{{-- MAGNOOLIA HEADER Phase 2 --}}
-<header class="mg-header" id="mg-header">
-    <div class="mg-container">
-        <div class="mg-header__inner">
-            <a href="{{ route('home') }}" class="mg-header__logo" aria-label="Magnoolia koduleht">
-                <span class="mg-header__logo-wordmark">
-                    <span class="logo-name">Magnoolia</span>
-                    <span class="logo-tagline">Vaela · Kiili · Harjumaa</span>
-                </span>
-            </a>
-            <nav class="mg-header__nav" aria-label="Peamenüü">
-                <ul>
-                    <li class="{{ request()->routeIs('home*') ? 'current' : '' }}"><a href="{{ route('home') }}">Avaleht</a></li>
-                    <li class="{{ request()->routeIs('apartments*') ? 'current' : '' }}"><a href="{{ route('apartments.index') }}">Kodud ja hinnad</a></li>
-                    <li><a href="{{ route('home') }}#asendiplaan">Asendiplaan</a></li>
-                    <li><a href="{{ route('home') }}#asukoht">Asukoht</a></li>
-                    <li><a href="{{ route('home') }}#ehitusinfo">Ehitusinfo</a></li>
-                    <li><a href="{{ route('home') }}#sisedisain">Sisedisain</a></li>
-                    <li class="{{ request()->routeIs('contact') ? 'current' : '' }}"><a href="{{ route('contact') }}">Kontakt</a></li>
-                </ul>
-            </nav>
-            <div class="mg-header__right">
-                <nav class="mg-lang-switcher" aria-label="Keelevalik">
-                    @foreach(['et' => 'EE', 'ru' => 'RU', 'en' => 'EN'] as $locale => $label)
-                        <a href="{{ route('locale.switch', $locale) }}"
-                           class="{{ app()->getLocale() === $locale ? 'active' : '' }}"
-                           hreflang="{{ $locale }}">{{ $label }}</a>
-                    @endforeach
-                </nav>
-                <a href="{{ route('contact') }}" class="mg-btn mg-btn--primary mg-btn--sm" id="header-cta-desktop" style="display:none;">
-                    Küsi pakkumist
+<header class="main-header main-header--two sticky-header sticky-header--normal">
+    <div class="main-header__group-shape"><span></span><span></span><span></span></div>
+    <div class="container-fluid">
+        <div class="main-header__inner">
+            <div class="main-header__logo logo-retina">
+                <a href="{{ route('home') }}" aria-label="Magnoolia koduleht" style="text-decoration:none;">
+                    <span style="font-size:22px;font-weight:700;color:#1E1F24;letter-spacing:0.05em;line-height:1;">Magnoolia</span>
                 </a>
-                <button class="mg-header__hamburger" id="mg-menu-toggle"
-                    aria-expanded="false" aria-controls="mg-mobile-nav" aria-label="Ava menüü">
-                    <span></span><span></span><span></span>
-                </button>
+            </div>
+            <div class="main-header__middle">
+                <nav class="main-header__nav main-menu">
+                    <ul class="main-menu__list">
+                        <li class="{{ request()->routeIs('home*') ? 'current' : '' }}">
+                            <a href="{{ route('home') }}">Avaleht</a>
+                        </li>
+                        <li class="{{ request()->routeIs('apartments*') ? 'current' : '' }}">
+                            <a href="{{ route('apartments.index') }}">Kodud ja hinnad</a>
+                        </li>
+                        <li><a href="{{ route('home') }}#asendiplaan">Asendiplaan</a></li>
+                        <li><a href="{{ route('home') }}#asukoht">Asukoht</a></li>
+                        <li><a href="{{ route('home') }}#ehitusinfo">Ehitusinfo</a></li>
+                        <li class="{{ request()->routeIs('contact') ? 'current' : '' }}">
+                            <a href="{{ route('contact') }}">Kontakt</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="main-header__middle__right">
+                    <div class="main-header__info">
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            @foreach(['et' => 'ET', 'ru' => 'RU', 'en' => 'EN'] as $locale => $label)
+                                <a href="{{ route('locale.switch', $locale) }}"
+                                   style="color:{{ app()->getLocale() === $locale ? '#CDA274' : '#1E1F24' }};font-size:12px;font-weight:600;text-decoration:none;opacity:{{ app()->getLocale() === $locale ? '1' : '0.5' }};">{{ $label }}</a>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="main-header__btn">
+                        <a href="{{ route('contact') }}" class="zoomvilla-btn">Küsi pakkumist</a>
+                    </div>
+                    <div class="mobile-nav__btn mobile-nav__toggler">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </header>
-
-<nav class="mg-mobile-nav" id="mg-mobile-nav" aria-label="Mobiilimenüü" aria-hidden="true">
-    <div class="mg-mobile-nav__header">
-        <span class="mg-header__logo-wordmark">
-            <span class="logo-name">Magnoolia</span>
-            <span class="logo-tagline">Vaela · Kiili · Harjumaa</span>
-        </span>
-        <button class="mg-mobile-nav__close" id="mg-menu-close" aria-label="Sulge">&#215;</button>
-    </div>
-    <ul>
-        <li><a href="{{ route('home') }}">Avaleht</a></li>
-        <li><a href="{{ route('apartments.index') }}">Kodud ja hinnad</a></li>
-        <li><a href="{{ route('home') }}#asendiplaan">Asendiplaan</a></li>
-        <li><a href="{{ route('home') }}#asukoht">Asukoht</a></li>
-        <li><a href="{{ route('home') }}#ehitusinfo">Ehitusinfo</a></li>
-        <li><a href="{{ route('home') }}#sisedisain">Sisedisain</a></li>
-        <li><a href="{{ route('home') }}#faq">KKK</a></li>
-        <li><a href="{{ route('contact') }}">Kontakt</a></li>
-    </ul>
-    <div class="mg-mobile-nav__footer">
-        <div class="mg-mobile-nav__langs">
-            @foreach(['et' => 'EE', 'ru' => 'RU', 'en' => 'EN'] as $locale => $label)
-                <a href="{{ route('locale.switch', $locale) }}" class="mg-btn mg-btn--secondary mg-btn--sm">{{ $label }}</a>
-            @endforeach
-        </div>
-        <a href="{{ route('contact') }}" class="mg-btn mg-btn--primary">Küsi pakkumist</a>
-        <a href="{{ route('apartments.index') }}" class="mg-btn mg-btn--secondary">Vaata kodusid</a>
-    </div>
-</nav>
-
-@push('scripts')
-<script>
-(function(){
-    var toggle=document.getElementById('mg-menu-toggle'),
-        close=document.getElementById('mg-menu-close'),
-        nav=document.getElementById('mg-mobile-nav'),
-        header=document.getElementById('mg-header'),
-        cta=document.getElementById('header-cta-desktop');
-    function open(){nav.classList.add('open');nav.setAttribute('aria-hidden','false');toggle.setAttribute('aria-expanded','true');document.body.style.overflow='hidden';}
-    function shut(){nav.classList.remove('open');nav.setAttribute('aria-hidden','true');toggle.setAttribute('aria-expanded','false');document.body.style.overflow='';}
-    toggle.addEventListener('click',open);
-    close.addEventListener('click',shut);
-    nav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',shut);});
-    window.addEventListener('scroll',function(){
-        if(window.scrollY>60){header.classList.add('mg-header--scrolled');if(cta)cta.style.display='inline-flex';}
-        else{header.classList.remove('mg-header--scrolled');if(cta)cta.style.display='none';}
-    },{passive:true});
-})();
-</script>
-@endpush

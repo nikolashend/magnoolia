@@ -1396,3 +1396,182 @@ img, svg { max-width: 100%; height: auto; display: block; }
 .mg-gallery-strip__item img { width: 360px; height: 240px; object-fit: cover; border-radius: var(--mg-radius-md); display: block; }
 @keyframes mgGalleryScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 @media (max-width: 768px) { .mg-gallery-strip__item img { width: 280px; height: 190px; } }
+
+/* =================================================
+   PHASE 2.6 FIX: about-two layout override
+   .about-two__thumb is position:absolute in zoomvilla.css — breaks grid
+   ================================================= */
+.about-two {
+  overflow: hidden;
+  padding-top: 80px !important;
+  padding-bottom: 80px !important;
+}
+.about-two .about-two__thumb {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+.about-two .about-two__content {
+  margin: 0 !important;
+  padding: 24px 0 !important;
+  position: relative;
+  z-index: 1;
+}
+.about-two .about-two__content::after {
+  display: none !important;
+}
+.about-two__shape,
+.about-two__funfact,
+.about-two__happy-client,
+.house-solituions {
+  display: none !important;
+}
+
+/* =================================================
+   PHASE 2.6 FIX: .feature-two spacing
+   ================================================= */
+.feature-two { padding: 80px 0; }
+
+/* =================================================
+   PHASE 2.6 FIX: .funfact-one spacing
+   ================================================= */
+.funfact-one { padding: 80px 0; background: var(--mg-charcoal); color: var(--mg-off-white); }
+.funfact-one .funfact-one__funfact__text { color: var(--mg-warm-grey); }
+.funfact-one .funfact-one__count { color: var(--mg-off-white); }
+.funfact-one .funfact-one__item__icon i { color: var(--mg-muted-gold); }
+
+/* =================================================
+   PHASE 2.6 FIX: section-space utility
+   ================================================= */
+.section-space { padding-top: 80px; padding-bottom: 80px; }
+
+/* =================================================
+   PHASE 2.6 FIX: feature-two color overrides
+   Original has orange ::before and image shapes ::after
+   ================================================= */
+.feature-two::before {
+  background-color: var(--mg-charcoal) !important;
+}
+.feature-two::after {
+  background-image: none !important;
+  opacity: 0.05;
+}
+.feature-two__item__icon {
+  background-color: rgba(255,255,255,0.08) !important;
+  color: var(--mg-muted-gold) !important;
+}
+.feature-two__item__title a,
+.feature-two__item__title {
+  color: var(--mg-off-white) !important;
+}
+
+/* feature-two__item__image: hide placeholder divs, they stretch card */
+.feature-two__item__image > div[style*="height:220px"] {
+  display: none !important;
+}
+.feature-two__item__shape { display: none !important; }
+
+/* =================================================
+   PHASE 2.6 FIX: contact-two bg override
+   ================================================= */
+.contact-two__bg {
+  background-color: var(--mg-soft-grey) !important;
+}
+
+/* =================================================
+   PHASE 2.6 FIX: team-card-two social hover color
+   ================================================= */
+.team-card-two__social__link a:hover { background: var(--mg-muted-gold) !important; }
+
+/* =================================================
+   PHASE 2.6 FIX: process-plan (floor plan) clean spacing
+   ================================================= */
+.process-plan { padding: 80px 0; }
+.process-plan__list__item { border-color: var(--mg-soft-grey) !important; }
+
+/* =================================================
+   PHASE 2.6 FIX: video-three color
+   ================================================= */
+.video-three__title { color: var(--mg-off-white); }
+.video-three__video a { color: var(--mg-muted-gold); border-color: var(--mg-muted-gold); }
+
+/* =================================================
+   PHASE 2.6 FIX: zoomvilla-btn color override
+   ================================================= */
+.zoomvilla-btn {
+  background: var(--mg-muted-gold) !important;
+  border-color: var(--mg-muted-gold) !important;
+  color: var(--mg-black) !important;
+}
+.zoomvilla-btn:hover {
+  background: var(--mg-forest) !important;
+  border-color: var(--mg-forest) !important;
+  color: var(--mg-off-white) !important;
+}
+
+/* =================================================
+   PHASE 2.6 FIX: feature-two color overrides
+   Original has orange ::before and image shapes ::after
+   ================================================= */
+.feature-two::before {
+  background-color: var(--mg-charcoal) !important;
+}
+.feature-two::after {
+  background-image: none !important;
+  opacity: 0.05;
+}
+.feature-two__item__icon {
+  background-color: rgba(255,255,255,0.08) !important;
+  color: var(--mg-muted-gold) !important;
+}
+.feature-two__item__title a,
+.feature-two__item__title {
+  color: var(--mg-off-white) !important;
+}
+
+/* feature-two__item__image: hide placeholder divs, they stretch card */
+.feature-two__item__image > div[style*="height:220px"] {
+  display: none !important;
+}
+.feature-two__item__shape { display: none !important; }
+
+/* =================================================
+   PHASE 2.6 FIX: contact-two bg override
+   ================================================= */
+.contact-two__bg {
+  background-color: var(--mg-soft-grey) !important;
+}
+
+/* =================================================
+   PHASE 2.6 FIX: team-card-two social hover color
+   ================================================= */
+.team-card-two__social__link a:hover { background: var(--mg-muted-gold) !important; }
+
+/* =================================================
+   PHASE 2.6 FIX: process-plan (floor plan) clean spacing
+   ================================================= */
+.process-plan { padding: 80px 0; }
+.process-plan__list__item { border-color: var(--mg-soft-grey) !important; }
+
+/* =================================================
+   PHASE 2.6 FIX: video-three color
+   ================================================= */
+.video-three__title { color: var(--mg-off-white); }
+.video-three__video a { color: var(--mg-muted-gold); border-color: var(--mg-muted-gold); }
+
+/* =================================================
+   PHASE 2.6 FIX: zoomvilla-btn color override
+   ================================================= */
+.zoomvilla-btn {
+  background: var(--mg-muted-gold) !important;
+  border-color: var(--mg-muted-gold) !important;
+  color: var(--mg-black) !important;
+}
+.zoomvilla-btn:hover {
+  background: var(--mg-forest) !important;
+  border-color: var(--mg-forest) !important;
+  color: var(--mg-off-white) !important;
+}

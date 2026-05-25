@@ -141,10 +141,4 @@
 
         </div>
     </div>
-    <div class="contact-two__shape-one">
-        <img src="{{ asset('assets/images/shapes/contact-shape-1-1.png') }}" alt="">
-    </div>
-    <div class="contact-two__shape-two">
-        <img src="{{ asset('assets/images/shapes/contact-shape-1-2.png') }}" alt="">
-    </div>
 </section>
