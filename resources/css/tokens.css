@@ -1,0 +1,97 @@
+/*
+ * tokens.css — Magnoolia Design Token Foundation
+ * Phase 1: CSS custom property definitions only.
+ * Phase 2 will extend these with final brand values.
+ * ---------------------------------------------------
+ * Do NOT hardcode colors or spacing in components.css / sections.css.
+ * Always reference these tokens.
+ */
+
+:root {
+
+  /* ────────────────────────────────────────
+     Colors
+  ──────────────────────────────────────── */
+  --color-black:         #0a0a0a;
+  --color-deep-black:    #050505;
+  --color-warm-grey:     #4a4540;
+  --color-soft-grey:     #8c8680;
+  --color-off-white:     #f5f3f0;
+  --color-muted-gold:    #b8a98a;    /* accent — Phase 2 may refine */
+  --color-wood:          #c4a882;    /* warm wood tone placeholder */
+  --color-text:          #1a1a1a;
+  --color-text-muted:    #6b6560;
+  --color-border:        #e2dedb;
+
+  /* Surface */
+  --color-surface:       #ffffff;
+  --color-surface-alt:   #f8f6f3;
+
+  /* Status */
+  --color-available:     #3a7d44;
+  --color-reserved:      #c47c2a;
+  --color-sold:          #8c8680;
+
+  /* ────────────────────────────────────────
+     Typography
+  ──────────────────────────────────────── */
+  --font-sans:  'system-ui', '-apple-system', 'Segoe UI', sans-serif;
+  --font-serif: 'Georgia', 'Times New Roman', serif; /* optional — Phase 2 may add custom font */
+
+  --text-xs:    0.75rem;    /* 12px */
+  --text-sm:    0.875rem;   /* 14px */
+  --text-base:  1rem;       /* 16px */
+  --text-lg:    1.125rem;   /* 18px */
+  --text-xl:    1.25rem;    /* 20px */
+  --text-2xl:   1.5rem;     /* 24px */
+  --text-3xl:   1.875rem;   /* 30px */
+  --text-hero:  clamp(2rem, 5vw, 4rem); /* responsive hero headline */
+
+  --leading-tight:   1.2;
+  --leading-normal:  1.6;
+  --leading-loose:   1.8;
+
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.08em;
+  --tracking-wider:  0.15em;
+
+  /* ────────────────────────────────────────
+     Spacing
+  ──────────────────────────────────────── */
+  --space-xs:    0.5rem;     /* 8px  */
+  --space-sm:    1rem;       /* 16px */
+  --space-md:    1.5rem;     /* 24px */
+  --space-lg:    2.5rem;     /* 40px */
+  --space-xl:    4rem;       /* 64px */
+  --space-2xl:   6rem;       /* 96px */
+  --section-padding: clamp(3rem, 8vw, 6rem);
+
+  /* ────────────────────────────────────────
+     Border radius
+  ──────────────────────────────────────── */
+  --radius-sm:  0.25rem;
+  --radius-md:  0.5rem;
+  --radius-lg:  1rem;
+
+  /* ────────────────────────────────────────
+     Shadows
+  ──────────────────────────────────────── */
+  --shadow-soft: 0 1px 4px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08), 0 8px 32px rgba(0, 0, 0, 0.08);
+
+  /* ────────────────────────────────────────
+     Layout
+  ──────────────────────────────────────── */
+  --container-max:    1200px;
+  --container-wide:   1400px;
+  --container-narrow: 800px;
+  --header-height:    72px;
+
+  /* ────────────────────────────────────────
+     Transitions
+  ──────────────────────────────────────── */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms ease;
+}

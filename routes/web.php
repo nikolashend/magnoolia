@@ -21,8 +21,10 @@ Route::get('/locale/{locale}', [LocaleController::class, 'switch'])
     ->name('locale.switch')
     ->where('locale', 'en|et|ru');
 
-// Home
-Route::get('/', [HomeController::class, 'index'])->name('home');
+// Home — locale-prefix routing: / (ET default), /ru, /en
+Route::get('/', [HomeController::class, 'index'])->name('home')->defaults('locale', 'et');
+Route::get('/ru', [HomeController::class, 'index'])->name('home.ru')->defaults('locale', 'ru');
+Route::get('/en', [HomeController::class, 'index'])->name('home.en')->defaults('locale', 'en');
 
 // About
 Route::get('/about', [AboutController::class, 'index'])->name('about');
