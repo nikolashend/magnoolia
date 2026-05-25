@@ -7,16 +7,14 @@
                         <div class="sec-title text-start">
                             <div class="sec-title__top justify-content-start">
                                 <span class="line-left"></span>
-                                <h6 class="sec-title__tagline bw-split-in-right">recent List apartment</h6>
+                                <h6 class="sec-title__tagline bw-split-in-right">Korduma kippuvad küsimused</h6>
                                 <span class=" "></span>
                             </div>
-                            <h3 class="sec-title__title bw-split-in-left">property managements List <br> rent collection residential</h3>
+                            <h3 class="sec-title__title bw-split-in-left">Mida soovid <br> Magnoolia kohta teada?</h3>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <p class="apartment-two__top__text">Home tailored design, management & support services business
-                            business agency elit, sed do eiusmod tempor  majority have in some we form by injected humour
-                            solution.</p>
+                        <p class="apartment-two__top__text">Oleme kogunud vastused kõige sagedamini esitatavatele küsimustele Magnoolia uusarenduse, kodude spetsifikatsiooni ja ostuprotsessi kohta.</p>
                     </div>
                 </div>
             </div>
@@ -24,72 +22,68 @@
                 <div class="row gutter-y-30">
                     <div class="col-lg-6">
                         <div class="apartment-two__thumb hover:shine">
-                            <img src="assets/images/resources/apartment-2-1.png" alt="apartment image">
+                            <img src="{{ asset('assets/images/magnoolia/magnoolia_cam09.jpg') }}" alt="Magnoolia kodu" style="width:533px;height:493px;object-fit:cover;display:block;">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="faq-accordion zoomvilla-accordion" data-grp-name="zoomvilla-accordion">
                             <div class="apartment-two__content">
-                                <div class="accordion">
-                                    <div class="accordion-title">
-                                        <h4><span class="accordion-title__number"></span>Car Parking Space</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
-                                    </div>
-                                    <div class="accordion-content">
-                                        <div class="inner">
-                                            <p>House appliances are essential tools that home Bulding best of simplify and
-                                                enhance our culinary experiences last this transforming routine rooms</p>
-                                            <ul class="accordion-list list-unstyled">
-                                                <li><div class="accordion-list__item"> <i class="icon-house"></i> <span>25 Room</span></div></li>
-                                                <li><div class="accordion-list__item"> <i class="icon-labyrinth"></i> <span>250Sq</span></div></li>
-                                                <li><div class="accordion-list__item"> <i class="icon-bedroom"></i> <span>bed 2x</span></div></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="accordion active">
                                     <div class="accordion-title">
-                                        <h4><span class="accordion-title__number"></span>zOOMVILA cITY Complex</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
+                                        <h4><span class="accordion-title__number"></span>Millal kodud valmivad?</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
                                     </div>
                                     <div class="accordion-content">
                                         <div class="inner">
-                                            <p>House appliances are essential tools that home Bulding best of simplify and
-                                                enhance our culinary experiences last this transforming routine rooms</p>
+                                            <p>Magnoolia ridaelamute planeeritud valmimine on 2027. aasta suvi. Täpsem graafik täpsustub ehitusloa saamisel.</p>
                                             <ul class="accordion-list list-unstyled">
-                                                <li><div class="accordion-list__item"> <i class="icon-house"></i> <span>25 Room</span></div></li>
-                                                <li><div class="accordion-list__item"> <i class="icon-labyrinth"></i> <span>250Sq</span></div></li>
-                                                <li><div class="accordion-list__item"> <i class="icon-bedroom"></i> <span>bed 2x</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-celemder"></i><span>Valmib suvi 2027</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-pin"></i><span>Vaela küla, Kiili vald</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-buildings"></i><span>19 iseseisvat kodu</span></div></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion">
                                     <div class="accordion-title">
-                                        <h4><span class="accordion-title__number"></span>Industrial Apartement</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
+                                        <h4><span class="accordion-title__number"></span>Mis on A-energiaklass?</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
                                     </div>
                                     <div class="accordion-content">
                                         <div class="inner">
-                                            <p>House appliances are essential tools that home Bulding best of simplify and
-                                                enhance our culinary experiences last this transforming routine rooms</p>
+                                            <p>A-energiaklass tähendab madalat küttearvet ja keskkonnasõbralikkust. Magnoolia kodud on varustatud maasoojuspumba, soojusvahetiga ventilatsiooni ja põrandaküttega.</p>
                                             <ul class="accordion-list list-unstyled">
-                                                <li><div class="accordion-list__item"> <i class="icon-house"></i> <span>25 Room</span></div></li>
-                                                <li><div class="accordion-list__item"> <i class="icon-labyrinth"></i> <span>250Sq</span></div></li>
-                                                <li><div class="accordion-list__item"> <i class="icon-bedroom"></i> <span>bed 2x</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-house"></i><span>Maasoojuspump</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-flooring"></i><span>Põrandaküte</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-trophy"></i><span>A-energiaklass</span></div></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion">
                                     <div class="accordion-title">
-                                        <h4><span class="accordion-title__number"></span>bEST Housing LONDON</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
+                                        <h4><span class="accordion-title__number"></span>Kui suur on kodu pindala?</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
                                     </div>
                                     <div class="accordion-content">
                                         <div class="inner">
-                                            <p>House appliances are essential tools that home Bulding best of simplify and
-                                                enhance our culinary experiences last this transforming routine rooms</p>
+                                            <p>Iga Magnoolia kodu on kahekorruseline ridaelamu kogupindalaga 129 m². Kodu juurde kuulub privaatne hooviala, terrass ja rõdu.</p>
                                             <ul class="accordion-list list-unstyled">
-                                                <li><div class="accordion-list__item"> <i class="icon-house"></i> <span>25 Room</span></div></li>
-                                                <li><div class="accordion-list__item"> <i class="icon-labyrinth"></i> <span>250Sq</span></div></li>
-                                                <li><div class="accordion-list__item"> <i class="icon-bedroom"></i> <span>bed 2x</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-labyrinth"></i><span>129 m² elamispinda</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-real-estate"></i><span>Terrass + rõdu</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-bedroom"></i><span>4–5 tuba</span></div></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion">
+                                    <div class="accordion-title">
+                                        <h4><span class="accordion-title__number"></span>Kus asub Magnoolia?</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
+                                    </div>
+                                    <div class="accordion-content">
+                                        <div class="inner">
+                                            <p>Magnoolia asub Vaela külas Kiili vallas — looduskaunis ja rahulikul alal, vaid 20 minutit Tallinna keskusest.</p>
+                                            <ul class="accordion-list list-unstyled">
+                                                <li><div class="accordion-list__item"><i class="icon-pin"></i><span>Magnoolia tee, Vaela küla</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-labyrinth"></i><span>20 min Tallinnast</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-house"></i><span>Kiili vald</span></div></li>
                                             </ul>
                                         </div>
                                     </div>
