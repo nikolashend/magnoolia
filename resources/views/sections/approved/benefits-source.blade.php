@@ -1,69 +1,86 @@
-﻿{{--
-  Source: php-template/parts/home2/features.php
-  Class:  .feature-two, .feature-two__item
-  NOTE:   Image placeholder divs removed -- they stretched pill cards.
-          Orange bg overridden via magnoolia.css .feature-two::before
---}}
-
-<section class="feature-two" id="eelised">
-    <div class="container">
-        <div class="sec-title text-center" style="margin-bottom: 40px;">
-            <div class="sec-title__top justify-content-center">
-                <span class="line-left" style="border-color:#fff;"></span>
-                <h6 class="sec-title__tagline bw-split-in-right" style="color:#fff;">Magnoolia eelised</h6>
-                <span class="line-right" style="border-color:#fff;"></span>
+{{-- SOURCE: php-template/parts/home2/services.php | class: services-three section-space --}}
+    <section class="services-three section-space">
+        <div class="container">
+            <div class="sec-title text-center">
+                <div class="sec-title__top justify-content-center">
+                    <span class="line-left"></span>
+                    <h6 class="sec-title__tagline bw-split-in-right">Our Best Service</h6>
+                    <span class="line-right"></span>
+                </div>
+                <h3 class="sec-title__title bw-split-in-left">Property Management Services <br> Managing of rental</h3>
             </div>
-            <h3 class="sec-title__title bw-split-in-left" style="color:#fff;">Mida teeb Magnoolia eriliseks?</h3>
+            <div class="row gutter-y-30">
+                <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                    <div class="service-card">
+                        <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-kitchen"></i></span></div>
+                        <div class="service-card__content"><div class="service-card__content__inner">
+                            <h3 class="service-card__title"><a href="#">Kitchens Room</a></h3>
+                            <p class="service-card__text">Home tailored design service sed do bulding room</p>
+                            <a href="#" class="service-card__link">READ MORE<i class="icon-angle-small-right"></i></a>
+                        </div></div>
+                        <div class="service-card__shape"></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+                    <div class="service-card">
+                        <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-restaurant"></i></span></div>
+                        <div class="service-card__content"><div class="service-card__content__inner">
+                            <h3 class="service-card__title"><a href="#">Restaurant</a></h3>
+                            <p class="service-card__text">Home tailored design service sed do bulding room</p>
+                            <a href="#" class="service-card__link">READ MORE<i class="icon-angle-small-right"></i></a>
+                        </div></div>
+                        <div class="service-card__shape"></div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="500ms">
+                    <div class="service-card__image hover:shine">
+                        <img src="{{ asset('assets/images/services/service-1-1.jpg') }}" alt="image">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                    <div class="service-card">
+                        <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-bath"></i></span></div>
+                        <div class="service-card__content"><div class="service-card__content__inner">
+                            <h3 class="service-card__title"><a href="#">Bath Room</a></h3>
+                            <p class="service-card__text">Home tailored design service sed do bulding room</p>
+                            <a href="#" class="service-card__link">READ MORE<i class="icon-angle-small-right"></i></a>
+                        </div></div>
+                        <div class="service-card__shape"></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+                    <div class="service-card">
+                        <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-bedroom"></i></span></div>
+                        <div class="service-card__content"><div class="service-card__content__inner">
+                            <h3 class="service-card__title"><a href="#">Bed Room</a></h3>
+                            <p class="service-card__text">Home tailored design service sed do bulding room</p>
+                            <a href="#" class="service-card__link">READ MORE<i class="icon-angle-small-right"></i></a>
+                        </div></div>
+                        <div class="service-card__shape"></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="500ms">
+                    <div class="service-card">
+                        <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-garage"></i></span></div>
+                        <div class="service-card__content"><div class="service-card__content__inner">
+                            <h3 class="service-card__title"><a href="#">Parking Car</a></h3>
+                            <p class="service-card__text">Home tailored design service sed do bulding room</p>
+                            <a href="#" class="service-card__link">READ MORE<i class="icon-angle-small-right"></i></a>
+                        </div></div>
+                        <div class="service-card__shape"></div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="700ms">
+                    <div class="service-card">
+                        <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-dumbbell"></i></span></div>
+                        <div class="service-card__content"><div class="service-card__content__inner">
+                            <h3 class="service-card__title"><a href="#">Fitness Center</a></h3>
+                            <p class="service-card__text">Home tailored design service sed do bulding room</p>
+                            <a href="#" class="service-card__link">READ MORE<i class="icon-angle-small-right"></i></a>
+                        </div></div>
+                        <div class="service-card__shape"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row gutter-y-30">
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
-                <div class="feature-two__item">
-                    <div class="feature-two__item__content">
-                        <div class="feature-two__item__icon"><i class="fas fa-leaf"></i></div>
-                        <h3 class="feature-two__item__title">A-energiaklass<br>&amp; maasoojuspump</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
-                <div class="feature-two__item">
-                    <div class="feature-two__item__content">
-                        <div class="feature-two__item__icon"><i class="fas fa-tree"></i></div>
-                        <h3 class="feature-two__item__title">Privaatne<br>hooviala 600–1200 m²</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                <div class="feature-two__item">
-                    <div class="feature-two__item__content">
-                        <div class="feature-two__item__icon"><i class="fas fa-shield-alt"></i></div>
-                        <h3 class="feature-two__item__title">Uusarenduse<br>kindlus &amp; garantii</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="400ms">
-                <div class="feature-two__item">
-                    <div class="feature-two__item__content">
-                        <div class="feature-two__item__icon"><i class="fas fa-bolt"></i></div>
-                        <h3 class="feature-two__item__title">EV laadimise<br>valmidus</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="500ms">
-                <div class="feature-two__item">
-                    <div class="feature-two__item__content">
-                        <div class="feature-two__item__icon"><i class="fas fa-map-marker-alt"></i></div>
-                        <h3 class="feature-two__item__title">20 min<br>Tallinnast</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="600ms">
-                <div class="feature-two__item">
-                    <div class="feature-two__item__content">
-                        <div class="feature-two__item__icon"><i class="fas fa-expand-arrows-alt"></i></div>
-                        <h3 class="feature-two__item__title">Suur terrass<br>&amp; katusealune parkimine</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>

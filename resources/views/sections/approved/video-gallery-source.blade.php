@@ -1,31 +1,19 @@
-{{--
-  SOURCE MAPPING — SCREENSHOT 07
-  Screenshot:   07-premium-gallery-video-preview.png
-  Original demo: https://bracketweb.com/zoomvilla-php/index-3.php
-  Source file:  php-template/parts/home3/video.php
-  Original class: .video-three, .video-three__bg, .video-three__inner, .video-popup
-  CSS required: zoomvilla.css (.video-three, .video-three__bg, .video-three__video)
-  JS required:  jquery-magnific-popup.js (.video-popup class triggers YouTube popup — already global)
-  Images:       Magnoolia exterior render as background — [PLACEHOLDER]
-  Reuse as-is:  YES — structure is clean: full-width bg image + centered play button
-  Rebuild:      PARTIAL — replaced demo YouTube URL and text, bg image placeholder
-  Risk:         LOW — magnific-popup already loaded globally, simple markup
---}}
-
-<div class="video-three" id="video">
-    {{-- [PLACEHOLDER] Replace background with real Magnoolia exterior photo/render --}}
-    <div class="video-three__bg"
-         style="background-image: url('{{ asset('assets/images/backgrounds/video-bg-1-1.jpg') }}');">
-        {{-- TODO: replace with Magnoolia render: style="background-image: url('{{ asset('assets/images/magnoolia/hero-render.jpg') }}');" --}}
-    </div>
-
-    <div class="video-three__inner wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-        <h2 class="video-three__title">Magnoolia — vaata tutvustavat videot</h2>
-        <div class="video-three__video">
-            {{-- [PLACEHOLDER] Replace YouTube URL with real Magnoolia promo video --}}
-            <a class="video-popup" href="https://www.youtube.com/watch?v=PLACEHOLDER">
-                <i class="icon-play-1"></i>
-            </a>
+{{-- SOURCE: php-template/parts/home1/projects.php | class: best-project-one section-space-top (video/gallery) --}}
+    <section class="best-project-one section-space-top">
+        <div class="sec-title text-center">
+            <div class="sec-title__top justify-content-center">
+                <span class="line-left"></span>
+                <h6 class="sec-title__tagline bw-split-in-right">Our BEST PROJECTS</h6>
+                <span class="line-right"></span>
+            </div>
+            <h3 class="sec-title__title bw-split-in-left">Property Investment Assisting <br> Projects House lucrative.</h3>
         </div>
-    </div>
-</div>
+        <div class="best-project-one__carousel zoomvilla-owl__carousel owl-carousel owl-theme wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms" data-owl-options='{"items":2,"margin":0,"loop":true,"smartSpeed":700,"center":true,"nav":true,"dots":false,"navText":["<i class=\"icon-angle-small-right\"></i>","<i class=\"icon-angle-small-right\"></i>"],"autoplay":false,"responsive":{"0":{"items":1},"768":{"items":1},"992":{"items":2},"1300":{"items":2}}}'>
+            <div class="item"><div class="best-project-one__item"><img src="{{ asset('assets/images/resources/best-project-1-1.jpg') }}" alt="image"><div class="best-project-one__item__popup"><a href="{{ asset('assets/images/resources/best-project-1-1.jpg') }}" class="img-popup"><i class="icon-zoom-1"></i></a><a href="https://www.youtube.com/watch?v=aO_kPW39um8" class="video-popup"><i class="icon-play-1"></i></a></div></div></div>
+            <div class="item"><div class="best-project-one__item"><img src="{{ asset('assets/images/resources/best-project-1-2.jpg') }}" alt="image"><div class="best-project-one__item__popup"><a href="{{ asset('assets/images/resources/best-project-1-2.jpg') }}" class="img-popup"><i class="icon-zoom-1"></i></a><a href="https://www.youtube.com/watch?v=aO_kPW39um8" class="video-popup"><i class="icon-play-1"></i></a></div></div></div>
+            <div class="item"><div class="best-project-one__item"><img src="{{ asset('assets/images/resources/best-project-1-3.jpg') }}" alt="image"><div class="best-project-one__item__popup"><a href="{{ asset('assets/images/resources/best-project-1-3.jpg') }}" class="img-popup"><i class="icon-zoom-1"></i></a><a href="https://www.youtube.com/watch?v=aO_kPW39um8" class="video-popup"><i class="icon-play-1"></i></a></div></div></div>
+            <div class="item"><div class="best-project-one__item"><img src="{{ asset('assets/images/resources/best-project-1-1.jpg') }}" alt="image"><div class="best-project-one__item__popup"><a href="{{ asset('assets/images/resources/best-project-1-1.jpg') }}" class="img-popup"><i class="icon-zoom-1"></i></a><a href="https://www.youtube.com/watch?v=aO_kPW39um8" class="video-popup"><i class="icon-play-1"></i></a></div></div></div>
+            <div class="item"><div class="best-project-one__item"><img src="{{ asset('assets/images/resources/best-project-1-2.jpg') }}" alt="image"><div class="best-project-one__item__popup"><a href="{{ asset('assets/images/resources/best-project-1-2.jpg') }}" class="img-popup"><i class="icon-zoom-1"></i></a><a href="https://www.youtube.com/watch?v=aO_kPW39um8" class="video-popup"><i class="icon-play-1"></i></a></div></div></div>
+            <div class="item"><div class="best-project-one__item"><img src="{{ asset('assets/images/resources/best-project-1-3.jpg') }}" alt="image"><div class="best-project-one__item__popup"><a href="{{ asset('assets/images/resources/best-project-1-3.jpg') }}" class="img-popup"><i class="icon-zoom-1"></i></a><a href="https://www.youtube.com/watch?v=aO_kPW39um8" class="video-popup"><i class="icon-play-1"></i></a></div></div></div>
+        </div>
+    </section>

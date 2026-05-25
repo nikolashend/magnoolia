@@ -1,86 +1,87 @@
-{{--
-  SOURCE MAPPING — SCREENSHOT 09
-  Screenshot:   09-facts-bar-inspiration-no-fake-stats.png
-  Original demo: https://bracketweb.com/zoomvilla-php/index-4.php
-  Source file:  php-template/parts/home4/funfact.php
-  Original class: .funfact-one, .funfact-one__item, .funfact-one__count, .count-box, .count-text
-  CSS required: zoomvilla.css (.funfact-one, .funfact-one__item, .funfact-one__item__icon)
-  JS required:  jquery-appear.js + zoomvilla.js (count-up animation) — NOT used here
-  Images:       None
-  Reuse as-is:  NO — count-up animation with fake "20M", "260+" stats is FORBIDDEN
-  Rebuild:      YES — replaced with static real Magnoolia facts, removed all .count-box/.count-text JS
-  Risk:         NONE — static HTML, no JS dependency, no fake counters
-  
-  NOTE: Screenshot title says "inspiration-no-fake-stats" — this block deliberately avoids
-  the funfact count-up pattern. It uses the same visual grid structure but with REAL static values.
---}}
-
-<section class="funfact-one section-space" id="faktid" aria-label="Magnoolia projektifaktid">
-    <div class="container">
-        <div class="sec-title text-center" style="margin-bottom:40px;">
-            <div class="sec-title__top justify-content-center">
-                <span class="line-left"></span>
-                <h6 class="sec-title__tagline bw-split-in-right">Projekt arvudes</h6>
-                <span class="line-right"></span>
+{{-- SOURCE: php-template/parts/home2/about.php | class: about-two --}}
+    <section class="about-two" id="about">
+        <div class="container">
+            <div class="row align-items-end gutter-y-30">
+                <div class="col-lg-6">
+                    <div class="about-two__thumb hover:shine">
+                        <img src="{{ asset('assets/images/about/about-2-1.jpg') }}" alt="image">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-two__content">
+                        <div class="sec-title text-start">
+                            <div class="sec-title__top justify-content-start">
+                                <span class="line-left"></span>
+                                <h6 class="sec-title__tagline bw-split-in-right">Our About property</h6>
+                            </div>
+                            <h3 class="sec-title__title bw-split-in-left">We Provide Thorough About <br> Customer Service Home.</h3>
+                        </div>
+                        <p class="about-two__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">Home tailored design, management &amp; support services business agency elit, sed do eiusmod tempor majority have in some we form by injected humour solution.</p>
+                        <ul class="about-two__list list-unstyled wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+                            <li><div class="about-two__list__item"><i class="icon-house"></i><span>24X <br> BedRoom</span></div></li>
+                            <li><div class="about-two__list__item"><i class="icon-kitchen"></i><span>32X <br> Kitchens</span></div></li>
+                            <li><div class="about-two__list__item"><i class="icon-dumbbell"></i><span>24X <br> Fitness</span></div></li>
+                        </ul>
+                        <div class="about-two__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+                            Best Home tailored design, management &amp; support services business agency elit, sed do bulding <a href="#">SEE MORE</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <h3 class="sec-title__title bw-split-in-left">Magnoolia faktid</h3>
         </div>
-
-        <div class="row gutter-y-30">
-
-            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                <div class="funfact-one__item wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
-                    <div class="funfact-one__item__icon">
-                        <i class="fas fa-home"></i>
+        <div class="about-two__funfact">
+            <ul class="about-two__funfact__list list-unstyled">
+                <li class="about-two__funfact__item wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
+                    <div class="about-two__funfact__card">
+                        <div class="about-two__funfact__card__icon"><i class="icon-buildings"></i></div>
+                        <div class="about-two__funfact__card__content">
+                            <h3 class="about-two__funfact__card__count">20k+</h3>
+                            <p class="about-two__funfact__card__text">Building Renovation</p>
+                        </div>
                     </div>
-                    <div class="funfact-one__item__content">
-                        {{-- Static value — NO count-up JS --}}
-                        <h3 class="funfact-one__count">19</h3>
-                        <p class="funfact-one__funfact__text">A-klassi kodu</p>
+                </li>
+                <li class="about-two__funfact__item wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+                    <div class="about-two__funfact__card">
+                        <div class="about-two__funfact__card__icon"><i class="icon-support"></i></div>
+                        <div class="about-two__funfact__card__content">
+                            <h3 class="about-two__funfact__card__count">360k+</h3>
+                            <p class="about-two__funfact__card__text">Team Support</p>
+                        </div>
                     </div>
-                    <span class="funfact-one__item__shape"></span>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                <div class="funfact-one__item wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                    <div class="funfact-one__item__icon">
-                        <i class="fas fa-leaf"></i>
+                </li>
+                <li class="about-two__funfact__item wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="500ms">
+                    <div class="about-two__funfact__card">
+                        <div class="about-two__funfact__card__icon"><i class="icon-trophy"></i></div>
+                        <div class="about-two__funfact__card__content">
+                            <h3 class="about-two__funfact__card__count">25k+</h3>
+                            <p class="about-two__funfact__card__text">Awards Won</p>
+                        </div>
                     </div>
-                    <div class="funfact-one__item__content">
-                        <h3 class="funfact-one__count">A</h3>
-                        <p class="funfact-one__funfact__text">Energiaklass</p>
+                </li>
+                <li class="about-two__funfact__item about-two__funfact__item--two wow fadeInRight" data-wow-duration="1500ms" data-wow-delay="500ms">
+                    <div class="house-solituions">
+                        <a href="#" class="house-solituions__icon"><i class="icon-arrow-up"></i></a>
+                        <img src="{{ asset('assets/images/shapes/text-round-1-1.png') }}" alt="image">
                     </div>
-                    <span class="funfact-one__item__shape"></span>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                <div class="funfact-one__item wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="500ms">
-                    <div class="funfact-one__item__icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="funfact-one__item__content">
-                        <h3 class="funfact-one__count">20 min</h3>
-                        <p class="funfact-one__funfact__text">Tallinnast</p>
-                    </div>
-                    <span class="funfact-one__item__shape"></span>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                <div class="funfact-one__item wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="700ms">
-                    <div class="funfact-one__item__icon">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <div class="funfact-one__item__content">
-                        <h3 class="funfact-one__count">2027</h3>
-                        <p class="funfact-one__funfact__text">Valmimisaeg</p>
-                    </div>
-                    <span class="funfact-one__item__shape"></span>
-                </div>
-            </div>
-
+                </li>
+            </ul>
         </div>
-    </div>
-</section>
+        <div class="about-two__happy-client wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+            <div class="about-two__happy-client__thumb">
+                <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-1.jpg') }}" alt="image"><a href="#"><i class="fas fa-plus"></i></a></div>
+                <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-2.jpg') }}" alt="image"><a href="#"><i class="fas fa-plus"></i></a></div>
+                <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-3.png') }}" alt="image"><a href="#"><i class="fas fa-plus"></i></a></div>
+                <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-4.png') }}" alt="image"><a href="#"><i class="fas fa-plus"></i></a></div>
+            </div>
+            <div class="about-two__happy-client__content">
+                <h4 class="about-two__happy-client__title">28k+ Happy Clients</h4>
+                <div class="about-two__happy-client__star">
+                    <i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i>
+                    <span>(52K) Review</span>
+                </div>
+            </div>
+        </div>
+        <div class="about-two__shape wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="500ms">
+            <img src="{{ asset('assets/images/shapes/about-2-2.png') }}" alt="shape">
+        </div>
+    </section>

@@ -10,37 +10,37 @@
     {{-- 1. HERO --}}
     @include('partials.home.slider')
 
-    {{-- 2. FACTS BAR — .funfact-one__item (source: home4/funfact.php) --}}
+    {{-- 3. FACTS / about-two (index-2 / home2/about.php) --}}
     @include('sections.approved.facts-source')
 
-    {{-- 3. ABOUT / MIKS MAGNOOLIA — .about-two (source: home2/about.php) --}}
+    {{-- 4. ABOUT / Miks Magnoolia? / about-one section-space (index / home1/about.php) --}}
     @include('sections.approved.about-magnoolia-source')
 
-    {{-- 4. BENEFIT CARDS — .feature-two__item (source: home2/features.php) --}}
+    {{-- 5. BENEFIT CARDS / services-three section-space (index-2 / home2/services.php) --}}
     @include('sections.approved.benefits-source')
 
-    {{-- 5. GALLERY STRIP — CSS marquee (source: home3/slider-area.php) --}}
+    {{-- 6. GALLERY STRIP / city-house section-space (index / home1/city-house.php) --}}
     @include('sections.approved.gallery-strip-source')
 
-    {{-- 6. TODO: Hinnad ja plaanid preview — apartment cards/pricing teaser --}}
+    {{-- 7. Hinnad ja plaanid preview — TODO --}}
     {{-- @include('sections.approved.pricing-preview-source') --}}
 
-    {{-- 7. TODO: Asendiplaan / masterplan preview --}}
+    {{-- 8. Asendiplaan / masterplan — TODO --}}
     {{-- @include('sections.approved.masterplan-source') --}}
 
-    {{-- 8. FLOOR PLANS — .process-plan / .property-plans (source: home4/process-plan.php) --}}
+    {{-- 9. FLOOR PLANS / property-plans--two + process-plan section-space (index + index-4) --}}
     @include('sections.approved.floor-plan-source')
 
-    {{-- 9. EHITUSINFO / FAQ — .zoomvilla-accordion (source: home5/faq.php) --}}
+    {{-- 10. EHITUSINFO / apartment-two section-space (index-2 / home2/apartment.php) --}}
     @include('sections.approved.accordion-source')
 
-    {{-- 10. VIDEO PREVIEW — .video-three (source: home3/video.php) --}}
+    {{-- 11. GALLERY / VIDEO / best-project-one section-space-top (index / home1/projects.php) --}}
     @include('sections.approved.video-gallery-source')
 
-    {{-- 11. TEAM + CONTACT — .team-card-two + .contact-two (source: home2/team.php + contact.php) --}}
+    {{-- 12. CONTACT / TEAM / team-one section-space-top (index-4 / home4/team.php) --}}
     @include('sections.approved.contact-team-source')
 
-    {{-- 12. TODO: Final CTA banner --}}
+    {{-- 13. Final CTA — TODO --}}
     {{-- @include('sections.approved.final-cta-source') --}}
 
 @endsection

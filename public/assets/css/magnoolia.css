@@ -1399,7 +1399,7 @@ img, svg { max-width: 100%; height: auto; display: block; }
 
 /* =================================================
    PHASE 2.6 FIX: about-two layout override
-   .about-two__thumb is position:absolute in zoomvilla.css — breaks grid
+   .about-two__thumb is position:absolute in zoomvilla.css ï¿½ breaks grid
    ================================================= */
 .about-two {
   overflow: hidden;
@@ -1423,12 +1423,7 @@ img, svg { max-width: 100%; height: auto; display: block; }
 .about-two .about-two__content::after {
   display: none !important;
 }
-.about-two__shape,
-.about-two__funfact,
-.about-two__happy-client,
-.house-solituions {
-  display: none !important;
-}
+/* about-two decorative elements â€” visible */
 
 /* =================================================
    PHASE 2.6 FIX: .feature-two spacing
@@ -1499,19 +1494,27 @@ img, svg { max-width: 100%; height: auto; display: block; }
 .video-three__video a { color: var(--mg-muted-gold); border-color: var(--mg-muted-gold); }
 
 /* =================================================
-   PHASE 2.6 FIX: zoomvilla-btn color override
+   MAIN-SLIDER-TWO: static no-OWL override
+   .active wrapper in HTML triggers Zoomvilla opacity rules.
+   Remove transition-delay so content shows immediately on load.
    ================================================= */
-.zoomvilla-btn {
-  background: var(--mg-muted-gold) !important;
-  border-color: var(--mg-muted-gold) !important;
-  color: var(--mg-black) !important;
+.main-slider-two .active .main-slider-two__bg {
+  transition-delay: 0ms !important;
 }
-.zoomvilla-btn:hover {
-  background: var(--mg-forest) !important;
-  border-color: var(--mg-forest) !important;
-  color: var(--mg-off-white) !important;
+.main-slider-two .active .main-slider-two__content {
+  transition-delay: 0ms !important;
 }
 
+/* Ghost variant for secondary hero CTA */
+.zoomvilla-btn--border {
+  background: transparent !important;
+  border: 2px solid var(--mg-muted-gold) !important;
+  color: var(--mg-muted-gold) !important;
+}
+.zoomvilla-btn--border:hover {
+  background: var(--mg-muted-gold) !important;
+  color: var(--mg-black) !important;
+}
 /* =================================================
    PHASE 2.6 FIX: feature-two color overrides
    Original has orange ::before and image shapes ::after
@@ -1561,17 +1564,3 @@ img, svg { max-width: 100%; height: auto; display: block; }
    ================================================= */
 .video-three__title { color: var(--mg-off-white); }
 .video-three__video a { color: var(--mg-muted-gold); border-color: var(--mg-muted-gold); }
-
-/* =================================================
-   PHASE 2.6 FIX: zoomvilla-btn color override
-   ================================================= */
-.zoomvilla-btn {
-  background: var(--mg-muted-gold) !important;
-  border-color: var(--mg-muted-gold) !important;
-  color: var(--mg-black) !important;
-}
-.zoomvilla-btn:hover {
-  background: var(--mg-forest) !important;
-  border-color: var(--mg-forest) !important;
-  color: var(--mg-off-white) !important;
-}

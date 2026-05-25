@@ -1,72 +1,41 @@
-{{--
-  SOURCE MAPPING — SCREENSHOT 04
-  Screenshot:   04-horizontal-gallery-renders-strip.png
-  Original demo: https://bracketweb.com/zoomvilla-php/index-3.php
-  Source file:  php-template/parts/home3/slider-area.php
-  Original class: .slider-area, .slider-area__three, .slider-area__text-slider
-  CSS required: zoomvilla.css (.slider-area, .slider-area__item) + custom scroll animation
-  JS required:  NONE (pure CSS marquee scroll) — original used text ticker, we replace with image grid
-  Images:       Magnoolia render photos — replace placeholders below
-  Reuse as-is:  NO — original is a text marquee ticker (PROPERTY/HOUSE/Building). Not suitable.
-  Rebuild:      YES — replaced text ticker with horizontal photo gallery strip. CSS scroll animation added.
-  Risk:         LOW — pure CSS, no JS slider dependency
---}}
-
-<section class="section-space" id="galerii" style="overflow:hidden;">
-    <div class="container">
-        <div class="sec-title text-center" style="margin-bottom: 40px;">
-            <div class="sec-title__top justify-content-center">
-                <span class="line-left"></span>
-                <h6 class="sec-title__tagline bw-split-in-right">Renderdused</h6>
-                <span class="line-right"></span>
-            </div>
-            <h3 class="sec-title__title bw-split-in-left">Vaata, milline Magnoolia välja näeb</h3>
-        </div>
-    </div>
-
-    {{-- Horizontal scrolling render strip -- pure CSS marquee, no JS --}}
-    <div class="mg-gallery-strip" aria-label="Magnoolia renderduste galerii">
-        <div class="mg-gallery-strip__track">
-
-            {{-- [PLACEHOLDER] Replace each item with real Magnoolia render --}}
-            @foreach(range(1, 6) as $i)
-            <div class="mg-gallery-strip__item">
-                <div style="width:360px; height:240px; background:var(--mg-soft-grey);
-                            border-radius:var(--mg-radius-md); display:flex; align-items:center;
-                            justify-content:center; flex-direction:column; gap:8px; flex-shrink:0;">
-                    <i class="fas fa-image" style="font-size:32px; color:var(--mg-warm-grey);"></i>
-                    <span style="color:var(--mg-warm-grey); font-size:var(--text-xs);">[Render {{ $i }}]</span>
+{{-- SOURCE: php-template/parts/home1/city-house.php | class: city-house section-space --}}
+    <section class="city-house section-space" id="property">
+        <div class="city-house__top">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <div class="sec-title text-start">
+                            <div class="sec-title__top justify-content-start">
+                                <span class="line-left"></span>
+                                <h6 class="sec-title__tagline bw-split-in-right">Building City House</h6>
+                            </div>
+                            <h3 class="sec-title__title bw-split-in-left">Exhibition Large open space <br> with minimal distractions.</h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-4"><div class="city-house__custome-navs text-end"></div></div>
                 </div>
             </div>
-            @endforeach
-
-            {{-- Duplicate set for seamless loop --}}
-            @foreach(range(1, 6) as $i)
-            <div class="mg-gallery-strip__item" aria-hidden="true">
-                <div style="width:360px; height:240px; background:var(--mg-soft-grey);
-                            border-radius:var(--mg-radius-md); display:flex; align-items:center;
-                            justify-content:center; flex-direction:column; gap:8px; flex-shrink:0;">
-                    <i class="fas fa-image" style="font-size:32px; color:var(--mg-warm-grey);"></i>
-                    <span style="color:var(--mg-warm-grey); font-size:var(--text-xs);">[Render {{ $i }}]</span>
+        </div>
+        <div class="city-house__bottom wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+            <div class="container-fluid">
+                <div class="city-house__carousel zoomvilla-owl__carousel zoomvilla-owl__carousel--basic-nav owl-carousel owl-theme" data-owl-options='{"items":1,"margin":0,"loop":true,"smartSpeed":700,"navContainer":".city-house__custome-navs","nav":true,"dots":true,"navText":["<span class=\"icon-angle-small-right\"><\/span>","<span class=\"icon-angle-small-right\"><\/span>"],"autoplay":true,"autoplayHoverPause":true,"responsive":{"0":{"items":1},"576":{"items":2},"992":{"items":3},"1466":{"items":4}}}'>
+                    <div class="item"><div class="city-house__card">
+                        <div class="city-house__card__image"><img src="{{ asset('assets/images/project/project-2-1.jpg') }}" alt="image"><div class="city-house__card__popup"><a href="#">VIEW</a></div></div>
+                        <div class="city-house__card__content"><span class="city-house__card__number">01</span><div class="city-house__card__hover"></div><h4 class="city-house__card__title"><a href="#">London Home City house</a></h4><ul class="city-house__card__list list-unstyled"><li class="city-house__card__list__item"><i class="icon-house"></i><span>25 Room</span></li><li class="city-house__card__list__item"><i class="icon-labyrinth"></i><span>250Sq</span></li><li class="city-house__card__list__item"><i class="icon-bedroom"></i><span>Bed 2x</span></li></ul></div>
+                    </div></div>
+                    <div class="item"><div class="city-house__card">
+                        <div class="city-house__card__image"><img src="{{ asset('assets/images/project/project-2-2.jpg') }}" alt="image"><div class="city-house__card__popup"><a href="#">VIEW</a></div></div>
+                        <div class="city-house__card__content"><span class="city-house__card__number">02</span><div class="city-house__card__hover"></div><h4 class="city-house__card__title"><a href="#">Apartment Complex city</a></h4><ul class="city-house__card__list list-unstyled"><li class="city-house__card__list__item"><i class="icon-house"></i><span>25 Room</span></li><li class="city-house__card__list__item"><i class="icon-labyrinth"></i><span>250Sq</span></li><li class="city-house__card__list__item"><i class="icon-bedroom"></i><span>Bed 2x</span></li></ul></div>
+                    </div></div>
+                    <div class="item"><div class="city-house__card">
+                        <div class="city-house__card__image"><img src="{{ asset('assets/images/project/project-2-3.jpg') }}" alt="image"><div class="city-house__card__popup"><a href="#">VIEW</a></div></div>
+                        <div class="city-house__card__content"><span class="city-house__card__number">03</span><div class="city-house__card__hover"></div><h4 class="city-house__card__title"><a href="#">Zoomvilla Home Room</a></h4><ul class="city-house__card__list list-unstyled"><li class="city-house__card__list__item"><i class="icon-house"></i><span>25 Room</span></li><li class="city-house__card__list__item"><i class="icon-labyrinth"></i><span>250Sq</span></li><li class="city-house__card__list__item"><i class="icon-bedroom"></i><span>Bed 2x</span></li></ul></div>
+                    </div></div>
+                    <div class="item"><div class="city-house__card">
+                        <div class="city-house__card__image"><img src="{{ asset('assets/images/project/project-2-4.jpg') }}" alt="image"><div class="city-house__card__popup"><a href="#">VIEW</a></div></div>
+                        <div class="city-house__card__content"><span class="city-house__card__number">04</span><div class="city-house__card__hover"></div><h4 class="city-house__card__title"><a href="#">Australia Home City house</a></h4><ul class="city-house__card__list list-unstyled"><li class="city-house__card__list__item"><i class="icon-house"></i><span>25 Room</span></li><li class="city-house__card__list__item"><i class="icon-labyrinth"></i><span>250Sq</span></li><li class="city-house__card__list__item"><i class="icon-bedroom"></i><span>Bed 2x</span></li></ul></div>
+                    </div></div>
                 </div>
             </div>
-            @endforeach
-
         </div>
-    </div>
-
-    <div class="container" style="margin-top: 32px; text-align:center;">
-        <a href="#" class="zoomvilla-btn">
-            Vaata kõiki renderdusi <i class="icon-angle-small-right"></i>
-        </a>
-    </div>
-</section>
-
-{{--
-  CSS to add to magnoolia.css:
-  .mg-gallery-strip { overflow:hidden; }
-  .mg-gallery-strip__track { display:flex; gap:16px; width:max-content; animation: mgGalleryScroll 30s linear infinite; }
-  .mg-gallery-strip__track:hover { animation-play-state:paused; }
-  .mg-gallery-strip__item { flex-shrink:0; }
-  @keyframes mgGalleryScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
---}}
+    </section>

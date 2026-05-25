@@ -1,82 +1,50 @@
-{{--
-  SOURCE MAPPING — SCREENSHOT 01
-  Screenshot:   01-about-miks-magnoolia-layout.png
-  Original demo: https://bracketweb.com/zoomvilla-php/index-2.php
-  Source file:  php-template/parts/home2/about.php
-  Original class: .about-two
-  CSS required: zoomvilla.css (.about-two, .sec-title, .about-two__thumb, .about-two__content, .about-two__list)
-  JS required:  wow.js (fade animations only — lightweight)
-  Images:       Magnoolia renders (placeholder until real photos available)
-  Reuse as-is:  NO — fake stats, kitchen/fitness icons, fake client avatars removed
-  Rebuild:      YES — kept 2-column image+content layout, removed funfact bar and happy client block
-  Risk:         LOW — clean 2-col layout, standard Bootstrap grid
---}}
-
-<section class="about-two" id="miks-magnoolia">
-    <div class="container">
-        <div class="row align-items-center gutter-y-30">
-
-            {{-- LEFT: Project render --}}
-            <div class="col-lg-6">
-                <div class="about-two__thumb hover:shine">
-                    {{-- [PLACEHOLDER] Replace with real Magnoolia exterior render --}}
-                    <div style="aspect-ratio:4/5; background:var(--mg-soft-grey); border-radius:var(--mg-radius-xl); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px;">
-                        <i class="fas fa-image" style="font-size:48px; color:var(--mg-warm-grey);"></i>
-                        <span style="color:var(--mg-warm-grey); font-size:var(--text-sm);">[Render: Magnoolia välisvaade]</span>
-                    </div>
-                </div>
-            </div>
-
-            {{-- RIGHT: Content --}}
-            <div class="col-lg-6">
-                <div class="about-two__content">
-                    <div class="sec-title text-start">
-                        <div class="sec-title__top justify-content-start">
-                            <span class="line-left"></span>
-                            <h6 class="sec-title__tagline bw-split-in-right">Miks Magnoolia?</h6>
+{{-- SOURCE: php-template/parts/home1/about.php | class: about-one section-space --}}
+    <section class="about-one section-space" id="about">
+        <div class="container">
+            <div class="row gutter-y-50">
+                <div class="col-lg-6 wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
+                    <div class="about-one__image">
+                        <div class="about-one__image__item">
+                            <div class="about-one__image__item__inner hover:shine">
+                                <img src="{{ asset('assets/images/about/about-1-1.jpg') }}" alt="about" class="about-one__image__one">
+                            </div>
+                            <div class="about-one__experience wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
+                                <h3 class="about-one__experience__title">Since 1972</h3>
+                            </div>
                         </div>
-                        <h3 class="sec-title__title bw-split-in-left">
-                            Ridaelamu mugavus.<br>Eramaja privaatsus.
-                        </h3>
+                        <div class="about-one__image__item-two hover:shine">
+                            <div class="about-one__image__icon">
+                                <img src="{{ asset('assets/images/shapes/house-1-1.png') }}" alt="icon">
+                            </div>
+                            <img src="{{ asset('assets/images/about/about-s-1-1.jpg') }}" alt="about" class="about-one__image__one">
+                        </div>
                     </div>
-
-                    <p class="about-two__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                        Magnoolia on uusarendus Vaelas, Kiili vallas, mis ühendab ridaelamu mugavuse
-                        ja eramaja privaatsuse. 19 A-energiaklassi kodu privaatse hoovialaga,
-                        terrassiga ja katusealuse parkimisega — 20 minutit Tallinnast.
-                    </p>
-
-                    {{-- Feature list — ONLY real Magnoolia features, NO kitchen/bath/fitness icons --}}
-                    <ul class="about-two__list list-unstyled wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                        <li>
-                            <div class="about-two__list__item">
-                                <i class="fas fa-leaf"></i>
-                                <span>A-energiaklass &amp; maasoojuspump</span>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-one__content">
+                        <div class="sec-title text-start">
+                            <div class="sec-title__top justify-content-start">
+                                <span class="line-left"></span>
+                                <h6 class="sec-title__tagline bw-split-in-right">Our About property</h6>
                             </div>
-                        </li>
-                        <li>
-                            <div class="about-two__list__item">
-                                <i class="fas fa-tree"></i>
-                                <span>600–1200 m² privaatne hooviala</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="about-two__list__item">
-                                <i class="fas fa-bolt"></i>
-                                <span>EV laadimise valmidus</span>
-                            </div>
-                        </li>
-                    </ul>
-
-                    <div class="about-two__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                        <a href="{{ route('apartments.index') }}" class="zoomvilla-btn">
-                            Vaata kodusid <i class="icon-angle-small-right"></i>
-                        </a>
+                            <h3 class="sec-title__title bw-split-in-left">We Provide thorough About <br> customer service Home.</h3>
+                        </div>
+                        <p class="about-one__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">Home tailored design, management &amp; support services business agency elit, sed do eiusmod tempor majority have in some we form by injected humour solution.</p>
+                        <div class="about-one__features">
+                            <ul class="about-one__features__list list-unstyled">
+                                <li class="wow fadeInUp" data-wow-duration="1500ms"><i class="icon-check-star"></i><span>Magnificent project of three modern.</span></li>
+                                <li class="wow fadeInUp" data-wow-duration="1600ms"><i class="icon-check-star"></i><span>Movable items not fixed to land</span></li>
+                                <li class="wow fadeInUp" data-wow-duration="1700ms"><i class="icon-check-star"></i><span>a private plot and a swimming pool.</span></li>
+                            </ul>
+                        </div>
+                        <div class="about-one__btn">
+                            <a href="#" class="zoomvilla-btn">About More <i class="icon-angle-small-right"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
-    {{-- shape removed — Magnoolia has no decorative shapes in this style --}}
-</section>
+        <div class="about-one__shape">
+            <img src="{{ asset('assets/images/shapes/about-shape-1-1.png') }}" alt="image">
+        </div>
+    </section>
