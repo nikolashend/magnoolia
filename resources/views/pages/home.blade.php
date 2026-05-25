@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', __('home.meta_title'))
 @section('meta_description', __('home.meta_description'))

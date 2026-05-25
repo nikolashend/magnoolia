@@ -1,0 +1,49 @@
+/*
+ * base.css — global resets (fallback when Vite is not available)
+ * Mirrors the inline resets from app.css
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+    font-family: system-ui, ui-sans-serif, sans-serif;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--color-surface, #f5f3f0);
+    color: var(--color-text, #1a1a1a);
+    line-height: 1.6;
+    min-height: 100dvh;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-muted-gold, #c9a96e);
+    outline-offset: 2px;
+}
+
+img { max-width: 100%; display: block; }
+button { cursor: pointer; font-family: inherit; }
+
+.container {
+    width: 100%;
+    max-width: var(--container-max, 1280px);
+    margin: 0 auto;
+    padding: 0 var(--space-md, 1.5rem);
+}
+.container--wide   { max-width: var(--container-wide, 1440px); }
+.container--narrow { max-width: var(--container-narrow, 720px); }
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}

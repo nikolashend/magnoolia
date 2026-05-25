@@ -22,25 +22,24 @@
 ])
 
 @php
-    $classes = 'cta-btn cta-btn--' . $variant . ($size === 'small' ? ' cta-btn--sm' : '');
-    $style = $size === 'small' ? 'padding: 0.5rem 1.25rem; font-size: var(--text-xs);' : '';
+    $classes  = 'cta-btn cta-btn--' . $variant . ($size === 'small' ? ' cta-btn--sm' : '');
+    $inlStyle = $size === 'small' ? 'padding: 0.5rem 1.25rem; font-size: var(--text-xs);' : null;
+    $trackJs  = $ctaId ? "window.Magnoolia?.trackCta('" . $ctaId . "', {label: '" . addslashes($label) . "'})" : null;
 @endphp
 
 @if($type === 'button')
     <button
-        class="{{ $classes }}"
-        style="{{ $style }}"
-        {{ $ctaId ? 'data-cta-id=' . $ctaId : '' }}
-        {{ $attributes }}
-        onclick="{{ $ctaId ? 'window.Magnoolia?.trackCta(\'' . $ctaId . '\', {label: \'' . $label . '\'})' : '' }}"
+        {{ $attributes->merge(['class' => $classes]) }}
+        @if($inlStyle) style="{{ $inlStyle }}" @endif
+        @if($ctaId) data-cta-id="{{ $ctaId }}" @endif
+        @if($trackJs) onclick="{{ $trackJs }}" @endif
     >{{ $label }}</button>
 @else
     <a
         href="{{ $href }}"
-        class="{{ $classes }}"
-        style="{{ $style }}"
-        {{ $ctaId ? 'data-cta-id=' . $ctaId : '' }}
-        {{ $attributes }}
-        onclick="{{ $ctaId ? 'window.Magnoolia?.trackCta(\'' . $ctaId . '\', {label: \'' . $label . '\'})' : '' }}"
+        {{ $attributes->merge(['class' => $classes]) }}
+        @if($inlStyle) style="{{ $inlStyle }}" @endif
+        @if($ctaId) data-cta-id="{{ $ctaId }}" @endif
+        @if($trackJs) onclick="{{ $trackJs }}" @endif
     >{{ $label }}</a>
 @endif
