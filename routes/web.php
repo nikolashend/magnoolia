@@ -67,6 +67,12 @@ Route::post('/contact', [ContactController::class, 'send'])->name('contact.send'
 // Newsletter
 Route::post('/newsletter', [PageController::class, 'newsletterSubscribe'])->name('newsletter.subscribe');
 
+// Styleguide (internal dev tool — guard with env check)
+Route::get('/styleguide', function () {
+    abort_unless(app()->isLocal() || request()->get('preview') === 'mg2025', 403);
+    return view('pages.styleguide');
+})->name('styleguide');
+
 // Auth (redirect to Filament admin login)
 Route::get('/login', fn() => redirect('/admin/login'))->name('login');
 Route::get('/register', fn() => redirect('/admin/login'))->name('register');

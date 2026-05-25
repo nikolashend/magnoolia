@@ -1,56 +1,54 @@
-<section class="about-one section-space" id="about">
-    <div class="container">
-        <div class="row gutter-y-50">
-            <div class="col-lg-6 wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
-                <div class="about-one__image">
-                    <div class="about-one__image__item">
-                        <div class="about-one__image__item__inner hover:shine">
-                            <img src="{{ asset('assets/images/about/about-1-1.jpg') }}" alt="about" class="about-one__image__one">
-                        </div>
-                        <div class="about-one__experience wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                            <h3 class="about-one__experience__title">{{ __('home.about.since') }}</h3>
-                        </div>
+﻿{{-- MAGNOOLIA "MIKS MAGNOOLIA?" — Phase 2 --}}
+<section class="mg-section" id="miks-magnoolia" aria-labelledby="about-title">
+    <div class="mg-container">
+        <div class="row gutter-y-50 align-items-center">
+
+            {{-- Image column --}}
+            <div class="col-lg-5">
+                <div class="mg-about-section__image-wrap">
+                    {{-- Placeholder until real render is available --}}
+                    <div class="mg-image-frame--placeholder" style="aspect-ratio:4/5; display:flex; align-items:center; justify-content:center; background:var(--mg-soft-grey); border-radius:var(--mg-radius-xl);">
+                        <i class="fas fa-image" style="font-size:48px; color:var(--mg-warm-grey);"></i>
+                        <p style="color:var(--mg-warm-grey); font-size:var(--text-sm); margin-top:12px;">[Render: Magnoolia välisvaade]</p>
                     </div>
-                    <div class="about-one__image__item-two hover:shine">
-                        <div class="about-one__image__icon">
-                            <img src="{{ asset('assets/images/shapes/house-1-1.png') }}" alt="icon">
-                        </div>
-                        <img src="{{ asset('assets/images/about/about-s-1-1.jpg') }}" alt="about" class="about-one__image__one">
+                    <div class="mg-about-section__badge">
+                        <div class="mg-about-section__badge-value">A</div>
+                        <div class="mg-about-section__badge-label">Energiaklass</div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="about-one__content">
-                    <div class="sec-title text-start">
-                        <div class="sec-title__top justify-content-start">
-                            <span class="line-left"></span>
-                            <h6 class="sec-title__tagline bw-split-in-right">{{ __('home.about.tagline') }}</h6>
-                        </div>
-                        <h3 class="sec-title__title bw-split-in-left">{{ __('home.about.title') }}</h3>
-                    </div>
-                    <p class="about-one__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                        {{ __('home.about.description') }}
-                    </p>
-                    <div class="about-one__features">
-                        <ul class="about-one__features__list list-unstyled">
-                            @foreach(__('home.about.features') as $index => $feature)
-                            <li class="wow fadeInUp" data-wow-duration="{{ 1500 + ($index * 100) }}ms">
-                                <i class="icon-check-star"></i>
-                                <span>{{ $feature }}</span>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div class="about-one__btn">
-                        <a href="{{ route('about') }}" class="zoomvilla-btn">
-                            {{ __('common.learn_more') }} <i class="icon-angle-small-right"></i>
-                        </a>
-                    </div>
+
+            {{-- Content column --}}
+            <div class="col-lg-7">
+                <div class="mg-eyebrow">Miks Magnoolia?</div>
+                <h2 class="mg-section__title" id="about-title">
+                    Ridaelamu mugavus.<br>Eramaja privaatsus.
+                </h2>
+                <p class="mg-section__lead" style="max-width:100%;">
+                    Magnoolia on uusarendus, mis pakub parimat mõlemast maailmast —
+                    uusarenduse kindlusest kuni privaatse hoovialani, kõrgkvaliteetsest
+                    ehitusest kuni A-energiaklassi madalate kuludeni.
+                </p>
+
+                <ul class="mg-about-features">
+                    <li><i class="fas fa-check-circle"></i><span>Privaatne hooviala 600–1200 m² — laste ja perekonna jaoks</span></li>
+                    <li><i class="fas fa-check-circle"></i><span>A-energiaklass — madalad igakuised kulud</span></li>
+                    <li><i class="fas fa-check-circle"></i><span>Maasoojuspump, ventilatsioon, päikesepaneeli valmidus</span></li>
+                    <li><i class="fas fa-check-circle"></i><span>Elektriautode laadimise valmidus iga kodu juures</span></li>
+                    <li><i class="fas fa-check-circle"></i><span>Tallinn 20 minutit — Kiili vald, Vaela küla</span></li>
+                    <li><i class="fas fa-check-circle"></i><span>Kvaliteetne sisekujundus, terrass, katusealune parkimine</span></li>
+                </ul>
+
+                <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;">
+                    <a href="{{ route('apartments.index') }}" class="mg-btn mg-btn--primary">
+                        Vaata kodusid
+                    </a>
+                    <a href="{{ route('contact') }}" class="mg-btn mg-btn--secondary">
+                        Küsi pakkumist
+                    </a>
                 </div>
             </div>
+
         </div>
-    </div>
-    <div class="about-one__shape">
-        <img src="{{ asset('assets/images/shapes/about-shape-1-1.png') }}" alt="image">
     </div>
 </section>
