@@ -65,7 +65,7 @@
           <div data-stage-group="{{ $stageNum }}"
                style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:13px 20px;background:#1d2430;border-radius:12px 12px 0 0;{{ !$loop->first ? 'margin-top:40px;' : '' }}">
               <span style="background:#c89443;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em;">{{ $sCfg['label'] }}</span>
-              <span style="color:rgba(255,255,255,.75);font-size:14px;">{{ implode(' &middot; ', $sCfg['buildings']) }}</span>
+              <span style="color:rgba(255,255,255,.75);font-size:14px;">{{ implode(' · ', $sCfg['buildings']) }}</span>
               <span style="margin-left:auto;color:rgba(200,148,67,.9);font-size:13px;font-weight:600;">Valmib {{ $sCfg['completion'] }}</span>
               <span style="color:rgba(255,255,255,.4);font-size:13px;">{{ $sCfg['homes'] }} kodu</span>
           </div>
