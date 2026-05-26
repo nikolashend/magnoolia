@@ -10,6 +10,7 @@
         'available' => ['label' => __('magnoolia.pricing.status_available'), 'class' => 'mg-status--available'],
         'reserved'  => ['label' => __('magnoolia.pricing.status_reserved'),  'class' => 'mg-status--reserved'],
         'sold'      => ['label' => __('magnoolia.pricing.status_sold'),       'class' => 'mg-status--sold'],
+        'tbc'       => ['label' => 'Täpsustamisel',                           'class' => 'mg-status--tbc'],
     ];
 @endphp
 
@@ -20,11 +21,14 @@
         <div class="sec-title text-center" style="margin-bottom:50px;">
             <div class="sec-title__top justify-content-center">
                 <span class="line-left"></span>
-                <h6 class="sec-title__tagline bw-split-in-right">{{ __('magnoolia.section.pricing_eyebrow') }}</h6>
+                <h6 class="sec-title__tagline bw-split-in-right">Kodud ja hinnad</h6>
                 <span class="line-right"></span>
             </div>
-            <h3 class="sec-title__title bw-split-in-left">{{ __('magnoolia.section.pricing_title') }}</h3>
-            <p style="color:#6f6a61;margin-top:16px;font-size:16px;">{{ __('magnoolia.section.pricing_subtitle') }}</p>
+            <h3 class="sec-title__title bw-split-in-left">Vali endale sobiv<br>Magnoolia kodu</h3>
+            <p style="color:#6f6a61;margin-top:16px;font-size:16px;max-width:600px;margin-left:auto;margin-right:auto;">
+                19 A-energiaklassi ridaelamukodu privaatse hooviala, rõdu ja terrassiga.
+                Hinnad on täpsustamisel &mdash; võta ühendust ja saadame sulle esimene.
+            </p>
         </div>
 
         {{-- ── DESKTOP TABLE ──────────────────────────────────────── --}}

@@ -27,7 +27,7 @@
                         <h6 class="sec-title__tagline bw-split-in-right" style="color:#c89443;">Võta ühendust</h6>
                     </div>
                     <h3 class="sec-title__title bw-split-in-left" style="color:#fff;">
-                        {{ __('magnoolia.section.contact_title') }}
+                        Soovid Magnoolia kodu kohta rohkem teada?
                     </h3>
                 </div>
 
@@ -60,24 +60,30 @@
                 {{-- CTAs --}}
                 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px;">
                     <a href="tel:+37258164078" class="zoomvilla-btn">
-                        <i class="fas fa-phone" style="margin-right:8px;"></i>{{ __('magnoolia.contact.cta_call') }}
+                        <i class="fas fa-phone" style="margin-right:8px;"></i>Helista
                     </a>
-                    <a href="{{ route('contact') }}" class="zoomvilla-btn zoomvilla-btn--border">
-                        {{ __('magnoolia.contact.cta_inquiry') }} <i class="icon-angle-small-right"></i>
+                    <a href="mailto:diana@estlanda.ee" class="zoomvilla-btn zoomvilla-btn--border">
+                        <i class="fas fa-envelope" style="margin-right:8px;"></i>Saada e-kiri
+                    </a>
+                    <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border">
+                        Küsi pakkumist <i class="icon-angle-small-right"></i>
                     </a>
                 </div>
 
-                {{-- Trust facts --}}
-                <div style="display:flex;flex-wrap:wrap;gap:20px;">
+                {{-- Trust chips --}}
+                <div style="display:flex;flex-wrap:wrap;gap:10px;">
                     @foreach([
-                        __('magnoolia.contact.trust_1'),
-                        __('magnoolia.contact.trust_2'),
-                        __('magnoolia.contact.trust_3'),
-                        __('magnoolia.contact.trust_4'),
-                    ] as $fact)
-                    <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.5);">
+                        '19 kodu',
+                        'A-energiaklass',
+                        'Valmib suvi 2027',
+                        'Vaela küla · Kiili vald',
+                        'Tallinna lähedal',
+                    ] as $chip)
+                    <div style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.7);
+                                background:rgba(255,255,255,.08);border-radius:100px;padding:6px 14px;
+                                border:1px solid rgba(200,148,67,.25);">
                         <span style="width:5px;height:5px;border-radius:50%;background:#c89443;flex-shrink:0;"></span>
-                        {{ $fact }}
+                        {{ $chip }}
                     </div>
                     @endforeach
                 </div>

@@ -7,7 +7,7 @@
       "@@id": "{{ url('/') }}/#website",
       "url": "{{ url('/') }}",
       "name": "Magnoolia Kodud",
-      "description": "A-energiaklassi ridaelamud Tallinna lÃ¤hedal, Vaela kÃ¼las, Kiili vallas",
+      "description": "A-energiaklassi ridaelamukodud Tallinna lahedal, Vaela kulas, Kiili vallas",
       "inLanguage": "et-EE",
       "publisher": {
         "@@id": "{{ url('/') }}/#organization"
@@ -30,7 +30,7 @@
       "address": {
         "@@type": "PostalAddress",
         "streetAddress": "Magnoolia tee",
-        "addressLocality": "Vaela kÃ¼la",
+        "addressLocality": "Vaela kula",
         "addressRegion": "Harjumaa",
         "addressCountry": "EE"
       }
@@ -39,12 +39,12 @@
       "@@type": "ApartmentComplex",
       "@@id": "{{ url('/') }}/#project",
       "name": "Magnoolia Kodud",
-      "description": "Magnoolia on 19 uue A-energiaklassi koduga ridaelamuarendus Vaela kÃ¼las, Kiili vallas, ligikaudu 20 minuti kaugusel Tallinnast. Privaatsed hoovialad, rÃµdud, terrassid ja lÃ¤bimÃµeldud energialahendused.",
+      "description": "Magnoolia on 19 uue A-energiaklassi koduga ridaelamuarendus Vaela kulas, Kiili vallas, ligikaudu 20 minuti kaugusel Tallinnast. Privaatsed hoovialad, rodud, terrassid ja labimoldud energialahendused.",
       "url": "{{ url('/') }}",
       "address": {
         "@@type": "PostalAddress",
         "streetAddress": "Magnoolia tee",
-        "addressLocality": "Vaela kÃ¼la",
+        "addressLocality": "Vaela kula",
         "addressRegion": "Harjumaa",
         "postalCode": "75401",
         "addressCountry": "EE"
@@ -66,7 +66,7 @@
         { "@@type": "LocationFeatureSpecification", "name": "Maasoojuspump", "value": true },
         { "@@type": "LocationFeatureSpecification", "name": "Ventilatsioon", "value": true },
         { "@@type": "LocationFeatureSpecification", "name": "EV laadimise valmidus", "value": true },
-        { "@@type": "LocationFeatureSpecification", "name": "Terrass ja rÃµdu", "value": true }
+        { "@@type": "LocationFeatureSpecification", "name": "Terrass ja rodu", "value": true }
       ]
     },
     {
@@ -87,10 +87,10 @@
       "mainEntity": [
         {
           "@@type": "Question",
-          "name": "Kus asub Magnoolia?",
+          "name": "Kus Magnoolia asub?",
           "acceptedAnswer": {
             "@@type": "Answer",
-            "text": "Magnoolia asub Vaela kÃ¼las, Kiili vallas, Harjumaal, ligikaudu 20 minuti kaugusel Tallinnast."
+            "text": "Magnoolia asub Vaela kulas, Kiili vallas, Harjumaal - ligikaudu 20 minutit Tallinnast."
           }
         },
         {
@@ -98,23 +98,23 @@
           "name": "Millal Magnoolia kodud valmivad?",
           "acceptedAnswer": {
             "@@type": "Answer",
-            "text": "Magnoolia kodude planeeritud valmimisaeg on suvi 2027."
+            "text": "Magnoolia ridaelamukodude planeeritud valmimisaeg on suvi 2027."
           }
         },
         {
           "@@type": "Question",
-          "name": "Mitu kodu Magnoolia arenduses on?",
+          "name": "Kui palju kodusid on ja mis suurused need on?",
           "acceptedAnswer": {
             "@@type": "Answer",
-            "text": "Arenduses on 19 uut A-energiaklassi ridaelamukodu."
+            "text": "Arenduses on 19 uut A-energiaklassi ridaelamukodu. 4-toaline kodu on ~129,6 m2, 5-toaline ~143,2 m2. Koigi juurde kuulub terrass, rodu, laoruum ja 2 parkimiskohta."
           }
         },
         {
           "@@type": "Question",
-          "name": "Millised on Magnoolia kodude suurused?",
+          "name": "Mis on hind?",
           "acceptedAnswer": {
             "@@type": "Answer",
-            "text": "Kodud on ligikaudu 129 mÂ² suurused, 4â€“5-toalised, rÃµdu ja terrassiga."
+            "text": "Hinnad on taepsustamisel. Vota uhendust ja saadame sulle hinnainfo esimesena."
           }
         },
         {
@@ -122,15 +122,15 @@
           "name": "Kas igal kodul on privaatne hooviala?",
           "acceptedAnswer": {
             "@@type": "Answer",
-            "text": "Jah, igal kodul on oma privaatne hooviala, mis loob eramaja tunnetuse."
+            "text": "Jah, igal Magnoolia kodul on oma piiratud ja maastikuehitusega hooviala. See loob eramaja tunnetuse ja privaatsuse."
           }
         },
         {
           "@@type": "Question",
-          "name": "Mis teeb Magnoolia eriliseks?",
+          "name": "Mis teeb Magnoolia ridaelamu eriliseks?",
           "acceptedAnswer": {
             "@@type": "Answer",
-            "text": "Magnoolia Ã¼hendab ridaelamu mugavuse, eramaja privaatsuse, A-energiaklassi, oma hooviala ja uusarenduse kindluse Tallinna lÃ¤hedal."
+            "text": "Magnoolia uhendab ridaelamu mugavuse, eramaja privaatsuse, A-energiaklassi maasoojuspumbaga, soojusvahestiga ventilatsiooni ja Tallinna laheduse uhes uues kodus."
           }
         }
       ]
@@ -138,4 +138,3 @@
   ]
 }
 </script>
-

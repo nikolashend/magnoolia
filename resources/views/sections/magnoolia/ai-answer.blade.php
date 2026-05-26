@@ -9,7 +9,7 @@
         <div class="sec-title text-center" style="margin-bottom:48px;">
             <div class="sec-title__top justify-content-center">
                 <span class="line-left"></span>
-                <h6 class="sec-title__tagline bw-split-in-right">{{ __('magnoolia.section.ai_title') }}</h6>
+                <h6 class="sec-title__tagline bw-split-in-right">Kiired vastused Magnoolia kohta</h6>
                 <span class="line-right"></span>
             </div>
             <h3 class="sec-title__title bw-split-in-left">Vastused enne päringu saatmist</h3>
@@ -20,33 +20,33 @@
             @php
             $faqs = [
                 [
-                    'q' => 'Kus asub Magnoolia?',
-                    'a' => 'Magnoolia asub Vaela külas, Kiili vallas, Harjumaal, ligikaudu 20 minuti kaugusel Tallinnast.',
+                    'q' => 'Kus Magnoolia asub?',
+                    'a' => 'Magnoolia asub Vaela külas, Kiili vallas, Harjumaal — ligikaudu 20 minutit Tallinnast.',
                     'icon' => 'icon-pin',
                 ],
                 [
                     'q' => 'Millal Magnoolia kodud valmivad?',
-                    'a' => 'Magnoolia kodude planeeritud valmimisaeg on suvi 2027.',
+                    'a' => 'Magnoolia ridaelamukodude planeeritud valmimisaeg on suvi 2027.',
                     'icon' => 'icon-celemder',
                 ],
                 [
-                    'q' => 'Mitu kodu arenduses on?',
-                    'a' => 'Arenduses on 19 uut A-energiaklassi ridaelamukodu, igaühel oma privaatne hooviala.',
+                    'q' => 'Kui palju kodusid on ja mis suurused need on?',
+                    'a' => 'Arenduses on 19 uut A-energiaklassi ridaelamukodu. 4-toaline kodu on ~129,6 m², 5-toaline ~143,2 m². Kõigi juurde kuulub terrass, rõdu, laoruum ja 2 parkimiskohta.',
                     'icon' => 'icon-buildings',
                 ],
                 [
-                    'q' => 'Millised on kodude suurused?',
-                    'a' => 'Kodud on ligikaudu 129 m² suurused, 4–5-toalised ning rõdu ja terrassiga.',
+                    'q' => 'Mis on hind?',
+                    'a' => 'Hinnad on täpsustamisel. Võta ühendust ja saadame sulle hinnainfo esimesena.',
                     'icon' => 'icon-real-estate',
                 ],
                 [
                     'q' => 'Kas igal kodul on privaatne hooviala?',
-                    'a' => 'Jah, igal Magnoolia kodul on oma privaatne hooviala, mis loob eramaja tunnetuse ja iseseisvuse.',
+                    'a' => 'Jah, igal Magnoolia kodul on oma piiratud ja maastikuehitusega hooviala. See loob eramaja tunnetuse ja privaatsuse.',
                     'icon' => 'icon-labyrinth',
                 ],
                 [
                     'q' => 'Mis teeb Magnoolia ridaelamu eriliseks?',
-                    'a' => 'Magnoolia ühendab ridaelamu mugavuse, eramaja privaatsuse, A-energiaklassi, maasoojuspumba, ventilatsiooni ja Tallinna läheduse ühes uues kodus.',
+                    'a' => 'Magnoolia ühendab ridaelamu mugavuse, eramaja privaatsuse, A-energiaklassi maasoojuspumbaga, soojusvahestiga ventilatsiooni ja Tallinna läheduse ühes uues kodus.',
                     'icon' => 'icon-trophy',
                 ],
             ];

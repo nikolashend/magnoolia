@@ -1,166 +1,73 @@
-<?php
-
-/*
-|--------------------------------------------------------------------------
-| Magnoolia Project Config
-|--------------------------------------------------------------------------
-| Central config for all project-specific data.
-| Do NOT hardcode these values into Blade templates directly.
-| Future phases will expand this file with full unit data, media assets, etc.
-|--------------------------------------------------------------------------
-*/
+﻿<?php
 
 return [
 
-    /*
-    |------------------------------------------------------------------
-    | Project identity
-    |------------------------------------------------------------------
-    */
     'project' => [
         'name'          => 'Magnoolia Kodud',
         'brand_name'    => 'Magnoolia',
-        'slogan'        => 'Kodu, mis kestab', // placeholder — final copy in Phase 2
+        'slogan'        => 'Ridaelamu mugavus. Eramaja privaatsus.',
         'location'      => 'Vaela küla, Kiili vald, Harjumaa',
-        'completion'    => 'Suvi 2027',        // placeholder
+        'completion'    => 'Suvi 2027',
         'homes_count'   => 19,
         'energy_class'  => 'A',
-        'developer'     => 'Placeholder OÜ',  // replace with real developer
-        'contact_email' => 'info@magnoolia.ee', // placeholder
-        'contact_phone' => '+372 000 0000',     // placeholder
+        'developer'     => 'Estlanda OÜ',
+        'contact_email' => 'diana@estlanda.ee',
+        'contact_phone' => '+37258164078',
     ],
 
-    /*
-    |------------------------------------------------------------------
-    | Navigation items
-    | label is a translation key — resolve with __()
-    |------------------------------------------------------------------
-    */
     'navigation' => [
-        ['id' => 'about',       'label_key' => 'nav.about'],
-        ['id' => 'homes',       'label_key' => 'nav.homes'],
-        ['id' => 'masterplan',  'label_key' => 'nav.masterplan'],
-        ['id' => 'location',    'label_key' => 'nav.location'],
-        ['id' => 'contact',     'label_key' => 'nav.contact'],
+        ['id' => 'about',      'label_key' => 'nav.about'],
+        ['id' => 'homes',      'label_key' => 'nav.homes'],
+        ['id' => 'masterplan', 'label_key' => 'nav.masterplan'],
+        ['id' => 'location',   'label_key' => 'nav.location'],
+        ['id' => 'contact',    'label_key' => 'nav.contact'],
     ],
 
-    /*
-    |------------------------------------------------------------------
-    | Facts bar
-    | Displayed in hero and standalone facts-bar component
-    |------------------------------------------------------------------
-    */
     'facts' => [
-        [
-            'value'   => '19',
-            'label'   => 'ridaelamut',        // placeholder — multilingual in Phase 2
-            'icon'    => 'home',
-        ],
-        [
-            'value'   => 'A',
-            'label'   => 'energiaklass',
-            'icon'    => 'energy',
-        ],
-        [
-            'value'   => '600–1200 m²',
-            'label'   => 'eraaed',
-            'icon'    => 'garden',
-        ],
-        [
-            'value'   => '2027',
-            'label'   => 'valmib suvel',
-            'icon'    => 'calendar',
-        ],
-        [
-            'value'   => '20 min',
-            'label'   => 'Tallinnast',
-            'icon'    => 'location',
-        ],
+        ['value' => '19',       'label' => 'kodu',           'icon' => 'home'],
+        ['value' => 'A',        'label' => 'energiaklass',   'icon' => 'energy'],
+        ['value' => '~129 m²',  'label' => 'elamispind',     'icon' => 'flooring'],
+        ['value' => '2027',     'label' => 'valmib suvel',   'icon' => 'calendar'],
+        ['value' => '20 min',   'label' => 'Tallinnast',     'icon' => 'location'],
     ],
 
-    /*
-    |------------------------------------------------------------------
-    | Units — Phase 1 sample only (2–3 placeholders)
-    | Full 19-unit table to be built in Phase 3/4
-    |------------------------------------------------------------------
-    | statuses: available | reserved | sold
-    |------------------------------------------------------------------
-    */
+    // statuses: available | reserved | sold | tbc
     'units' => [
-        [
-            'id'               => 1,
-            'address'          => 'Magnoolia tee 1, Vaela',
-            'unit_number'      => 'M-01',
-            'rooms'            => 4,
-            'net_area'         => 118.5,
-            'terrace_area'     => 18.0,
-            'balcony_area'     => 0,
-            'storage_area'     => 8.5,
-            'parking'          => 2,
-            'private_use_area' => 650,
-            'price'            => null, // price on request in Phase 1
-            'status'           => 'available',
-            'floor_plan_1'     => null, // public/images/magnoolia/plans/m01-ground.jpg
-            'floor_plan_2'     => null, // public/images/magnoolia/plans/m01-upper.jpg
-        ],
-        [
-            'id'               => 2,
-            'address'          => 'Magnoolia tee 2, Vaela',
-            'unit_number'      => 'M-02',
-            'rooms'            => 4,
-            'net_area'         => 122.0,
-            'terrace_area'     => 20.0,
-            'balcony_area'     => 0,
-            'storage_area'     => 8.5,
-            'parking'          => 2,
-            'private_use_area' => 720,
-            'price'            => null,
-            'status'           => 'reserved',
-            'floor_plan_1'     => null,
-            'floor_plan_2'     => null,
-        ],
-        [
-            'id'               => 3,
-            'address'          => 'Magnoolia tee 3, Vaela',
-            'unit_number'      => 'M-03',
-            'rooms'            => 5,
-            'net_area'         => 143.0,
-            'terrace_area'     => 24.0,
-            'balcony_area'     => 10.0,
-            'storage_area'     => 10.0,
-            'parking'          => 2,
-            'private_use_area' => 900,
-            'price'            => null,
-            'status'           => 'available',
-            'floor_plan_1'     => null,
-            'floor_plan_2'     => null,
-        ],
+        ['id'=>'M-01','address'=>'Magnoolia tee 1/1','rooms'=>4,'net_area'=>129.6,'terrace_area'=>22.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-02','address'=>'Magnoolia tee 1/2','rooms'=>4,'net_area'=>129.6,'terrace_area'=>18.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-03','address'=>'Magnoolia tee 1/3','rooms'=>4,'net_area'=>129.6,'terrace_area'=>18.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'reserved','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-04','address'=>'Magnoolia tee 1/4','rooms'=>4,'net_area'=>129.6,'terrace_area'=>18.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-05','address'=>'Magnoolia tee 1/5','rooms'=>5,'net_area'=>143.2,'terrace_area'=>24.0,'balcony_area'=>11.5,'storage_area'=>5.0,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-06','address'=>'Magnoolia tee 2/1','rooms'=>4,'net_area'=>129.6,'terrace_area'=>22.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-07','address'=>'Magnoolia tee 2/2','rooms'=>4,'net_area'=>129.6,'terrace_area'=>18.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'reserved','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-08','address'=>'Magnoolia tee 2/3','rooms'=>4,'net_area'=>129.6,'terrace_area'=>18.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-09','address'=>'Magnoolia tee 2/4','rooms'=>4,'net_area'=>129.6,'terrace_area'=>18.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-10','address'=>'Magnoolia tee 2/5','rooms'=>5,'net_area'=>143.2,'terrace_area'=>24.0,'balcony_area'=>11.5,'storage_area'=>5.0,'parking'=>2,'price'=>null,'status'=>'sold','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-11','address'=>'Magnoolia tee 3/1','rooms'=>4,'net_area'=>129.6,'terrace_area'=>22.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-12','address'=>'Magnoolia tee 3/2','rooms'=>4,'net_area'=>129.6,'terrace_area'=>18.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-13','address'=>'Magnoolia tee 3/3','rooms'=>4,'net_area'=>129.6,'terrace_area'=>18.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'reserved','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-14','address'=>'Magnoolia tee 3/4','rooms'=>4,'net_area'=>129.6,'terrace_area'=>18.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-15','address'=>'Magnoolia tee 3/5','rooms'=>5,'net_area'=>143.2,'terrace_area'=>24.0,'balcony_area'=>11.5,'storage_area'=>5.0,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-16','address'=>'Magnoolia tee 4/1','rooms'=>4,'net_area'=>129.6,'terrace_area'=>22.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-17','address'=>'Magnoolia tee 4/2','rooms'=>4,'net_area'=>129.6,'terrace_area'=>18.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'reserved','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-18','address'=>'Magnoolia tee 4/3','rooms'=>4,'net_area'=>129.6,'terrace_area'=>18.0,'balcony_area'=>9.5,'storage_area'=>4.1,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
+        ['id'=>'M-19','address'=>'Magnoolia tee 4/4','rooms'=>5,'net_area'=>143.2,'terrace_area'=>24.0,'balcony_area'=>11.5,'storage_area'=>5.0,'parking'=>2,'price'=>null,'status'=>'available','floor_plan_1'=>null,'floor_plan_2'=>null],
     ],
 
-    /*
-    |------------------------------------------------------------------
-    | Unit status labels (resolved per locale in Phase 2)
-    |------------------------------------------------------------------
-    */
     'statuses' => [
-        'available' => 'Saadaval',
+        'available' => 'Vaba',
         'reserved'  => 'Broneeritud',
         'sold'      => 'Müüdud',
+        'tbc'       => 'Täpsustamisel',
     ],
 
-    /*
-    |------------------------------------------------------------------
-    | Media — Phase 1 placeholders
-    | Replace null values with actual paths when assets are ready
-    |------------------------------------------------------------------
-    */
     'media' => [
-        'hero_video'    => null, // public/images/magnoolia/renders/hero.mp4
-        'hero_poster'   => null, // public/images/magnoolia/renders/hero-poster.jpg
-        'logo_light'    => null, // public/images/magnoolia/logos/magnoolia-white.svg
-        'logo_dark'     => null, // public/images/magnoolia/logos/magnoolia-dark.svg
-        'renders'       => [],   // array of render paths
-        'masterplan'    => null, // public/images/magnoolia/masterplan/masterplan.jpg
+        'hero_video'  => null,
+        'hero_poster' => null,
+        'logo_light'  => null,
+        'logo_dark'   => null,
+        'renders'     => [],
+        'masterplan'  => null,
     ],
 
 ];
