@@ -26,7 +26,7 @@
                 ],
                 [
                     'q' => 'Millal Magnoolia kodud valmivad?',
-                    'a' => 'Magnoolia ridaelamukodude planeeritud valmimisaeg on suvi 2027.',
+                    'a' => 'I etapp (Magnoolia tee 1 ja 3) valmib kevad 2027. II etapp (Magnoolia tee 5 kuni 11) valmib kevad 2028.',
                     'icon' => 'icon-celemder',
                 ],
                 [

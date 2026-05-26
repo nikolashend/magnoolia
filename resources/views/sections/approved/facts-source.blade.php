@@ -23,7 +23,7 @@
                             <li><div class="about-two__list__item"><i class="icon-bedroom"></i><span>Rõdu <br> + terrass</span></div></li>
                         </ul>
                         <div class="about-two__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                            Maasoojuspump, ventilatsioon, päikesepaneelide valmidus ja EV laadimise valmidus. <a href="{{ route('apartments.index') }}">VAATA KODUSID</a>
+                            Maasoojuspump, ventilatsioon, päikesepaneelide valmidus ja EV laadimise valmidus. <a href="#hinnad">VAATA KODUSID</a>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                 <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-4.png') }}" alt="image"><a href="#"><i class="fas fa-plus"></i></a></div>
             </div>
             <div class="about-two__happy-client__content">
-                <h4 class="about-two__happy-client__title">Valmib suvi 2027</h4>
+                <h4 class="about-two__happy-client__title">I etapp kevad 2027</h4>
                 <div class="about-two__happy-client__star">
                     <i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i>
                     <span>Vaela küla, Kiili vald</span>

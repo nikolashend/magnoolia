@@ -13,14 +13,14 @@
                         <li class="{{ request()->routeIs('home*') ? 'current' : '' }}">
                             <a href="{{ route('home') }}">Avaleht</a>
                         </li>
-                        <li class="{{ request()->routeIs('apartments*') ? 'current' : '' }}">
-                            <a href="{{ route('apartments.index') }}">Kodud ja hinnad</a>
+                        <li class="{{ request()->routeIs('home*') ? 'current' : '' }}">
+                            <a href="{{ route('home') }}#hinnad">Kodud ja hinnad</a>
                         </li>
                         <li><a href="{{ route('home') }}#asendiplaan">Asendiplaan</a></li>
                         <li><a href="{{ route('home') }}#asukoht">Asukoht</a></li>
                         <li><a href="{{ route('home') }}#ehitusinfo">Ehitusinfo</a></li>
-                        <li class="{{ request()->routeIs('contact') ? 'current' : '' }}">
-                            <a href="{{ route('contact') }}">Kontakt</a>
+                        <li>
+                            <a href="{{ route('home') }}#kontakt">Kontakt</a>
                         </li>
                     </ul>
                 </nav>
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="main-header__btn">
-                        <a href="{{ route('contact') }}" class="zoomvilla-btn">Küsi pakkumist</a>
+                        <a href="{{ route('home') }}#kontakt" class="zoomvilla-btn">Küsi pakkumist</a>
                     </div>
                     <div class="mobile-nav__btn mobile-nav__toggler">
                         <span></span><span></span><span></span>

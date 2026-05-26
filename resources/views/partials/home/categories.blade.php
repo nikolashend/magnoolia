@@ -23,7 +23,7 @@
 
             <div class="mg-facts-bar__item">
                 <div class="mg-facts-bar__icon"><i class="fas fa-calendar" aria-hidden="true"></i></div>
-                <span class="mg-facts-bar__value">Suvi 2027</span>
+                <span class="mg-facts-bar__value">Kevad 2027</span>
                 <span class="mg-facts-bar__label">Valmimisaeg</span>
             </div>
 

@@ -26,7 +26,7 @@
             <div>
                 <span class="mg-footer__col-title">Projekt</span>
                 <ul class="mg-footer__links">
-                    <li><a href="{{ route('apartments.index') }}">Kodud ja hinnad</a></li>
+                    <li><a href="{{ route('home') }}#hinnad">Kodud ja hinnad</a></li>
                     <li><a href="{{ route('home') }}#asendiplaan">Asendiplaan</a></li>
                     <li><a href="{{ route('home') }}#asukoht">Asukoht</a></li>
                     <li><a href="{{ route('home') }}#ehitusinfo">Ehitusinfo</a></li>

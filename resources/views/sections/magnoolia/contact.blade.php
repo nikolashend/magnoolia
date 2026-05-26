@@ -75,7 +75,7 @@
                     @foreach([
                         '19 kodu',
                         'A-energiaklass',
-                        'Valmib suvi 2027',
+                        'I etapp · kevad 2027',
                         'Vaela küla · Kiili vald',
                         'Tallinna lähedal',
                     ] as $chip)

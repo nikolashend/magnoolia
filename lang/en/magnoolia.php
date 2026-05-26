@@ -16,9 +16,9 @@ return [
     /* Hero */
     'hero' => [
         'eyebrow'      => 'Vaela village · Kiili municipality · Harjumaa',
-        'eyebrow_sub'  => 'New development · completion summer 2027',
+        'eyebrow_sub'  => 'New development · phase 1 spring 2027 / phase 2 spring 2028',
         'h1'           => 'A-energy-class homes near Tallinn',
-        'subheadline'  => '19 new townhouses with private yard, balcony, terrace and smart energy systems. Completion summer 2027.',
+        'subheadline'  => '19 new townhouses with private yard, balcony, terrace and smart energy systems. Phase 1 spring 2027, Phase 2 spring 2028.',
         'cta_primary'  => 'View homes & prices',
         'cta_secondary'=> 'Request a quote',
     ],
@@ -30,7 +30,7 @@ return [
         'rooms'       => '4–5 rooms',
         'area'        => 'approx. 129 m²',
         'distance'    => 'Tallinn approx. 20 min',
-        'completion'  => 'Completion summer 2027',
+        'completion'  => 'Phase 1 spring 2027 / Phase 2 spring 2028',
     ],
 
     /* Sections */
@@ -70,11 +70,21 @@ return [
         'status'         => 'Availability',
         'cta_plans'      => 'View plans',
         'cta_inquiry'    => 'Request a quote',
+        'cta_availability' => 'Ask about availability',
+        'cta_sold'       => 'View available homes',
         'price_request'  => 'On request',
+        'price_tbc'      => 'Ask for price',
         'status_available'  => 'Available',
         'status_reserved'   => 'Reserved',
         'status_sold'       => 'Sold',
+        'status_tbc'        => 'To be confirmed',
         'status_unknown'    => 'On request',
+        'filter_all'        => 'All',
+        'filter_available'  => 'Available',
+        'filter_reserved'   => 'Reserved',
+        'filter_sold'       => 'Sold',
+        'filter_stage1'     => 'Phase 1',
+        'filter_stage2'     => 'Phase 2',
         'includes_title' => 'Price includes:',
         'includes_items' => [
             'Internal roads and parking areas',
@@ -97,8 +107,9 @@ return [
         'cta_inquiry' => 'Request a quote',
         'trust_1'     => 'Energy class A',
         'trust_2'     => '19 homes',
-        'trust_3'     => 'Completion summer 2027',
+        'trust_3'     => 'Phase 1 spring 2027',
         'trust_4'     => 'Vaela village · Kiili municipality',
+        'trust_5'     => 'Near Tallinn',
     ],
 
 ];

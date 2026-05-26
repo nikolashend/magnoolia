@@ -20,7 +20,7 @@
                             <li class="property-plans__list__item"><span>Energiaklass</span><span>A</span></li>
                         </ul>
                         <div class="property-plans__btn wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
-                            <a href="{{ route('apartments.index') }}" class="zoomvilla-btn">Vaata kodusid <i class="icon-angle-small-right"></i></a>
+                            <a href="#hinnad" class="zoomvilla-btn">Vaata kodusid <i class="icon-angle-small-right"></i></a>
                             <div class="property-plans__btn__download">
                                 <div class="property-plans__btn__icon"><img src="{{ asset('assets/images/shapes/sheet-1-1.png') }}" alt></div>
                                 <div class="property-plans__btn__content">
@@ -65,7 +65,7 @@
                             <li class="process-plan__list__item"><span>Ventilatsioon</span><span>Jah</span></li>
                         </ul>
                     </div>
-                    <a href="{{ route('apartments.index') }}" class="zoomvilla-btn">Vaata kodusid <i class="icon-angle-small-right"></i></a>
+                    <a href="#hinnad" class="zoomvilla-btn">Vaata kodusid <i class="icon-angle-small-right"></i></a>
                 </div>
                 <div class="col-lg-4 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
                     <div class="process-plan__thumb hover:shine">

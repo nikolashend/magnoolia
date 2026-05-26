@@ -38,7 +38,7 @@
                             </ul>
                         </div>
                         <div class="about-one__btn">
-                            <a href="{{ route('apartments.index') }}" class="zoomvilla-btn">Vaata kodusid <i class="icon-angle-small-right"></i></a>
+                            <a href="#hinnad" class="zoomvilla-btn">Vaata kodusid <i class="icon-angle-small-right"></i></a>
                         </div>
                     </div>
                 </div>

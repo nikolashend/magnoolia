@@ -54,7 +54,7 @@
                                 <div class="mg-hero-fact"><strong>19</strong><span>kodu</span></div>
                                 <div class="mg-hero-fact"><strong>~129 m²</strong><span>elamispind</span></div>
                                 <div class="mg-hero-fact"><strong>4–5</strong><span>tuba</span></div>
-                                <div class="mg-hero-fact"><strong>Suvi 2027</strong><span>valmib</span></div>
+                                <div class="mg-hero-fact"><strong>Kevad 2027</strong><span>I etapp</span></div>
                                 <div class="mg-hero-fact"><strong>20 min</strong><span>Tallinnast</span></div>
                             </div>
 

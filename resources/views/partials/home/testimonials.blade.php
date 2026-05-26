@@ -92,7 +92,7 @@
             <div class="mg-placeholder-section__title">Kodude valik, plaanid ja hinnad</div>
             <p class="mg-placeholder-section__note">[Phase 3: interaktiivne hinnatabel ja plaanide galerii]</p>
             <div style="margin-top:24px;">
-                <a href="{{ route('apartments.index') }}" class="mg-btn mg-btn--primary">
+                <a href="#hinnad" class="mg-btn mg-btn--primary">
                     Vaata saadaolevaid kodusid
                 </a>
             </div>
@@ -129,7 +129,7 @@
                 <a href="{{ route('contact') }}" class="mg-btn mg-btn--gold mg-btn--lg">
                     Küsi pakkumist
                 </a>
-                <a href="{{ route('apartments.index') }}" class="mg-btn mg-btn--ghost mg-btn--lg">
+                <a href="#hinnad" class="mg-btn mg-btn--ghost mg-btn--lg">
                     Vaata kodusid
                 </a>
             </div>

@@ -40,7 +40,7 @@
                 </ul>
 
                 <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:8px;">
-                    <a href="{{ route('apartments.index') }}" class="mg-btn mg-btn--primary">
+                    <a href="#hinnad" class="mg-btn mg-btn--primary">
                         Vaata kodusid
                     </a>
                     <a href="{{ route('contact') }}" class="mg-btn mg-btn--secondary">

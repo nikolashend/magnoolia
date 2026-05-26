@@ -36,7 +36,7 @@
                                         <div class="inner">
                                             <p>Magnoolia ridaelamute planeeritud valmimine on 2027. aasta suvi. Täpsem graafik täpsustub ehitusloa saamisel.</p>
                                             <ul class="accordion-list list-unstyled">
-                                                <li><div class="accordion-list__item"><i class="icon-celemder"></i><span>Valmib suvi 2027</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-celemder"></i><span>I etapp valmib kevad 2027 &middot; II etapp kevad 2028</span></div></li>
                                                 <li><div class="accordion-list__item"><i class="icon-pin"></i><span>Vaela küla, Kiili vald</span></div></li>
                                                 <li><div class="accordion-list__item"><i class="icon-buildings"></i><span>19 iseseisvat kodu</span></div></li>
                                             </ul>

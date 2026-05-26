@@ -1,15 +1,23 @@
 {{-- MAGNOOLIA MOBILE STICKY CTA --}}
 <div class="mg-sticky-cta" id="mg-sticky-cta" aria-label="Kiire kontaktmenüü">
-    <a href="{{ route('apartments.index') }}" class="mg-btn mg-btn--secondary">
-        <i class="fas fa-home" aria-hidden="true"></i>
-        Kodud
+    <a href="{{ route('home') }}#hinnad" class="mg-sticky-cta__btn mg-sticky-cta__btn--ghost">
+        Kodud &amp; hinnad
     </a>
-    <a href="{{ route('contact') }}" class="mg-btn mg-btn--primary">
-        <i class="fas fa-envelope" aria-hidden="true"></i>
+    <a href="{{ route('home') }}#kontakt" class="mg-sticky-cta__btn">
         Küsi pakkumist
     </a>
-    <a href="tel:+37200000000" class="mg-btn mg-btn--ghost">
-        <i class="fas fa-phone" aria-hidden="true"></i>
-        Helista
-    </a>
 </div>
+<script>
+(function () {
+    var bar = document.getElementById('mg-sticky-cta');
+    if (!bar) return;
+    var hero = document.querySelector('.mg-hero, #mg-hero, .slider-one, section:first-of-type');
+    function update() {
+        var scrolled = window.scrollY || window.pageYOffset;
+        var threshold = hero ? hero.offsetHeight * 0.7 : 400;
+        bar.classList.toggle('is-visible', scrolled > threshold);
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+})();
+</script>

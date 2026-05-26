@@ -98,7 +98,7 @@
           "name": "Millal Magnoolia kodud valmivad?",
           "acceptedAnswer": {
             "@@type": "Answer",
-            "text": "Magnoolia ridaelamukodude planeeritud valmimisaeg on suvi 2027."
+            "text": "I etapp (Magnoolia tee 1 ja 3) valmib kevad 2027. II etapp (Magnoolia tee 5 kuni 11) valmib kevad 2028."
           }
         },
         {
@@ -106,7 +106,7 @@
           "name": "Kui palju kodusid on ja mis suurused need on?",
           "acceptedAnswer": {
             "@@type": "Answer",
-            "text": "Arenduses on 19 uut A-energiaklassi ridaelamukodu. 4-toaline kodu on ~129,6 m2, 5-toaline ~143,2 m2. Koigi juurde kuulub terrass, rodu, laoruum ja 2 parkimiskohta."
+            "text": "Arenduses on 19 uut A-energiaklassi ridaelamukodu. 4-toaline kodu on ~129,6 m², 5-toaline ~143,2 m². Kõigi juurde kuulub terrass, rõdu ja 2 parkimiskohta."
           }
         },
         {

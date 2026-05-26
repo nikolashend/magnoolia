@@ -1,8 +1,18 @@
 {{-- ══════════════════════════════════════════════════════════════
-    ASENDIPLAAN — Static masterplan section
-    Phase 4: static image + lightbox + legend + CTA
-    Phase 5: interactive SVG with hotspots per unit
+    ASENDIPLAAN — Masterplan section
+    Phase 6: hotspot data-attributes added (coords are placeholder until SVG/EXR)
+    Phase 7 TODO: interaktiivsed SVG hotspotid koordinaatidega
     ══════════════════════════════════════════════════════════════ --}}
+@php
+    $allUnits = config('magnoolia.units', []);
+    $stages   = config('magnoolia.stages', []);
+    $statusColors = [
+        'available' => '#4caf50',
+        'reserved'  => '#ff9800',
+        'sold'      => '#f44336',
+        'tbc'       => '#9c27b0',
+    ];
+@endphp
 <section class="section-space" id="asendiplaan" style="background:#151515;">
     <div class="container">
 
@@ -40,7 +50,23 @@
                             <i class="icon-zoom-1"></i>
                         </div>
                     </a>
-                    {{-- Phase 5: interactive unit hotspots will be injected here by JS --}}
+                    {{-- Phase 6: hotspot container — positions are TODO until real SVG coords received from architect --}}
+                    <div class="mg-masterplan__hotspots" aria-hidden="true"
+                         style="position:absolute;inset:0;pointer-events:none;">
+                        @foreach($allUnits as $unit)
+                        {{-- Each hotspot carries full data-attributes for future JS interaction --}}
+                        <div class="mg-masterplan__hotspot"
+                             data-unit-id="{{ $unit['id'] }}"
+                             data-address="{{ $unit['address'] }}"
+                             data-status="{{ $unit['status'] ?? 'tbc' }}"
+                             data-stage="{{ $unit['stage'] ?? 0 }}"
+                             data-completion="{{ $stages[$unit['stage'] ?? 0]['completion'] ?? '' }}"
+                             data-rooms="{{ $unit['rooms'] ?? '' }}"
+                             data-area="{{ $unit['net_area'] ?? '' }}"
+                             data-masterplan-key="{{ $unit['masterplan_key'] ?? $unit['id'] }}"
+                             style="display:none;">{{-- coords set by JS after SVG integration --}}</div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
 
@@ -82,8 +108,8 @@
                             <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">energiaklass</div>
                         </div>
                         <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:16px;">
-                            <div style="font-size:22px;font-weight:700;color:#c89443;">2027</div>
-                            <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">valmimine</div>
+                            <div style="font-size:16px;font-weight:700;color:#c89443;">kevad 2027</div>
+                            <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">I etapp</div>
                         </div>
                         <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:16px;">
                             <div style="font-size:22px;font-weight:700;color:#c89443;">20 min</div>
@@ -99,4 +125,49 @@
         </div>
 
     </div>
+
+    {{-- Mobile unit list (visible on small screens) --}}
+    <div class="d-lg-none" style="margin-top:32px;">
+        @foreach($stages as $stageNum => $stageCfg)
+        <div style="margin-bottom:24px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                <span style="background:#c89443;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">{{ $stageCfg['label'] }}</span>
+                <span style="color:rgba(255,255,255,.6);font-size:13px;">valmib {{ $stageCfg['completion'] }}</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+                @foreach($allUnits as $unit)
+                @if(($unit['stage'] ?? 0) === $stageNum)
+                @php $color = $statusColors[$unit['status'] ?? 'tbc'] ?? '#9c27b0'; @endphp
+                <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.07);border-radius:10px;padding:12px 16px;">
+                    <div>
+                        <div style="font-weight:600;color:#fff;font-size:14px;">{{ $unit['address'] }}</div>
+                        <div style="color:rgba(255,255,255,.5);font-size:12px;margin-top:2px;">{{ $unit['rooms'] ?? '—' }} tuba · {{ $unit['net_area'] ?? '—' }} m²</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <span style="width:10px;height:10px;border-radius:50%;background:{{ $color }};flex-shrink:0;"></span>
+                        @if(($unit['status'] ?? '') !== 'sold')
+                        <a href="#kontakt" style="background:#c89443;color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;">Küsi</a>
+                        @endif
+                    </div>
+                </div>
+                @endif
+                @endforeach
+            </div>
+        </div>
+        @endforeach
+
+        {{-- Mobile legend --}}
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);">
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.6);">
+                <span style="width:10px;height:10px;border-radius:50%;background:#4caf50;"></span> Vaba
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.6);">
+                <span style="width:10px;height:10px;border-radius:50%;background:#ff9800;"></span> Broneeritud
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.6);">
+                <span style="width:10px;height:10px;border-radius:50%;background:#f44336;"></span> Müüdud
+            </div>
+        </div>
+    </div>
+
 </section>

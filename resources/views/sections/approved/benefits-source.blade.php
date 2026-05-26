@@ -15,8 +15,8 @@
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-trophy"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
                             <h3 class="service-card__title"><a href="#hinnad">A-energiaklass</a></h3>
-                            <p class="service-card__text">Madal energiaarve labi maasoojuspumba ja soojusvahestiga ventilatsiooni</p>
-                            <a href="#hinnad" class="service-card__link">LAHEMALT<i class="icon-angle-small-right"></i></a>
+                            <p class="service-card__text">Madal energiaarve läbi maasoojuspumba ja soojustagastusega ventilatsiooni</p>
+                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -26,8 +26,8 @@
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-labyrinth"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
                             <h3 class="service-card__title"><a href="#hinnad">Privaatne hooviala</a></h3>
-                            <p class="service-card__text">Igal kodil on oma piiratud aed - eraoue ilma kortermaja mollu</p>
-                            <a href="#hinnad" class="service-card__link">LAHEMALT<i class="icon-angle-small-right"></i></a>
+                            <p class="service-card__text">Igal kodul on oma piiratud aed — eraõue ilma kortermaja mölluta</p>
+                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -41,9 +41,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-real-estate"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">Rodu ja terrass</a></h3>
-                            <p class="service-card__text">Iga kodu juurde kuulub isiklik terrass (18-24 m2) ja rodu (9,5-11,5 m2)</p>
-                            <a href="#hinnad" class="service-card__link">LAHEMALT<i class="icon-angle-small-right"></i></a>
+                            <h3 class="service-card__title"><a href="#hinnad">Rõdu ja terrass</a></h3>
+                            <p class="service-card__text">Iga kodu juurde kuulub isiklik terrass (18–24 m²) ja rõdu (9,5–11,5 m²)</p>
+                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -52,9 +52,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-flooring"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">Porandakuute</a></h3>
-                            <p class="service-card__text">Veesoojendusega porandakuute igas toas, ka vannitoas</p>
-                            <a href="#hinnad" class="service-card__link">LAHEMALT<i class="icon-angle-small-right"></i></a>
+                            <h3 class="service-card__title"><a href="#hinnad">Põrandaküte</a></h3>
+                            <p class="service-card__text">Veesoojendusega põrandaküte igas toas, ka vannitoas</p>
+                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -64,8 +64,8 @@
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-house"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
                             <h3 class="service-card__title"><a href="#hinnad">Ventilatsioon</a></h3>
-                            <p class="service-card__text">Soojusvahestiga sundventilatsioon tagab vaerske sisekliima aasta ring</p>
-                            <a href="#hinnad" class="service-card__link">LAHEMALT<i class="icon-angle-small-right"></i></a>
+                            <p class="service-card__text">Soojustagastusega sundventilatsioon tagab värske sisekliima aasta ringi</p>
+                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -75,8 +75,8 @@
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-garage"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
                             <h3 class="service-card__title"><a href="#hinnad">EV-laadimise valmidus</a></h3>
-                            <p class="service-card__text">Elektriautode laadimispunkti ettevalmistus molema parkimiskoha juurde</p>
-                            <a href="#hinnad" class="service-card__link">LAHEMALT<i class="icon-angle-small-right"></i></a>
+                            <p class="service-card__text">Elektriautode laadimispunkti ettevalmistus mõlema parkimiskoha juurde</p>
+                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -85,9 +85,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-real-estate"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">Paikesepaneelide valmidus</a></h3>
-                            <p class="service-card__text">Katusele on ette valmistatud paikesepaneelide hilisem paigaldus</p>
-                            <a href="#hinnad" class="service-card__link">LAHEMALT<i class="icon-angle-small-right"></i></a>
+                            <h3 class="service-card__title"><a href="#hinnad">Päikesepaneelide valmidus</a></h3>
+                            <p class="service-card__text">Katusele on ette valmistatud päikesepaneelide hilisem paigaldus</p>
+                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -96,9 +96,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-pin"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#kontakt">Tallinna lahedal</a></h3>
-                            <p class="service-card__text">Vaela kuela, Kiili vald - looduskeskkond 20 minutit Tallinna kesklinnast</p>
-                            <a href="#kontakt" class="service-card__link">LAHEMALT<i class="icon-angle-small-right"></i></a>
+                            <h3 class="service-card__title"><a href="#kontakt">Tallinna lähedal</a></h3>
+                            <p class="service-card__text">Vaela küla, Kiili vald — looduskeskkond 20 minutit Tallinna kesklinnast</p>
+                            <a href="#kontakt" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>

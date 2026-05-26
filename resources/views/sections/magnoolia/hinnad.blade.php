@@ -1,16 +1,24 @@
 {{-- ══════════════════════════════════════════════════════════════
     HINNAD JA PLAANID — Magnoolia pricing table
-    Source: config/magnoolia.php → units array
-    Phase 4: static preview with real unit data from config
-    Phase 5: DB-driven with live status
+    Phase 6: filter bar · stage groups · status-aware CTAs
+    Source: config/magnoolia.php → units, stages arrays
     ══════════════════════════════════════════════════════════════ --}}
 @php
-    $units = config('magnoolia.units', []);
-    $statuses = [
-        'available' => ['label' => __('magnoolia.pricing.status_available'), 'class' => 'mg-status--available'],
-        'reserved'  => ['label' => __('magnoolia.pricing.status_reserved'),  'class' => 'mg-status--reserved'],
-        'sold'      => ['label' => __('magnoolia.pricing.status_sold'),       'class' => 'mg-status--sold'],
-        'tbc'       => ['label' => 'Täpsustamisel',                           'class' => 'mg-status--tbc'],
+    $units  = config('magnoolia.units', []);
+    $stages = config('magnoolia.stages', []);
+
+    // Group units by stage for grouped table headers
+    $byStage = [];
+    foreach ($units as $unit) {
+        $byStage[$unit['stage'] ?? 0][] = $unit;
+    }
+
+    // Status config: CSS class + translation key + context-aware CTA key
+    $statusCfg = [
+        'available' => ['label' => __('magnoolia.pricing.status_available'), 'class' => 'mg-status--available', 'cta_key' => 'magnoolia.pricing.cta_inquiry'],
+        'reserved'  => ['label' => __('magnoolia.pricing.status_reserved'),  'class' => 'mg-status--reserved',  'cta_key' => 'magnoolia.pricing.cta_availability'],
+        'sold'      => ['label' => __('magnoolia.pricing.status_sold'),       'class' => 'mg-status--sold',      'cta_key' => 'magnoolia.pricing.cta_sold'],
+        'tbc'       => ['label' => __('magnoolia.pricing.status_tbc'),        'class' => 'mg-status--tbc',       'cta_key' => 'magnoolia.pricing.cta_inquiry'],
     ];
 @endphp
 
@@ -18,24 +26,53 @@
     <div class="container">
 
         {{-- Section header --}}
-        <div class="sec-title text-center" style="margin-bottom:50px;">
+        <div class="sec-title text-center" style="margin-bottom:36px;">
             <div class="sec-title__top justify-content-center">
                 <span class="line-left"></span>
-                <h6 class="sec-title__tagline bw-split-in-right">Kodud ja hinnad</h6>
+                <h6 class="sec-title__tagline bw-split-in-right">{{ __('magnoolia.section.pricing_eyebrow') }}</h6>
                 <span class="line-right"></span>
             </div>
-            <h3 class="sec-title__title bw-split-in-left">Vali endale sobiv<br>Magnoolia kodu</h3>
+            <h3 class="sec-title__title bw-split-in-left">{{ __('magnoolia.section.pricing_title') }}</h3>
             <p style="color:#6f6a61;margin-top:16px;font-size:16px;max-width:600px;margin-left:auto;margin-right:auto;">
-                19 A-energiaklassi ridaelamukodu privaatse hooviala, rõdu ja terrassiga.
-                Hinnad on täpsustamisel &mdash; võta ühendust ja saadame sulle esimene.
+                {{ __('magnoolia.section.pricing_subtitle') }}
             </p>
         </div>
 
+        {{-- ── Filter bar ──────────────────────────────────────────────── --}}
+        <div class="wow fadeInUp" data-wow-duration="800ms"
+             style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:36px;">
+            @foreach([
+                ['key' => 'all',       'label' => __('magnoolia.pricing.filter_all')],
+                ['key' => 'available', 'label' => __('magnoolia.pricing.filter_available')],
+                ['key' => 'reserved',  'label' => __('magnoolia.pricing.filter_reserved')],
+                ['key' => 'sold',      'label' => __('magnoolia.pricing.filter_sold')],
+                ['key' => 'stage-1',   'label' => __('magnoolia.pricing.filter_stage1')],
+                ['key' => 'stage-2',   'label' => __('magnoolia.pricing.filter_stage2')],
+            ] as $f)
+            <button type="button" data-filter="{{ $f['key'] }}" onclick="mgFilter('{{ $f['key'] }}')"
+                    style="padding:8px 20px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid;transition:all .2s;
+                           {{ $loop->first ? 'background:#1d2430;color:#fff;border-color:#1d2430;' : 'background:transparent;color:#6f6a61;border-color:rgba(29,36,48,.25);' }}">
+                {{ $f['label'] }}
+            </button>
+            @endforeach
+        </div>
+
         {{-- ── DESKTOP TABLE ──────────────────────────────────────── --}}
-        <div class="mg-pricing-table__wrap d-none d-lg-block wow fadeInUp" data-wow-duration="1200ms">
-            <table class="mg-pricing-table" style="width:100%;border-collapse:collapse;">
+        <div class="d-none d-lg-block wow fadeInUp" data-wow-duration="1200ms">
+          @foreach($byStage as $stageNum => $stageUnits)
+          @php $sCfg = $stages[$stageNum] ?? null; @endphp
+          @if($sCfg)
+          <div data-stage-group="{{ $stageNum }}"
+               style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:13px 20px;background:#1d2430;border-radius:12px 12px 0 0;{{ !$loop->first ? 'margin-top:40px;' : '' }}">
+              <span style="background:#c89443;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em;">{{ $sCfg['label'] }}</span>
+              <span style="color:rgba(255,255,255,.75);font-size:14px;">{{ implode(' &middot; ', $sCfg['buildings']) }}</span>
+              <span style="margin-left:auto;color:rgba(200,148,67,.9);font-size:13px;font-weight:600;">Valmib {{ $sCfg['completion'] }}</span>
+              <span style="color:rgba(255,255,255,.4);font-size:13px;">{{ $sCfg['homes'] }} kodu</span>
+          </div>
+          @endif
+          <table data-stage-table="{{ $stageNum }}" style="width:100%;border-collapse:collapse;margin-bottom:0;">
                 <thead>
-                    <tr style="background:#151515;color:#fff;">
+                    <tr style="background:#2c3441;color:rgba(255,255,255,.72);">
                         <th style="padding:14px 16px;text-align:left;font-size:13px;font-weight:600;letter-spacing:.04em;">{{ __('magnoolia.pricing.address') }}</th>
                         <th style="padding:14px 16px;text-align:center;font-size:13px;font-weight:600;">{{ __('magnoolia.pricing.area') }}</th>
                         <th style="padding:14px 16px;text-align:center;font-size:13px;font-weight:600;">{{ __('magnoolia.pricing.rooms') }}</th>
@@ -48,77 +85,94 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($units as $i => $unit)
+                    @foreach($stageUnits as $i => $unit)
                     @php
-                        $st = $unit['status'] ?? 'unknown';
-                        $stData = $statuses[$st] ?? ['label' => __('magnoolia.pricing.status_unknown'), 'class' => 'mg-status--unknown'];
+                        $st  = $unit['status'] ?? 'tbc';
+                        $cfg = $statusCfg[$st] ?? $statusCfg['tbc'];
                     @endphp
-                    <tr style="background:{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }};border-bottom:1px solid rgba(29,36,48,.08);transition:background .2s;"
-                        onmouseover="this.style.background='#f0ece3'" onmouseout="this.style.background='{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }}'">
-                        <td style="padding:16px;font-weight:600;color:#1d2430;">{{ $unit['address'] }}</td>
-                        <td style="padding:16px;text-align:center;color:#1d2430;">{{ number_format($unit['net_area'] ?? 0, 1) }} m²</td>
-                        <td style="padding:16px;text-align:center;color:#1d2430;">{{ $unit['rooms'] ?? '—' }}</td>
-                        <td style="padding:16px;text-align:center;color:#6f6a61;">{{ isset($unit['terrace_area']) && $unit['terrace_area'] > 0 ? number_format($unit['terrace_area'], 0) . ' m²' : '—' }}</td>
-                        <td style="padding:16px;text-align:center;color:#6f6a61;">{{ isset($unit['balcony_area']) && $unit['balcony_area'] > 0 ? number_format($unit['balcony_area'], 0) . ' m²' : '—' }}</td>
-                        <td style="padding:16px;text-align:center;color:#6f6a61;">{{ $unit['parking'] ?? 2 }}×</td>
-                        <td style="padding:16px;text-align:right;font-weight:700;color:#1d2430;">
-                            {{ $unit['price'] ? '€ ' . number_format($unit['price'], 0, ',', ' ') : __('magnoolia.pricing.price_request') }}
+                    <tr class="mg-unit-row"
+                        data-status="{{ $st }}"
+                        data-stage="stage-{{ $stageNum }}"
+                        style="background:{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }};border-bottom:1px solid rgba(29,36,48,.07);transition:background .18s;"
+                        onmouseover="this.style.background='#f5f0e5'" onmouseout="this.style.background='{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }}'">
+                        <td style="padding:15px 16px;font-weight:600;color:#1d2430;font-size:14px;">{{ $unit['address'] }}</td>
+                        <td style="padding:15px 16px;text-align:center;color:#1d2430;font-weight:500;">{{ number_format($unit['net_area'] ?? 0, 1) }} m²</td>
+                        <td style="padding:15px 16px;text-align:center;color:#1d2430;">{{ $unit['rooms'] ?? '—' }}</td>
+                        <td style="padding:15px 16px;text-align:center;color:#6f6a61;font-size:13px;">{{ !empty($unit['terrace_area']) ? number_format($unit['terrace_area'],1).' m²' : '—' }}</td>
+                        <td style="padding:15px 16px;text-align:center;color:#6f6a61;font-size:13px;">{{ !empty($unit['balcony_area']) ? number_format($unit['balcony_area'],1).' m²' : '—' }}</td>
+                        <td style="padding:15px 16px;text-align:center;color:#6f6a61;">{{ $unit['parking'] ?? 2 }}×</td>
+                        <td style="padding:15px 16px;text-align:right;font-weight:700;color:#1d2430;">
+                            {{ $unit['price'] ? '€ '.number_format($unit['price'], 0, ',', ' ') : '—' }}
                         </td>
-                        <td style="padding:16px;text-align:center;">
-                            <span class="mg-status {{ $stData['class'] }}" style="display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;">
-                                {{ $stData['label'] }}
+                        <td style="padding:15px 16px;text-align:center;">
+                            <span class="mg-status {{ $cfg['class'] }}"
+                                  style="display:inline-block;padding:3px 11px;border-radius:20px;font-size:11px;font-weight:700;">
+                                {{ $cfg['label'] }}
                             </span>
                         </td>
-                        <td style="padding:16px;text-align:center;">
-                            <a href="{{ route('contact') }}" class="mg-table-cta">{{ __('magnoolia.pricing.cta_inquiry') }}</a>
+                        <td style="padding:15px 16px;text-align:center;white-space:nowrap;">
+                            @if($st === 'sold')
+                                <a href="#hinnad" class="mg-table-cta mg-table-cta--muted">{{ __($cfg['cta_key']) }}</a>
+                            @else
+                                <a href="#kontakt" class="mg-table-cta">{{ __($cfg['cta_key']) }}</a>
+                            @endif
                         </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="9" style="padding:32px;text-align:center;color:#6f6a61;">
-                            {{ __('magnoolia.pricing.price_request') }}
-                        </td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
+          @endforeach
         </div>
 
         {{-- ── MOBILE CARDS ───────────────────────────────────────── --}}
-        <div class="d-lg-none" style="display:flex;flex-direction:column;gap:16px;">
+        <div class="d-lg-none" style="display:flex;flex-direction:column;gap:14px;">
             @foreach($units as $unit)
             @php
-                $st = $unit['status'] ?? 'unknown';
-                $stData = $statuses[$st] ?? ['label' => __('magnoolia.pricing.status_unknown'), 'class' => 'mg-status--unknown'];
+                $st  = $unit['status'] ?? 'tbc';
+                $cfg = $statusCfg[$st] ?? $statusCfg['tbc'];
+                $sCfg = $stages[$unit['stage'] ?? 0] ?? null;
             @endphp
-            <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);">
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+            <div class="mg-unit-card"
+                 data-status="{{ $st }}"
+                 data-stage="stage-{{ $unit['stage'] ?? 0 }}"
+                 style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-top:3px solid #c89443;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
                     <div>
                         <div style="font-weight:700;color:#1d2430;font-size:15px;">{{ $unit['address'] }}</div>
-                        <div style="color:#6f6a61;font-size:13px;margin-top:4px;">
-                            {{ number_format($unit['net_area'] ?? 0, 1) }} m² · {{ $unit['rooms'] ?? '—' }} tuba · A-klass
+                        <div style="color:#6f6a61;font-size:13px;margin-top:3px;">
+                            {{ $unit['rooms'] ?? '—' }} tuba · {{ number_format($unit['net_area'] ?? 0, 1) }} m² · A-klass
                         </div>
                     </div>
-                    <span class="mg-status {{ $stData['class'] }}" style="padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;">
-                        {{ $stData['label'] }}
+                    <span class="mg-status {{ $cfg['class'] }}"
+                          style="padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0;">
+                        {{ $cfg['label'] }}
                     </span>
                 </div>
-                <div style="display:flex;gap:16px;font-size:13px;color:#6f6a61;margin-bottom:14px;">
+                @if($sCfg)
+                <div style="display:inline-flex;align-items:center;gap:6px;background:#f7f4ef;border-radius:8px;padding:4px 10px;margin-bottom:10px;font-size:12px;color:#6f6a61;">
+                    <span style="width:6px;height:6px;border-radius:50%;background:#c89443;flex-shrink:0;"></span>
+                    {{ $sCfg['label'] }} · {{ $sCfg['completion'] }}
+                </div>
+                @endif
+                <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:#6f6a61;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(29,36,48,.07);">
                     @if(!empty($unit['terrace_area']) && $unit['terrace_area'] > 0)
-                        <span>Terrass {{ $unit['terrace_area'] }} m²</span>
+                        <span>Terrass {{ number_format($unit['terrace_area'],1) }} m²</span>
                     @endif
                     @if(!empty($unit['balcony_area']) && $unit['balcony_area'] > 0)
-                        <span>Rõdu {{ $unit['balcony_area'] }} m²</span>
+                        <span>Rõdu {{ number_format($unit['balcony_area'],1) }} m²</span>
                     @endif
-                    <span>Parkimine {{ $unit['parking'] ?? 2 }}×</span>
+                    <span>{{ $unit['parking'] ?? 2 }}× parkimine</span>
                 </div>
                 <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <div style="font-weight:700;color:#1d2430;font-size:16px;">
-                        {{ $unit['price'] ? '€ ' . number_format($unit['price'], 0, ',', ' ') : __('magnoolia.pricing.price_request') }}
+                    <div style="font-weight:700;color:#1d2430;font-size:15px;">
+                        {{ $unit['price'] ? '€ '.number_format($unit['price'], 0, ',', ' ') : __('magnoolia.pricing.price_tbc') }}
                     </div>
-                    <a href="{{ route('contact') }}" style="background:#c89443;color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
-                        {{ __('magnoolia.pricing.cta_inquiry') }}
+                    @if($st !== 'sold')
+                    <a href="#kontakt"
+                       style="background:#c89443;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
+                        {{ __($cfg['cta_key']) }}
                     </a>
+                    @endif
                 </div>
             </div>
             @endforeach
@@ -141,7 +195,7 @@
             <div style="flex:1;min-width:240px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;">
                 <p style="font-size:13px;color:#9a9490;font-style:italic;margin:0;">{{ __('magnoolia.pricing.disclaimer') }}</p>
                 <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                    <a href="{{ route('contact') }}" class="zoomvilla-btn">
+                    <a href="#kontakt" class="zoomvilla-btn">
                         {{ __('magnoolia.pricing.cta_inquiry') }} <i class="icon-angle-small-right"></i>
                     </a>
                     <a href="#asendiplaan" class="zoomvilla-btn zoomvilla-btn--border">
@@ -153,3 +207,32 @@
 
     </div>
 </section>
+<script>
+(function () {
+    function mgFilter(key) {
+        document.querySelectorAll('[data-filter]').forEach(function (btn) {
+            var active = btn.dataset.filter === key;
+            btn.style.background  = active ? '#1d2430' : 'transparent';
+            btn.style.color       = active ? '#fff'    : '#6f6a61';
+            btn.style.borderColor = active ? '#1d2430' : 'rgba(29,36,48,.25)';
+        });
+        document.querySelectorAll('.mg-unit-row').forEach(function (row) {
+            var show = key === 'all' || row.dataset.status === key || row.dataset.stage === key;
+            row.style.display = show ? '' : 'none';
+        });
+        document.querySelectorAll('[data-stage-group]').forEach(function (header) {
+            var sg  = 'stage-' + header.dataset.stageGroup;
+            var vis = document.querySelectorAll('.mg-unit-row[data-stage="' + sg + '"]:not([style*="display: none"])').length;
+            var hide = key !== 'all' && key !== sg && vis === 0;
+            header.style.display = hide ? 'none' : '';
+            var tbl = header.nextElementSibling;
+            if (tbl) tbl.style.display = hide ? 'none' : '';
+        });
+        document.querySelectorAll('.mg-unit-card').forEach(function (card) {
+            var show = key === 'all' || card.dataset.status === key || card.dataset.stage === key;
+            card.style.display = show ? '' : 'none';
+        });
+    }
+    window.mgFilter = mgFilter;
+})();
+</script>
