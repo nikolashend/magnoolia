@@ -5,24 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Magnoolia — A-energiaklassi kodud Tallinna lähedal')</title>
-    <meta name="description" content="@yield('meta_description', 'Magnoolia on premium uusarendus Vaelas, Kiili vallas — A-energiaklassi kodud privaatse hoovi, terrassi ja Tallinna lähedusega.')">    
-    <meta property="og:type"        content="website">
-    <meta property="og:title"       content="@yield('og_title', 'Magnoolia — A-energiaklassi kodud Tallinna lähedal')">
-    <meta property="og:description" content="@yield('og_description', 'Magnoolia on premium uusarendus Vaelas, Kiili vallas — 19 A-energiaklassi kodu privaatse hoovi ja terrassiga.')">
-    <meta property="og:url"         content="{{ url()->current() }}">
-    <meta property="og:site_name"   content="Magnoolia">
-    <link rel="canonical"           href="{{ url()->current() }}">
+
+    {{-- SEO: meta, OG, Twitter, hreflang, canonical --}}
+    @include('partials.seo.meta')
 
     <!-- Favicon Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicons/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicons/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ asset('assets/images/favicons/site.webmanifest') }}">
-    <meta name="description" content="@yield('meta_description', __('meta.default_description'))">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -106,6 +97,9 @@
     <script src="{{ asset('assets/js/zoomvilla.js') }}"></script>
 
     @stack('scripts')
+
+    {{-- Schema JSON-LD --}}
+    @include('partials.seo.schema')
 </body>
 
 </html>

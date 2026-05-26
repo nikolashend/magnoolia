@@ -22,11 +22,11 @@
     {{-- 6. GALLERY STRIP / city-house section-space (index / home1/city-house.php) --}}
     @include('sections.approved.gallery-strip-source')
 
-    {{-- 7. Hinnad ja plaanid preview — TODO --}}
-    {{-- @include('sections.approved.pricing-preview-source') --}}
+    {{-- 7. HINNAD JA PLAANID — pricing table --}}
+    @include('sections.magnoolia.hinnad')
 
-    {{-- 8. Asendiplaan / masterplan — TODO --}}
-    {{-- @include('sections.approved.masterplan-source') --}}
+    {{-- 8. ASENDIPLAAN — masterplan overview --}}
+    @include('sections.magnoolia.asendiplaan')
 
     {{-- 9. FLOOR PLANS / property-plans--two + process-plan section-space (index + index-4) --}}
     @include('sections.approved.floor-plan-source')
@@ -37,10 +37,10 @@
     {{-- 11. GALLERY / VIDEO / best-project-one section-space-top (index / home1/projects.php) --}}
     @include('sections.approved.video-gallery-source')
 
-    {{-- 12. CONTACT / TEAM / team-one section-space-top (index-4 / home4/team.php) --}}
-    @include('sections.approved.contact-team-source')
+    {{-- 12. KKK / AI Answer block --}}
+    @include('sections.magnoolia.ai-answer')
 
-    {{-- 13. Final CTA — TODO --}}
-    {{-- @include('sections.approved.final-cta-source') --}}
+    {{-- 13. KONTAKT — Diana Tali, inquiry form --}}
+    @include('sections.magnoolia.contact')
 
 @endsection
