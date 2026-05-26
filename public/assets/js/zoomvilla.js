@@ -643,19 +643,21 @@
   // window scroll event
   function stickyMenuUpScroll($targetMenu, $toggleClass) {
     var lastScrollTop = 0;
+    var scrollDelta = 5; // minimum px before reacting — prevents flash on scroll deceleration
     window.addEventListener(
       "scroll",
       function () {
         var st = window.pageYOffset || document.documentElement.scrollTop;
+        if (Math.abs(st - lastScrollTop) < scrollDelta) {
+          return; // ignore micro-movements
+        }
         if (st > 500) {
           if (st > lastScrollTop) {
             // downscroll code
             $targetMenu.removeClass($toggleClass);
-            // console.log("down");
           } else {
             // upscroll code
             $targetMenu.addClass($toggleClass);
-            // console.log("up");
           }
         } else {
           $targetMenu.removeClass($toggleClass);
