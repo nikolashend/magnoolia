@@ -31,8 +31,11 @@
                     </h3>
                 </div>
 
-                <p style="color:rgba(255,255,255,.65);font-size:16px;line-height:1.8;margin-bottom:32px;">
+                <p style="color:rgba(255,255,255,.65);font-size:16px;line-height:1.8;margin-bottom:16px;">
                     {{ __('magnoolia.section.contact_body') }}
+                </p>
+                <p style="color:rgba(200,148,67,.8);font-size:14px;line-height:1.6;margin-bottom:32px;font-style:italic;">
+                    Küsi vaba kodu, täpsustatud hinda või personaalselt sobivat plaani.
                 </p>
 
                 {{-- Contact person --}}
@@ -164,8 +167,9 @@
                         </button>
                     </form>
 
-                    <p style="font-size:12px;color:#9a9490;text-align:center;margin-top:14px;margin-bottom:0;">
-                        Vastame esimesel võimalusel ja saadame täpse info valitud kodude kohta.
+                    <p style="font-size:12px;color:#9a9490;text-align:center;margin-top:14px;margin-bottom:0;line-height:1.6;">
+                        Vastame esimesel võimalusel ning täpsustame valitud kodu hinna,
+                        plaani ja saadavuse.
                     </p>
                 </div>
             </div>

@@ -24,8 +24,10 @@
                 <span class="line-right" style="background:rgba(255,255,255,.2);"></span>
             </div>
             <h3 class="sec-title__title bw-split-in-left" style="color:#fff;">{{ __('magnoolia.section.masterplan_title') }}</h3>
-            <p style="color:rgba(255,255,255,.6);margin-top:16px;font-size:16px;max-width:600px;margin-left:auto;margin-right:auto;">
-                {{ __('magnoolia.section.masterplan_body') }}
+            <p style="color:rgba(255,255,255,.6);margin-top:16px;font-size:16px;max-width:620px;margin-left:auto;margin-right:auto;">
+                Vaata, millises etapis ja millisel aadressil kodu paikneb.
+                Täpse asukoha ja plaani saad küsida valitud kodu kohta &mdash;
+                <a href="#kontakt" style="color:#c89443;text-decoration:none;font-weight:600;">kirjuta Diana Talile</a>.
             </p>
         </div>
 

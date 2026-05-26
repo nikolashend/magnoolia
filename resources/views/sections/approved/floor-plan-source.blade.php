@@ -7,9 +7,13 @@
                         <div class="sec-title text-start">
                             <div class="sec-title__top justify-content-start">
                                 <span class="line-left"></span>
-                                <h6 class="sec-title__tagline bw-split-in-right">Korruste plaanid</h6>
+                                <h6 class="sec-title__tagline bw-split-in-right">Korrusplaanid</h6>
                             </div>
-                            <h3 class="sec-title__title bw-split-in-left">Läbimõeldud planeering. <br> Ruumi on kõigeks.</h3>
+                            <h3 class="sec-title__title bw-split-in-left">Läbimõeldud plaanid<br>pereeluks.</h3>
+                            <p style="color:#6f6a61;font-size:15px;line-height:1.7;margin-top:14px;margin-bottom:0;max-width:440px;">
+                                Avatud elutsoon, 4&ndash;5 tuba, terrass, rõdu ja panipaik &mdash;
+                                ruumilahendus, mis sobib nii perele, kodukontorile kui külalistele.
+                            </p>
                         </div>
                         <ul class="property-plans__list list-unstyled wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
                             <li class="property-plans__list__item"><span>Korruseid</span><span>2</span></li>
@@ -20,7 +24,8 @@
                             <li class="property-plans__list__item"><span>Energiaklass</span><span>A</span></li>
                         </ul>
                         <div class="property-plans__btn wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
-                            <a href="#hinnad" class="zoomvilla-btn">Vaata kodusid <i class="icon-angle-small-right"></i></a>
+                            <a href="#hinnad" class="zoomvilla-btn">Vaata kodusid ja hindu <i class="icon-angle-small-right"></i></a>
+                            <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border" style="margin-top:10px;">Küsi valitud kodu plaani <i class="icon-angle-small-right"></i></a>
                             <div class="property-plans__btn__download">
                                 <div class="property-plans__btn__icon"><img src="{{ asset('assets/images/shapes/sheet-1-1.png') }}" alt></div>
                                 <div class="property-plans__btn__content">
@@ -78,7 +83,7 @@
                     <div class="process-plan__right">
                         <p class="process-plan__text"><span class="process-plan__big-text">M</span>agnoolia kodud on projekteeritud nii, et iga ruutmeeter on sisustatud otstarbekalt ja mugavalt.</p>
                         <p class="process-plan__text">Teine korrus pakub privaatsust ja rahu — eraldi magamistoad, vannituba ja rõdu värskes õhus olemiseks.</p>
-                        <p class="process-plan__text"><span class="process-plan__highlite">KODU:</span> Iga Magnoolia kodu on omanäoline ja energiatõhus A-klassi ridaelamu Vaela külas.</p>
+                        <p class="process-plan__text"><span class="process-plan__highlite">NB:</span> Plaanilahendus on tüüplahendus. Täpne plaan sõltub valitud kodust &mdash; <a href="#kontakt" style="color:#c89443;font-weight:600;">küsi Diana käest</a>.</p>
                         <div class="process-plan__btn__download">
                             <div class="process-plan__btn__icon"><img src="{{ asset('assets/images/shapes/sheet-1-1.png') }}" alt></div>
                             <div class="process-plan__btn__content">

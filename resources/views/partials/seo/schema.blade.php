@@ -7,7 +7,7 @@
       "@@id": "{{ url('/') }}/#website",
       "url": "{{ url('/') }}",
       "name": "Magnoolia Kodud",
-      "description": "A-energiaklassi ridaelamukodud Tallinna lahedal, Vaela kulas, Kiili vallas",
+      "description": "A-energiaklassi ridaelamukodud Tallinna lähedal, Vaela külas, Kiili vallas",
       "inLanguage": "et-EE",
       "publisher": {
         "@@id": "{{ url('/') }}/#organization"
@@ -30,7 +30,7 @@
       "address": {
         "@@type": "PostalAddress",
         "streetAddress": "Magnoolia tee",
-        "addressLocality": "Vaela kula",
+        "addressLocality": "Vaela küla",
         "addressRegion": "Harjumaa",
         "addressCountry": "EE"
       }
@@ -39,12 +39,12 @@
       "@@type": "ApartmentComplex",
       "@@id": "{{ url('/') }}/#project",
       "name": "Magnoolia Kodud",
-      "description": "Magnoolia on 19 uue A-energiaklassi koduga ridaelamuarendus Vaela kulas, Kiili vallas, ligikaudu 20 minuti kaugusel Tallinnast. Privaatsed hoovialad, rodud, terrassid ja labimoldud energialahendused.",
+      "description": "Magnoolia on 19 uue A-energiaklassi koduga ridaelamuarendus Vaela külas, Kiili vallas, ligikaudu 20 minuti kaugusel Tallinnast. Privaatsed hoovialad, rõdud, terrassid ja läbimõeldud energialahendused.",
       "url": "{{ url('/') }}",
       "address": {
         "@@type": "PostalAddress",
         "streetAddress": "Magnoolia tee",
-        "addressLocality": "Vaela kula",
+        "addressLocality": "Vaela küla",
         "addressRegion": "Harjumaa",
         "postalCode": "75401",
         "addressCountry": "EE"
@@ -66,7 +66,7 @@
         { "@@type": "LocationFeatureSpecification", "name": "Maasoojuspump", "value": true },
         { "@@type": "LocationFeatureSpecification", "name": "Ventilatsioon", "value": true },
         { "@@type": "LocationFeatureSpecification", "name": "EV laadimise valmidus", "value": true },
-        { "@@type": "LocationFeatureSpecification", "name": "Terrass ja rodu", "value": true }
+        { "@@type": "LocationFeatureSpecification", "name": "Terrass ja rõdu", "value": true }
       ]
     },
     {
@@ -90,7 +90,7 @@
           "name": "Kus Magnoolia asub?",
           "acceptedAnswer": {
             "@@type": "Answer",
-            "text": "Magnoolia asub Vaela kulas, Kiili vallas, Harjumaal - ligikaudu 20 minutit Tallinnast."
+            "text": "Magnoolia asub Vaela külas, Kiili vallas, Harjumaal — ligikaudu 20 minutit Tallinnast."
           }
         },
         {
@@ -114,7 +114,7 @@
           "name": "Mis on hind?",
           "acceptedAnswer": {
             "@@type": "Answer",
-            "text": "Hinnad on taepsustamisel. Vota uhendust ja saadame sulle hinnainfo esimesena."
+            "text": "Hinnad on täpsustamisel. Võtke ühendust ning saadame teile hinnainfo esimesena."
           }
         },
         {

@@ -2141,3 +2141,94 @@ a {
     color: rgba(255, 255, 255, .5);
     letter-spacing: .02em;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   PHASE 8 — GLOBAL PREMIUM POLISH
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Buyer note in Hinnad ─────────────────────────────────────── */
+.mg-buyer-note {
+    background: #fff8ef;
+    border-left: 3px solid #c89443;
+    border-radius: 0 10px 10px 0;
+    padding: 14px 20px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    color: #4a4540;
+    line-height: 1.6;
+}
+
+/* ── Remove all LÄHEMALT link underline on service cards ─────── */
+.service-card__link {
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: .08em;
+    font-weight: 700;
+}
+
+/* ── Service card — remove faux arrow on cardless sections ───── */
+.service-card p.service-card__text {
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+/* ── Consistent button sizing across site ────────────────────── */
+.zoomvilla-btn {
+    white-space: nowrap;
+}
+
+/* ── Hinnad filter button active/hover polish ────────────────── */
+[data-filter]:hover {
+    border-color: #c89443 !important;
+}
+
+/* ── Table sold row: mute hover so it doesn't look available ─── */
+.mg-unit-row[data-status="sold"]:hover {
+    background: inherit !important;
+}
+.mg-unit-row[data-status="sold"] {
+    pointer-events: none;
+}
+.mg-unit-row[data-status="sold"] td {
+    pointer-events: none;
+}
+/* Allow CTA for sold to still be clickable */
+.mg-unit-row[data-status="sold"] .mg-table-cta--muted {
+    pointer-events: auto;
+}
+
+/* ── Floor plan section image quality ────────────────────────── */
+.property-plans__image img,
+.process-plan__thumb img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* ── Contact trust chips mobile wrap ─────────────────────────── */
+@media (max-width: 576px) {
+    .mg-trust-chips {
+        justify-content: flex-start;
+    }
+}
+
+/* ── Modal: sold state CTA style override ────────────────────── */
+#mg-modal-cta-btn[data-sold] {
+    background: #9a9490;
+}
+#mg-modal-cta-btn[data-sold]:hover {
+    background: #808080;
+}
+
+/* ── Process plan CTA buttons vertical stack on mobile ───────── */
+@media (max-width: 576px) {
+    .property-plans__btn {
+        flex-direction: column;
+    }
+    .property-plans__btn .zoomvilla-btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+}

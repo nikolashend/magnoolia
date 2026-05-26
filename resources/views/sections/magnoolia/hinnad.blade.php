@@ -99,8 +99,8 @@
                     <tr class="mg-unit-row"
                         data-status="{{ $st }}"
                         data-stage="stage-{{ $stageNum }}"
-                        style="background:{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }};border-bottom:1px solid rgba(29,36,48,.07);transition:background .18s;cursor:pointer;"
-                        onclick="mgOpenUnit('{{ $unit['id'] }}')"
+                        style="background:{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }};border-bottom:1px solid rgba(29,36,48,.07);transition:all .18s;cursor:{{ $st === 'sold' ? 'default' : 'pointer' }};{{ $st === 'sold' ? 'opacity:.55;' : '' }}"
+                        onclick="{{ $st !== 'sold' ? "mgOpenUnit('".$unit['id']."')" : '' }}"
                         onmouseover="this.style.background='#f5f0e5'" onmouseout="this.style.background='{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }}'">
                         <td style="padding:15px 16px;font-weight:600;color:#1d2430;font-size:14px;">{{ $unit['address'] }}</td>
                         <td style="padding:15px 16px;text-align:center;color:#1d2430;font-weight:500;">{{ number_format($unit['net_area'] ?? 0, 1) }} m²</td>
@@ -108,8 +108,9 @@
                         <td style="padding:15px 16px;text-align:center;color:#6f6a61;font-size:13px;">{{ !empty($unit['terrace_area']) ? number_format($unit['terrace_area'],1).' m²' : '—' }}</td>
                         <td style="padding:15px 16px;text-align:center;color:#6f6a61;font-size:13px;">{{ !empty($unit['balcony_area']) ? number_format($unit['balcony_area'],1).' m²' : '—' }}</td>
                         <td style="padding:15px 16px;text-align:center;color:#6f6a61;">{{ $unit['parking'] ?? 2 }}×</td>
-                        <td style="padding:15px 16px;text-align:right;font-weight:700;color:#1d2430;">
-                            {{ $unit['price'] ? '€ '.number_format($unit['price'], 0, ',', ' ') : '—' }}
+                        <td style="padding:15px 16px;text-align:right;font-weight:700;
+                                   color:{{ ($unit['price'] ?? null) ? '#1d2430' : '#c89443' }};font-size:{{ ($unit['price'] ?? null) ? '15' : '12' }}px;">
+                            {{ $unit['price'] ? '€ '.number_format($unit['price'], 0, ',', ' ') : 'Hind täpsustamisel' }}
                         </td>
                         <td style="padding:15px 16px;text-align:center;">
                             <span class="mg-status {{ $cfg['class'] }}"
