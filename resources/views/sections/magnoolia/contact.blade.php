@@ -99,6 +99,28 @@
 
                     <form action="{{ route('contact.send') }}" method="POST" style="display:flex;flex-direction:column;gap:16px;">
                         @csrf
+
+                        {{-- Selected unit (prefilled by modal CTA) --}}
+                        @php $allUnitsForForm = config('magnoolia.units', []); @endphp
+                        <div>
+                            <select name="selected_unit" id="mg-selected-unit-select"
+                                    style="width:100%;border:1.5px solid rgba(29,36,48,.15);border-radius:10px;
+                                           padding:12px 16px;font-size:14px;color:#1d2430;background:#fff;
+                                           outline:none;transition:border-color .2s;font-family:inherit;
+                                           appearance:none;-webkit-appearance:none;
+                                           background-image:url('data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'8\' viewBox=\'0 0 12 8\'><path d=\'M1 1l5 5 5-5\' stroke=\'%239a9490\' stroke-width=\'1.5\' fill=\'none\'/></svg>');
+                                           background-repeat:no-repeat;background-position:right 14px center;
+                                           padding-right:40px;"
+                                    onfocus="this.style.borderColor='#c89443'" onblur="this.style.borderColor='rgba(29,36,48,.15)'">
+                                <option value="">Soovitud kodu (valikuline)</option>
+                                @foreach($allUnitsForForm as $u)
+                                    @if(($u['status'] ?? 'tbc') !== 'sold')
+                                    <option value="{{ $u['address'] }}">{{ $u['address'] }} — {{ $u['rooms'] ?? '?' }} tuba, {{ number_format($u['net_area'] ?? 0, 1) }} m²</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div>
                             <input type="text" name="name" placeholder="Nimi *" required
                                    style="width:100%;border:1.5px solid rgba(29,36,48,.15);border-radius:10px;
@@ -127,6 +149,16 @@
                                              resize:vertical;font-family:inherit;"
                                       onfocus="this.style.borderColor='#c89443'" onblur="this.style.borderColor='rgba(29,36,48,.15)'"></textarea>
                         </div>
+                        {{-- Consent --}}
+                        <div style="display:flex;align-items:flex-start;gap:12px;">
+                            <input type="checkbox" name="consent" id="mg-consent" required
+                                   style="width:16px;height:16px;accent-color:#c89443;cursor:pointer;flex-shrink:0;margin-top:2px;">
+                            <label for="mg-consent"
+                                   style="font-size:13px;color:#6f6a61;line-height:1.5;cursor:pointer;">
+                                Nõustun, et minuga võetakse ühendust seoses Magnoolia kodude kohta info saamisega.
+                            </label>
+                        </div>
+
                         <button type="submit" class="zoomvilla-btn" style="width:100%;justify-content:center;border:none;cursor:pointer;">
                             Saada päring <i class="icon-angle-small-right"></i>
                         </button>

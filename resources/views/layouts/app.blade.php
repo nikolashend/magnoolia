@@ -64,6 +64,9 @@
     {{-- Mobile sticky CTA --}}
     @include('partials.mobile-cta')
 
+    {{-- Unit detail modal (Phase 7) --}}
+    @include('partials.unit-modal')
+
     {{-- Search Popup --}}
     @include('partials.search-popup')
 

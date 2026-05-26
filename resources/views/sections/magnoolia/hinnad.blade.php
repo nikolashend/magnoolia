@@ -57,6 +57,12 @@
             @endforeach
         </div>
 
+        {{-- Count indicator --}}
+        <div style="text-align:center;margin-bottom:16px;margin-top:-12px;">
+            <span id="mg-filter-count"
+                  style="font-size:13px;color:#9a9490;font-style:italic;">Näitame kõiki 19 kodu</span>
+        </div>
+
         {{-- ── DESKTOP TABLE ──────────────────────────────────────── --}}
         <div class="d-none d-lg-block wow fadeInUp" data-wow-duration="1200ms">
           @foreach($byStage as $stageNum => $stageUnits)
@@ -93,7 +99,8 @@
                     <tr class="mg-unit-row"
                         data-status="{{ $st }}"
                         data-stage="stage-{{ $stageNum }}"
-                        style="background:{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }};border-bottom:1px solid rgba(29,36,48,.07);transition:background .18s;"
+                        style="background:{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }};border-bottom:1px solid rgba(29,36,48,.07);transition:background .18s;cursor:pointer;"
+                        onclick="mgOpenUnit('{{ $unit['id'] }}')"
                         onmouseover="this.style.background='#f5f0e5'" onmouseout="this.style.background='{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }}'">
                         <td style="padding:15px 16px;font-weight:600;color:#1d2430;font-size:14px;">{{ $unit['address'] }}</td>
                         <td style="padding:15px 16px;text-align:center;color:#1d2430;font-weight:500;">{{ number_format($unit['net_area'] ?? 0, 1) }} m²</td>
@@ -135,7 +142,8 @@
             <div class="mg-unit-card"
                  data-status="{{ $st }}"
                  data-stage="stage-{{ $unit['stage'] ?? 0 }}"
-                 style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-top:3px solid #c89443;">
+                 onclick="mgOpenUnit('{{ $unit['id'] }}')"
+                 style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-top:3px solid #c89443;cursor:pointer;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
                     <div>
                         <div style="font-weight:700;color:#1d2430;font-size:15px;">{{ $unit['address'] }}</div>
@@ -232,6 +240,18 @@
             var show = key === 'all' || card.dataset.status === key || card.dataset.stage === key;
             card.style.display = show ? '' : 'none';
         });
+        /* Update count */
+        setTimeout(function () {
+            var rows  = document.querySelectorAll('.mg-unit-row');
+            var visible = 0;
+            rows.forEach(function (r) { if (r.style.display !== 'none') visible++; });
+            var el = document.getElementById('mg-filter-count');
+            if (el) {
+                el.textContent = visible === rows.length
+                    ? 'N\u00e4itame k\u00f5iki ' + rows.length + ' kodu'
+                    : 'N\u00e4itame: ' + visible + ' kodu';
+            }
+        }, 10);
     }
     window.mgFilter = mgFilter;
 })();

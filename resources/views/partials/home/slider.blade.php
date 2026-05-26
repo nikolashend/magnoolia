@@ -57,6 +57,10 @@
                                 <div class="mg-hero-fact"><strong>Kevad 2027</strong><span>I etapp</span></div>
                                 <div class="mg-hero-fact"><strong>20 min</strong><span>Tallinnast</span></div>
                             </div>
+                            <p style="margin-top:12px;margin-bottom:0;font-size:12px;
+                                       color:rgba(255,255,255,.5);letter-spacing:.02em;">
+                                I etapp: Magnoolia tee 1 ja 3 &nbsp;&middot;&nbsp; II etapp: Magnoolia tee 5–11
+                            </p>
 
                         </div>
                     </div>

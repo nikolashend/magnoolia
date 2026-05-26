@@ -2063,3 +2063,81 @@ a {
 }
 .mg-sticky-cta__btn--ghost:hover { background: rgba(255,255,255,.1); color: #fff; }
 @media (min-width: 992px) { .mg-sticky-cta { display: none !important; } }
+
+/* ═══════════════════════════════════════════════════════════════
+   UNIT DETAIL MODAL — Phase 7
+   Slide-in panel for unit details, floor plans, CTA.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Table row / mobile card hover state when selectable */
+.mg-unit-row:focus-visible,
+.mg-unit-card:focus-visible {
+    outline: 2px solid #c89443;
+    outline-offset: 2px;
+}
+
+/* Modal overlay */
+#mg-modal-overlay {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Panel scroll bar */
+#mg-modal-panel::-webkit-scrollbar {
+    width: 4px;
+}
+#mg-modal-panel::-webkit-scrollbar-track {
+    background: #f0ece6;
+}
+#mg-modal-panel::-webkit-scrollbar-thumb {
+    background: #c89443;
+    border-radius: 4px;
+}
+
+/* Spec grid cell hover */
+#mg-specs-grid > div {
+    transition: background .15s;
+}
+#mg-specs-grid > div:hover {
+    background: #fbf8f3;
+}
+
+/* Modal tab button focus */
+#mg-tab-0:focus-visible,
+#mg-tab-1:focus-visible,
+#mg-tab-2:focus-visible {
+    outline: 2px solid #c89443;
+    outline-offset: -2px;
+}
+
+/* Responsive: full-width panel on mobile */
+@media (max-width: 480px) {
+    #mg-modal-panel {
+        width: 100vw;
+    }
+}
+
+/* Unit row clickable visual hint */
+.mg-unit-row td:first-child::after {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #c89443;
+    margin-left: 8px;
+    vertical-align: middle;
+    opacity: 0;
+    transition: opacity .2s;
+}
+.mg-unit-row:hover td:first-child::after {
+    opacity: 1;
+}
+
+/* Hero stage note */
+.mg-hero-stage-note {
+    margin-top: 12px;
+    margin-bottom: 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, .5);
+    letter-spacing: .02em;
+}

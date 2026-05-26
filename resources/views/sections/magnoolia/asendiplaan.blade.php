@@ -138,7 +138,8 @@
                 @foreach($allUnits as $unit)
                 @if(($unit['stage'] ?? 0) === $stageNum)
                 @php $color = $statusColors[$unit['status'] ?? 'tbc'] ?? '#9c27b0'; @endphp
-                <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.07);border-radius:10px;padding:12px 16px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.07);border-radius:10px;padding:12px 16px;cursor:pointer;"
+                     onclick="mgOpenUnit('{{ $unit['id'] }}')">
                     <div>
                         <div style="font-weight:600;color:#fff;font-size:14px;">{{ $unit['address'] }}</div>
                         <div style="color:rgba(255,255,255,.5);font-size:12px;margin-top:2px;">{{ $unit['rooms'] ?? '—' }} tuba · {{ $unit['net_area'] ?? '—' }} m²</div>

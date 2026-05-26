@@ -31,11 +31,11 @@
     {{-- 9. FLOOR PLANS / property-plans--two + process-plan section-space (index + index-4) --}}
     @include('sections.approved.floor-plan-source')
 
-    {{-- 10. EHITUSINFO / apartment-two section-space (index-2 / home2/apartment.php) --}}
-    @include('sections.approved.accordion-source')
-
-    {{-- 11. GALLERY / VIDEO / best-project-one section-space-top (index / home1/projects.php) --}}
+    {{-- 10. SISEDISAIN / VIDEO — gallery preview (index / home1/projects.php) --}}
     @include('sections.approved.video-gallery-source')
+
+    {{-- 11. EHITUSINFO / apartment-two section-space (index-2 / home2/apartment.php) --}}
+    @include('sections.approved.accordion-source')
 
     {{-- 12. KKK / AI Answer block --}}
     @include('sections.magnoolia.ai-answer')
