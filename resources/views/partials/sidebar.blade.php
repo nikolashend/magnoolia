@@ -21,7 +21,7 @@
                         </div>
                         <div class="header-right-sidebar__container__list__content">
                             <span class="header-right-sidebar__container__list__title">{{ __('common.send_email') }}</span>
-                            <a href="mailto:{{ config('contact.email', 'info@company.com') }}">{{ config('contact.email', 'info@company.com') }}</a>
+                            <a href="mailto:{{ config('contact.email', 'diana@estlanda.ee') }}">{{ config('contact.email', 'diana@estlanda.ee') }}</a>
                         </div>
                     </li>
                     <li class="header-right-sidebar__container__list__item">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="header-right-sidebar__container__list__content">
                             <span class="header-right-sidebar__container__list__title">{{ __('common.call_agent') }}</span>
-                            <a href="tel:{{ config('contact.phone', '') }}">{{ config('contact.phone', '+372 000 000') }}</a>
+                            <a href="tel:{{ config('contact.phone', '+37258164078') }}">{{ config('contact.phone', '+372 58 16 40 78') }}</a>
                         </div>
                     </li>
                     <li class="header-right-sidebar__container__list__item">

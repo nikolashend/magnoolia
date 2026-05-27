@@ -36,9 +36,9 @@
                                         <div class="inner">
                                             <p>Magnoolia ridaelamute ehitus toimub kahes etapis. I etapp (Magnoolia tee 1 ja 3) valmib kevad 2027, II etapp (Magnoolia tee 5 kuni 11) valmib kevad 2028.</p>
                                             <ul class="accordion-list list-unstyled">
-                                                <li><div class="accordion-list__item"><i class="icon-celemder"></i><span>I etapp (tee 1 ja 3) valmib kevad 2027 &middot; II etapp (tee 5&ndash;11) kevad 2028</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-celemder"></i><span>I etapp — kevad 2027</span></div></li>
+                                                <li><div class="accordion-list__item"><i class="icon-celemder"></i><span>II etapp — kevad 2028</span></div></li>
                                                 <li><div class="accordion-list__item"><i class="icon-pin"></i><span>Vaela küla, Kiili vald</span></div></li>
-                                                <li><div class="accordion-list__item"><i class="icon-buildings"></i><span>19 iseseisvat kodu</span></div></li>
                                             </ul>
                                         </div>
                                     </div>

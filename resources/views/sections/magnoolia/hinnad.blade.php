@@ -38,6 +38,17 @@
             </p>
         </div>
 
+        {{-- ── Buyer orientation note ──────────────────────────────────── --}}
+        <div class="mg-buyer-note wow fadeInUp" data-wow-duration="800ms"
+             style="border-left:3px solid #c89443;background:#fff;border-radius:0 12px 12px 0;
+                    padding:16px 20px;margin-bottom:32px;display:flex;align-items:flex-start;gap:14px;">
+            <i class="fas fa-info-circle" style="color:#c89443;font-size:16px;margin-top:2px;flex-shrink:0;"></i>
+            <p style="margin:0;font-size:14px;color:#4a4540;line-height:1.6;">
+                Vali kodu aadressi, etapi ja staatuse järgi. Täpse hinna, plaani ja saadavuse täpsustab
+                <a href="#kontakt" style="color:#c89443;font-weight:600;text-decoration:none;">Diana Tali</a>.
+            </p>
+        </div>
+
         {{-- ── Filter bar ──────────────────────────────────────────────── --}}
         <div class="wow fadeInUp" data-wow-duration="800ms"
              style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:36px;">

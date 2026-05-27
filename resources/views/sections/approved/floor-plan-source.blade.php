@@ -25,14 +25,18 @@
                         </ul>
                         <div class="property-plans__btn wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
                             <a href="#hinnad" class="zoomvilla-btn">Vaata kodusid ja hindu <i class="icon-angle-small-right"></i></a>
-                            <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border" style="margin-top:10px;">Küsi valitud kodu plaani <i class="icon-angle-small-right"></i></a>
-                            <div class="property-plans__btn__download">
-                                <div class="property-plans__btn__icon"><img src="{{ asset('assets/images/shapes/sheet-1-1.png') }}" alt></div>
-                                <div class="property-plans__btn__content">
-                                    <p class="property-plans__btn__text">Korruse plaan</p>
-                                    <a href="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg') }}" download><span>Laadi alla</span></a>
-                                </div>
-                            </div>
+                            <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border">Küsi valitud kodu plaani <i class="icon-angle-small-right"></i></a>
+                            <a href="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg') }}"
+                               download
+                               style="display:inline-flex;align-items:center;gap:8px;
+                                      font-size:13px;color:#6f6a61;font-weight:500;text-decoration:none;
+                                      border:1px solid rgba(29,36,48,.2);border-radius:8px;padding:8px 16px;
+                                      transition:border-color .2s,color .2s;"
+                               onmouseover="this.style.borderColor='#c89443';this.style.color='#c89443'"
+                               onmouseout="this.style.borderColor='rgba(29,36,48,.2)';this.style.color='#6f6a61'">
+                                <i class="fas fa-download" style="font-size:12px;"></i>
+                                Laadi plaan alla
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -84,13 +88,17 @@
                         <p class="process-plan__text"><span class="process-plan__big-text">M</span>agnoolia kodud on projekteeritud nii, et iga ruutmeeter on sisustatud otstarbekalt ja mugavalt.</p>
                         <p class="process-plan__text">Teine korrus pakub privaatsust ja rahu — eraldi magamistoad, vannituba ja rõdu värskes õhus olemiseks.</p>
                         <p class="process-plan__text"><span class="process-plan__highlite">NB:</span> Plaanilahendus on tüüplahendus. Täpne plaan sõltub valitud kodust &mdash; <a href="#kontakt" style="color:#c89443;font-weight:600;">küsi Diana käest</a>.</p>
-                        <div class="process-plan__btn__download">
-                            <div class="process-plan__btn__icon"><img src="{{ asset('assets/images/shapes/sheet-1-1.png') }}" alt></div>
-                            <div class="process-plan__btn__content">
-                                <p class="process-plan__btn__text">Teise korruse plaan</p>
-                                <a href="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg') }}" download><span>Laadi alla</span></a>
-                            </div>
-                        </div>
+                        <a href="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg') }}"
+                           download
+                           style="display:inline-flex;align-items:center;gap:8px;
+                                  font-size:13px;color:#6f6a61;font-weight:500;text-decoration:none;
+                                  border:1px solid rgba(29,36,48,.2);border-radius:8px;padding:8px 16px;
+                                  transition:border-color .2s,color .2s;"
+                           onmouseover="this.style.borderColor='#c89443';this.style.color='#c89443'"
+                           onmouseout="this.style.borderColor='rgba(29,36,48,.2)';this.style.color='#6f6a61'">
+                            <i class="fas fa-download" style="font-size:12px;"></i>
+                            Laadi teise korruse plaan alla
+                        </a>
                     </div>
                 </div>
             </div>

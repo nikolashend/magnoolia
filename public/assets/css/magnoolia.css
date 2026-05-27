@@ -2221,14 +2221,239 @@ a {
     background: #808080;
 }
 
-/* ── Process plan CTA buttons vertical stack on mobile ───────── */
+/* ── Process plan CTA buttons: always column, never row ─────── */
+.property-plans__btn {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start;
+    gap: 10px;
+}
+.property-plans__btn .zoomvilla-btn {
+    white-space: nowrap;
+}
 @media (max-width: 576px) {
-    .property-plans__btn {
-        flex-direction: column;
-    }
     .property-plans__btn .zoomvilla-btn {
         width: 100%;
         justify-content: center;
         text-align: center;
     }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PHASE 9 — MOBILE UX + PREMIUM POLISH + FOOTER TRUTH
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Footer premium ──────────────────────────────────────────── */
+.mg-footer__contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255,255,255,.7);
+    font-size: 14px;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: color .2s;
+}
+.mg-footer__contact-item:hover {
+    color: #c89443;
+}
+.mg-footer__contact-item i {
+    color: #c89443;
+    width: 16px;
+    flex-shrink: 0;
+}
+
+/* ── Hero heading mobile ─────────────────────────────────────── */
+@media (max-width: 576px) {
+    .main-slider-two__title {
+        font-size: clamp(26px, 7vw, 42px);
+        line-height: 1.2;
+    }
+    .main-slider-two__title span {
+        display: inline;
+        -webkit-text-stroke: 0;
+        text-stroke: 0;
+    }
+    .main-slider-two__content {
+        padding: 24px 0 32px;
+    }
+    .main-slider-two__text {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    .main-slider-two__btn {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .main-slider-two__btn a {
+        width: 100%;
+        justify-content: center;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* ── Hero facts bar mobile ───────────────────────────────────── */
+@media (max-width: 576px) {
+    .mg-hero-facts {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+    }
+    .mg-hero-fact {
+        text-align: center;
+    }
+    .mg-hero-fact strong {
+        font-size: 16px;
+    }
+    .mg-hero-fact span {
+        font-size: 11px;
+    }
+}
+
+/* ── Hinnad mobile cards ─────────────────────────────────────── */
+@media (max-width: 576px) {
+    .mg-unit-card {
+        padding: 18px 16px !important;
+        border-radius: 12px !important;
+    }
+    .mg-unit-card [style*="font-size:13px"] {
+        font-size: 12px !important;
+    }
+    /* Filter buttons scroll horizontal on very small screens */
+    #hinnad > .container > div:first-of-type {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+    }
+    #hinnad > .container > div:first-of-type::-webkit-scrollbar {
+        height: 0;
+    }
+}
+
+/* ── Unit modal mobile ───────────────────────────────────────── */
+@media (max-width: 576px) {
+    #mg-modal-panel {
+        width: 100vw !important;
+        border-radius: 0 !important;
+    }
+    #mg-specs-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+    #mg-specs-grid > div {
+        padding: 12px !important;
+    }
+    #mg-specs-grid > div > div:last-child {
+        font-size: 14px !important;
+    }
+}
+
+/* ── Asendiplaan mobile list item tap target ─────────────────── */
+@media (max-width: 991px) {
+    .mg-asendiplaan-item {
+        min-height: 48px;
+    }
+}
+
+/* ── Contact form mobile ─────────────────────────────────────── */
+@media (max-width: 576px) {
+    #kontakt .col-lg-5 > div,
+    #kontakt [style*="border-radius:20px"] {
+        padding: 24px 18px !important;
+        border-radius: 12px !important;
+    }
+    #kontakt input,
+    #kontakt select,
+    #kontakt textarea {
+        font-size: 16px !important; /* prevents iOS auto-zoom */
+    }
+}
+
+/* ── Sticky CTA: hide below contact section ──────────────────── */
+/* JS class .mg-cta-hide added by scroll observer */
+.mg-mobile-cta.mg-cta-hide {
+    transform: translateY(120%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ── Section headings mobile scale ──────────────────────────── */
+@media (max-width: 576px) {
+    .sec-title__title {
+        font-size: clamp(22px, 6vw, 36px);
+    }
+    .sec-title__tagline {
+        font-size: 11px;
+    }
+}
+
+/* ── Footer mobile ───────────────────────────────────────────── */
+@media (max-width: 576px) {
+    .mg-footer__grid {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+    }
+    .mg-footer__brand {
+        font-size: 24px;
+    }
+    .mg-footer__bottom {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    .mg-footer__bottom-links {
+        justify-content: center;
+    }
+}
+
+/* ── No horizontal scroll anywhere ──────────────────────────── */
+body {
+    overflow-x: hidden;
+}
+
+/* ── Buyer note mobile ───────────────────────────────────────── */
+@media (max-width: 576px) {
+    .mg-buyer-note {
+        border-radius: 0 8px 8px 0 !important;
+        padding: 14px 14px !important;
+    }
+}
+
+/* ── Benefits section mobile ─────────────────────────────────── */
+@media (max-width: 768px) {
+    .mg-benefit-card {
+        padding: 20px 16px;
+    }
+}
+
+/* ── Gallery strip mobile ────────────────────────────────────── */
+@media (max-width: 576px) {
+    .mg-gallery-strip .swiper-slide img {
+        height: 200px;
+        object-fit: cover;
+    }
+}
+
+/* ── Accordion list: override theme 290px → 100% width ──────── */
+.apartment-two__content .accordion-content .accordion-list {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    max-width: 100%;
+    width: 100%;
+    gap: 0;
+}
+.apartment-two__content .accordion-content .accordion-list li {
+    flex: 1;
+    min-width: 0;
+}
+.apartment-two__content .accordion-content .accordion-list__item {
+    font-size: 13px;
+    white-space: normal;
+    word-break: break-word;
+    align-items: flex-start;
 }

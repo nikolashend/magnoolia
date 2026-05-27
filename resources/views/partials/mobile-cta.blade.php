@@ -11,11 +11,22 @@
 (function () {
     var bar = document.getElementById('mg-sticky-cta');
     if (!bar) return;
-    var hero = document.querySelector('.mg-hero, #mg-hero, .slider-one, section:first-of-type');
+    var hero    = document.querySelector('.main-slider-two, .slider-one, section:first-of-type');
+    var contact = document.getElementById('kontakt');
+    var footer  = document.getElementById('footer');
     function update() {
-        var scrolled = window.scrollY || window.pageYOffset;
+        var scrolled  = window.scrollY || window.pageYOffset;
         var threshold = hero ? hero.offsetHeight * 0.7 : 400;
-        bar.classList.toggle('is-visible', scrolled > threshold);
+        var nearBottom = false;
+        if (contact) {
+            var rect = contact.getBoundingClientRect();
+            nearBottom = rect.top < window.innerHeight * 0.85;
+        }
+        if (!nearBottom && footer) {
+            var fr = footer.getBoundingClientRect();
+            nearBottom = fr.top < window.innerHeight;
+        }
+        bar.classList.toggle('is-visible', scrolled > threshold && !nearBottom);
     }
     window.addEventListener('scroll', update, { passive: true });
     update();

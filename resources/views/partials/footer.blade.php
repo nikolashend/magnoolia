@@ -48,13 +48,14 @@
             {{-- Col 4: Kontakt --}}
             <div>
                 <span class="mg-footer__col-title">Kontakt</span>
-                <a href="tel:+37200000000" class="mg-footer__contact-item">
+                <div style="font-size:12px;color:rgba(255,255,255,.45);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Diana Tali &mdash; Müügiinfo</div>
+                <a href="tel:+37258164078" class="mg-footer__contact-item">
                     <i class="fas fa-phone" aria-hidden="true"></i>
-                    <span>+372 000 0000</span>
+                    <span>+372 58 16 40 78</span>
                 </a>
-                <a href="mailto:info@magnoolia.ee" class="mg-footer__contact-item">
+                <a href="mailto:diana@estlanda.ee" class="mg-footer__contact-item">
                     <i class="fas fa-envelope" aria-hidden="true"></i>
-                    <span>info@magnoolia.ee</span>
+                    <span>diana@estlanda.ee</span>
                 </a>
                 <div class="mg-footer__contact-item">
                     <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
