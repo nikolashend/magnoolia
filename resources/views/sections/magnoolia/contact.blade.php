@@ -37,6 +37,9 @@
                 <p style="color:rgba(200,148,67,.8);font-size:14px;line-height:1.6;margin-bottom:32px;font-style:italic;">
                     Küsi vaba kodu, täpsustatud hinda või personaalselt sobivat plaani.
                 </p>
+                <p style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.6;margin-top:-18px;margin-bottom:28px;">
+                    Diana aitab täpsustada vaba kodu, plaani, hinna ja broneerimise järgmise sammu.
+                </p>
 
                 {{-- Contact person --}}
                 <div style="background:rgba(255,255,255,.07);border-radius:16px;padding:24px 28px;margin-bottom:32px;border:1px solid rgba(200,148,67,.2);">

@@ -46,7 +46,7 @@
                 ],
                 [
                     'q' => 'Mis teeb Magnoolia ridaelamu eriliseks?',
-                    'a' => 'Magnoolia ühendab ridaelamu mugavuse, eramaja privaatsuse, A-energiaklassi maasoojuspumbaga, soojusvahestiga ventilatsiooni ja Tallinna läheduse ühes uues kodus.',
+                    'a' => 'Magnoolia ühendab ridaelamu mugavuse, eramaja privaatsuse, A-energiaklassi maasoojuspumbaga, soojustagastusega ventilatsiooni ja Tallinna läheduse ühes uues kodus.',
                     'icon' => 'icon-trophy',
                 ],
             ];

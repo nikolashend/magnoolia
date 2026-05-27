@@ -1,3 +1,5 @@
+{{-- DEMO / NOT INCLUDED IN PUBLIC HOMEPAGE --}}
+{{-- Internal design sandbox only --}}
 @extends('layouts.app')
 
 @section('title', 'Magnooolia Stilistika — Design System Preview')

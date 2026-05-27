@@ -6,6 +6,9 @@
 @php
     $allUnits = config('magnoolia.units', []);
     $stages   = config('magnoolia.stages', []);
+    $mapCfg   = config('magnoolia_map', []);
+    $hotspots = $mapCfg['hotspots'] ?? [];
+    $showDevHotspots = (bool) ($mapCfg['show_dev_hotspots'] ?? false);
     $statusColors = [
         'available' => '#4caf50',
         'reserved'  => '#ff9800',
@@ -28,6 +31,9 @@
                 Vaata, millises etapis ja millisel aadressil kodu paikneb.
                 Täpse asukoha ja plaani saad küsida valitud kodu kohta &mdash;
                 <a href="#kontakt" style="color:#c89443;text-decoration:none;font-weight:600;">kirjuta Diana Talile</a>.
+            </p>
+            <p style="color:rgba(255,255,255,.45);margin-top:10px;font-size:13px;max-width:700px;margin-left:auto;margin-right:auto;">
+                Interaktiivne kaardivaade täpsustub koos lõpliku asendiplaani ja hinnakirja failidega.
             </p>
         </div>
 
@@ -52,10 +58,16 @@
                             <i class="icon-zoom-1"></i>
                         </div>
                     </a>
-                    {{-- Phase 6: hotspot container — positions are TODO until real SVG coords received from architect --}}
+                    {{-- TODO (Yellow Studio): replace fallback map layer after final SVG/EXR + mask mapping arrives. --}}
                     <div class="mg-masterplan__hotspots" aria-hidden="true"
                          style="position:absolute;inset:0;pointer-events:none;">
                         @foreach($allUnits as $unit)
+                        @php
+                            $unitMap = $hotspots[$unit['id']] ?? null;
+                            $x = $unitMap['x_percent'] ?? null;
+                            $y = $unitMap['y_percent'] ?? null;
+                            $canRender = $showDevHotspots && $x !== null && $y !== null;
+                        @endphp
                         {{-- Each hotspot carries full data-attributes for future JS interaction --}}
                         <div class="mg-masterplan__hotspot"
                              data-unit-id="{{ $unit['id'] }}"
@@ -66,7 +78,7 @@
                              data-rooms="{{ $unit['rooms'] ?? '' }}"
                              data-area="{{ $unit['net_area'] ?? '' }}"
                              data-masterplan-key="{{ $unit['masterplan_key'] ?? $unit['id'] }}"
-                             style="display:none;">{{-- coords set by JS after SVG integration --}}</div>
+                             style="{{ $canRender ? 'display:block;top:' . $y . '%;left:' . $x . '%;' : 'display:none;' }}">{{-- coords set from config/magnoolia_map.php when approved --}}</div>
                         @endforeach
                     </div>
                 </div>

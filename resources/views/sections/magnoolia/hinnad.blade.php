@@ -44,8 +44,9 @@
                     padding:16px 20px;margin-bottom:32px;display:flex;align-items:flex-start;gap:14px;">
             <i class="fas fa-info-circle" style="color:#c89443;font-size:16px;margin-top:2px;flex-shrink:0;"></i>
             <p style="margin:0;font-size:14px;color:#4a4540;line-height:1.6;">
-                Vali kodu aadressi, etapi ja staatuse järgi. Täpse hinna, plaani ja saadavuse täpsustab
-                <a href="#kontakt" style="color:#c89443;font-weight:600;text-decoration:none;">Diana Tali</a>.
+                Hinnad ja saadavus täpsustuvad. Valige sobiv kodu ning
+                <a href="#kontakt" style="color:#c89443;font-weight:600;text-decoration:none;">Diana</a>
+                saadab täpse info plaani, hinna ja broneerimisvõimaluse kohta.
             </p>
         </div>
 
@@ -110,8 +111,11 @@
                     <tr class="mg-unit-row"
                         data-status="{{ $st }}"
                         data-stage="stage-{{ $stageNum }}"
+                        aria-label="Ava kodu detailid: {{ $unit['address'] }}"
+                        tabindex="{{ $st === 'sold' ? '-1' : '0' }}"
                         style="background:{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }};border-bottom:1px solid rgba(29,36,48,.07);transition:all .18s;cursor:{{ $st === 'sold' ? 'default' : 'pointer' }};{{ $st === 'sold' ? 'opacity:.55;' : '' }}"
                         onclick="{{ $st !== 'sold' ? "mgOpenUnit('".$unit['id']."')" : '' }}"
+                        onkeydown="{{ $st !== 'sold' ? "if(event.key==='Enter'||event.key===' '){event.preventDefault();mgOpenUnit('".$unit['id']."');}" : '' }}"
                         onmouseover="this.style.background='#f5f0e5'" onmouseout="this.style.background='{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }}'">
                         <td style="padding:15px 16px;font-weight:600;color:#1d2430;font-size:14px;">{{ $unit['address'] }}</td>
                         <td style="padding:15px 16px;text-align:center;color:#1d2430;font-weight:500;">{{ number_format($unit['net_area'] ?? 0, 1) }} m²</td>

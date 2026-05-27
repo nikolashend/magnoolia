@@ -17,6 +17,7 @@ window.mgStagesData = @json(config('magnoolia.stages'));
 window.mgFloor1Img  = '{{ $floor1 }}';
 window.mgFloor2Img  = '{{ $floor2 }}';
 window._mgCurrentUnit = null;
+window._mgLastFocus = null;
 </script>
 
 {{-- ── Modal overlay ──────────────────────────────────────────── --}}
@@ -127,6 +128,12 @@ window._mgCurrentUnit = null;
                 {{-- populated by JS --}}
             </div>
 
+            <div id="mg-fit-note"
+                 style="background:#fff8ec;border:1px solid rgba(200,148,67,.35);border-radius:10px;
+                        padding:14px 16px;margin-bottom:16px;display:none;">
+                {{-- populated by JS --}}
+            </div>
+
             {{-- Disclaimer --}}
             <p style="font-size:12px;color:#9a9490;line-height:1.7;margin:0;">
                 Plaanilahendus võib sõltuvalt kodust erineda.
@@ -228,6 +235,23 @@ window._mgCurrentUnit = null;
         return v ? (parseFloat(v).toFixed(1) + ' m²') : null;
     }
 
+    function fitNote(unit, status) {
+        var stageMsg = String(unit.stage || 1) === '1'
+            ? 'I etapi kodu eelis on varasem valmimine (kevad 2027).'
+            : 'II etapi kodu eelis on hilisem etapp ja paindlikum valik.';
+
+        if (status === 'sold') {
+            return 'See kodu on müüdud. Vaata vabu kodusid samas arenduses.';
+        }
+        if (status === 'reserved') {
+            return stageMsg + ' Kodu on hetkel broneeritud — küsi saadavuse täpsustust.';
+        }
+        if (status === 'tbc') {
+            return stageMsg + ' Detailid on täpsustamisel — küsi hinnainfot ja plaani.';
+        }
+        return stageMsg + ' Kodu on saadaval — küsi personaalselt sobiv pakkumine.';
+    }
+
     window.mgOpenUnit = function (unitId) {
         var units  = window.mgUnitsData  || [];
         var stages = window.mgStagesData || {};
@@ -237,6 +261,7 @@ window._mgCurrentUnit = null;
         }
         if (!unit) return;
         window._mgCurrentUnit = unit;
+        window._mgLastFocus = document.activeElement;
 
         var st     = unit.status || 'tbc';
         var stCol  = COLORS[st]  || COLORS.tbc;
@@ -272,8 +297,10 @@ window._mgCurrentUnit = null;
             + specCell('Netopind',  fmtArea(unit.net_area) || '—')
             + specCell('Terrass',   fmtArea(unit.terrace_area) || '—')
             + specCell('R\u00f5du',      fmtArea(unit.balcony_area) || '—')
-            + specCell('Panipaik',  unit.storage_area ? fmtArea(unit.storage_area) : 'Jah')
-            + specCell('Parkimine', (unit.parking || 2) + '\u00d7');
+            + specCell('Panipaik',  unit.storage_area ? fmtArea(unit.storage_area) : 'Täpsustamisel')
+            + specCell('Hooviala',  unit.private_yard_area ? fmtArea(unit.private_yard_area) : 'Täpsustamisel')
+            + specCell('Parkimine', (unit.parking || 2) + '\u00d7')
+            + specCell('Valmimine', unit.completion || 'Täpsustamisel');
 
         /* Price */
         var priceEl = document.getElementById('mg-unit-price-row');
@@ -288,8 +315,15 @@ window._mgCurrentUnit = null;
             priceEl.innerHTML =
                 '<div style="display:flex;justify-content:space-between;align-items:center;">'
                 + '<span style="font-size:13px;color:#6f6a61;">Hind</span>'
-                + '<span style="font-size:16px;font-weight:700;color:#c89443;">K\u00fcsi hinnainfot</span>'
+                + '<span style="font-size:16px;font-weight:700;color:#c89443;">Hind täpsustamisel</span>'
                 + '</div>';
+        }
+
+        var fit = document.getElementById('mg-fit-note');
+        if (fit) {
+            fit.style.display = 'block';
+            fit.innerHTML = '<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#9a9490;margin-bottom:6px;">Miks see kodu võib sobida</div>'
+                + '<p style="margin:0;font-size:13px;line-height:1.55;color:#4a4540;">' + fitNote(unit, st) + '</p>';
         }
 
         /* CTA button */
@@ -339,6 +373,9 @@ window._mgCurrentUnit = null;
             overlay.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
             window._mgCurrentUnit = null;
+            if (window._mgLastFocus && typeof window._mgLastFocus.focus === 'function') {
+                window._mgLastFocus.focus();
+            }
         }, 360);
     };
 

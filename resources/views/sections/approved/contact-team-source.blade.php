@@ -1,3 +1,4 @@
+{{-- DEMO / NOT INCLUDED IN PUBLIC HOMEPAGE --}}
 {{-- SOURCE: php-template/parts/home4/team.php | class: team-one section-space-top --}}
     <section class="team-one section-space">
         <div class="container">

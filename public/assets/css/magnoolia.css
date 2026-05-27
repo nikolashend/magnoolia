@@ -34,6 +34,24 @@
   --mg-shadow-md:   rgba(17, 17, 17, 0.16);
   --mg-shadow-lg:   rgba(17, 17, 17, 0.22);
 
+  /* Phase 10 aliases for unified premium system */
+  --mg-bg: #FAF8F3;
+  --mg-bg-soft: #F3F1EC;
+  --mg-dark: #1C1C1A;
+  --mg-dark-2: #2A2622;
+  --mg-gold: #C6A36A;
+  --mg-gold-soft: #E2C992;
+  --mg-text: #1C1C1A;
+  --mg-muted: #8D867C;
+  --mg-radius-sm: 8px;
+  --mg-radius-md: 14px;
+  --mg-radius-lg: 22px;
+  --mg-radius-xl: 32px;
+  --mg-shadow-soft: 0 8px 22px rgba(17, 17, 17, 0.08);
+  --mg-shadow-premium: 0 16px 46px rgba(17, 17, 17, 0.13);
+  --mg-section-y-desktop: 104px;
+  --mg-section-y-mobile: 72px;
+
   /* Status */
   --mg-status-available: #3F5A44;
   --mg-status-reserved:  #B88756;
@@ -171,6 +189,17 @@ a {
 .mg-section--soft   { background: var(--mg-soft-grey); }
 .mg-section--white  { background: var(--mg-white); }
 .mg-section--nature { background: var(--mg-forest); color: var(--mg-off-white); }
+
+.section-space {
+  padding-top: var(--mg-section-y-desktop);
+  padding-bottom: var(--mg-section-y-desktop);
+}
+@media (max-width: 767px) {
+  .section-space {
+    padding-top: var(--mg-section-y-mobile);
+    padding-bottom: var(--mg-section-y-mobile);
+  }
+}
 
 /* Eyebrow label */
 .mg-eyebrow {
@@ -2456,4 +2485,121 @@ body {
     white-space: normal;
     word-break: break-word;
     align-items: flex-start;
+}
+
+/* ── Hero readability premium tune ───────────────────────────── */
+.main-slider-two__title span {
+  -webkit-text-stroke: 0.8px rgba(255,255,255,.35);
+  color: rgba(255,255,255,.92);
+}
+
+/* ── Floor plan typology module ──────────────────────────────── */
+.mg-typology-card {
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid rgba(29,36,48,.08);
+  box-shadow: var(--mg-shadow-soft);
+  padding: 24px;
+  height: 100%;
+}
+.mg-typology-card__head h4 {
+  margin: 10px 0 8px;
+  font-size: 24px;
+  color: #1d2430;
+}
+.mg-typology-card__head p {
+  margin: 0;
+  color: #6f6a61;
+  font-size: 14px;
+}
+.mg-typology-card__badge {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #1d2430;
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+.mg-typology-card__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
+}
+.mg-typology-card__grid a {
+  display: block;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(29,36,48,.1);
+}
+.mg-typology-card__grid img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  background: #fbfaf7;
+  display: block;
+}
+.mg-typology-card__facts {
+  margin-top: 14px;
+  border: 1px solid rgba(29,36,48,.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.mg-typology-card__facts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #6f6a61;
+  border-bottom: 1px solid rgba(29,36,48,.06);
+}
+.mg-typology-card__facts > div:last-child {
+  border-bottom: none;
+}
+.mg-typology-card__facts strong {
+  color: #1d2430;
+  font-weight: 600;
+}
+.mg-typology-card__homes {
+  margin: 14px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #6f6a61;
+}
+.mg-plan-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(29,36,48,.2);
+  border-radius: 8px;
+  padding: 10px 16px;
+  color: #6f6a61;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color .2s, border-color .2s;
+}
+.mg-plan-download:hover {
+  color: #c89443;
+  border-color: #c89443;
+}
+
+@media (max-width: 576px) {
+  .main-slider-two__title span {
+    -webkit-text-stroke: 0;
+  }
+  .mg-typology-card {
+    padding: 18px;
+  }
+  .mg-typology-card__head h4 {
+    font-size: 20px;
+  }
+  .mg-typology-card__grid {
+    grid-template-columns: 1fr;
+  }
+  .mg-typology-card__grid img {
+    height: auto;
+  }
 }

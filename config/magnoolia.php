@@ -499,4 +499,10 @@ return [
         'masterplan'  => null,
     ],
 
+    'seo' => [
+        // Leave null until final production domain is confirmed by client.
+        'canonical_base' => env('MAGNOOLIA_CANONICAL_BASE', null),
+        'og_image'       => 'assets/images/magnoolia/Cam001.0000.jpg',
+    ],
+
 ];

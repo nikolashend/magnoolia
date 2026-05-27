@@ -1,106 +1,125 @@
-{{-- SOURCE: php-template/parts/home1/property-plans.php + home4/process-plan.php | classes: property-plans property-plans--two section-space + process-plan section-space --}}
-    <section class="property-plans property-plans--two section-space">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="property-plans__content">
-                        <div class="sec-title text-start">
-                            <div class="sec-title__top justify-content-start">
-                                <span class="line-left"></span>
-                                <h6 class="sec-title__tagline bw-split-in-right">Korrusplaanid</h6>
-                            </div>
-                            <h3 class="sec-title__title bw-split-in-left">Läbimõeldud plaanid<br>pereeluks.</h3>
-                            <p style="color:#6f6a61;font-size:15px;line-height:1.7;margin-top:14px;margin-bottom:0;max-width:440px;">
-                                Avatud elutsoon, 4&ndash;5 tuba, terrass, rõdu ja panipaik &mdash;
-                                ruumilahendus, mis sobib nii perele, kodukontorile kui külalistele.
-                            </p>
-                        </div>
-                        <ul class="property-plans__list list-unstyled wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
-                            <li class="property-plans__list__item"><span>Korruseid</span><span>2</span></li>
-                            <li class="property-plans__list__item"><span>Tube</span><span>4–5</span></li>
-                            <li class="property-plans__list__item"><span>Vannitube</span><span>2</span></li>
-                            <li class="property-plans__list__item"><span>Kogupindala</span><span>129 m²</span></li>
-                            <li class="property-plans__list__item"><span>Parkimiskohti</span><span>1–2</span></li>
-                            <li class="property-plans__list__item"><span>Energiaklass</span><span>A</span></li>
-                        </ul>
-                        <div class="property-plans__btn wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
-                            <a href="#hinnad" class="zoomvilla-btn">Vaata kodusid ja hindu <i class="icon-angle-small-right"></i></a>
-                            <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border">Küsi valitud kodu plaani <i class="icon-angle-small-right"></i></a>
-                            <a href="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg') }}"
-                               download
-                               style="display:inline-flex;align-items:center;gap:8px;
-                                      font-size:13px;color:#6f6a61;font-weight:500;text-decoration:none;
-                                      border:1px solid rgba(29,36,48,.2);border-radius:8px;padding:8px 16px;
-                                      transition:border-color .2s,color .2s;"
-                               onmouseover="this.style.borderColor='#c89443';this.style.color='#c89443'"
-                               onmouseout="this.style.borderColor='rgba(29,36,48,.2)';this.style.color='#6f6a61'">
-                                <i class="fas fa-download" style="font-size:12px;"></i>
-                                Laadi plaan alla
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeInRight" data-wow-duration="1500ms" data-wow-delay="300ms">
-                    <div class="property-plans__image">
-                        <a href="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg') }}" class="img-popup">
-                            <img src="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg') }}" alt="Esimese korruse plaan" style="width:614px;height:599px;object-fit:contain;">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@php
+    $units = config('magnoolia.units', []);
 
-    <section class="process-plan section-space">
-        <div class="container">
-            <div class="sec-title text-center">
-                <div class="sec-title__top justify-content-center">
-                    <span class="line-left"></span>
-                    <h6 class="sec-title__tagline bw-split-in-right">Teine korrus</h6>
-                    <span class="line-right"></span>
-                </div>
-                <h3 class="sec-title__title bw-split-in-left">Privaatne magamiskorrus <br> rõduga.</h3>
+    $typeAUnits = array_values(array_filter($units, fn($unit) => ($unit['plan_type'] ?? null) === 'type-a'));
+    $typeBUnits = array_values(array_filter($units, fn($unit) => ($unit['plan_type'] ?? null) === 'type-b'));
+
+    $formatAddresses = function (array $list) {
+        $addresses = array_map(fn($item) => $item['address'] ?? '', $list);
+        $addresses = array_values(array_filter($addresses));
+        if (count($addresses) > 6) {
+            return implode(', ', array_slice($addresses, 0, 6)) . ' …';
+        }
+        return implode(', ', $addresses);
+    };
+
+    $floor1 = asset('assets/images/magnoolia/PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg');
+    $floor2 = asset('assets/images/magnoolia/PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg');
+@endphp
+
+<section class="section-space" id="plaanid" style="background:#fbfaf7;">
+    <div class="container">
+
+        <div class="sec-title text-center" style="margin-bottom:42px;">
+            <div class="sec-title__top justify-content-center">
+                <span class="line-left"></span>
+                <h6 class="sec-title__tagline bw-split-in-right">Korrusplaanid</h6>
+                <span class="line-right"></span>
             </div>
-            <div class="row gutter-y-30">
-                <div class="col-lg-4 wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
-                    <div class="process-plan__left">
-                        <ul class="process-plan__list list-unstyled">
-                            <li class="process-plan__list__item"><span>Magamistube</span><span>3–4</span></li>
-                            <li class="process-plan__list__item"><span>Vannitube</span><span>1</span></li>
-                            <li class="process-plan__list__item"><span>Rõdu</span><span>1</span></li>
-                            <li class="process-plan__list__item"><span>Pindala</span><span>~65 m²</span></li>
-                            <li class="process-plan__list__item"><span>Lagi</span><span>2,7 m</span></li>
-                            <li class="process-plan__list__item"><span>Põrandaküte</span><span>Jah</span></li>
-                            <li class="process-plan__list__item"><span>Ventilatsioon</span><span>Jah</span></li>
-                        </ul>
-                    </div>
-                    <a href="#hinnad" class="zoomvilla-btn">Vaata kodusid <i class="icon-angle-small-right"></i></a>
-                </div>
-                <div class="col-lg-4 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                    <div class="process-plan__thumb hover:shine">
-                        <a href="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg') }}" class="img-popup">
-                            <img src="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg') }}" alt="Teise korruse plaan" style="width:371px;height:428px;object-fit:contain;">
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 wow fadeInRight" data-wow-duration="1500ms" data-wow-delay="300ms">
-                    <div class="process-plan__right">
-                        <p class="process-plan__text"><span class="process-plan__big-text">M</span>agnoolia kodud on projekteeritud nii, et iga ruutmeeter on sisustatud otstarbekalt ja mugavalt.</p>
-                        <p class="process-plan__text">Teine korrus pakub privaatsust ja rahu — eraldi magamistoad, vannituba ja rõdu värskes õhus olemiseks.</p>
-                        <p class="process-plan__text"><span class="process-plan__highlite">NB:</span> Plaanilahendus on tüüplahendus. Täpne plaan sõltub valitud kodust &mdash; <a href="#kontakt" style="color:#c89443;font-weight:600;">küsi Diana käest</a>.</p>
-                        <a href="{{ asset('assets/images/magnoolia/PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg') }}"
-                           download
-                           style="display:inline-flex;align-items:center;gap:8px;
-                                  font-size:13px;color:#6f6a61;font-weight:500;text-decoration:none;
-                                  border:1px solid rgba(29,36,48,.2);border-radius:8px;padding:8px 16px;
-                                  transition:border-color .2s,color .2s;"
-                           onmouseover="this.style.borderColor='#c89443';this.style.color='#c89443'"
-                           onmouseout="this.style.borderColor='rgba(29,36,48,.2)';this.style.color='#6f6a61'">
-                            <i class="fas fa-download" style="font-size:12px;"></i>
-                            Laadi teise korruse plaan alla
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <h3 class="sec-title__title bw-split-in-left">Läbimõeldud plaanid pereeluks</h3>
+            <p style="color:#6f6a61;font-size:15px;line-height:1.75;margin:14px auto 0;max-width:720px;">
+                Avatud elutsoon, 4–5 tuba, terrass, rõdu ja panipaik — ruumilahendus,
+                mis sobib perele, kodukontorile ja külalistele.
+            </p>
         </div>
-    </section>
+
+        <div class="row gutter-y-30">
+
+            <div class="col-lg-6">
+                <article class="mg-typology-card wow fadeInUp" data-wow-duration="1200ms">
+                    <div class="mg-typology-card__head">
+                        <span class="mg-typology-card__badge">Typoloogia A</span>
+                        <h4>3 koduga ridaelamu</h4>
+                        <p>4 tuba · ~129,6 m² · 2 korrust</p>
+                    </div>
+
+                    <div class="mg-typology-card__grid">
+                        <a href="{{ $floor1 }}" class="img-popup" aria-label="Ava 3 koduga tüübi esimese korruse plaan">
+                            <img src="{{ $floor1 }}"
+                                 alt="3 koduga ridaelamu esimese korruse plaan"
+                                 width="424" height="413"
+                                 loading="lazy" decoding="async">
+                        </a>
+                        <a href="{{ $floor2 }}" class="img-popup" aria-label="Ava 3 koduga tüübi teise korruse plaan">
+                            <img src="{{ $floor2 }}"
+                                 alt="3 koduga ridaelamu teise korruse plaan"
+                                 width="371" height="428"
+                                 loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    <div class="mg-typology-card__facts">
+                        <div><span>Korruseid</span><strong>2</strong></div>
+                        <div><span>Tube</span><strong>4</strong></div>
+                        <div><span>Parkimine</span><strong>2 kohta</strong></div>
+                        <div><span>Staatus</span><strong>Täpsustamisel</strong></div>
+                    </div>
+
+                    <p class="mg-typology-card__homes">
+                        Sellesse tüüpi kuuluvad kodud (config): {{ $formatAddresses($typeAUnits) ?: 'Täpsustamisel' }}
+                    </p>
+                </article>
+            </div>
+
+            <div class="col-lg-6">
+                <article class="mg-typology-card wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="120ms">
+                    <div class="mg-typology-card__head">
+                        <span class="mg-typology-card__badge">Typoloogia B</span>
+                        <h4>4 koduga ridaelamu</h4>
+                        <p>5 tuba · ~143,2 m² · 2 korrust</p>
+                    </div>
+
+                    <div class="mg-typology-card__grid">
+                        <a href="{{ $floor1 }}" class="img-popup" aria-label="Ava 4 koduga tüübi esimese korruse plaan">
+                            <img src="{{ $floor1 }}"
+                                 alt="4 koduga ridaelamu esimese korruse plaan"
+                                 width="424" height="413"
+                                 loading="lazy" decoding="async">
+                        </a>
+                        <a href="{{ $floor2 }}" class="img-popup" aria-label="Ava 4 koduga tüübi teise korruse plaan">
+                            <img src="{{ $floor2 }}"
+                                 alt="4 koduga ridaelamu teise korruse plaan"
+                                 width="371" height="428"
+                                 loading="lazy" decoding="async">
+                        </a>
+                    </div>
+
+                    <div class="mg-typology-card__facts">
+                        <div><span>Korruseid</span><strong>2</strong></div>
+                        <div><span>Tube</span><strong>5</strong></div>
+                        <div><span>Parkimine</span><strong>2 kohta</strong></div>
+                        <div><span>Staatus</span><strong>Täpsustamisel</strong></div>
+                    </div>
+
+                    <p class="mg-typology-card__homes">
+                        Sellesse tüüpi kuuluvad kodud (config): {{ $formatAddresses($typeBUnits) ?: 'Täpsustamisel' }}
+                    </p>
+                </article>
+            </div>
+
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:30px;">
+            <a href="#hinnad" class="zoomvilla-btn">Vaata kodusid ja hindu <i class="icon-angle-small-right"></i></a>
+            <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border">Küsi valitud kodu plaani <i class="icon-angle-small-right"></i></a>
+            <a href="{{ $floor1 }}" download class="mg-plan-download">
+                <i class="fas fa-download" aria-hidden="true"></i> Laadi plaan alla
+            </a>
+        </div>
+
+        <p style="font-size:13px;color:#9a9490;text-align:center;max-width:760px;margin:18px auto 0;line-height:1.7;">
+            Plaanid on informatiivsed. Lõplikud mõõdud ja detailid täpsustatakse müügiprotsessis ja projekti dokumentatsioonis.
+        </p>
+
+    </div>
+</section>
