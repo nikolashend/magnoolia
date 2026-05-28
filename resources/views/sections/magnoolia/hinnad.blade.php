@@ -75,6 +75,14 @@
                   style="font-size:13px;color:#9a9490;font-style:italic;">Näitame kõiki 19 kodu</span>
         </div>
 
+        {{-- Buyer helper tip --}}
+        <p style="text-align:center;font-size:13px;color:#9a9490;margin-bottom:28px;margin-top:-4px;">
+            <i class="icon-info" style="color:#c89443;margin-right:5px;"></i>
+            <em>Soovitus: alustage etapist ja plaanitüübist, seejärel küsige
+            <a href="#kontakt" style="color:#c89443;text-decoration:none;font-weight:600;">Diana käest</a>
+            konkreetse kodu saadavust.</em>
+        </p>
+
         {{-- ── DESKTOP TABLE ──────────────────────────────────────── --}}
         <div class="d-none d-lg-block wow fadeInUp" data-wow-duration="1200ms">
           @foreach($byStage as $stageNum => $stageUnits)
