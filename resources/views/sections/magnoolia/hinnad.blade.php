@@ -78,9 +78,15 @@
         {{-- Buyer helper tip --}}
         <p style="text-align:center;font-size:13px;color:#9a9490;margin-bottom:28px;margin-top:-4px;">
             <i class="icon-info" style="color:#c89443;margin-right:5px;"></i>
-            <em>Soovitus: alustage etapist ja plaanitüübist, seejärel küsige
+            <em>Soovitus: valige esmalt sobiv etapp ja plaanitüüp. Kui konkreetne kodu tundub sobiv, küsi
             <a href="#kontakt" style="color:#c89443;text-decoration:none;font-weight:600;">Diana käest</a>
-            konkreetse kodu saadavust.</em>
+            saadavust, täpset plaani ja pakkumist.</em>
+        </p>
+
+        {{-- ── Table microcopy ─────────────────────────────────────── --}}
+        <p class="wow fadeInUp" data-wow-duration="800ms"
+           style="text-align:center;font-size:13px;color:#9a9490;margin-bottom:20px;line-height:1.6;max-width:680px;margin-left:auto;margin-right:auto;">
+            Tabel aitab võrrelda aadressi, etappi, plaanitüüpi ja saadavust. Lõplik hind ning kasutusõigusega hooviala m² täpsustuvad kinnitatud hinnatabeliga.
         </p>
 
         {{-- ── DESKTOP TABLE ──────────────────────────────────────── --}}

@@ -38,11 +38,12 @@
                 <p style="color:rgba(255,255,255,.65);font-size:16px;line-height:1.8;margin-bottom:16px;">
                     {{ __('magnoolia.section.contact_body') }}
                 </p>
+                <p style="color:rgba(255,255,255,.75);font-size:15px;line-height:1.75;margin-bottom:20px;">
+                    Kui mõni kodu tundub sobiv, on kõige mõistlikum järgmine samm küsi da konkreetse aadressi saadavust, plaani ja pakkumist.
+                    Diana aitab kontrollida, millised kodud on veel vabad ja milline plaan sobib teie perele kõige paremini.
+                </p>
                 <p style="color:rgba(200,148,67,.8);font-size:14px;line-height:1.6;margin-bottom:32px;font-style:italic;">
                     Küsi vaba kodu, täpsustatud hinda või personaalselt sobivat plaani.
-                </p>
-                <p style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.6;margin-top:-18px;margin-bottom:28px;">
-                    Diana aitab täpsustada vaba kodu, plaani, hinna ja broneerimise järgmise sammu.
                 </p>
 
                 {{-- Contact person --}}
@@ -212,8 +213,9 @@
                     </form>
 
                     <p style="font-size:12px;color:#9a9490;text-align:center;margin-top:14px;margin-bottom:0;line-height:1.6;">
-                        Vastame esimesel võimalusel ning täpsustame valitud kodu hinna,
-                        plaani ja saadavuse.
+                        Pärast päringu saatmist täpsustame valitud kodu saadavuse, plaani, hinna ja järgmise sammu.
+                        Kui soovite kiiremat vastust,
+                        <a href="tel:+37258164078" style="color:#c89443;text-decoration:none;font-weight:600;">helistage otse Dianale</a>.
                     </p>
                 </div>
             </div>

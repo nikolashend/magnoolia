@@ -204,9 +204,17 @@ window._mgLastFocus = null;
             <button id="mg-modal-cta-btn"
                     class="zoomvilla-btn"
                     style="width:100%;justify-content:center;border:none;cursor:pointer;
-                           font-size:15px;padding:14px;">
-                Küsi pakkumist <i class="icon-angle-small-right"></i>
+                           font-size:15px;padding:14px;margin-bottom:10px;">
+                Küsi selle kodu pakkumist <i class="icon-angle-small-right"></i>
             </button>
+            <a href="tel:+37258164078"
+               style="display:flex;align-items:center;justify-content:center;gap:8px;
+                      font-size:14px;font-weight:600;color:#6f6a61;text-decoration:none;
+                      padding:8px;border-radius:8px;transition:color .2s;"
+               onmouseover="this.style.color='#c89443'" onmouseout="this.style.color='#6f6a61'">
+                <i class="fas fa-phone" style="color:#c89443;font-size:13px;"></i>
+                Helista Dianale
+            </a>
         </div>
     </div>
 </div>
@@ -317,8 +325,9 @@ window._mgLastFocus = null;
                 planLinkRow.style.alignItems = 'center';
                 planLinkRow.style.gap = '10px';
                 planLinkRow.style.flexWrap = 'wrap';
+                var planHlType = unit.plan_type || '';
                 planLinkRow.innerHTML =
-                    '<a href="#plaanid" onclick="mgCloseUnit()" '
+                    '<a href="#plaanid" onclick="mgCloseUnit();setTimeout(function(){mgHighlightPlan(\'' + planHlType + '\')},450);return true;" '
                     + 'style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;'
                     + 'color:#c89443;text-decoration:none;" '
                     + 'aria-label="Vaata korrusplaane">'
@@ -427,7 +436,7 @@ window._mgLastFocus = null;
     window.mgSelectAndContact = function () {
         var unit = window._mgCurrentUnit;
         if (unit) {
-            /* Prefill visible select in contact form */
+            /* Prefill select */
             var sel = document.getElementById('mg-selected-unit-select');
             if (sel) {
                 for (var i = 0; i < sel.options.length; i++) {
@@ -437,12 +446,32 @@ window._mgLastFocus = null;
                     }
                 }
             }
+            /* Prefill message textarea if empty */
+            var msg = document.querySelector('textarea[name="message"]');
+            if (msg && msg.value.trim() === '') {
+                msg.value = 'Tere! Soovin lisainfot valitud Magnoolia kodu kohta: ' + unit.address + '.\n'
+                    + 'Palun saatke täpne saadavus, plaan ja pakkumine.';
+            }
         }
         mgCloseUnit();
         setTimeout(function () {
             var el = document.getElementById('kontakt');
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 400);
+    };
+
+    window.mgHighlightPlan = function (planType) {
+        var typeMap = { 'type-a': 'plaan-a', 'type-b': 'plaan-b' };
+        var key = typeMap[planType] || planType;
+        var cards = document.querySelectorAll('[data-plan-type]');
+        var target = null;
+        cards.forEach(function (card) {
+            if (card.dataset.planType === key) { target = card; }
+        });
+        if (!target) return;
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target.classList.add('is-plan-highlighted');
+        setTimeout(function () { target.classList.remove('is-plan-highlighted'); }, 2800);
     };
 
     /* ESC key */

@@ -76,7 +76,8 @@
             <div class="col-lg-6">
                 <article class="mg-plan-card wow fadeInUp"
                          data-wow-duration="1200ms"
-                         data-wow-delay="{{ $idx * 120 }}ms">
+                         data-wow-delay="{{ $idx * 120 }}ms"
+                         data-plan-type="{{ $plan['id'] }}">
 
                     {{-- Card head --}}
                     <div class="mg-plan-card__head">

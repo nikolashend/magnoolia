@@ -135,6 +135,9 @@
                     <a href="#hinnad" class="zoomvilla-btn">
                         Vaata kodusid ja hindu <i class="icon-angle-small-right"></i>
                     </a>
+                    <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border" style="margin-top:12px;">
+                        Küsi asukoha kohta <i class="icon-angle-small-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
