@@ -27,6 +27,12 @@ return [
         'developer'     => 'Estlanda OÜ',
         'contact_email' => 'diana@estlanda.ee',
         'contact_phone' => '+37258164078',
+
+        // Phase 11 feature flags — set to true only when client confirms
+        // diana_photo_approved: show Diana photo in contact block
+        // jaanika_confirmed: show Jaanika Salumäe card (JP Design interior consultation)
+        'diana_photo_approved' => false,
+        'jaanika_confirmed'    => false,
     ],
 
     'stages' => [

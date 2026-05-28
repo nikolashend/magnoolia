@@ -96,7 +96,12 @@ window._mgLastFocus = null;
             {{-- Specs grid --}}
             <div id="mg-specs-grid"
                  style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(29,36,48,.08);
-                        border-radius:12px;overflow:hidden;margin-bottom:24px;">
+                        border-radius:12px;overflow:hidden;margin-bottom:16px;">
+                {{-- populated by JS --}}
+            </div>
+
+            {{-- Plan type link (shown only when plan_type is known) --}}
+            <div id="mg-modal-plan-link-row" style="display:none;margin-bottom:20px;">
                 {{-- populated by JS --}}
             </div>
 
@@ -292,15 +297,39 @@ window._mgLastFocus = null;
                 : '');
 
         /* Specs grid */
+        var ptLabel = unit.plan_type === 'type-a' ? 'Plaan A' : (unit.plan_type === 'type-b' ? 'Plaan B' : 'Täpsustamisel');
         document.getElementById('mg-specs-grid').innerHTML =
-            specCell('Tube',      unit.rooms || '—')
+            specCell('Tube',        unit.rooms || '—')
             + specCell('Netopind',  fmtArea(unit.net_area) || '—')
             + specCell('Terrass',   fmtArea(unit.terrace_area) || '—')
             + specCell('R\u00f5du',      fmtArea(unit.balcony_area) || '—')
             + specCell('Panipaik',  unit.storage_area ? fmtArea(unit.storage_area) : 'Täpsustamisel')
             + specCell('Hooviala',  unit.private_yard_area ? fmtArea(unit.private_yard_area) : 'Täpsustamisel')
             + specCell('Parkimine', (unit.parking || 2) + '\u00d7')
-            + specCell('Valmimine', unit.completion || 'Täpsustamisel');
+            + specCell('Valmimine', unit.completion || 'Täpsustamisel')
+            + specCell('Plaanitüüp', ptLabel);
+
+        /* Plan link row */
+        var planLinkRow = document.getElementById('mg-modal-plan-link-row');
+        if (planLinkRow) {
+            if (unit.plan_type) {
+                planLinkRow.style.display = 'flex';
+                planLinkRow.style.alignItems = 'center';
+                planLinkRow.style.gap = '10px';
+                planLinkRow.style.flexWrap = 'wrap';
+                planLinkRow.innerHTML =
+                    '<a href="#plaanid" onclick="mgCloseUnit()" '
+                    + 'style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;'
+                    + 'color:#c89443;text-decoration:none;" '
+                    + 'aria-label="Vaata korrusplaane">'
+                    + '<i class="icon-real-estate" aria-hidden="true"></i>'
+                    + 'Vaata ' + ptLabel + ' plaani'
+                    + '</a>';
+            } else {
+                planLinkRow.style.display = 'none';
+                planLinkRow.innerHTML = '';
+            }
+        }
 
         /* Price */
         var priceEl = document.getElementById('mg-unit-price-row');

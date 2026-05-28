@@ -2603,3 +2603,265 @@ body {
     height: auto;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   PHASE 11 — FLOOR PLAN RECOVERY MODULE
+   Premium typology cards with labeled floors + plan lightbox
+   ══════════════════════════════════════════════════════════════ */
+
+/* Section subtitle */
+.mg-section-subtitle {
+  color: #6f6a61;
+  font-size: 16px;
+  line-height: 1.75;
+  max-width: 720px;
+  margin: 16px auto 0;
+}
+
+/* Plan card */
+.mg-plan-card {
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid rgba(29,36,48,.08);
+  box-shadow: 0 8px 40px rgba(0,0,0,.07);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mg-plan-card__head {
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid rgba(29,36,48,.07);
+}
+.mg-plan-card__badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.mg-plan-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 4px 11px;
+  border-radius: 999px;
+  color: #fff;
+}
+.mg-plan-badge--a { background: #1d2430; }
+.mg-plan-badge--b { background: #2c3441; }
+.mg-plan-type-chip {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6f6a61;
+  background: #f7f4ef;
+  border-radius: 999px;
+  padding: 4px 11px;
+  border: 1px solid rgba(29,36,48,.1);
+}
+.mg-plan-card__desc {
+  font-size: 14px;
+  color: #6f6a61;
+  line-height: 1.65;
+  margin: 0 0 10px;
+}
+.mg-plan-card__units {
+  margin: 0;
+  font-size: 12px;
+  color: #9a9490;
+  line-height: 1.6;
+}
+.mg-plan-card__units-label {
+  font-weight: 600;
+  color: #6f6a61;
+  margin-right: 4px;
+}
+
+/* Floors container */
+.mg-plan-card__floors {
+  flex: 1;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Single floor block */
+.mg-plan-floor {
+  flex: 1;
+}
+.mg-plan-floor__label {
+  margin-bottom: 10px;
+}
+.mg-plan-floor__num {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: #1d2430;
+  background: #f7f4ef;
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+.mg-plan-floor__num::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #c89443;
+  flex-shrink: 0;
+}
+
+/* Image wrapper + hover overlay */
+.mg-plan-floor__img-wrap {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(29,36,48,.09);
+  background: #fbfaf7;
+  cursor: pointer;
+}
+.mg-plan-floor__img {
+  width: 100%;
+  height: 240px;
+  object-fit: contain;
+  display: block;
+  transition: transform .35s ease;
+}
+.mg-plan-floor__img-wrap:hover .mg-plan-floor__img {
+  transform: scale(1.02);
+}
+.mg-plan-floor__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(29,36,48,.48);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .25s;
+}
+.mg-plan-floor__img-wrap:hover .mg-plan-floor__overlay,
+.mg-plan-floor__img-wrap:focus-within .mg-plan-floor__overlay {
+  opacity: 1;
+}
+
+/* Enlarge button */
+.mg-plan-enlarge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,.95);
+  color: #1d2430;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  min-height: 44px;
+}
+.mg-plan-enlarge:hover {
+  background: #c89443;
+  color: #fff;
+}
+
+/* Download link */
+.mg-plan-dl {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #c89443;
+  text-decoration: none;
+  padding: 4px 0;
+  transition: color .2s;
+}
+.mg-plan-dl:hover { color: #a77832; }
+
+/* Actions row under image */
+.mg-plan-floor__actions {
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+/* Divider between floors */
+.mg-plan-floors-divider {
+  height: 1px;
+  background: rgba(29,36,48,.08);
+  margin: 18px 0;
+}
+
+/* Card CTAs */
+.mg-plan-card__ctas {
+  padding: 0 24px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.mg-plan-card__ctas .zoomvilla-btn,
+.mg-plan-card__ctas .zoomvilla-btn--border {
+  flex: 1;
+  min-width: 140px;
+  justify-content: center;
+  text-align: center;
+  min-height: 48px;
+}
+
+/* Plan disclaimer */
+.mg-plan-disclaimer {
+  text-align: center;
+  font-size: 13px;
+  color: #9a9490;
+  max-width: 720px;
+  margin: 28px auto 0;
+  line-height: 1.7;
+}
+
+/* Plan chip in Hinnad table */
+.mg-plan-chip {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  background: #f0ebe3;
+  color: #6f6a61;
+  border-radius: 6px;
+  padding: 2px 8px;
+  border: 1px solid rgba(29,36,48,.1);
+}
+.mg-plan-chip--a { background: #eef2ff; color: #3949ab; border-color: rgba(57,73,171,.2); }
+.mg-plan-chip--b { background: #e8f5e9; color: #388e3c; border-color: rgba(56,142,60,.2); }
+
+/* ── Phase 11 mobile responsive ───────────────────────────── */
+@media (max-width: 576px) {
+  .mg-plan-card__ctas {
+    flex-direction: column;
+  }
+  .mg-plan-card__ctas .zoomvilla-btn,
+  .mg-plan-card__ctas .zoomvilla-btn--border {
+    width: 100%;
+  }
+  .mg-plan-floor__img {
+    height: 180px;
+  }
+  .mg-section-subtitle {
+    font-size: 14px;
+  }
+}
+@media (max-width: 390px) {
+  .mg-plan-floor__img {
+    height: 150px;
+  }
+}
+

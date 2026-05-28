@@ -117,7 +117,19 @@
                         onclick="{{ $st !== 'sold' ? "mgOpenUnit('".$unit['id']."')" : '' }}"
                         onkeydown="{{ $st !== 'sold' ? "if(event.key==='Enter'||event.key===' '){event.preventDefault();mgOpenUnit('".$unit['id']."');}" : '' }}"
                         onmouseover="this.style.background='#f5f0e5'" onmouseout="this.style.background='{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }}'">
-                        <td style="padding:15px 16px;font-weight:600;color:#1d2430;font-size:14px;">{{ $unit['address'] }}</td>
+                        <td style="padding:15px 16px;">
+                            <div style="font-weight:600;color:#1d2430;font-size:14px;">{{ $unit['address'] }}</div>
+                            @php
+                                $ptChip = match($unit['plan_type'] ?? null) {
+                                    'type-a' => ['label' => 'Plaan A', 'class' => 'mg-plan-chip--a'],
+                                    'type-b' => ['label' => 'Plaan B', 'class' => 'mg-plan-chip--b'],
+                                    default  => null,
+                                };
+                            @endphp
+                            @if($ptChip)
+                            <span class="mg-plan-chip {{ $ptChip['class'] }}">{{ $ptChip['label'] }}</span>
+                            @endif
+                        </td>
                         <td style="padding:15px 16px;text-align:center;color:#1d2430;font-weight:500;">{{ number_format($unit['net_area'] ?? 0, 1) }} m²</td>
                         <td style="padding:15px 16px;text-align:center;color:#1d2430;">{{ $unit['rooms'] ?? '—' }}</td>
                         <td style="padding:15px 16px;text-align:center;color:#6f6a61;font-size:13px;">{{ !empty($unit['terrace_area']) ? number_format($unit['terrace_area'],1).' m²' : '—' }}</td>
@@ -166,6 +178,16 @@
                         <div style="color:#6f6a61;font-size:13px;margin-top:3px;">
                             {{ $unit['rooms'] ?? '—' }} tuba · {{ number_format($unit['net_area'] ?? 0, 1) }} m² · A-klass
                         </div>
+                        @php
+                            $mobilePtChip = match($unit['plan_type'] ?? null) {
+                                'type-a' => ['label' => 'Plaan A', 'class' => 'mg-plan-chip--a'],
+                                'type-b' => ['label' => 'Plaan B', 'class' => 'mg-plan-chip--b'],
+                                default  => null,
+                            };
+                        @endphp
+                        @if($mobilePtChip)
+                        <span class="mg-plan-chip {{ $mobilePtChip['class'] }}" style="margin-top:6px;display:inline-block;">{{ $mobilePtChip['label'] }}</span>
+                        @endif
                     </div>
                     <span class="mg-status {{ $cfg['class'] }}"
                           style="padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0;">

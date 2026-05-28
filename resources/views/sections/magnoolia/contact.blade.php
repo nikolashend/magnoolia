@@ -1,8 +1,12 @@
 {{-- ══════════════════════════════════════════════════════════════
     CONTACT — Clean contact block without fake team placeholders
-    Diana Tali confirmed contact. No fake agents.
-    Phase 5: add real Diana photo when available.
+    Phase 11: diana_photo_approved + jaanika_confirmed feature flags
+    No fake agents, no fake photos. Config-driven only.
     ══════════════════════════════════════════════════════════════ --}}
+@php
+    $dianaPhotoApproved = config('magnoolia.project.diana_photo_approved', false);
+    $jaanikaConfirmed   = config('magnoolia.project.jaanika_confirmed', false);
+@endphp
 <section class="section-space" id="kontakt" style="background:#151515;position:relative;overflow:hidden;">
 
     {{-- Background accent image --}}
@@ -43,12 +47,32 @@
 
                 {{-- Contact person --}}
                 <div style="background:rgba(255,255,255,.07);border-radius:16px;padding:24px 28px;margin-bottom:32px;border:1px solid rgba(200,148,67,.2);">
+                    @if($dianaPhotoApproved)
+                    {{-- Diana photo — shown only when diana_photo_approved => true in config --}}
+                    <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+                        <img src="{{ asset('assets/images/magnoolia/diana-tali.jpg') }}"
+                             alt="Diana Tali – Estlanda müügiinfo"
+                             width="56" height="56"
+                             loading="lazy"
+                             style="width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid rgba(200,148,67,.5);flex-shrink:0;">
+                        <div>
+                            <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:2px;">
+                                {{ __('magnoolia.contact.name') }}
+                            </div>
+                            <div style="font-size:13px;color:#c89443;letter-spacing:.04em;text-transform:uppercase;">
+                                {{ __('magnoolia.contact.role') }}
+                            </div>
+                        </div>
+                    </div>
+                    @else
+                    {{-- No-photo elegant layout --}}
                     <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:4px;">
                         {{ __('magnoolia.contact.name') }}
                     </div>
                     <div style="font-size:13px;color:#c89443;margin-bottom:16px;letter-spacing:.04em;text-transform:uppercase;">
                         {{ __('magnoolia.contact.role') }}
                     </div>
+                    @endif
                     <div style="display:flex;flex-direction:column;gap:10px;">
                         <a href="tel:+37258164078" style="display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.8);font-size:15px;text-decoration:none;transition:color .2s;"
                            onmouseover="this.style.color='#c89443'" onmouseout="this.style.color='rgba(255,255,255,.8)'">
@@ -62,6 +86,23 @@
                         </a>
                     </div>
                 </div>
+
+                @if($jaanikaConfirmed)
+                {{-- Jaanika mini-card — only when jaanika_confirmed => true in config --}}
+                <div style="background:rgba(255,255,255,.05);border-radius:16px;padding:20px 24px;margin-bottom:28px;border:1px solid rgba(255,255,255,.1);">
+                    <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;">Jaanika Salumäe</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em;">
+                        Sisedisaini konsultatsioon · JP Design
+                    </div>
+                    <a href="#kontakt"
+                       style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;
+                              color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s;"
+                       onmouseover="this.style.color='#c89443'" onmouseout="this.style.color='rgba(255,255,255,.7)'">
+                        <i class="fas fa-paint-brush" style="color:#c89443;width:14px;"></i>
+                        Küsi sisedisaini nõustamist
+                    </a>
+                </div>
+                @endif
 
                 {{-- CTAs --}}
                 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px;">
