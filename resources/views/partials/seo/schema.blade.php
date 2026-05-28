@@ -130,6 +130,46 @@
             "@@type": "Answer",
             "text": "Hinnad ja saadavus on täpsustamisel. Vali sobiv kodu ja saada päring kontaktivormi kaudu — Diana Tali täpsustab hinna, plaani ning järgmise broneerimissammu."
           }
+        },
+        {
+          "@@type": "Question",
+          "name": "Kas igal kodul on privaatne hooviala?",
+          "acceptedAnswer": {
+            "@@type": "Answer",
+            "text": "Jah, igal Magnoolia kodul on oma piiratud ja maastikuehitusega hooviala. See annab eramaja privaatsuse ridaelamu mugavuse ja uusarenduse kindlusega."
+          }
+        },
+        {
+          "@@type": "Question",
+          "name": "Mis teeb Magnoolia ridaelamu eriliseks?",
+          "acceptedAnswer": {
+            "@@type": "Answer",
+            "text": "Magnoolia ühendab A-energiaklassi lahendused (maasoojuspump, põrandaküte, soojustagastusega ventilatsioon), privaatse hooviala, rõdu ja terrassi ning rahulikku asukohta Tallinna lähedal ühes läbimõeldud koduprojektis."
+          }
+        },
+        {
+          "@@type": "Question",
+          "name": "Kas kodudel on terrass ja rõdu?",
+          "acceptedAnswer": {
+            "@@type": "Answer",
+            "text": "Jah. Iga Magnoolia kodu juurde kuulub isiklik terrass (18–24 m²) esimesel korrusel ja rõdu (9,5–11,5 m²) teisel korrusel."
+          }
+        },
+        {
+          "@@type": "Question",
+          "name": "Millised tehnosüsteemid on Magnoolia kodus?",
+          "acceptedAnswer": {
+            "@@type": "Answer",
+            "text": "Magnoolia kodudes on maasoojuspump, veesoojendusega põrandaküte igas toas ja vannitoas, soojustagastusega ventilatsioon ning EV-laadimise ja päikesepaneelide valmidus."
+          }
+        },
+        {
+          "@@type": "Question",
+          "name": "Kui suured on Magnoolia kodud?",
+          "acceptedAnswer": {
+            "@@type": "Answer",
+            "text": "Magnoolia pakub kahte plaanitüüpi: 4-toaline Plaan A (~129,6 m²) ja 5-toaline Plaan B (~143,2 m²). Kõigi juurde kuulub laoruum ja 2 parkimiskohta."
+          }
         }
       ]
     }

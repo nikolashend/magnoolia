@@ -17,8 +17,18 @@
         ? ($locale === 'ru' ? $homeRu : ($locale === 'en' ? $homeEn : $homeEt))
         : url()->current();
 
-    $defaultTitle = 'Magnoolia Kodud — A-energiaklassi ridaelamukodud Tallinna lähedal';
-    $defaultDesc  = 'Magnoolia Kodud Vaela külas, Kiili vallas, Harjumaal: 19 A-energiaklassi ridaelamukodu privaatse hooviala, rõdu ja terrassiga. I etapp valmib kevad 2027, II etapp kevad 2028.';
+    $titles = [
+        'et' => 'Magnoolia Kodud — A-energiaklassi ridaelamukodud Vaelas Tallinna lähedal',
+        'ru' => 'Magnoolia Kodud — энергоэффективные рядные дома рядом с Таллинном',
+        'en' => 'Magnoolia Kodud — A-Class Townhouse Homes Near Tallinn',
+    ];
+    $descs = [
+        'et' => 'Magnoolia Kodud on 19 A-energiaklassi ridaelamukodu Vaela külas, Kiili vallas. Privaatne hooviala, läbimõeldud plaanid, I etapp kevad 2027 ja II etapp kevad 2028. Küsi saadavust ja pakkumist Diana Talilt.',
+        'ru' => 'Magnoolia Kodud — 19 энергоэффективных рядных домов класса A в деревне Vaela, волости Kiili, у Таллинна. Личный двор, террасы, балконы. I этап — весна 2027, II этап — весна 2028.',
+        'en' => 'Magnoolia Kodud: 19 A-energy-class townhomes in Vaela village, Kiili municipality, near Tallinn. Private yard, terrace and balcony. Stage I ready spring 2027, Stage II spring 2028.',
+    ];
+    $defaultTitle = $titles[$locale] ?? $titles['et'];
+    $defaultDesc  = $descs[$locale]  ?? $descs['et'];
     $defaultOgImg = asset(config('magnoolia.seo.og_image', 'assets/images/magnoolia/Cam001.0000.jpg'));
 @endphp
 

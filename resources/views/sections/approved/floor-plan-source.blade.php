@@ -179,8 +179,8 @@
 
         {{-- Disclaimer --}}
         <p class="mg-plan-disclaimer">
-            Täpne plaan seotakse konkreetse koduga pärast lõpliku hinnatabeli ja plaanide kinnitamist.
-            Planeeringulahendused on tüüpnäidised, mis võivad sõltuvalt kodust erineda.
+            <strong>NB!</strong> Plaanid on illustratiivsed ja võivad sõltuvalt konkreetsest kodust erineda.
+            Täpne plaan, ruumijaotus ja tehnilised detailid kinnitatakse konkreetse aadressi põhjal.
         </p>
 
     </div>

@@ -35,19 +35,24 @@
                     'icon' => 'icon-buildings',
                 ],
                 [
-                    'q' => 'Mis on hind?',
-                    'a' => 'Hinnad on täpsustamisel. Võta ühendust ja saadame sulle hinnainfo esimesena.',
+                    'q' => 'Mis on Magnoolia kodude hind?',
+                    'a' => 'Konkreetsed hinnad on täpsustamisel vastavalt arendaja hinnatabelile. Hinna ja saadavuse teadasaamiseks saada päring — Diana Tali vastab esimeste hulgas.',
                     'icon' => 'icon-real-estate',
                 ],
                 [
                     'q' => 'Kas igal kodul on privaatne hooviala?',
-                    'a' => 'Jah, igal Magnoolia kodul on oma piiratud ja maastikuehitusega hooviala. See loob eramaja tunnetuse ja privaatsuse.',
+                    'a' => 'Jah, igal Magnoolia kodul on oma piiratud ja maastikuehitusega hooviala. See annab eramaja tunnetuse ilma ehitusprotsessi juhtimiseta.',
                     'icon' => 'icon-labyrinth',
                 ],
                 [
-                    'q' => 'Mis teeb Magnoolia ridaelamu eriliseks?',
-                    'a' => 'Magnoolia ühendab ridaelamu mugavuse, eramaja privaatsuse, A-energiaklassi maasoojuspumbaga, soojustagastusega ventilatsiooni ja Tallinna läheduse ühes uues kodus.',
-                    'icon' => 'icon-trophy',
+                    'q' => 'Kas kodudel on terrass ja rõdu?',
+                    'a' => 'Jah. Iga kodu juurde kuulub isiklik terrass (18–24 m²) esimesel korrusel ja rõdu (9,5–11,5 m²) teisel korrusel — mõlemad privaatsed, hooviala pool.',
+                    'icon' => 'icon-stairs',
+                ],
+                [
+                    'q' => 'Millised tehnosüsteemid on Magnoolia kodus?',
+                    'a' => 'Magnoolia kodudes on maasoojuspump, soojustagastusega ventilatsioon, veesoojendusega põrandaküte igas toas ja vannitoas ning EV-laadimise ja päikesepaneelide tehniline valmidus.',
+                    'icon' => 'icon-energy',
                 ],
             ];
             @endphp

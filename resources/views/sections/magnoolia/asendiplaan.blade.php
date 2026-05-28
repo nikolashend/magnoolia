@@ -33,7 +33,8 @@
                 <a href="#kontakt" style="color:#c89443;text-decoration:none;font-weight:600;">kirjuta Diana Talile</a>.
             </p>
             <p style="color:rgba(255,255,255,.45);margin-top:10px;font-size:13px;max-width:700px;margin-left:auto;margin-right:auto;">
-                Interaktiivne kaardivaade täpsustub koos lõpliku asendiplaani ja hinnakirja failidega.
+                Interaktiivne kodude kaart lisatakse pärast lõpliku EXR/SVG/hotspot mappingu kinnitamist.
+                Praegu saab kodusid võrrelda <a href="#hinnad" style="color:rgba(200,148,67,.7);text-decoration:none;">hinnatabeli, etappide ja plaanitüüpide järgi</a>.
             </p>
         </div>
 

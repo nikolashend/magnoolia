@@ -29,7 +29,7 @@
                             </div>
                             <h3 class="sec-title__title bw-split-in-left">Läbimõeldud kodu. <br> Privaatne hooviala.</h3>
                         </div>
-                        <p class="about-one__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">Magnoolia on uusarendus, kus iga detail on läbi mõeldud — alates A-energiaklassi lahendustest kuni privaatse planeeringuni. 19 iseseisvat kodu privaatse hooviala, terrassi ja rõduga.</p>
+                        <p class="about-one__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">Magnoolia ei ole lihtsalt uus ridaelamu. See on koduformaat ostjale, kes tahab eramaja tunnet, oma õue ja uusarenduse kindlust, kuid ei soovi ise ehitusprotsessi juhtida. 19 iseseisvat A-energiaklassi kodu privaatse hooviala, terrassi ja rõduga — Vaela külas, 20 minutit Tallinnast.</p>
                         <div class="about-one__features">
                             <ul class="about-one__features__list list-unstyled">
                                 <li class="wow fadeInUp" data-wow-duration="1500ms"><i class="icon-check-star"></i><span>Maasoojuspump, ventilatsioon ja põrandaküte</span></li>
