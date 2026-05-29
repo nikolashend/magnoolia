@@ -47,7 +47,7 @@
 </script>
 
 {{-- ── Page intro hero ────────────────────────────────────────── --}}
-<section style="background:#1d2430;padding:60px 0 48px;">
+<section style="background:#1d2430;padding:220px 0 48px 0;margin-top:-160px;">
     <div class="container">
         @include('partials.seo.breadcrumb', [
             'items' => [
