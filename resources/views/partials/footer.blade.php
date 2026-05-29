@@ -26,10 +26,10 @@
             <div>
                 <span class="mg-footer__col-title">Projekt</span>
                 <ul class="mg-footer__links">
-                    <li><a href="{{ route('home') }}#hinnad">Kodud ja hinnad</a></li>
-                    <li><a href="{{ route('home') }}#asendiplaan">Asendiplaan</a></li>
-                    <li><a href="{{ route('home') }}#asukoht">Asukoht</a></li>
-                    <li><a href="{{ route('home') }}#ehitusinfo">Ehitusinfo</a></li>
+                    <li><a href="{{ route('magnoolia.homes') }}">Kodud ja hinnad</a></li>
+                    <li><a href="{{ route('magnoolia.site-plan') }}">Asendiplaan</a></li>
+                    <li><a href="{{ route('magnoolia.location') }}">Asukoht</a></li>
+                    <li><a href="{{ route('magnoolia.construction') }}">Ehitusinfo</a></li>
                     <li><a href="{{ route('home') }}#sisedisain">Sisedisain</a></li>
                 </ul>
             </div>
@@ -41,7 +41,7 @@
                     <li><a href="{{ route('home') }}#ostuprotsess">Ostuprotsess</a></li>
                     <li><a href="{{ route('home') }}#finantseerimine">Finantseerimine</a></li>
                     <li><a href="{{ route('home') }}#faq">KKK</a></li>
-                    <li><a href="{{ route('contact') }}">Võta ühendust</a></li>
+                    <li><a href="{{ route('magnoolia.contact') }}">Võta ühendust</a></li>
                 </ul>
             </div>
 
@@ -62,7 +62,7 @@
                     <span>Magnoolia tee, Vaela küla,<br>Kiili vald, Harjumaa</span>
                 </div>
                 <div style="margin-top:20px;">
-                    <a href="{{ route('contact') }}" class="mg-btn mg-btn--ghost mg-btn--sm">
+                    <a href="{{ route('magnoolia.contact') }}" class="mg-btn mg-btn--ghost mg-btn--sm">
                         Küsi pakkumist
                     </a>
                 </div>
@@ -77,7 +77,7 @@
             <ul class="mg-footer__bottom-links">
                 <li><a href="#">Privaatsuspoliitika</a></li>
                 <li><a href="#">Kasutustingimused</a></li>
-                <li><a href="{{ route('contact') }}">Kontakt</a></li>
+                <li><a href="{{ route('magnoolia.contact') }}">Kontakt</a></li>
             </ul>
         </div>
     </div>

@@ -10,17 +10,23 @@
             <div class="main-header__middle">
                 <nav class="main-header__nav main-menu">
                     <ul class="main-menu__list">
-                        <li class="{{ request()->routeIs('home*') ? 'current' : '' }}">
+                        <li class="{{ request()->routeIs('home') ? 'current' : '' }}">
                             <a href="{{ route('home') }}">Avaleht</a>
                         </li>
-                        <li class="{{ request()->routeIs('home*') ? 'current' : '' }}">
-                            <a href="{{ route('home') }}#hinnad">Kodud ja hinnad</a>
+                        <li class="{{ request()->routeIs('magnoolia.homes') ? 'current' : '' }}">
+                            <a href="{{ route('magnoolia.homes') }}">Kodud ja hinnad</a>
                         </li>
-                        <li><a href="{{ route('home') }}#asendiplaan">Asendiplaan</a></li>
-                        <li><a href="{{ route('home') }}#asukoht">Asukoht</a></li>
-                        <li><a href="{{ route('home') }}#ehitusinfo">Ehitusinfo</a></li>
-                        <li>
-                            <a href="{{ route('home') }}#kontakt">Kontakt</a>
+                        <li class="{{ request()->routeIs('magnoolia.site-plan') ? 'current' : '' }}">
+                            <a href="{{ route('magnoolia.site-plan') }}">Asendiplaan</a>
+                        </li>
+                        <li class="{{ request()->routeIs('magnoolia.location') ? 'current' : '' }}">
+                            <a href="{{ route('magnoolia.location') }}">Asukoht</a>
+                        </li>
+                        <li class="{{ request()->routeIs('magnoolia.construction') ? 'current' : '' }}">
+                            <a href="{{ route('magnoolia.construction') }}">Ehitusinfo</a>
+                        </li>
+                        <li class="{{ request()->routeIs('magnoolia.contact') ? 'current' : '' }}">
+                            <a href="{{ route('magnoolia.contact') }}">Kontakt</a>
                         </li>
                     </ul>
                 </nav>
@@ -34,7 +40,7 @@
                         </div>
                     </div>
                     <div class="main-header__btn">
-                        <a href="{{ route('home') }}#kontakt" class="zoomvilla-btn">Küsi pakkumist</a>
+                        <a href="{{ route('magnoolia.contact') }}" class="zoomvilla-btn">Küsi pakkumist</a>
                     </div>
                     <div class="mobile-nav__btn mobile-nav__toggler">
                         <span></span><span></span><span></span>

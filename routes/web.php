@@ -9,6 +9,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\MagnooliaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,18 @@ Route::get('/locale/{locale}', [LocaleController::class, 'switch'])
 Route::get('/', [HomeController::class, 'index'])->name('home')->defaults('locale', 'et');
 Route::get('/ru', [HomeController::class, 'index'])->name('home.ru')->defaults('locale', 'ru');
 Route::get('/en', [HomeController::class, 'index'])->name('home.en')->defaults('locale', 'en');
+
+// ── Magnoolia standalone pages (Phase 14) ────────────────────────────────
+Route::get('/kodud-ja-hinnad',  [MagnooliaController::class, 'homes'])        ->name('magnoolia.homes');
+Route::get('/asendiplaan',      [MagnooliaController::class, 'sitePlan'])      ->name('magnoolia.site-plan');
+Route::get('/asukoht',          [MagnooliaController::class, 'location'])      ->name('magnoolia.location');
+Route::get('/ehitusinfo',       [MagnooliaController::class, 'construction'])  ->name('magnoolia.construction');
+Route::get('/kontakt',          [MagnooliaController::class, 'contact'])       ->name('magnoolia.contact');
+
+// ── Sitemap ──────────────────────────────────────────────────────────────
+Route::get('/sitemap.xml', function () {
+    return response()->view('sitemap')->header('Content-Type', 'application/xml');
+})->name('sitemap');
 
 // About
 Route::get('/about', [AboutController::class, 'index'])->name('about');
