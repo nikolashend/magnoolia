@@ -126,6 +126,8 @@
                         $cfg = $statusCfg[$st] ?? $statusCfg['tbc'];
                     @endphp
                     <tr class="mg-unit-row"
+                        data-event="unit_row_click"
+                        data-unit-id="{{ $unit['address'] }}"
                         data-status="{{ $st }}"
                         data-stage="stage-{{ $stageNum }}"
                         aria-label="Ava kodu detailid: {{ $unit['address'] }}"
@@ -164,9 +166,11 @@
                         </td>
                         <td style="padding:15px 16px;text-align:center;white-space:nowrap;">
                             @if($st === 'sold')
-                                <a href="#hinnad" class="mg-table-cta mg-table-cta--muted">{{ __($cfg['cta_key']) }}</a>
+                                <a href="#hinnad" class="mg-table-cta mg-table-cta--muted"
+                                   data-event="unit_view" data-unit-id="{{ $unit['address'] }}">{{ __($cfg['cta_key']) }}</a>
                             @else
-                                <a href="#kontakt" class="mg-table-cta">{{ __($cfg['cta_key']) }}</a>
+                                <a href="#kontakt?unit={{ urlencode($unit['address']) }}" class="mg-table-cta"
+                                   data-event="unit_modal_open" data-unit-id="{{ $unit['address'] }}">{{ __($cfg['cta_key']) }}</a>
                             @endif
                         </td>
                     </tr>

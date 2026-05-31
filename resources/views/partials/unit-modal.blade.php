@@ -149,7 +149,8 @@ window._mgLastFocus = null;
         {{-- ── Tab: 1. korrus ────────────────────────────────── --}}
         <div id="mg-panel-floor1" style="padding:24px 28px;flex:1;display:none;">
             <h4 style="font-size:14px;font-weight:700;color:#1d2430;margin-bottom:16px;">1. korrus</h4>
-            <a id="mg-floor1-link" href="{{ $floor1 }}" class="img-popup">
+            <a id="mg-floor1-link" href="{{ $floor1 }}" class="img-popup"
+               data-event="floor_plan_view" data-floor="1">
                 <img id="mg-floor1-img"
                      src="{{ $floor1 }}"
                      alt="Magnoolia 1. korruse plaan"
@@ -161,6 +162,7 @@ window._mgLastFocus = null;
                 <a id="mg-floor1-download"
                    href="{{ $floor1 }}"
                    download
+                   data-event="floor_plan_download" data-floor="1"
                    style="display:inline-flex;align-items:center;gap:8px;font-size:13px;
                           color:#c89443;font-weight:600;text-decoration:none;">
                     <i class="icon-download"></i>
@@ -175,7 +177,8 @@ window._mgLastFocus = null;
         {{-- ── Tab: 2. korrus ────────────────────────────────── --}}
         <div id="mg-panel-floor2" style="padding:24px 28px;flex:1;display:none;">
             <h4 style="font-size:14px;font-weight:700;color:#1d2430;margin-bottom:16px;">2. korrus</h4>
-            <a id="mg-floor2-link" href="{{ $floor2 }}" class="img-popup">
+            <a id="mg-floor2-link" href="{{ $floor2 }}" class="img-popup"
+               data-event="floor_plan_view" data-floor="2">
                 <img id="mg-floor2-img"
                      src="{{ $floor2 }}"
                      alt="Magnoolia 2. korruse plaan"
@@ -187,6 +190,7 @@ window._mgLastFocus = null;
                 <a id="mg-floor2-download"
                    href="{{ $floor2 }}"
                    download
+                   data-event="floor_plan_download" data-floor="2"
                    style="display:inline-flex;align-items:center;gap:8px;font-size:13px;
                           color:#c89443;font-weight:600;text-decoration:none;">
                     <i class="icon-download"></i>
@@ -203,11 +207,13 @@ window._mgLastFocus = null;
                     flex-shrink:0;background:#fff;position:sticky;bottom:0;">
             <button id="mg-modal-cta-btn"
                     class="zoomvilla-btn"
+                    data-event="unit_modal_cta"
                     style="width:100%;justify-content:center;border:none;cursor:pointer;
                            font-size:15px;padding:14px;margin-bottom:10px;">
                 Küsi selle kodu pakkumist <i class="icon-angle-small-right"></i>
             </button>
             <a href="tel:+37258164078"
+               data-event="phone_click" data-page="unit_modal"
                style="display:flex;align-items:center;justify-content:center;gap:8px;
                       font-size:14px;font-weight:600;color:#6f6a61;text-decoration:none;
                       padding:8px;border-radius:8px;transition:color .2s;"

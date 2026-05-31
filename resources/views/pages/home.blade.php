@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Magnoolia — A-energiaklassi kodud Tallinna lähedal')
-@section('meta_description', 'Magnoolia on uusarendus Vaelas, Kiili vallas — 19 A-energiaklassi ridaelamukodu privaatse hoovi, terrassi ja Tallinna lähedusega. I etapp valmib kevad 2027.')
+@section('title', 'Magnoolia Kodud — A-energiaklassi ridaelamukodud Tallinna lähedal')
+@section('meta_description', 'Magnoolia on 19 A-energiaklassi ridaelamukodu arendus Vaela külas, Kiili vallas — privaatse hooviala, terrassi ja Tallinna lähedusega. I etapp kevad 2027.')
 @section('og_title', 'Magnoolia — A-energiaklassi kodud Tallinna lähedal')
 @section('body_class', 'custom-cursor')
 
@@ -39,6 +39,13 @@
 
     {{-- 12. KKK / AI Answer block --}}
     @include('sections.magnoolia.ai-answer')
+
+    {{-- 12b. ANSWER UNIT — AI-citable Magnoolia summary --}}
+    @php
+      $au = __('magnoolia.answer_unit.home');
+      $au['cta_route'] = lroute('magnoolia.homes');
+    @endphp
+    @include('sections.magnoolia.answer-unit', ['unit' => $au])
 
     {{-- 13. KONTAKT — Diana Tali, inquiry form --}}
     @include('sections.magnoolia.contact')

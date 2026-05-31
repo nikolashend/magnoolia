@@ -17,7 +17,9 @@
       @foreach($faqs ?? [] as $i => $faq)
         <div class="col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="700ms" data-wow-delay="{{ $i * 70 }}ms"
              itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-          <div class="mg-faq-card">
+          <div class="mg-faq-card"
+               data-event="faq_open" data-faq-index="{{ $i }}"
+               onclick="this.classList.toggle('mg-faq-card--open')">
             <h3 itemprop="name" class="mg-faq-card__q">{{ $faq['q'] }}</h3>
             <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
               <p itemprop="text" class="mg-faq-card__a">{{ $faq['a'] }}</p>

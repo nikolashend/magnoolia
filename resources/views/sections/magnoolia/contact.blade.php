@@ -75,11 +75,13 @@
                     @endif
                     <div style="display:flex;flex-direction:column;gap:10px;">
                         <a href="tel:+37258164078" style="display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.8);font-size:15px;text-decoration:none;transition:color .2s;"
+                           data-event="phone_click" data-page="contact"
                            onmouseover="this.style.color='#c89443'" onmouseout="this.style.color='rgba(255,255,255,.8)'">
                             <i class="fas fa-phone" style="color:#c89443;width:16px;"></i>
                             {{ __('magnoolia.contact.phone') }}
                         </a>
                         <a href="mailto:{{ __('magnoolia.contact.email') }}" style="display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.8);font-size:15px;text-decoration:none;transition:color .2s;"
+                           data-event="email_click" data-page="contact"
                            onmouseover="this.style.color='#c89443'" onmouseout="this.style.color='rgba(255,255,255,.8)'">
                             <i class="fas fa-envelope" style="color:#c89443;width:16px;"></i>
                             {{ __('magnoolia.contact.email') }}
@@ -106,10 +108,12 @@
 
                 {{-- CTAs --}}
                 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px;">
-                    <a href="tel:+37258164078" class="zoomvilla-btn">
+                    <a href="tel:+37258164078" class="zoomvilla-btn"
+                        data-event="phone_click" data-page="contact_cta">
                         <i class="fas fa-phone" style="margin-right:8px;"></i>{{ __('magnoolia.section.contact_cta_call') }}
                     </a>
-                    <a href="mailto:diana@estlanda.ee" class="zoomvilla-btn zoomvilla-btn--border">
+                    <a href="mailto:diana@estlanda.ee" class="zoomvilla-btn zoomvilla-btn--border"
+                        data-event="email_click" data-page="contact_cta">
                         <i class="fas fa-envelope" style="margin-right:8px;"></i>{{ __('magnoolia.section.contact_cta_email') }}
                     </a>
                     <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border">
@@ -144,7 +148,27 @@
                         {{ __('magnoolia.contact.cta_inquiry') }}
                     </h4>
 
-                    <form action="{{ route('contact.send') }}" method="POST" style="display:flex;flex-direction:column;gap:16px;">
+                        {{-- Success flash --}}
+                        @if(session('contact_success'))
+                        <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:12px;padding:16px 20px;margin-bottom:8px;">
+                            <div style="font-size:15px;font-weight:700;color:#2e7d32;margin-bottom:4px;">✓ Päring saadetud!</div>
+                            <p style="font-size:13px;color:#388e3c;margin:0;line-height:1.6;">
+                                Aitäh, {{ session('contact_name', 'kliendile') }}! Vastame teile tavaliselt ühe tööpäeva jooksul.
+                                Kiiremal juhul saab helistada: <a href="tel:+37258164078" style="color:#2e7d32;font-weight:600;">+372 58 164 078</a>.
+                            </p>
+                        </div>
+                        @endif
+                        {{-- Error flash --}}
+                        @if($errors->any())
+                        <div style="background:#fce4ec;border:1px solid #f48fb1;border-radius:12px;padding:16px 20px;margin-bottom:8px;">
+                            <div style="font-size:14px;font-weight:700;color:#c62828;margin-bottom:6px;">Palun täida kõik kohustuslikud väljad:</div>
+                            <ul style="margin:0;padding-left:18px;font-size:13px;color:#c62828;">
+                                @foreach($errors->all() as $err)<li>{{ $err }}</li>@endforeach
+                            </ul>
+                        </div>
+                        @endif
+                        <form action="{{ lroute('magnoolia.contact.send') }}" method="POST" style="display:flex;flex-direction:column;gap:16px;"
+                              data-event="contact_form_start" data-page="contact">
                         @csrf
 
                         {{-- Selected unit (prefilled by modal CTA) --}}
@@ -206,7 +230,8 @@
                             </label>
                         </div>
 
-                        <button type="submit" class="zoomvilla-btn" style="width:100%;justify-content:center;border:none;cursor:pointer;">
+                        <button type="submit" class="zoomvilla-btn" style="width:100%;justify-content:center;border:none;cursor:pointer;"
+                                data-event="contact_form_submit" data-page="contact">
                             {{ __('magnoolia.forms.submit') }} <i class="icon-angle-small-right"></i>
                         </button>
                     </form>

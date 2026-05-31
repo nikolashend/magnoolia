@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 /**
  * MagnooliaController — Phase 14
@@ -70,6 +72,48 @@ class MagnooliaController extends Controller
         $unitData   = $validUnits[$selectedUnit] ?? null;
 
         return view('pages.magnoolia.kontakt', compact('page', 'selectedUnit', 'unitData'));
+    }
+
+    /**
+     * POST /kontakt  (also /ru/kontakt, /en/kontakt)
+     * Processes the inquiry form and redirects back with flash.
+     */
+    public function contactSend(Request $request)
+    {
+        $validated = $request->validate([
+            'name'          => 'required|string|max:255',
+            'email'         => 'required|email|max:255',
+            'phone'         => 'nullable|string|max:50',
+            'message'       => 'nullable|string|max:2000',
+            'selected_unit' => 'nullable|string|max:100',
+            'consent'       => 'accepted',
+        ]);
+
+        $toEmail   = config('magnoolia.project.contact_email', 'diana@estlanda.ee');
+        $unitLabel = $validated['selected_unit'] ? ' — ' . $validated['selected_unit'] : '';
+
+        try {
+            Mail::raw(
+                "Uus päring Magnoolia kodulehelt{$unitLabel}\n\n"
+                . "Nimi:      {$validated['name']}\n"
+                . "E-post:    {$validated['email']}\n"
+                . "Telefon:   " . ($validated['phone'] ?? '—') . "\n"
+                . "Kodu:      " . ($validated['selected_unit'] ?? '—') . "\n\n"
+                . "Sõnum:\n" . ($validated['message'] ?? '—'),
+                function ($message) use ($toEmail, $validated, $unitLabel) {
+                    $message->to($toEmail)
+                            ->replyTo($validated['email'], $validated['name'])
+                            ->subject("Magnoolia päring{$unitLabel} — {$validated['name']}");
+                }
+            );
+        } catch (\Exception $e) {
+            Log::error('Magnoolia contact form mail failed: ' . $e->getMessage(), $validated);
+        }
+
+        return redirect()
+            ->to(lroute('magnoolia.contact') . '#kontaktivorm')
+            ->with('contact_success', true)
+            ->with('contact_name', $validated['name']);
     }
 
     /** GET /sisedisain */

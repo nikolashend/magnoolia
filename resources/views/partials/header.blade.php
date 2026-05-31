@@ -43,13 +43,15 @@
                             @foreach($localeLabels as $locale => $label)
                                 @if(in_array($locale, $activeLocales))
                                     <a href="{{ locale_url($locale) }}"
+                                       data-event="lang_switch" data-locale="{{ $locale }}"
                                        style="color:{{ app()->getLocale() === $locale ? '#CDA274' : '#1E1F24' }};font-size:12px;font-weight:600;text-decoration:none;opacity:{{ app()->getLocale() === $locale ? '1' : '0.5' }};">{{ $label }}</a>
                                 @endif
                             @endforeach
                         </div>
                     </div>
                     <div class="main-header__btn">
-                        <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn">{{ __('magnoolia.contact.cta_inquiry') }}</a>
+                        <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn"
+                           data-event="header_cta">{{ __('magnoolia.contact.cta_inquiry') }}</a>
                     </div>
                     <div class="mobile-nav__btn mobile-nav__toggler">
                         <span></span><span></span><span></span>

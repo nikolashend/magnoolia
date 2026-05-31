@@ -32,8 +32,8 @@
                 <a href="#kontakt" style="color:#c89443;text-decoration:none;font-weight:600;">{{ __('magnoolia.section.asendiplaan_diana_link') }}</a>.
             </p>
             <p style="color:rgba(255,255,255,.45);margin-top:10px;font-size:13px;max-width:700px;margin-left:auto;margin-right:auto;">
-                Interaktiivne kodude kaart lisatakse pärast lõpliku EXR/SVG/hotspot mappingu kinnitamist.
                 Praegu saab kodusid võrrelda <a href="#hinnad" style="color:rgba(200,148,67,.7);text-decoration:none;">hinnatabeli, etappide ja plaanitüüpide järgi</a>.
+                Interaktiivne kaart täieneb koos projekti valmimisega.
             </p>
         </div>
 
@@ -130,10 +130,10 @@
                         </div>
                     </div>
 
-                    <a href="#hinnad" class="zoomvilla-btn">
+                    <a href="#hinnad" class="zoomvilla-btn" data-event="cta_click" data-dest="hinnad">
                         {{ __('magnoolia.section.asendiplaan_cta_homes') }} <i class="icon-angle-small-right"></i>
                     </a>
-                    <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border" style="margin-top:12px;">
+                    <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border" data-event="cta_click" data-dest="kontakt" style="margin-top:12px;">
                         {{ __('magnoolia.section.asendiplaan_cta_ask') }} <i class="icon-angle-small-right"></i>
                     </a>
                 </div>

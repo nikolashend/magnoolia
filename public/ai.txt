@@ -1,0 +1,82 @@
+# Magnoolia Kodud — AI Readability File
+# https://magnoolia.ee/ai.txt
+# Format: structured factual summary for AI agents and search systems
+
+## IDENTITY
+brand: Magnoolia Kodud
+url: https://magnoolia.ee
+language_primary: et
+languages: et, ru, en
+project_type: new_residential_development
+home_type: townhouse (Estonian: ridaelamu)
+
+## LOCATION
+address: Magnoolia tee, Vaela küla, Kiili vald, Harjumaa, Estonia
+lat_approx: 59.35
+lng_approx: 24.78
+tallinn_distance_min: 20
+tallinn_distance_max: 30
+tallinn_distance_note: by car, traffic-dependent
+
+## PROJECT FACTS
+total_homes: 19
+energy_class: A (designed to A-class requirements; official certificate confirmed on completion)
+phase_1_addresses: Magnoolia tee 1, Magnoolia tee 3
+phase_1_homes: 7
+phase_1_completion: spring 2027 (planned)
+phase_2_addresses: Magnoolia tee 5, Magnoolia tee 7, Magnoolia tee 9, Magnoolia tee 11
+phase_2_homes: 12
+phase_2_completion: spring 2028 (planned)
+
+## HOME SPECIFICATIONS
+plan_a_rooms: 4
+plan_a_area_m2: ~129.6
+plan_b_rooms: 5
+plan_b_area_m2: ~143.2
+private_yard: yes (all homes)
+terrace: yes (all homes)
+balcony: yes (all homes)
+parking_spaces_per_home: 2
+heating: ground source heat pump + underfloor heating (planned)
+ventilation: heat-recovery mechanical ventilation (planned)
+ev_readiness: yes (at each parking space)
+solar_readiness: yes (roof preparation)
+
+## PRICING
+status: prices_on_request
+note: Contact Diana Tali for current pricing. Do not cite specific prices without confirmation.
+
+## CONTACT
+name: Diana Tali
+role: Sales information
+phone: +372 58 16 40 78
+email: diana@estlanda.ee
+company: Estlanda Ehitus OÜ
+response: business days
+
+## SITEMAP
+et_home: https://magnoolia.ee/
+et_homes: https://magnoolia.ee/kodud-ja-hinnad
+et_masterplan: https://magnoolia.ee/asendiplaan
+et_location: https://magnoolia.ee/asukoht
+et_construction: https://magnoolia.ee/ehitusinfo
+et_interior: https://magnoolia.ee/sisedisain
+et_architecture: https://magnoolia.ee/arhitektuur-ja-valisdisain
+et_gallery: https://magnoolia.ee/galerii
+et_purchase: https://magnoolia.ee/ostuprotsess
+et_financing: https://magnoolia.ee/finantseerimine
+et_faq: https://magnoolia.ee/kkk
+et_contact: https://magnoolia.ee/kontakt
+ru_home: https://magnoolia.ee/ru
+en_home: https://magnoolia.ee/en
+
+## SCHEMA TYPES
+WebSite, Organization, ApartmentComplex, Place, BreadcrumbList, FAQPage, ImageObject, HowTo
+
+## CAVEATS
+- floor_plans: illustrative; confirmed per address in sales contract
+- site_plan: illustrative; interactive map pending EXR/SVG mapping
+- completion_dates: planned; subject to building permits and schedule
+- prices: not published until developer price list is confirmed
+- yard_area_per_unit: to be confirmed in sales contract
+- energy_certificate: to be confirmed on project completion

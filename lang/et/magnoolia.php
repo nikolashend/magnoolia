@@ -95,6 +95,46 @@ return [
         'contact_eyebrow' => 'Võta ühendust',
         'contact_title'   => 'Soovid Magnoolia kodu kohta rohkem teada?',
         'contact_body'    => 'Kirjuta või helista ning lepime kokku sobiva aja, et tutvustada vabu kodusid, plaane ja ostuprotsessi.',
+        'contact_body2'   => 'Kui kodu tundub sobivana, on järgmine samm küsida saadavust, korrusplaani ja hinnapakkumist. Diana aitab selgitada, millised kodud on veel vabad ja milline lahendus teie perele sobib.',
+        'contact_body3'   => 'Küsi konkreetse kodu, täpse hinna või sobiva plaani kohta.',
+        'contact_cta_call'  => 'Helista',
+        'contact_cta_email' => 'Saada e-kiri',
+
+        'why_tagline'    => 'Magnoolia uusarendus',
+        'why_desc'       => '19 A-energiaklassi ridaelamukodu Vaela külas, Kiili vallas. Igal kodul privaatne hooviala ja terrass — ~20 minutit Tallinnast.',
+        'why_body2'      => 'Magnoolia ei ole tavaline ridaelamu. See on koduvorm ostjatele, kes soovivad eramaja tunnet, oma hooviala ja uusarenduse kindlust. 19 iseseisvat A-energiaklassi kodu privaatse hooviala, terrasi ja rõduga — Vaela külas, ~20 minutit Tallinnast.',
+        'why_completion' => 'Valmib 2027',
+        'why_list_energy'=> 'Maasoojuspump, soojustagastusega ventilatsioon ja põrandaküte',
+        'why_list_yard'  => 'Privaatne hooviala, terrass ja rõdu igale kodule',
+        'why_list_ev'    => 'EV-laadimise ja päikesepaneelide valmidus',
+        'why_cta'        => 'Vaata kodusid',
+        'why_stage_badge'=> 'I etapp kevad 2027',
+        'why_stage_sub'  => 'Vaela küla, Kiili vald',
+
+        'benefits_link'  => 'LOEN LÄHEMALT',
+        'about_title'    => 'Läbimõeldud kodu. Privaatne hooviala.',
+
+        'gallery_view'     => 'VAATA',
+
+        'asendiplaan_desc'          => 'Vaata, millises etapis ja aadressil iga kodu paikneb. Täpse asukoha ja plaani saab kinnitada —',
+        'asendiplaan_diana_link'    => 'kirjuta Diana Talile',
+        'asendiplaan_map_title'     => 'Magnoolia arendus kaardil',
+        'asendiplaan_map_body'      => 'Igal kodul on oma privaatne hooviala, parkimiskohad ja läbimõeldud ligipääs. Arendus asub Vaela külas, ligikaudu ~20 minutit Tallinnast.',
+        'asendiplaan_legend1'       => 'Magnoolia tee — 19 kodu',
+        'asendiplaan_legend2'       => 'Privaatne hooviala igale kodule',
+        'asendiplaan_legend3'       => 'Parkimiskohad iga kodu juures',
+        'asendiplaan_cta_homes'     => 'Vaata kodusid ja hindu',
+        'asendiplaan_cta_ask'       => 'Küsi asukoha kohta',
+        'asendiplaan_mobile_completing' => 'valmib',
+        'asendiplaan_mobile_rooms'  => 'tuba',
+        'asendiplaan_mobile_ask'    => 'Küsi',
+        'asendiplaan_legend_avail'  => 'Vaba',
+        'asendiplaan_legend_reserved' => 'Broneeritud',
+        'asendiplaan_legend_sold'   => 'Müüdud',
+        'asendiplaan_trust_homes'   => 'kodu',
+        'asendiplaan_trust_energy'  => 'energiaklass',
+        'asendiplaan_trust_stage1'  => 'I etapp',
+        'asendiplaan_trust_tallinn' => 'Tallinnast',
     ],
 
     /* Pricing table */
@@ -181,6 +221,124 @@ return [
         'success'  => 'Täname! Vastame esimesel võimalusel.',
         'privacy'  => 'Andmeid kasutatakse ainult teie päringu menetlemiseks.',
         'required' => 'Kohustuslik',
+        'message_placeholder' => 'Sõnum — näiteks milline kodu pakub huvi',
+        'consent_text'        => 'Nõustun, et minuga võetakse ühendust seoses Magnoolia kodude infoga.',
+        'post_submit'         => 'Pärast päringu saatmist kinnitame saadavuse, korrusplaani, hinna ja järgmised sammud.',
+        'post_submit_cta'     => 'helista Dianale otse',
+        'unit_rooms'          => 'tuba',
+    ],
+
+    /* Floor plan section */
+    'floorplan' => [
+        'eyebrow'        => 'Korrusplaanid',
+        'title'          => 'Läbimõeldud plaanid eri perevajadustele',
+        'subtitle'       => 'Magnoolia kodud on planeeritud avatud elutsooni, 4–5 toa, terrasi/rõdu ja praktiliste panipaigaga. Tutvu plaanide tüüpidega ja küsi Dianalt täpset plaani ja konkreetse kodu saadavust.',
+        'plan_a_badge'   => '3-kodune terrassmaja',
+        'plan_b_badge'   => '4-kodune terrassmaja',
+        'plan_a_desc'    => 'Rohkem privaatsust, selge eraldatus — sobib peredele, kes hindavad tõeliselt privaatset tunnet.',
+        'plan_b_desc'    => 'Tõhus ja läbimõeldud plaan, kus kodud säilitavad privaatsuse ja kasutavad ruumi nutikalt.',
+        'addresses_label'=> 'Aadressid:',
+        'addresses_tbc'  => 'Täpsustamisel',
+        'floor_1'        => '1. korrus',
+        'floor_2'        => '2. korrus',
+        'enlarge'        => 'Suurenda plaani',
+        'download'       => 'Laadi alla',
+        'cta_homes'      => 'Vaata vabu kodusid',
+        'cta_ask'        => 'Küsi selle plaani kohta',
+        'lightbox_close' => 'Sulge',
+        'disclaimer'     => 'Korrusplaanid on illustratiivsed ja võivad erineda konkreetse kodu lõplikust lahendusest. Täpne plaan, ruumijagamine ja tehnilised detailid kinnitatakse konkreetse aadressi põhjal.',
+    ],
+
+    /* FAQ accordion (home page) */
+    'faq_home' => [
+        'eyebrow'  => 'Korduma kippuvad küsimused',
+        'title'    => 'Mida soovid Magnoolia kohta teada?',
+        'intro'    => 'Oleme kogunud vastused kõige sagedamini esitatavatele küsimustele Magnoolia arenduse, kodude spetsifikatsiooni ja ostuprotsessi kohta.',
+        'items' => [
+            [
+                'q'     => 'Millal kodud valmivad?',
+                'a'     => 'Magnoolia terrasmajade ehitus toimub kahes etapis. I etapp (Magnoolia tee 1 ja 3) valmib kevad 2027, II etapp (Magnoolia tee 5–11) kevad 2028.',
+                'list'  => ['I etapp — kevad 2027', 'II etapp — kevad 2028', 'Vaela küla, Kiili vald'],
+                'icons' => ['icon-celemder', 'icon-celemder', 'icon-pin'],
+            ],
+            [
+                'q'     => 'Mis on A-energiaklass?',
+                'a'     => 'A-klass tähendab madalaid kütte- ja energiakulusid. Magnoolia kodudes on maasoojuspump, soojustagastusega ventilatsioon ja põrandaküte.',
+                'list'  => ['Maasoojuspump', 'Põrandaküte', 'A-energiaklass'],
+                'icons' => ['icon-house', 'icon-flooring', 'icon-trophy'],
+            ],
+            [
+                'q'     => 'Kui suur on üks Magnoolia kodu?',
+                'a'     => 'Iga Magnoolia kodu on kahekorruseline terrassmaja. 4-toaline ~129,6 m², 5-toaline ~143,2 m². Juurde kuulub privaatne hooviala, terrass ja rõdu.',
+                'list'  => ['~129–143 m² netopind', 'Terrass + rõdu', '4–5 tuba'],
+                'icons' => ['icon-labyrinth', 'icon-real-estate', 'icon-bedroom'],
+            ],
+            [
+                'q'     => 'Kus Magnoolia asub?',
+                'a'     => 'Magnoolia asub Vaela külas, Kiili vallas — rahulikul looduslähedasel alal, ligikaudu 20 minutit Tallinna kesklinnast.',
+                'list'  => ['Magnoolia tee, Vaela küla', '~20 min Tallinnast', 'Kiili vald'],
+                'icons' => ['icon-pin', 'icon-labyrinth', 'icon-house'],
+            ],
+        ],
+    ],
+
+    /* AI-citable answer units — one per key page */
+    'answer_unit' => [
+        'facts_label' => 'Peamised andmed',
+
+        'home' => [
+            'eyebrow'    => 'Mis on Magnoolia?',
+            'title'      => 'Mis on Magnoolia Kodud?',
+            'answer'     => 'Magnoolia Kodud on 19 A-energiaklassi ridaelamukodu arendus Vaela külas, Kiili vallas, Tallinna lähedal. Kodud paiknevad Magnoolia teel kahes etapis: Magnoolia tee 1 ja 3 valmivad plaanitult kevadel 2027, Magnoolia tee 5–11 kevadel 2028.',
+            'facts'      => ['19 kodu', 'Vaela küla, Kiili vald', 'I etapp · II etapp', 'A-energiaklass', 'Privaatne hooviala', 'Terrass ja rõdu'],
+            'cta_label'  => 'Vaata kodusid ja hindu',
+            'disclaimer' => 'Valmimine sõltub ehitusloast ja tööde graafikusest. Ehituse käik ja täpse koha info kinnitatakse müügimaterjalides.',
+        ],
+
+        'homes' => [
+            'eyebrow'    => 'Kodude valimine',
+            'title'      => 'Kuidas valida Magnoolia kodu?',
+            'answer'     => 'Võrdle kodusid etapi, aadressi, plaanitüübi, tubade arvu ja saadavuse järgi. Küsi Dianalt täpset saadavust, hinda ja plaani detaile.',
+            'facts'      => ['19 kodu', 'Plaan A (4 tuba, ~129,6 m²)', 'Plaan B (5 tuba, ~143,2 m²)', 'I etapp · kevad 2027', 'II etapp · kevad 2028'],
+            'cta_label'  => 'Küsi pakkumist',
+            'disclaimer' => 'Hinnad täpsustuvad arendaja hinnatabelis. Täpne pindala ja tingimused kinnitatakse müügilepingus.',
+        ],
+
+        'asendiplaan' => [
+            'eyebrow'    => 'Asukoht arendusel',
+            'title'      => 'Kuidas paiknevad Magnoolia kodud?',
+            'answer'     => '19 kodu paiknevad Magnoolia tee 1, 3, 5, 7, 9 ja 11 aadressidel. Täpne paiknemine on praegu näidatud illustratiivselt. Interaktiivne kaart koos hotspot-kaardistusega lisatakse pärast EXR/SVG-kaardistuse kinnitamist.',
+            'facts'      => ['Magnoolia tee 1 · 3 kodu', 'Magnoolia tee 3 · 4 kodu', 'Magnoolia tee 5–11 · 12 kodu', 'Privaatne hooviala igal kodul'],
+            'cta_label'  => 'Küsi asukoha kohta',
+            'disclaimer' => 'Asendiplaan on illustratiivne. Täpsed krundi- ja kasutusõiguse piirid kinnitatakse lõpliku plaani alusel.',
+        ],
+
+        'asukoht' => [
+            'eyebrow'    => 'Asukoht',
+            'title'      => 'Kus asub Magnoolia?',
+            'answer'     => 'Magnoolia asub Vaela külas, Kiili vallas, Harjumaal. Sõltuvalt marsruudist ja liiklussituatsioonist on Tallinna kesklinn umbes 20–30 minutit kaugusel.',
+            'facts'      => ['Vaela küla, Kiili vald', 'Harjumaa', '~20–30 min Tallinnast', 'Looduslähedane elukeskkond'],
+            'cta_label'  => 'Küsi asukoha kohta',
+            'disclaimer' => 'Sõiduaeg sõltub marsruudist, liiklussituatsioonist ja aastajast.',
+        ],
+
+        'ehitusinfo' => [
+            'eyebrow'    => 'Tehniline info',
+            'title'      => 'Millised tehnilised lahendused on Magnoolia kodudes?',
+            'answer'     => 'Magnoolia kodud on kavandatud A-energiaklassi nõuete kohaselt. Planeeritud lahendused hõlmavad maasoojuspumpa, soojustagastusega sundventilatsiooni, põrandaküttet igas toas, EV-laadimise valmidust ja päikesepaneelide valmidust. Täpsed spetsifikatsioonid kinnitatakse müügimaterjalides.',
+            'facts'      => ['A-energiaklass', 'Maasoojuspump', 'Soojustagastusega ventilatsioon', 'Põrandaküte', 'EV-laadimise valmidus', 'Päikesepaneelide valmidus'],
+            'cta_label'  => 'Küsi ehitusinfo kohta',
+            'disclaimer' => 'Täpne tehniline spetsifikatsioon kinnitatakse ehitusprojektis ja müügilepingus.',
+        ],
+
+        'kontakt' => [
+            'eyebrow'    => 'Ostuprotsess',
+            'title'      => 'Kuidas küsida vaba kodu kohta infot?',
+            'answer'     => 'Vali soovitud kodu või plaanitüüp, jäta kontaktandmed ja Diana kinnitab saadavuse, hinna, korrusplaani ja järgmised sammud.',
+            'facts'      => ['Diana Tali — müügiinfo', '+372 58 16 40 78', 'diana@estlanda.ee', 'Vastus tööpäevadel'],
+            'cta_label'  => 'Mine vormi juurde',
+            'disclaimer' => 'Päring ei kohusta ostu ega broneeringut tegema.',
+        ],
     ],
 
     /* FAQ — exact wording for schema match */
@@ -211,7 +369,7 @@ return [
     'page' => [
 
         'galerii' => [
-            'page_title'  => 'Galerii — Magnoolia',
+            'page_title'  => 'Magnoolia galerii — arhitektuurirenderdused ja siseviimistlus',
             'page_h1'     => 'Magnoolia galerii',
             'eyebrow'    => 'Välisvaated · Interjöör · Plaanid',
             'lead'       => 'Arhitektuurirenderdused, siseviimistluse näidised ja korruseplaanid ühes kohas.',
@@ -232,7 +390,7 @@ return [
         ],
 
         'kkk' => [
-            'page_title'    => 'Korduma kippuvad küsimused — Magnoolia',
+            'page_title'    => 'Magnoolia KKK — korduma kippuvad küsimused ridaelamukodude kohta',
             'page_h1'       => 'Korduma kippuvad küsimused',
             'eyebrow'       => '7 teemat · 25+ küsimust',
             'lead'          => 'Vastused kõige sagedamini esitatavatele küsimustele Magnoolia ridaelamukodude kohta.',
@@ -337,7 +495,7 @@ return [
         ],
 
         'asukoht' => [
-            'page_title'      => 'Magnoolia asukoht — Vaela küla, Kiili vald',
+            'page_title'      => 'Magnoolia asukoht — Vaela küla, Kiili vald, Tallinna lähedal',
             'page_h1'         => 'Magnoolia asukoht — Vaela küla, Kiili vald',
             'eyebrow'         => 'Vaela küla · Kiili vald · Harjumaa',
             'lead'            => 'Rahulik elukeskkond Vaela külas, kus looduslähedus ja hea ligipääs on käeulatuses. Vaid mõne minuti kaugusel Tallinna piirilt, eemal linnamurast.',
@@ -398,7 +556,7 @@ return [
         ],
 
         'ehitusinfo' => [
-            'page_title'      => 'Ehitusinfo — Magnoolia A-energiaklass',
+            'page_title'      => 'Magnoolia ehitusinfo — A-energiaklass, maasoojuspump ja ventilatsioon',
             'page_h1'         => 'Magnoolia ehitusinfo',
             'eyebrow'         => 'A-energiaklass · Maasoojuspump · Ventilatsioon',
             'lead'            => 'Magnoolia ridaelamukodud ehitatakse kaasaegsete energiatõhusate lahendustega ja vastupidavate materjalidega. Allpool ülevaade kavandatavatest tehnilistest lahendustest projektdokumentatsiooni alusel.',
@@ -422,6 +580,54 @@ return [
             'card5_body'      => 'EV-laadimise ettevalmistus on kavandatud parkimislahenduse osana. Täpsed spetsifikatsioonid täpsustuvad.',
             'card6_title'     => 'Ehitusstandard',
             'card6_body'      => 'Hoone vastab Eesti kehtivale ehitusseadustikule ja eurokoodeksitele. Ehitusluba väljastatakse enne müügilepingute sõlmimist.',
+            'accordion_eyebrow' => 'Tehniline kirjeldus',
+            'accordion_title'   => 'Ehituslahenduste detailid',
+            'accordion_note'    => 'Andmed põhinevad projekteerimisfaasi dokumentidel. Lõplikud spetsifikatsioonid kinnitatakse ehituslepingus.',
+            'accordion_items'   => [
+                [
+                    'title' => 'Konstruktsioon ja piirdetarindid',
+                    'items' => [
+                        'Vundament: betoonvaip või vaialused (vastavalt geotehnilisele uuringule)',
+                        'Välisseinad: raamkonstruktsioon mineraalvilla soojustusega (täpne U-väärtus kinnitatakse projektis)',
+                        'Katus: kaldkatus — viimistlusmaterjal täpsustub',
+                        'Aknad ja välisuksed: kolmekordne klaaspakk, A-energiaklass',
+                        'Rõdu ja terrass: kuumtsingitud teras- või puidukonstruktsioon',
+                    ],
+                ],
+                [
+                    'title' => 'Tehnosüsteemid',
+                    'items' => [
+                        'Kütteüsteem: maasoojuspump — individuaalne igale kodule',
+                        'Radiaatorid / põrandaküte: täpsustub viimistluspaketi valikul',
+                        'Ventilatsioon: soojustagastusega sundventilatsioon (HRV/ERV)',
+                        'Päikesepaneelid: ettevalmistus hilisemaks paigalduseks katusele',
+                        'EV-laadimine: elektriline ettevalmistus parkimiskohal',
+                        'Veevarustus: ühisveevärk (Kiili valla ühisveevärk)',
+                        'Kanalisatsioon: ühiskanalisatsioon',
+                    ],
+                ],
+                [
+                    'title' => 'Siseviimistlus',
+                    'items' => [
+                        'Seinte viimistlus: krohv + värv (täpsem valik kinnitatakse)',
+                        'Põrandad: parkeet / plaat — täpsustub viimistlusnäidistega',
+                        'Vannituba: plaadiviimistlus, sanitaartehnilised seadmed täpsustuvad',
+                        'Köök: köögimööbli olemasolu kinnitatakse müügilepingus',
+                        'Siseuksed: standardlahendus, täpsem mudel kinnitatakse',
+                        'Saun: saun on kavandatud vähemalt osades kodutüüpides — küsi Diana käest',
+                    ],
+                ],
+                [
+                    'title' => 'Väljarendus ja parkimine',
+                    'items' => [
+                        'Parkimine: vähemalt 2 parkimiskohta krundil (autovarjualune + avala)',
+                        'Privaatne hooviala: piiratud aia/hekiga, täpne suurus kinnitatakse',
+                        'Ühisteede kate: asfalt või kivi (täpsustub arendusprojektis)',
+                        'Haljastus: aluste ettevalmistus — hekk, muru, kattematerjal täpsustuvad',
+                        'Valgustus: välialal minimaalne tänavavalgustus',
+                    ],
+                ],
+            ],
             'stages_eyebrow'  => 'Etapid',
             'stages_title'    => 'Ehitusajakava',
             'stages'          => [
@@ -460,7 +666,7 @@ return [
         ],
 
         'sisedisain' => [
-            'page_title'       => 'Sisedisain — Magnoolia',
+            'page_title'       => 'Magnoolia siseviimistlus — disainlahendused ja viimistlusnäidised',
             'page_h1'          => 'Magnoolia siseviimistlus',
             'eyebrow'          => 'Siseviimistlus · Näidislahendused',
             'lead'             => 'Vaata siseviimistluse näidiseid — elutoad, magamistoad, vannitoad ja köögialad. Konkreetne viimistluspakett kinnitatakse müügilepingus.',
@@ -502,7 +708,7 @@ return [
         ],
 
         'kodudjahinnad' => [
-            'page_title'     => 'Magnoolia kodud ja hinnad — A-energiaklassi ridaelamud',
+            'page_title'     => 'Magnoolia kodud ja hinnad — 19 ridaelamukodu Vaelas',
             'page_h1'        => 'Magnoolia kodud ja hinnad',
             'eyebrow'        => 'Magnoolia · 19 kodu · A-energiaklass',
             'lead'           => 'Vali sobiv kodu, võrdle etappe ja planeeringutüüpe. <strong>I etapp</strong> — Magnoolia tee 1 ja 3, <em>kevad 2027</em>. &nbsp;<strong>II etapp</strong> — Magnoolia tee 5–11, <em>kevad 2028</em>.',
@@ -571,7 +777,7 @@ return [
         ],
 
         'arhitektuur' => [
-            'page_title'     => 'Arhitektuur ja välisdisain — Magnoolia',
+            'page_title'     => 'Magnoolia arhitektuur ja välisdisain — kahekorruselised terrassmajad',
             'page_h1'        => 'Arhitektuur ja välisdisain',
             'eyebrow'        => 'Ridaelamu · Kahekorruseline · Nüüdisaegne fassaad',
             'lead'           => 'Magnoolia kodud on projekteeritud nii, et iga kodu tunneks end eraldiseisvana — privaatne terrass, hooviala ja oma sissepääs.',
@@ -635,7 +841,7 @@ return [
         ],
 
         'ostuprotsess' => [
-            'page_title'     => 'Ostuprotsess — Magnoolia',
+            'page_title'     => 'Magnoolia ostuprotsess — sammud Magnoolia kodu ostmiseks',
             'page_h1'        => 'Kuidas osta Magnoolia kodu?',
             'eyebrow'        => 'Sammud · Broneerimine · Müügileping',
             'lead'           => 'Ülevaade ostuprotsessi põhisammudest. Täpsed tingimused, tähtajad ja kohustused fikseeritakse broneerimislepingus ja müügilepingus.',
@@ -678,7 +884,7 @@ return [
         ],
 
         'finantseerimine' => [
-            'page_title'     => 'Finantseerimine — Magnoolia',
+            'page_title'     => 'Magnoolia finantseerimine — kodulaen uusarenduses',
             'page_h1'        => 'Magnoolia kodu finantseerimine',
             'eyebrow'        => 'Pangalaen · Omaosalus · Ajakava',
             'lead'           => 'Üldinfo uusarenduses ostmise finantseerimise kohta. Täpsed tingimused sõltuvad ostja individuaalsest olukorrast.',
@@ -742,7 +948,7 @@ return [
         ],
 
         'kontakt' => [
-            'page_title'     => 'Kontakt — Magnoolia',
+            'page_title'     => 'Kontakt — küsi Magnoolia vaba kodu kohta pakkumist',
             'page_h1'        => 'Küsi vaba kodu kohta',
             'eyebrow'        => 'Müügiesindaja · Otsekontakt',
             'lead'           => 'Uuri rohkem Magnoolia kohta. Diana vastab kõigile küsimustele — saadavusest finantseerimise ja ostuprotsessini.',

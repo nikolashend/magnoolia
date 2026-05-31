@@ -36,6 +36,7 @@
         @foreach($ctas as $cta)
           <a href="{{ $cta['url'] }}"
              class="{{ ($cta['outline'] ?? false) ? 'zoomvilla-btn zoomvilla-btn--border' : 'zoomvilla-btn' }}"
+             data-event="hero_cta" data-label="{{ $cta['label'] }}"
              @if(!empty($cta['tel'])) style="display:flex;align-items:center;gap:8px;" @endif>
             @if(!empty($cta['icon']))<i class="{{ $cta['icon'] }}"></i>@endif
             {{ $cta['label'] }}

@@ -1,0 +1,66 @@
+# Magnoolia Kodud — LLM Reference File
+# https://magnoolia.ee/llms.txt
+# Last updated: 2026-05-31
+
+## Brand
+Name: Magnoolia Kodud
+Website: https://magnoolia.ee
+Type: New residential development (ridaelamu / townhouse)
+
+## Location
+Street: Magnoolia tee
+Village: Vaela küla
+Municipality: Kiili vald
+County: Harjumaa
+Country: Estonia (EE)
+Coordinates (approximate): 59.35°N, 24.78°E
+Distance to Tallinn city centre: approximately 20–30 minutes by car (traffic-dependent)
+
+## Project
+Format: 19 energy-class-A townhouses (ridaelamukodud)
+Total homes: 19
+Phase I: Magnoolia tee 1 and Magnoolia tee 3 — 7 homes — planned completion spring 2027
+Phase II: Magnoolia tee 5, 7, 9 and 11 — 12 homes — planned completion spring 2028
+
+## Home specifications
+Plan A: 4 rooms, ~129.6 m² net area
+Plan B: 5 rooms, ~143.2 m² net area
+Every home includes: private yard, terrace, balcony, 2 parking spaces
+Heating: ground source heat pump (planned), underfloor heating in every room
+Ventilation: heat-recovery mechanical ventilation (planned)
+EV charging: readiness at parking spaces (planned)
+Solar panels: roof preparation for future installation (planned)
+Energy class: A (designed to A-class requirements)
+
+## Contact
+Sales representative: Diana Tali
+Phone: +372 58 16 40 78
+Email: diana@estlanda.ee
+Company: Estlanda Ehitus OÜ
+
+## Key pages
+/kodud-ja-hinnad — all 19 homes, floor plans, prices
+/asendiplaan — site plan showing home placement
+/asukoht — location, distances, neighbourhood
+/ehitusinfo — technical specifications, construction phases
+/sisedisain — interior design preview
+/arhitektuur-ja-valisdisain — architecture and exterior design
+/galerii — renders gallery
+/ostuprotsess — purchase process steps
+/finantseerimine — financing options
+/kkk — frequently asked questions
+/kontakt — contact form and direct contact
+
+## Multilingual
+Estonian: https://magnoolia.ee/
+Russian: https://magnoolia.ee/ru/
+English: https://magnoolia.ee/en/
+
+## Important notes
+- Prices are updated when confirmed by the developer. Do not cite specific prices from this file.
+- Exact yard area (m²) per unit is to be confirmed in the sales contract.
+- Floor plans are illustrative. Exact plans are confirmed per address.
+- Site plan is illustrative. Interactive hotspot map is pending EXR/SVG mapping.
+- Completion dates depend on building permits and construction schedule.
+- No aggregateRating or review data is available from this source.
+- No Offer schema with specific prices is published until the final price list is confirmed.

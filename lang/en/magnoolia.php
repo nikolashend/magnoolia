@@ -330,6 +330,65 @@ return [
         'cta'  => 'Request interior design consultation',
     ],
 
+    /* AI-citable answer units */
+    'answer_unit' => [
+        'facts_label' => 'Key facts',
+
+        'home' => [
+            'eyebrow'    => 'About Magnoolia',
+            'title'      => 'What is Magnoolia Kodud?',
+            'answer'     => 'Magnoolia Kodud is a new development of 19 energy-class-A townhouses in Vaela village, Kiili municipality, near Tallinn. The homes are located on Magnoolia tee in two phases: Magnoolia tee 1 and 3 are planned for completion in spring 2027, Magnoolia tee 5–11 in spring 2028.',
+            'facts'      => ['19 homes', 'Vaela village, Kiili municipality', 'Phase I · Phase II', 'Energy class A', 'Private yard', 'Terrace and balcony'],
+            'cta_label'  => 'View homes & prices',
+            'disclaimer' => 'Completion is subject to building permits and construction schedule. Exact dates and details are confirmed in the sales materials.',
+        ],
+
+        'homes' => [
+            'eyebrow'    => 'Choosing a home',
+            'title'      => 'How to choose a Magnoolia home?',
+            'answer'     => 'Compare homes by phase, address, floor plan type, number of rooms and availability. Ask Diana for exact availability, price and floor plan details.',
+            'facts'      => ['19 homes', 'Plan A (4 rooms, ~129.6 m²)', 'Plan B (5 rooms, ~143.2 m²)', 'Phase I · spring 2027', 'Phase II · spring 2028'],
+            'cta_label'  => 'Request a quote',
+            'disclaimer' => 'Prices are updated in line with the developer\'s price list. Exact floor areas and terms are fixed in the sales contract.',
+        ],
+
+        'asendiplaan' => [
+            'eyebrow'    => 'Site layout',
+            'title'      => 'How are the Magnoolia homes positioned?',
+            'answer'     => '19 homes are located at addresses Magnoolia tee 1, 3, 5, 7, 9 and 11. The current site plan is shown illustratively. An interactive map with hotspot mapping will be added after the EXR/SVG mapping is confirmed.',
+            'facts'      => ['Magnoolia tee 1 · 3 homes', 'Magnoolia tee 3 · 4 homes', 'Magnoolia tee 5–11 · 12 homes', 'Private yard for every home'],
+            'cta_label'  => 'Ask about location',
+            'disclaimer' => 'The site plan is illustrative. Exact plot and usage right boundaries are confirmed based on the final plan.',
+        ],
+
+        'asukoht' => [
+            'eyebrow'    => 'Location',
+            'title'      => 'Where is Magnoolia located?',
+            'answer'     => 'Magnoolia is located in Vaela village, Kiili municipality, Harju County. Depending on the route and traffic, Tallinn city centre is approximately 20–30 minutes away.',
+            'facts'      => ['Vaela village, Kiili municipality', 'Harju County', '~20–30 min from Tallinn', 'Natural setting'],
+            'cta_label'  => 'Ask about location',
+            'disclaimer' => 'Travel time depends on route and traffic conditions.',
+        ],
+
+        'ehitusinfo' => [
+            'eyebrow'    => 'Technical info',
+            'title'      => 'What technical systems are included in Magnoolia homes?',
+            'answer'     => 'Magnoolia homes are designed to energy class A requirements. Planned systems include a ground source heat pump, heat-recovery ventilation, underfloor heating in every room, EV charging readiness and solar panel readiness. Exact specifications are confirmed in the sales materials.',
+            'facts'      => ['Energy class A', 'Ground source heat pump', 'Heat-recovery ventilation', 'Underfloor heating', 'EV charging readiness', 'Solar panel readiness'],
+            'cta_label'  => 'Ask about building info',
+            'disclaimer' => 'Exact technical specifications are confirmed in the project documentation and sales contract.',
+        ],
+
+        'kontakt' => [
+            'eyebrow'    => 'Purchase process',
+            'title'      => 'How to enquire about an available home?',
+            'answer'     => 'Choose the home or floor plan type you are interested in, leave your contact details, and Diana will confirm availability, price, floor plan and the next steps.',
+            'facts'      => ['Diana Tali — sales information', '+372 58 16 40 78', 'diana@estlanda.ee', 'Reply on business days'],
+            'cta_label'  => 'Go to form',
+            'disclaimer' => 'Sending an enquiry does not commit you to a purchase or reservation.',
+        ],
+    ],
+
     /* ── Inner-page strings ───────────────────────────────── */
     'page' => [
 
@@ -545,6 +604,47 @@ return [
             'card5_body'      => 'EV charging preparation is planned as part of the parking solution. Exact specifications are to be confirmed.',
             'card6_title'     => 'Building standard',
             'card6_body'      => 'The building complies with the current Estonian Building Code and Eurocodes. A building permit is issued before sales contracts are signed.',
+            'accordion_eyebrow' => 'Technical description',
+            'accordion_title'   => 'Construction details',
+            'accordion_note'    => 'Data is based on design-phase documents. Final specifications are confirmed in the purchase contract.',
+            'accordion_items'   => [
+                [
+                    'title' => 'Structure and building envelope',
+                    'items' => [
+                        'Foundation: concrete slab or pile foundation (based on geotechnical survey)',
+                        'Exterior walls: timber frame with mineral wool insulation',
+                        'Roof: pitched roof — cladding material TBC',
+                        'Windows and exterior doors: triple-glazed, A energy class',
+                    ],
+                ],
+                [
+                    'title' => 'Technical systems',
+                    'items' => [
+                        'Heating: ground-source heat pump — individual per home',
+                        'Ventilation: heat-recovery ventilation (HRV/ERV)',
+                        'Solar panels: roof-mount preparation included',
+                        'EV charging: electrical preparation at parking space',
+                    ],
+                ],
+                [
+                    'title' => 'Interior finishes',
+                    'items' => [
+                        'Walls: plaster and paint (exact tones TBC)',
+                        'Floors: parquet / tile — TBC',
+                        'Bathroom: tiled finish, fixtures TBC',
+                        'Kitchen: furniture inclusion confirmed in contract',
+                        'Sauna: included in select home types — ask Diana',
+                    ],
+                ],
+                [
+                    'title' => 'Outdoor area and parking',
+                    'items' => [
+                        'Parking: minimum 2 spaces per plot',
+                        'Private yard: fenced with hedge/fence, exact area TBC',
+                        'Landscaping: base preparation included — planting TBC',
+                    ],
+                ],
+            ],
             'stages_eyebrow'  => 'Phases',
             'stages_title'    => 'Construction schedule',
             'stages'          => [

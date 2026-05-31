@@ -39,7 +39,7 @@
 </script>
 
 {{-- ── Hero ─────────────────────────────────────────────────── --}}
-<div class="mg-page-hero">
+<div class="mg-page-hero" style="background-image:linear-gradient(to right, rgba(29,36,48,.88) 60%, rgba(29,36,48,.5)), url('{{ asset('assets/images/magnoolia/Cam001.0000.jpg') }}');background-size:cover;background-position:center;">
   <div class="container">
     @include('partials.seo.breadcrumb', ['items' => [
       ['label' => __('magnoolia.nav.home'), 'url' => route('home')],

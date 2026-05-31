@@ -33,6 +33,7 @@ Route::get('/asendiplaan',      [MagnooliaController::class, 'sitePlan'])      -
 Route::get('/asukoht',          [MagnooliaController::class, 'location'])      ->name('magnoolia.location');
 Route::get('/ehitusinfo',       [MagnooliaController::class, 'construction'])  ->name('magnoolia.construction');
 Route::get('/kontakt',          [MagnooliaController::class, 'contact'])       ->name('magnoolia.contact');
+Route::post('/kontakt',         [MagnooliaController::class, 'contactSend'])   ->name('magnoolia.contact.send');
 Route::get('/sisedisain',       [MagnooliaController::class, 'interior'])      ->name('magnoolia.sisedisain');
 Route::get('/arhitektuur-ja-valisdisain', [MagnooliaController::class, 'architecture'])->name('magnoolia.arhitektuur');
 Route::get('/galerii',          [MagnooliaController::class, 'gallery'])       ->name('magnoolia.galerii');
@@ -56,6 +57,8 @@ foreach (['ru', 'en'] as $_loc) {
                 ->name($_loc . '.magnoolia.construction');
             Route::get('/kontakt',          [MagnooliaController::class, 'contact'])
                 ->name($_loc . '.magnoolia.contact');
+            Route::post('/kontakt',         [MagnooliaController::class, 'contactSend'])
+                ->name($_loc . '.magnoolia.contact.send');
             Route::get('/sisedisain',       [MagnooliaController::class, 'interior'])
                 ->name($_loc . '.magnoolia.sisedisain');
             Route::get('/arhitektuur-ja-valisdisain', [MagnooliaController::class, 'architecture'])
