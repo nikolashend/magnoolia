@@ -1,6 +1,6 @@
 <header class="main-header main-header--two sticky-header sticky-header--normal">
     <div class="main-header__group-shape"><span></span><span></span><span></span></div>
-    <div class="container-fluid px-0">
+    <div class="container-fluid">
         <div class="main-header__inner">
             <div class="main-header__logo logo-retina">
                 <a href="{{ lroute('home') }}" aria-label="Magnoolia koduleht" style="text-decoration:none;">
