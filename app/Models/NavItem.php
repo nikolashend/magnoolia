@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
 class NavItem extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = ['label', 'route_name', 'url', 'sort_order', 'is_active', 'open_blank'];
 
     protected $casts = [
@@ -18,8 +21,11 @@ class NavItem extends Model
 
     protected static function booted(): void
     {
-        static::saved(fn()   => Cache::forget('nav_items_active'));
-        static::deleted(fn() => Cache::forget('nav_items_active'));
+        $clear = fn() => Cache::forget('nav_items_active');
+        static::saved($clear);
+        static::deleted($clear);
+        static::restored($clear);
+        static::forceDeleted($clear);
     }
 
     public function scopeActive($query)

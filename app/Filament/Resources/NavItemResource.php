@@ -23,12 +23,12 @@ class NavItemResource extends Resource
         return $form->schema([
             Forms\Components\Section::make('Labels (per language)')->schema([
                 Forms\Components\TextInput::make('label.et')
-                    ->label('Label (ET — Estonian)')
+                    ->label('Label (ET â€” Estonian)')
                     ->required(),
                 Forms\Components\TextInput::make('label.ru')
-                    ->label('Label (RU — Russian)'),
+                    ->label('Label (RU â€” Russian)'),
                 Forms\Components\TextInput::make('label.en')
-                    ->label('Label (EN — English)'),
+                    ->label('Label (EN â€” English)'),
             ])->columns(3),
 
             Forms\Components\Section::make('Link')->schema([
@@ -81,18 +81,51 @@ class NavItemResource extends Resource
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('Active')
                     ->boolean(),
+                Tables\Columns\TextColumn::make('deleted_at')
+                    ->label('Deleted')
+                    ->dateTime('d.m.Y H:i')
+                    ->placeholder('â€”')
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('sort_order')
             ->reorderable('sort_order')
+            ->filters([
+                Tables\Filters\TrashedFilter::make(),
+            ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->hidden(fn (NavItem $record) => $record->trashed()),
+                Tables\Actions\Action::make('restore')
+                    ->label('Restore')
+                    ->icon('heroicon-o-arrow-uturn-left')
+                    ->color('success')
+                    ->visible(fn (NavItem $record) => $record->trashed())
+                    ->requiresConfirmation()
+                    ->modalHeading('Restore menu item?')
+                    ->modalDescription('The item will be made active again and reappear in the navigation.')
+                    ->action(fn (NavItem $record) => $record->restore()),
+                Tables\Actions\DeleteAction::make()
+                    ->hidden(fn (NavItem $record) => $record->trashed())
+                    ->label('Move to trash'),
+                Tables\Actions\ForceDeleteAction::make()
+                    ->visible(fn (NavItem $record) => $record->trashed())
+                    ->label('Delete permanently')
+                    ->modalDescription('This will permanently delete the menu item. This cannot be undone.'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Move to trash'),
+                    Tables\Actions\RestoreBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make()
+                        ->label('Delete permanently'),
                 ]),
             ]);
+    }
+
+    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    {
+        return parent::getEloquentQuery()->withTrashed();
     }
 
     public static function getPages(): array
