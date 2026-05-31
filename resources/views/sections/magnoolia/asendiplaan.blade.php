@@ -28,9 +28,8 @@
             </div>
             <h3 class="sec-title__title bw-split-in-left" style="color:#fff;">{{ __('magnoolia.section.masterplan_title') }}</h3>
             <p style="color:rgba(255,255,255,.6);margin-top:16px;font-size:16px;max-width:620px;margin-left:auto;margin-right:auto;">
-                Vaata, millises etapis ja millisel aadressil kodu paikneb.
-                Täpse asukoha ja plaani saad küsida valitud kodu kohta &mdash;
-                <a href="#kontakt" style="color:#c89443;text-decoration:none;font-weight:600;">kirjuta Diana Talile</a>.
+                {{ __('magnoolia.section.asendiplaan_desc') }}
+                <a href="#kontakt" style="color:#c89443;text-decoration:none;font-weight:600;">{{ __('magnoolia.section.asendiplaan_diana_link') }}</a>.
             </p>
             <p style="color:rgba(255,255,255,.45);margin-top:10px;font-size:13px;max-width:700px;margin-left:auto;margin-right:auto;">
                 Interaktiivne kodude kaart lisatakse pärast lõpliku EXR/SVG/hotspot mappingu kinnitamist.
@@ -89,26 +88,25 @@
                 <div style="color:#fff;padding:0 0 0 20px;">
 
                     <h4 style="font-size:22px;font-weight:700;margin-bottom:20px;color:#fff;">
-                        Magnoolia arendus kaardil
+                        {{ __('magnoolia.section.asendiplaan_map_title') }}
                     </h4>
                     <p style="color:rgba(255,255,255,.65);font-size:15px;line-height:1.7;margin-bottom:28px;">
-                        Igal kodul on oma privaatne hooviala, parkimiskohad ning läbimõeldud ligipääs.
-                        Arendus asub Vaela külas, rahulikul uusarenduse alal, ligikaudu 20 minuti kaugusel Tallinnast.
+                        {{ __('magnoolia.section.asendiplaan_map_body') }}
                     </p>
 
                     {{-- Legend --}}
                     <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px;">
                         <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(255,255,255,.7);">
                             <span style="width:14px;height:14px;border-radius:50%;background:#c89443;flex-shrink:0;"></span>
-                            Magnoolia tee — 19 kodu
+                            {{ __('magnoolia.section.asendiplaan_legend1') }}
                         </div>
                         <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(255,255,255,.7);">
                             <span style="width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.3);flex-shrink:0;"></span>
-                            Privaatne hooviala igal kodul
+                            {{ __('magnoolia.section.asendiplaan_legend2') }}
                         </div>
                         <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(255,255,255,.7);">
                             <span style="width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.15);flex-shrink:0;border:1px solid rgba(255,255,255,.3);"></span>
-                            Parkimiskohad kodu juures
+                            {{ __('magnoolia.section.asendiplaan_legend3') }}
                         </div>
                     </div>
 
@@ -116,27 +114,27 @@
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;">
                         <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:16px;">
                             <div style="font-size:22px;font-weight:700;color:#c89443;">19</div>
-                            <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">kodu</div>
+                            <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">{{ __('magnoolia.section.asendiplaan_trust_homes') }}</div>
                         </div>
                         <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:16px;">
                             <div style="font-size:22px;font-weight:700;color:#c89443;">A</div>
-                            <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">energiaklass</div>
+                            <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">{{ __('magnoolia.section.asendiplaan_trust_energy') }}</div>
                         </div>
                         <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:16px;">
                             <div style="font-size:16px;font-weight:700;color:#c89443;">kevad 2027</div>
-                            <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">I etapp</div>
+                            <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">{{ __('magnoolia.section.asendiplaan_trust_stage1') }}</div>
                         </div>
                         <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:16px;">
-                            <div style="font-size:22px;font-weight:700;color:#c89443;">20 min</div>
-                            <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">Tallinnast</div>
+                            <div style="font-size:22px;font-weight:700;color:#c89443;">{{ __('magnoolia.hero.distance_value') }}</div>
+                            <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">{{ __('magnoolia.section.asendiplaan_trust_tallinn') }}</div>
                         </div>
                     </div>
 
                     <a href="#hinnad" class="zoomvilla-btn">
-                        Vaata kodusid ja hindu <i class="icon-angle-small-right"></i>
+                        {{ __('magnoolia.section.asendiplaan_cta_homes') }} <i class="icon-angle-small-right"></i>
                     </a>
                     <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border" style="margin-top:12px;">
-                        Küsi asukoha kohta <i class="icon-angle-small-right"></i>
+                        {{ __('magnoolia.section.asendiplaan_cta_ask') }} <i class="icon-angle-small-right"></i>
                     </a>
                 </div>
             </div>
@@ -150,7 +148,7 @@
         <div style="margin-bottom:24px;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
                 <span style="background:#c89443;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">{{ $stageCfg['label'] }}</span>
-                <span style="color:rgba(255,255,255,.6);font-size:13px;">valmib {{ $stageCfg['completion'] }}</span>
+                <span style="color:rgba(255,255,255,.6);font-size:13px;">{{ __('magnoolia.section.asendiplaan_mobile_completing') }} {{ $stageCfg['completion'] }}</span>
             </div>
             <div style="display:flex;flex-direction:column;gap:8px;">
                 @foreach($allUnits as $unit)
@@ -160,12 +158,12 @@
                      onclick="mgOpenUnit('{{ $unit['id'] }}')">
                     <div>
                         <div style="font-weight:600;color:#fff;font-size:14px;">{{ $unit['address'] }}</div>
-                        <div style="color:rgba(255,255,255,.5);font-size:12px;margin-top:2px;">{{ $unit['rooms'] ?? '—' }} tuba · {{ $unit['net_area'] ?? '—' }} m²</div>
+                        <div style="color:rgba(255,255,255,.5);font-size:12px;margin-top:2px;">{{ $unit['rooms'] ?? '—' }} {{ __('magnoolia.pricing.rooms_unit') }} · {{ $unit['net_area'] ?? '—' }} m²</div>
                     </div>
                     <div style="display:flex;align-items:center;gap:10px;">
                         <span style="width:10px;height:10px;border-radius:50%;background:{{ $color }};flex-shrink:0;"></span>
                         @if(($unit['status'] ?? '') !== 'sold')
-                        <a href="#kontakt" style="background:#c89443;color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;">Küsi</a>
+                        <a href="#kontakt" style="background:#c89443;color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;">{{ __('magnoolia.section.asendiplaan_mobile_ask') }}</a>
                         @endif
                     </div>
                 </div>
@@ -178,13 +176,13 @@
         {{-- Mobile legend --}}
         <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);">
             <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.6);">
-                <span style="width:10px;height:10px;border-radius:50%;background:#4caf50;"></span> Vaba
+                <span style="width:10px;height:10px;border-radius:50%;background:#4caf50;"></span> {{ __('magnoolia.section.asendiplaan_legend_avail') }}
             </div>
             <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.6);">
-                <span style="width:10px;height:10px;border-radius:50%;background:#ff9800;"></span> Broneeritud
+                <span style="width:10px;height:10px;border-radius:50%;background:#ff9800;"></span> {{ __('magnoolia.section.asendiplaan_legend_reserved') }}
             </div>
             <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.6);">
-                <span style="width:10px;height:10px;border-radius:50%;background:#f44336;"></span> Müüdud
+                <span style="width:10px;height:10px;border-radius:50%;background:#f44336;"></span> {{ __('magnoolia.section.asendiplaan_legend_sold') }}
             </div>
         </div>
     </div>

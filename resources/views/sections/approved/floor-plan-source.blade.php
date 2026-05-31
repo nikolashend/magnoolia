@@ -1,4 +1,4 @@
-﻿{{-- ══════════════════════════════════════════════════════════════
+{{-- ══════════════════════════════════════════════════════════════
     FLOOR PLAN — Phase 11 Recovery
     2 typology cards: 3 koduga (Plaan A) + 4 koduga (Plaan B)
     Each card: I korrus + II korrus labeled sections,
@@ -27,9 +27,9 @@
         [
             'id'         => 'plaan-a',
             'label'      => 'Plaan A',
-            'badge'      => '3 koduga ridaelamu',
+            'badge'      => __('magnoolia.floorplan.plan_a_badge'),
             'badge_css'  => 'mg-plan-badge--a',
-            'desc'       => 'Rohkem privaatsust, selge kodude jaotus, sobib perele, kes hindab omaette kodutunnet.',
+            'desc'       => __('magnoolia.floorplan.plan_a_desc'),
             'units'      => $typeAUnits,
             'floor1_src' => $floor1,
             'floor2_src' => $floor2,
@@ -39,9 +39,9 @@
         [
             'id'         => 'plaan-b',
             'label'      => 'Plaan B',
-            'badge'      => '4 koduga ridaelamu',
+            'badge'      => __('magnoolia.floorplan.plan_b_badge'),
             'badge_css'  => 'mg-plan-badge--b',
-            'desc'       => 'Efektiivne ja läbimõeldud plaanilahendus, kus kodud säilitavad privaatsuse ning praktilise ruumikasutuse.',
+            'desc'       => __('magnoolia.floorplan.plan_b_desc'),
             'units'      => $typeBUnits,
             'floor1_src' => $floor1,
             'floor2_src' => $floor2,
@@ -59,14 +59,12 @@
         <div class="sec-title text-center" style="margin-bottom:48px;">
             <div class="sec-title__top justify-content-center">
                 <span class="line-left"></span>
-                <h6 class="sec-title__tagline bw-split-in-right">Korrusplaanid</h6>
+                <h6 class="sec-title__tagline bw-split-in-right">{{ __('magnoolia.floorplan.eyebrow') }}</h6>
                 <span class="line-right"></span>
             </div>
-            <h2 class="sec-title__title bw-split-in-left">Läbimõeldud plaanid eri kodutüüpidele</h2>
+            <h2 class="sec-title__title bw-split-in-left">{{ __('magnoolia.floorplan.title') }}</h2>
             <p class="mg-section-subtitle">
-                Magnoolia kodud on planeeritud avatud elutsooni, 4–5 toa, terrassi/rõdu ja praktiliste
-                panipaikade loogikaga. Vaadake plaanitüüpe ning küsige Diana käest konkreetse kodu
-                täpset plaani ja saadavust.
+                {{ __('magnoolia.floorplan.subtitle') }}
             </p>
         </div>
 
@@ -88,11 +86,11 @@
                         <p class="mg-plan-card__desc">{{ $plan['desc'] }}</p>
                         @if($plan['units'])
                         <p class="mg-plan-card__units">
-                            <span class="mg-plan-card__units-label">Aadressid:</span>
+                            <span class="mg-plan-card__units-label">{{ __('magnoolia.floorplan.addresses_label') }}</span>
                             {{ $formatAddresses($plan['units']) }}
                         </p>
                         @else
-                        <p class="mg-plan-card__units">Täpsustamisel</p>
+                        <p class="mg-plan-card__units">{{ __('magnoolia.floorplan.addresses_tbc') }}</p>
                         @endif
                     </div>
 
@@ -102,7 +100,7 @@
                         {{-- I korrus --}}
                         <div class="mg-plan-floor">
                             <div class="mg-plan-floor__label">
-                                <span class="mg-plan-floor__num">I korrus</span>
+                                <span class="mg-plan-floor__num">{{ __('magnoolia.floorplan.floor_1') }}</span>
                             </div>
                             <div class="mg-plan-floor__img-wrap">
                                 <img src="{{ $plan['floor1_src'] }}"
@@ -113,10 +111,10 @@
                                 <div class="mg-plan-floor__overlay">
                                     <button type="button"
                                             class="mg-plan-enlarge"
-                                            onclick="mgOpenPlanLightbox('{{ $plan['label'] }}','I korrus','{{ $plan['floor1_src'] }}','{{ $plan['floor1_alt'] }}')"
+                                            onclick="mgOpenPlanLightbox('{{ $plan['label'] }}','{{ __('magnoolia.floorplan.floor_1') }}','{{ $plan['floor1_src'] }}','{{ $plan['floor1_alt'] }}')"
                                             aria-label="Suurenda {{ $plan['label'] }} I korruse plaani">
                                         <i class="icon-zoom-1" aria-hidden="true"></i>
-                                        Suurenda plaani
+                                        {{ __('magnoolia.floorplan.enlarge') }}
                                     </button>
                                 </div>
                             </div>
@@ -124,7 +122,7 @@
                                 <a href="{{ $plan['floor1_src'] }}"
                                    download
                                    class="mg-plan-dl">
-                                    <i class="icon-download" aria-hidden="true"></i> Laadi alla
+                                    <i class="icon-download" aria-hidden="true"></i> {{ __('magnoolia.floorplan.download') }}
                                 </a>
                             </div>
                         </div>
@@ -134,7 +132,7 @@
                         {{-- II korrus --}}
                         <div class="mg-plan-floor">
                             <div class="mg-plan-floor__label">
-                                <span class="mg-plan-floor__num">II korrus</span>
+                                <span class="mg-plan-floor__num">{{ __('magnoolia.floorplan.floor_2') }}</span>
                             </div>
                             <div class="mg-plan-floor__img-wrap">
                                 <img src="{{ $plan['floor2_src'] }}"
@@ -145,10 +143,10 @@
                                 <div class="mg-plan-floor__overlay">
                                     <button type="button"
                                             class="mg-plan-enlarge"
-                                            onclick="mgOpenPlanLightbox('{{ $plan['label'] }}','II korrus','{{ $plan['floor2_src'] }}','{{ $plan['floor2_alt'] }}')"
+                                            onclick="mgOpenPlanLightbox('{{ $plan['label'] }}','{{ __('magnoolia.floorplan.floor_2') }}','{{ $plan['floor2_src'] }}','{{ $plan['floor2_alt'] }}')"
                                             aria-label="Suurenda {{ $plan['label'] }} II korruse plaani">
                                         <i class="icon-zoom-1" aria-hidden="true"></i>
-                                        Suurenda plaani
+                                        {{ __('magnoolia.floorplan.enlarge') }}
                                     </button>
                                 </div>
                             </div>
@@ -156,7 +154,7 @@
                                 <a href="{{ $plan['floor2_src'] }}"
                                    download
                                    class="mg-plan-dl">
-                                    <i class="icon-download" aria-hidden="true"></i> Laadi alla
+                                    <i class="icon-download" aria-hidden="true"></i> {{ __('magnoolia.floorplan.download') }}
                                 </a>
                             </div>
                         </div>
@@ -166,10 +164,10 @@
                     {{-- Card CTAs --}}
                     <div class="mg-plan-card__ctas">
                         <a href="#hinnad" class="zoomvilla-btn">
-                            Vaata sobivaid kodusid <i class="icon-angle-small-right" aria-hidden="true"></i>
+                            {{ __('magnoolia.floorplan.cta_homes') }} <i class="icon-angle-small-right" aria-hidden="true"></i>
                         </a>
                         <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border">
-                            Küsi selle plaani kohta <i class="icon-angle-small-right" aria-hidden="true"></i>
+                            {{ __('magnoolia.floorplan.cta_ask') }} <i class="icon-angle-small-right" aria-hidden="true"></i>
                         </a>
                     </div>
 
@@ -180,8 +178,7 @@
 
         {{-- Disclaimer --}}
         <p class="mg-plan-disclaimer">
-            <strong>NB!</strong> Plaanid on illustratiivsed ja võivad sõltuvalt konkreetsest kodust erineda.
-            Täpne plaan, ruumijaotus ja tehnilised detailid kinnitatakse konkreetse aadressi põhjal.
+            {{ __('magnoolia.floorplan.disclaimer') }}
         </p>
 
     </div>
@@ -222,7 +219,7 @@
             </div>
             <button onclick="mgClosePlanLightbox()"
                     id="mg-plan-lb-close"
-                    aria-label="Sulge"
+                    aria-label="{{ __('magnoolia.floorplan.lightbox_close') }}"
                     style="width:44px;height:44px;min-width:44px;border-radius:50%;border:1.5px solid rgba(29,36,48,.15);
                            background:transparent;cursor:pointer;font-size:20px;color:#6f6a61;
                            display:flex;align-items:center;justify-content:center;transition:all .2s;"
@@ -247,14 +244,14 @@
                onclick="mgClosePlanLightbox()"
                class="zoomvilla-btn"
                style="flex:1;min-width:160px;justify-content:center;text-align:center;">
-                Küsi selle plaani kohta <i class="icon-angle-small-right" aria-hidden="true"></i>
+                {{ __('magnoolia.floorplan.cta_ask') }} <i class="icon-angle-small-right" aria-hidden="true"></i>
             </a>
             <a id="mg-plan-lb-dl"
                href=""
                download
                class="mg-plan-dl"
                style="min-height:48px;align-self:center;">
-                <i class="icon-download" aria-hidden="true"></i> Laadi alla
+                <i class="icon-download" aria-hidden="true"></i> {{ __('magnoolia.floorplan.download') }}
             </a>
         </div>
 

@@ -12,22 +12,15 @@ use Illuminate\Http\Request;
 class MagnooliaController extends Controller
 {
     /**
-     * Resolve locale from route default or session.
+     * Locale is set by SetLocale middleware from URL segment.
+     * No need to handle it in the controller.
      */
-    protected function locale(string $locale = 'et'): string
-    {
-        $supported = ['et', 'ru', 'en'];
-        $locale = in_array($locale, $supported) ? $locale : 'et';
-        app()->setLocale($locale);
-        return $locale;
-    }
 
     /**
      * GET /kodud-ja-hinnad
      */
-    public function homes(string $locale = 'et')
+    public function homes()
     {
-        $this->locale($locale);
         $page = config('magnoolia_pages.pages.homes', []);
 
         return view('pages.magnoolia.kodud-ja-hinnad', compact('page'));
@@ -36,9 +29,8 @@ class MagnooliaController extends Controller
     /**
      * GET /asendiplaan
      */
-    public function sitePlan(string $locale = 'et')
+    public function sitePlan()
     {
-        $this->locale($locale);
         $page = config('magnoolia_pages.pages.site_plan', []);
 
         return view('pages.magnoolia.asendiplaan', compact('page'));
@@ -47,9 +39,8 @@ class MagnooliaController extends Controller
     /**
      * GET /asukoht
      */
-    public function location(string $locale = 'et')
+    public function location()
     {
-        $this->locale($locale);
         $page = config('magnoolia_pages.pages.location', []);
 
         return view('pages.magnoolia.asukoht', compact('page'));
@@ -58,9 +49,8 @@ class MagnooliaController extends Controller
     /**
      * GET /ehitusinfo
      */
-    public function construction(string $locale = 'et')
+    public function construction()
     {
-        $this->locale($locale);
         $page = config('magnoolia_pages.pages.construction', []);
 
         return view('pages.magnoolia.ehitusinfo', compact('page'));
@@ -70,9 +60,8 @@ class MagnooliaController extends Controller
      * GET /kontakt
      * Accepts optional ?unit= query param to prefill selected unit in form.
      */
-    public function contact(Request $request, string $locale = 'et')
+    public function contact(Request $request)
     {
-        $this->locale($locale);
         $page        = config('magnoolia_pages.pages.contact', []);
         $selectedUnit = $request->query('unit', '');
 
@@ -81,5 +70,47 @@ class MagnooliaController extends Controller
         $unitData   = $validUnits[$selectedUnit] ?? null;
 
         return view('pages.magnoolia.kontakt', compact('page', 'selectedUnit', 'unitData'));
+    }
+
+    /** GET /sisedisain */
+    public function interior()
+    {
+        $page = config('magnoolia_pages.pages.interior', []);
+        return view('pages.magnoolia.sisedisain', compact('page'));
+    }
+
+    /** GET /arhitektuur-ja-valisdisain */
+    public function architecture()
+    {
+        $page = config('magnoolia_pages.pages.architecture', []);
+        return view('pages.magnoolia.arhitektuur-ja-valisdisain', compact('page'));
+    }
+
+    /** GET /galerii */
+    public function gallery()
+    {
+        $page = config('magnoolia_pages.pages.gallery', []);
+        return view('pages.magnoolia.galerii', compact('page'));
+    }
+
+    /** GET /ostuprotsess */
+    public function purchase()
+    {
+        $page = config('magnoolia_pages.pages.purchase', []);
+        return view('pages.magnoolia.ostuprotsess', compact('page'));
+    }
+
+    /** GET /finantseerimine */
+    public function financing()
+    {
+        $page = config('magnoolia_pages.pages.financing', []);
+        return view('pages.magnoolia.finantseerimine', compact('page'));
+    }
+
+    /** GET /kkk */
+    public function faq()
+    {
+        $page = config('magnoolia_pages.pages.faq', []);
+        return view('pages.magnoolia.kkk', compact('page'));
     }
 }

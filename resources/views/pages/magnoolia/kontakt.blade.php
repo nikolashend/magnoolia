@@ -1,13 +1,16 @@
 @extends('layouts.app')
 
-@section('title', $page['title'] ?? 'Küsi Magnoolia kodu pakkumist')
+@section('title', __('magnoolia.page.kontakt.page_title'))
 @section('meta_description', $page['description'] ?? '')
-@section('og_title', $page['title'] ?? 'Küsi Magnoolia kodu pakkumist')
+@section('og_title', $page['title'] ?? '')
 @section('og_description', $page['description'] ?? '')
 
 @section('content')
 @php
-    $canonicalBase = rtrim(config('magnoolia.seo.canonical_base', config('app.url', url('/'))), '/');
+  $base  = rtrim(config('magnoolia.seo.canonical_base', config('app.url', url('/'))), '/');
+  $email = config('magnoolia.project.contact_email', 'diana@estlanda.ee');
+  $phone = config('magnoolia.project.contact_phone', '+37258164078');
+  $phoneFormatted = '+372 58 164 078';
 @endphp
 
 <script type="application/ld+json">
@@ -17,133 +20,136 @@
     {
       "@@type": "BreadcrumbList",
       "itemListElement": [
-        { "@@type": "ListItem", "position": 1, "name": "Avaleht", "item": "{{ $canonicalBase }}" },
-        { "@@type": "ListItem", "position": 2, "name": "Kontakt", "item": "{{ $canonicalBase }}/kontakt" }
+        { "@@type": "ListItem", "position": 1, "name": "Avaleht", "item": "{{ $base }}" },
+        { "@@type": "ListItem", "position": 2, "name": "Kontakt", "item": "{{ $base }}/kontakt" }
       ]
     },
     {
       "@@type": "ContactPage",
-      "@@id": "{{ $canonicalBase }}/kontakt",
-      "name": "Küsi Magnoolia kodu pakkumist",
-      "description": "Küsi Diana Talilt vaba kodu saadavust, hinda ja plaani. Vastame 1 tööpäeva jooksul.",
-      "url": "{{ $canonicalBase }}/kontakt"
-    },
-    {
-      "@@type": "Organization",
-      "@@id": "{{ $canonicalBase }}/#organization",
-      "name": "Magnoolia ridaelamukodud",
-      "url": "{{ $canonicalBase }}",
-      "contactPoint": {
-        "@@type": "ContactPoint",
-        "telephone": "+372-58-16-40-78",
-        "contactType": "sales",
-        "availableLanguage": ["Estonian","Russian","English"]
+      "@@id": "{{ $base }}/kontakt",
+      "name": "Magnoolia kontakt",
+      "description": "Võta ühendust Magnoolia müügiesindajaga",
+      "mainEntity": {
+        "@@type": "Organization",
+        "name": "Estlanda Ehitus OÜ",
+        "telephone": "{{ $phone }}",
+        "email": "{{ $email }}",
+        "address": {
+          "@@type": "PostalAddress",
+          "streetAddress": "Magnoolia tee",
+          "addressLocality": "Vaela küla, Kiili vald",
+          "addressRegion": "Harjumaa",
+          "addressCountry": "EE"
+        }
       }
     }
   ]
 }
 </script>
 
-{{-- ── Page intro hero ────────────────────────────────────────── --}}
-<section style="background:#1d2430;padding:220px 0 48px 0;margin-top:-160px;">
-    <div class="container">
-        @include('partials.seo.breadcrumb', [
-            'items' => [
-                ['label' => 'Avaleht', 'url' => route('home')],
-                ['label' => 'Kontakt'],
-            ]
-        ])
-        <h1 style="font-size:clamp(28px,4vw,44px);font-weight:700;color:#fff;margin:16px 0 20px;line-height:1.2;">
-            {{ $page['h1'] ?? 'Küsi Magnoolia kodu kohta pakkumist' }}
-        </h1>
-        <p style="color:rgba(255,255,255,.7);font-size:17px;line-height:1.75;max-width:700px;margin-bottom:24px;">
-            Saatke päring ja Diana Tali täpsustab teie soovile vastava kodu saadavuse,
-            hinna ja järgmised sammud. Vastame 1 tööpäeva jooksul.
-        </p>
-        <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
-            <a href="tel:+37258164078" style="color:#c89443;font-weight:700;font-size:18px;text-decoration:none;display:flex;align-items:center;gap:10px;">
-                <i class="fas fa-phone"></i> +372 58 16 40 78
-            </a>
-            <a href="mailto:info@magnoolia.ee" style="color:rgba(255,255,255,.6);font-size:15px;text-decoration:none;">
-                <i class="fas fa-envelope" style="margin-right:6px;"></i>info@magnoolia.ee
-            </a>
-        </div>
+{{-- ── Hero ─────────────────────────────────────────────────── --}}
+<div class="mg-page-hero">
+  <div class="container">
+    @include('partials.seo.breadcrumb', ['items' => [
+      ['label' => __('magnoolia.nav.home'), 'url' => route('home')],
+      ['label' => __('magnoolia.nav.contact')],
+    ]])
+    <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.kontakt.eyebrow') }}</div>
+    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.kontakt.page_h1') }}</h1>
+    <p class="mg-page-hero__lead">{!! __('magnoolia.page.kontakt.lead') !!}</p>
+    <div class="mg-page-hero__ctas">
+      <a href="#kontaktivorm" class="zoomvilla-btn">{{ __('magnoolia.page.kontakt.cta_form') }} <i class="icon-angle-small-right"></i></a>
+      <a href="tel:{{ $phone }}" class="zoomvilla-btn zoomvilla-btn--border">
+        <i class="fas fa-phone" style="margin-right:8px;"></i>{{ $phoneFormatted }}
+      </a>
     </div>
+  </div>
+</div>
+
+{{-- ── Intent cards ─────────────────────────────────────────── --}}
+<section class="mg-page-section mg-page-section--cream">
+  <div class="container">
+    <div class="mg-section-heading mg-section-heading--center" style="margin-bottom:40px;">
+      <div class="mg-section-heading__eyebrow">{{ __('magnoolia.page.kontakt.intent_eyebrow') }}</div>
+      <h2 class="mg-section-heading__title">{{ __('magnoolia.page.kontakt.intent_title') }}</h2>
+    </div>
+
+    <div class="row gutter-y-20">
+      @foreach(__('magnoolia.page.kontakt.intents') as $card)
+      <div class="col-lg-4 col-md-6">
+        <div class="mg-intent-card">
+          <div class="mg-intent-card__icon"><i class="{{ $card['icon'] }}"></i></div>
+          <div class="mg-intent-card__title">{{ $card['title'] }}</div>
+          <div class="mg-intent-card__sub">{{ $card['sub'] }}</div>
+        </div>
+      </div>
+      @endforeach
+    </div>
+  </div>
 </section>
 
-{{-- ── Contact form section ────────────────────────────────────── --}}
-@include('sections.magnoolia.contact')
-
-{{-- ── Trust quick links ───────────────────────────────────────── --}}
-<section style="background:#f7f4ef;padding:48px 0;">
-    <div class="container">
-        <div class="row gutter-y-20">
-            <div class="col-lg-4 col-md-6">
-                <a href="{{ route('magnoolia.homes') }}"
-                   style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:20px 22px;text-decoration:none;border:1px solid rgba(29,36,48,.07);transition:border-color .2s;"
-                   onmouseover="this.style.borderColor='#c89443'" onmouseout="this.style.borderColor='rgba(29,36,48,.07)'">
-                    <i class="fas fa-table" style="color:#c89443;font-size:22px;flex-shrink:0;"></i>
-                    <div>
-                        <div style="font-weight:700;color:#1d2430;font-size:15px;">Kodud ja hinnad</div>
-                        <div style="font-size:13px;color:#6f6a61;margin-top:2px;">Vaata hinnatabelit</div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <a href="{{ route('magnoolia.site-plan') }}"
-                   style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:20px 22px;text-decoration:none;border:1px solid rgba(29,36,48,.07);transition:border-color .2s;"
-                   onmouseover="this.style.borderColor='#c89443'" onmouseout="this.style.borderColor='rgba(29,36,48,.07)'">
-                    <i class="fas fa-map" style="color:#c89443;font-size:22px;flex-shrink:0;"></i>
-                    <div>
-                        <div style="font-weight:700;color:#1d2430;font-size:15px;">Asendiplaan</div>
-                        <div style="font-size:13px;color:#6f6a61;margin-top:2px;">Vaata kodude paiknemist</div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <a href="{{ route('magnoolia.location') }}"
-                   style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:20px 22px;text-decoration:none;border:1px solid rgba(29,36,48,.07);transition:border-color .2s;"
-                   onmouseover="this.style.borderColor='#c89443'" onmouseout="this.style.borderColor='rgba(29,36,48,.07)'">
-                    <i class="fas fa-map-marker-alt" style="color:#c89443;font-size:22px;flex-shrink:0;"></i>
-                    <div>
-                        <div style="font-weight:700;color:#1d2430;font-size:15px;">Asukoht</div>
-                        <div style="font-size:13px;color:#6f6a61;margin-top:2px;">Vaela küla, Kiili vald</div>
-                    </div>
-                </a>
-            </div>
+{{-- ── Direct contact (horizontal full-width card) ──────────── --}}
+<section class="mg-page-section mg-page-section--cream">
+  <div class="container">
+    <div style="background:#fff;border-radius:16px;padding:40px 48px;box-shadow:0 4px 20px rgba(29,36,48,.06);">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#c89443;margin-bottom:28px;">{{ __('magnoolia.page.kontakt.direct_label') }}</div>
+      <div class="row gutter-y-20">
+        <div class="col-lg-3 col-md-6">
+          <div style="font-size:13px;color:#888;margin-bottom:6px;">{{ __('magnoolia.page.kontakt.direct_phone') }}</div>
+          <a href="tel:{{ $phone }}" style="font-size:22px;font-weight:700;color:#1d2430;text-decoration:none;display:block;">
+            {{ $phoneFormatted }}
+          </a>
         </div>
+        <div class="col-lg-3 col-md-6">
+          <div style="font-size:13px;color:#888;margin-bottom:6px;">{{ __('magnoolia.page.kontakt.direct_email') }}</div>
+          <a href="mailto:{{ $email }}" style="font-size:16px;font-weight:600;color:#c89443;text-decoration:none;display:block;word-break:break-all;">
+            {{ $email }}
+          </a>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div style="font-size:13px;color:#888;margin-bottom:6px;">{{ __('magnoolia.page.kontakt.direct_loc') }}</div>
+          <div style="font-size:14px;color:#444;line-height:1.7;">{!! __('magnoolia.page.kontakt.direct_address') !!}</div>
+        </div>
+        <div class="col-lg-3 col-md-6" style="display:flex;align-items:flex-end;">
+          <div style="font-size:12px;color:#aaa;line-height:1.7;">{{ __('magnoolia.page.kontakt.direct_note') }}</div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 
-{{-- ── ?unit= prefill script ───────────────────────────────────── --}}
-@if($selectedUnit)
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var unitId = '{{ $selectedUnit }}';
-    // Prefill the unit select
-    var sel = document.getElementById('mg-selected-unit-select');
-    if (sel) {
-        for (var i = 0; i < sel.options.length; i++) {
-            if (sel.options[i].value === unitId) {
-                sel.selectedIndex = i;
-                break;
-            }
-        }
-    }
-    // Prefill the message textarea
-    var ta = document.querySelector('textarea[name="message"]');
-    if (ta && !ta.value) {
-        ta.value = 'Olen huvitatud kodust ' + unitId + '. Palun võtke ühendust.';
-    }
-    // Scroll to form
-    var form = document.getElementById('mg-contact-form');
-    if (form) {
-        setTimeout(function () {
-            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300);
-    }
-});
-</script>
-@endif
+{{-- ── Contact form (full-width) ──────────────────────────── --}}
+<div id="kontaktivorm">
+  @include('sections.magnoolia.contact')
+</div>
 
 @endsection
+
+@push('scripts')
+<script>
+// Pre-fill unit from URL parameter ?unit=X
+document.addEventListener('DOMContentLoaded', function () {
+  var params = new URLSearchParams(window.location.search);
+  var unit   = params.get('unit');
+  if (!unit) return;
+
+  // Try select first, then text input
+  var sel = document.querySelector('[name="unit"], select[name="unit_select"], #unit-select');
+  if (sel && sel.tagName === 'SELECT') {
+    for (var i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value === unit || sel.options[i].text.indexOf(unit) !== -1) {
+        sel.selectedIndex = i;
+        break;
+      }
+    }
+  } else {
+    var txt = document.querySelector('[name="unit"], #unit, input[placeholder*="kodu"]');
+    if (txt) txt.value = unit;
+  }
+
+  // Scroll to form
+  var form = document.getElementById('kontaktivorm');
+  if (form) { setTimeout(function(){ form.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300); }
+});
+</script>
+@endpush

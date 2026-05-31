@@ -44,9 +44,9 @@
                     padding:16px 20px;margin-bottom:32px;display:flex;align-items:flex-start;gap:14px;">
             <i class="fas fa-info-circle" style="color:#c89443;font-size:16px;margin-top:2px;flex-shrink:0;"></i>
             <p style="margin:0;font-size:14px;color:#4a4540;line-height:1.6;">
-                Hinnad ja saadavus täpsustuvad. Valige sobiv kodu ning
-                <a href="#kontakt" style="color:#c89443;font-weight:600;text-decoration:none;">Diana</a>
-                saadab täpse info plaani, hinna ja broneerimisvõimaluse kohta.
+                {{ __('magnoolia.pricing.buyer_note') }}
+                <a href="#kontakt" style="color:#c89443;font-weight:600;text-decoration:none;">{{ __('magnoolia.pricing.buyer_note_link') }}</a>
+                {{ __('magnoolia.pricing.buyer_note_end') }}
             </p>
         </div>
 
@@ -72,21 +72,24 @@
         {{-- Count indicator --}}
         <div style="text-align:center;margin-bottom:16px;margin-top:-12px;">
             <span id="mg-filter-count"
-                  style="font-size:13px;color:#9a9490;font-style:italic;">Näitame kõiki 19 kodu</span>
+                  data-count-all-pre="{{ __('magnoolia.pricing.count_all_pre') }}"
+                  data-count-filter-pre="{{ __('magnoolia.pricing.count_filter_pre') }}"
+                  data-count-suffix="{{ __('magnoolia.pricing.count_suffix') }}"
+                  style="font-size:13px;color:#9a9490;font-style:italic;">{{ __('magnoolia.pricing.count_all_pre') }} {{ count($units) }} {{ __('magnoolia.pricing.count_suffix') }}</span>
         </div>
 
         {{-- Buyer helper tip --}}
         <p style="text-align:center;font-size:13px;color:#9a9490;margin-bottom:28px;margin-top:-4px;">
             <i class="icon-info" style="color:#c89443;margin-right:5px;"></i>
-            <em>Soovitus: valige esmalt sobiv etapp ja plaanitüüp. Kui konkreetne kodu tundub sobiv, küsi
-            <a href="#kontakt" style="color:#c89443;text-decoration:none;font-weight:600;">Diana käest</a>
-            saadavust, täpset plaani ja pakkumist.</em>
+            <em>{{ __('magnoolia.pricing.buyer_tip_pre') }}
+            <a href="#kontakt" style="color:#c89443;text-decoration:none;font-weight:600;">{{ __('magnoolia.pricing.buyer_tip_link') }}</a>
+            {{ __('magnoolia.pricing.buyer_tip_end') }}</em>
         </p>
 
         {{-- ── Table microcopy ─────────────────────────────────────── --}}
         <p class="wow fadeInUp" data-wow-duration="800ms"
            style="text-align:center;font-size:13px;color:#9a9490;margin-bottom:20px;line-height:1.6;max-width:680px;margin-left:auto;margin-right:auto;">
-            Tabel aitab võrrelda aadressi, etappi, plaanitüüpi ja saadavust. Lõplik hind ning kasutusõigusega hooviala m² täpsustuvad kinnitatud hinnatabeliga.
+            {{ __('magnoolia.pricing.table_note') }}
         </p>
 
         {{-- ── DESKTOP TABLE ──────────────────────────────────────── --}}
@@ -98,8 +101,8 @@
                style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:13px 20px;background:#1d2430;border-radius:12px 12px 0 0;{{ !$loop->first ? 'margin-top:40px;' : '' }}">
               <span style="background:#c89443;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em;">{{ $sCfg['label'] }}</span>
               <span style="color:rgba(255,255,255,.75);font-size:14px;">{{ implode(' · ', $sCfg['buildings']) }}</span>
-              <span style="margin-left:auto;color:rgba(200,148,67,.9);font-size:13px;font-weight:600;">Valmib {{ $sCfg['completion'] }}</span>
-              <span style="color:rgba(255,255,255,.4);font-size:13px;">{{ $sCfg['homes'] }} kodu</span>
+              <span style="margin-left:auto;color:rgba(200,148,67,.9);font-size:13px;font-weight:600;">{{ __('magnoolia.pricing.completing') }} {{ $sCfg['completion'] }}</span>
+              <span style="color:rgba(255,255,255,.4);font-size:13px;">{{ $sCfg['homes'] }} {{ __('magnoolia.pricing.homes_label') }}</span>
           </div>
           @endif
           <table data-stage-table="{{ $stageNum }}" style="width:100%;border-collapse:collapse;margin-bottom:0;">
@@ -151,7 +154,7 @@
                         <td style="padding:15px 16px;text-align:center;color:#6f6a61;">{{ $unit['parking'] ?? 2 }}×</td>
                         <td style="padding:15px 16px;text-align:right;font-weight:700;
                                    color:{{ ($unit['price'] ?? null) ? '#1d2430' : '#c89443' }};font-size:{{ ($unit['price'] ?? null) ? '15' : '12' }}px;">
-                            {{ $unit['price'] ? '€ '.number_format($unit['price'], 0, ',', ' ') : 'Hind täpsustamisel' }}
+                            {{ $unit['price'] ? '€ '.number_format($unit['price'], 0, ',', ' ') : __('magnoolia.pricing.price_tbc_inline') }}
                         </td>
                         <td style="padding:15px 16px;text-align:center;">
                             <span class="mg-status {{ $cfg['class'] }}"
@@ -190,7 +193,7 @@
                     <div>
                         <div style="font-weight:700;color:#1d2430;font-size:15px;">{{ $unit['address'] }}</div>
                         <div style="color:#6f6a61;font-size:13px;margin-top:3px;">
-                            {{ $unit['rooms'] ?? '—' }} tuba · {{ number_format($unit['net_area'] ?? 0, 1) }} m² · A-klass
+                            {{ $unit['rooms'] ?? '—' }} {{ __('magnoolia.pricing.rooms_unit') }} · {{ number_format($unit['net_area'] ?? 0, 1) }} m² · {{ __('magnoolia.pricing.area_class') }}
                         </div>
                         @php
                             $mobilePtChip = match($unit['plan_type'] ?? null) {
@@ -216,12 +219,12 @@
                 @endif
                 <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:#6f6a61;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(29,36,48,.07);">
                     @if(!empty($unit['terrace_area']) && $unit['terrace_area'] > 0)
-                        <span>Terrass {{ number_format($unit['terrace_area'],1) }} m²</span>
+                        <span>{{ __('magnoolia.pricing.terrace_label') }} {{ number_format($unit['terrace_area'],1) }} m²</span>
                     @endif
                     @if(!empty($unit['balcony_area']) && $unit['balcony_area'] > 0)
-                        <span>Rõdu {{ number_format($unit['balcony_area'],1) }} m²</span>
+                        <span>{{ __('magnoolia.pricing.balcony_label') }} {{ number_format($unit['balcony_area'],1) }} m²</span>
                     @endif
-                    <span>{{ $unit['parking'] ?? 2 }}× parkimine</span>
+                    <span>{{ $unit['parking'] ?? 2 }}× {{ __('magnoolia.pricing.parking_label') }}</span>
                 </div>
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div style="font-weight:700;color:#1d2430;font-size:15px;">
@@ -259,7 +262,7 @@
                         {{ __('magnoolia.pricing.cta_inquiry') }} <i class="icon-angle-small-right"></i>
                     </a>
                     <a href="#asendiplaan" class="zoomvilla-btn zoomvilla-btn--border">
-                        Asendiplaan <i class="icon-angle-small-right"></i>
+                        {{ __('magnoolia.nav.masterplan') }} <i class="icon-angle-small-right"></i>
                     </a>
                 </div>
             </div>
@@ -295,13 +298,16 @@
         /* Update count */
         setTimeout(function () {
             var rows  = document.querySelectorAll('.mg-unit-row');
+            var el = document.getElementById('mg-filter-count');
             var visible = 0;
             rows.forEach(function (r) { if (r.style.display !== 'none') visible++; });
-            var el = document.getElementById('mg-filter-count');
             if (el) {
+                var allPre    = el.dataset.countAllPre    || '';
+                var filterPre = el.dataset.countFilterPre || '';
+                var suffix    = el.dataset.countSuffix    || '';
                 el.textContent = visible === rows.length
-                    ? 'N\u00e4itame k\u00f5iki ' + rows.length + ' kodu'
-                    : 'N\u00e4itame: ' + visible + ' kodu';
+                    ? allPre + ' ' + rows.length + ' ' + suffix
+                    : filterPre + ' ' + visible + ' ' + suffix;
             }
         }, 10);
     }

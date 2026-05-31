@@ -1,16 +1,17 @@
 @extends('layouts.app')
 
-@section('title', $page['title'] ?? 'Magnoolia kodud ja hinnad')
+@section('title', __('magnoolia.page.kodudjahinnad.page_title'))
 @section('meta_description', $page['description'] ?? '')
-@section('og_title', $page['title'] ?? 'Magnoolia kodud ja hinnad')
+@section('og_title', $page['title'] ?? '')
 @section('og_description', $page['description'] ?? '')
 
 @section('content')
 @php
-    $canonicalBase = rtrim(config('magnoolia.seo.canonical_base', config('app.url', url('/'))), '/');
+  $base   = rtrim(config('magnoolia.seo.canonical_base', config('app.url', url('/'))), '/');
+  $units  = collect(config('magnoolia.units', []));
+  $stages = config('magnoolia.stages', []);
 @endphp
 
-{{-- Page-level BreadcrumbList schema --}}
 <script type="application/ld+json">
 {
   "@@context": "https://schema.org",
@@ -18,164 +19,156 @@
     {
       "@@type": "BreadcrumbList",
       "itemListElement": [
-        { "@@type": "ListItem", "position": 1, "name": "Avaleht", "item": "{{ $canonicalBase }}" },
-        { "@@type": "ListItem", "position": 2, "name": "Kodud ja hinnad", "item": "{{ $canonicalBase }}/kodud-ja-hinnad" }
+        { "@@type": "ListItem", "position": 1, "name": "Avaleht", "item": "{{ $base }}" },
+        { "@@type": "ListItem", "position": 2, "name": "Kodud ja hinnad", "item": "{{ $base }}/kodud-ja-hinnad" }
       ]
     },
     {
-      "@@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@@type": "Question",
-          "name": "Mis on Magnoolia kodude hind?",
-          "acceptedAnswer": { "@@type": "Answer", "text": "Konkreetsed hinnad täpsustuvad vastavalt kinnitatud hinnatabelile. Saadavuse ja hinnainfo saamiseks saatke päring — Diana Tali täpsustab kõik detailid." }
-        },
-        {
-          "@@type": "Question",
-          "name": "Mis on Plaan A ja Plaan B erinevus?",
-          "acceptedAnswer": { "@@type": "Answer", "text": "Plaan A on 3 koduga ridaelamu sektsiooni tüüp (~129,6 m², 4 tuba). Plaan B on 4 koduga ridaelamu sektsiooni tüüp (~143,2 m², 5 tuba). Mõlemal on privaatne hooviala, terrass, rõdu ja 2 parkimiskohta." }
-        },
-        {
-          "@@type": "Question",
-          "name": "Kuidas valida I ja II etapi vahel?",
-          "acceptedAnswer": { "@@type": "Answer", "text": "I etapp (Magnoolia tee 1 ja 3) valmib kevadel 2027 ja sobib neile, kes soovivad varem sisse kolida. II etapp (Magnoolia tee 5–11) valmib kevadel 2028 ja pakub laiemat valikut. Küsige Diana käest konkreetsete kodude saadavust." }
-        }
-      ]
+      "@@type": "ApartmentComplex",
+      "@@id": "{{ $base }}/#apartment-complex",
+      "name": "Magnoolia ridaelamukodud",
+      "description": "19 A-energiaklassi ridaelamukodu Vaela külas, Kiili vallas, Tallinna lähedal. Plaan A (4 tuba, ~129.6 m²) ja Plaan B (5 tuba, ~143.2 m²).",
+      "url": "{{ $base }}/kodud-ja-hinnad",
+      "address": {
+        "@@type": "PostalAddress",
+        "streetAddress": "Magnoolia tee",
+        "addressLocality": "Vaela küla, Kiili vald",
+        "addressRegion": "Harjumaa",
+        "addressCountry": "EE"
+      }
     }
   ]
 }
 </script>
 
-{{-- ── Page intro hero ────────────────────────────────────────── --}}
-<section style="background:#1d2430;padding:220px 0 48px 0;margin-top:-160px;">
-    <div class="container">
-        @include('partials.seo.breadcrumb', [
-            'items' => [
-                ['label' => 'Avaleht', 'url' => route('home')],
-                ['label' => 'Kodud ja hinnad'],
-            ]
-        ])
-        <h1 style="font-size:clamp(28px,4vw,44px);font-weight:700;color:#fff;margin:16px 0 20px;line-height:1.2;">
-            {{ $page['h1'] ?? 'Magnoolia kodud ja hinnad' }}
-        </h1>
-        <p style="color:rgba(255,255,255,.7);font-size:17px;line-height:1.75;max-width:700px;margin-bottom:28px;">
-            Magnoolia kodude valik aitab võrrelda aadresse, etappe, plaanitüüpe ja saadavust ühes kohas.
-            I etapp hõlmab Magnoolia tee 1 ja 3 kodusid valmimisega kevadel 2027.
-            II etapp hõlmab Magnoolia tee 5–11 kodusid valmimisega kevadel 2028.
-        </p>
-        <p style="color:rgba(255,255,255,.55);font-size:15px;line-height:1.65;max-width:700px;margin-bottom:0;">
-            Lõplik hind ja isikliku kasutusõigusega hooviala täpsustuvad kinnitatud hinnatabeliga.
-            Kui mõni kodu tundub sobiv, küsige
-            <a href="{{ route('magnoolia.contact') }}" style="color:#c89443;font-weight:600;text-decoration:none;">Diana käest</a>
-            konkreetse aadressi saadavust, plaani ja pakkumist.
-        </p>
+{{-- ── Hero ─────────────────────────────────────────────────── --}}
+<div class="mg-page-hero">
+  <div class="container">
+    @include('partials.seo.breadcrumb', ['items' => [
+      ['label' => __('magnoolia.nav.home'), 'url' => route('home')],
+      ['label' => __('magnoolia.nav.homes')],
+    ]])
+    <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.kodudjahinnad.eyebrow') }}</div>
+    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.kodudjahinnad.page_h1') }}</h1>
+    <p class="mg-page-hero__lead">{!! __('magnoolia.page.kodudjahinnad.lead') !!}</p>
+    <p class="mg-page-hero__note">{{ __('magnoolia.page.kodudjahinnad.note') }}</p>
+    <div class="mg-page-hero__ctas">
+      <a href="#hinnatabel" class="zoomvilla-btn">{{ __('magnoolia.page.kodudjahinnad.cta_table') }} <i class="icon-angle-small-right"></i></a>
+      <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border">{{ __('magnoolia.page.kodudjahinnad.cta_inquiry') }} <i class="icon-angle-small-right"></i></a>
     </div>
+  </div>
+</div>
+
+{{-- ── Plan comparison cards ────────────────────────────────── --}}
+<section class="mg-page-section mg-page-section--white" id="plaanid">
+  <div class="container">
+    <div class="mg-section-heading mg-section-heading--center">
+      <div class="mg-section-heading__eyebrow">{{ __('magnoolia.page.kodudjahinnad.plans_eyebrow') }}</div>
+      <h2 class="mg-section-heading__title">{{ __('magnoolia.page.kodudjahinnad.plans_title') }}</h2>
+      <p class="mg-section-heading__subtitle">{{ __('magnoolia.page.kodudjahinnad.plans_sub') }}</p>
+    </div>
+    <div class="row gutter-y-24">
+      <div class="col-lg-6 wow fadeInUp" data-wow-duration="700ms" data-wow-delay="0ms">
+        <div class="mg-comparison-card">
+          <div class="mg-comparison-card__plan">{{ __('magnoolia.page.kodudjahinnad.plan_a_name') }}</div>
+          <div class="mg-comparison-card__title">{{ __('magnoolia.page.kodudjahinnad.plan_a_title') }}</div>
+          <div class="mg-comparison-card__size">{{ __('magnoolia.page.kodudjahinnad.plan_a_size') }}</div>
+          <ul class="mg-comparison-card__specs">
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_rooms') }}</span><strong>4</strong></li>
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_area') }}</span><strong>ca 129,6 m²</strong></li>
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_terrace') }}</span><strong>{{ __('magnoolia.page.kodudjahinnad.spec_check') }}</strong></li>
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_yard') }}</span><strong>{{ __('magnoolia.page.kodudjahinnad.spec_check') }}</strong></li>
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_parking') }}</span><strong>2</strong></li>
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_stage') }}</span><strong>{{ __('magnoolia.page.kodudjahinnad.spec_stage_ab') }}</strong></li>
+          </ul>
+          <p class="mg-comparison-card__pitch">{{ __('magnoolia.page.kodudjahinnad.plan_a_pitch') }}</p>
+          <div class="mg-comparison-card__ctas">
+            <a href="{{ route('home') }}#plaanid" class="zoomvilla-btn">{{ __('magnoolia.page.kodudjahinnad.plan_a_cta_view') }} <i class="icon-angle-small-right"></i></a>
+            <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border">{{ __('magnoolia.page.kodudjahinnad.plan_a_cta_inq') }} <i class="icon-angle-small-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 wow fadeInUp" data-wow-duration="700ms" data-wow-delay="120ms">
+        <div class="mg-comparison-card mg-comparison-card--featured">
+          <div class="mg-comparison-card__badge">{{ __('magnoolia.page.kodudjahinnad.plan_b_badge') }}</div>
+          <div class="mg-comparison-card__plan">{{ __('magnoolia.page.kodudjahinnad.plan_b_name') }}</div>
+          <div class="mg-comparison-card__title">{{ __('magnoolia.page.kodudjahinnad.plan_b_title') }}</div>
+          <div class="mg-comparison-card__size">{{ __('magnoolia.page.kodudjahinnad.plan_b_size') }}</div>
+          <ul class="mg-comparison-card__specs">
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_rooms') }}</span><strong>5</strong></li>
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_area') }}</span><strong>ca 143,2 m²</strong></li>
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_terrace') }}</span><strong>{{ __('magnoolia.page.kodudjahinnad.plan_b_terrass') }}</strong></li>
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_yard') }}</span><strong>{{ __('magnoolia.page.kodudjahinnad.spec_check') }}</strong></li>
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_parking') }}</span><strong>2</strong></li>
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_stage') }}</span><strong>{{ __('magnoolia.page.kodudjahinnad.spec_stage_ab') }}</strong></li>
+          </ul>
+          <p class="mg-comparison-card__pitch">{{ __('magnoolia.page.kodudjahinnad.plan_b_pitch') }}</p>
+          <div class="mg-comparison-card__ctas">
+            <a href="{{ route('home') }}#plaanid" class="zoomvilla-btn">{{ __('magnoolia.page.kodudjahinnad.plan_b_cta_view') }} <i class="icon-angle-small-right"></i></a>
+            <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border">{{ __('magnoolia.page.kodudjahinnad.plan_b_cta_inq') }} <i class="icon-angle-small-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-{{-- ── SEO keyword intro ───────────────────────────────────────── --}}
-<section style="background:#f7f4ef;padding:36px 0 0;">
-    <div class="container">
-        <div style="background:#fff;border-radius:16px;padding:28px 32px;border-left:3px solid #c89443;max-width:820px;">
-            <p style="font-size:15px;color:#4a4540;line-height:1.75;margin:0;">
-                Magnoolia on A-energiaklassi ridaelamu Vaela külas, Kiili vallas — ligikaudu 20 minutit Tallinnast.
-                Uusarenduse 19 rida&shy;elamu&shy;kodu pakuvad privaatset hooviala, terrassi, rõdu ja läbimõeldud tehnosüsteeme.
-                Vaadake allpool ridaelamukoduide tabelit, võrrelge plaane ja küsige saadavust.
-            </p>
+{{-- ── Hinnatabel ───────────────────────────────────────────── --}}
+<div id="hinnatabel">
+  @include('sections.magnoolia.hinnad')
+</div>
+
+{{-- ── How to choose ────────────────────────────────────────── --}}
+<section class="mg-page-section mg-page-section--white">
+  <div class="container">
+    <div class="mg-how-to">
+      <div class="mg-section-heading" style="margin-bottom:0;">
+        <div class="mg-section-heading__eyebrow">{{ __('magnoolia.page.kodudjahinnad.how_eyebrow') }}</div>
+        <h2 class="mg-section-heading__title">{{ __('magnoolia.page.kodudjahinnad.how_title') }}</h2>
+      </div>
+      <div class="mg-how-to__grid">
+        @foreach(__('magnoolia.page.kodudjahinnad.how_steps') as $s)
+        <div class="mg-how-to__step">
+          <div class="mg-how-to__num">{{ $s['n'] }}</div>
+          <div class="mg-how-to__label">{{ $s['t'] }}</div>
+          <div class="mg-how-to__desc">{{ $s['d'] }}</div>
         </div>
+        @endforeach
+      </div>
     </div>
+  </div>
 </section>
 
-{{-- ── Hinnad table ────────────────────────────────────────────── --}}
-@include('sections.magnoolia.hinnad')
+{{-- ── FAQ ─────────────────────────────────────────────────── --}}
+@include('sections.magnoolia.page-faq', [
+  'eyebrow' => __('magnoolia.page.kodudjahinnad.faq_eyebrow'),
+  'title'   => __('magnoolia.page.kodudjahinnad.faq_title'),
+  'bg'      => 'cream',
+  'faqs'    => __('magnoolia.page.kodudjahinnad.faq_items'),
+])
 
-{{-- ── Floor plan teaser ──────────────────────────────────────── --}}
-<section style="background:#fff;padding:60px 0;">
-    <div class="container">
-        <div class="sec-title text-center" style="margin-bottom:36px;">
-            <div class="sec-title__top justify-content-center">
-                <span class="line-left"></span>
-                <h6 class="sec-title__tagline bw-split-in-right">Korrusplaanid</h6>
-                <span class="line-right"></span>
-            </div>
-            <h2 class="sec-title__title bw-split-in-left">Plaan A ja Plaan B</h2>
-            <p style="color:#6f6a61;margin-top:16px;font-size:16px;max-width:580px;margin-left:auto;margin-right:auto;">
-                Kaks plaanitüüpi — 4-toaline Plaan A (~129,6 m²) ja 5-toaline Plaan B (~143,2 m²).
-                Mõlemal on privaatne hooviala, terrass ja rõdu.
-            </p>
-        </div>
-        <div style="text-align:center;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-            <a href="{{ route('home') }}#plaanid" class="zoomvilla-btn">
-                Vaata korrusplaane <i class="icon-angle-small-right"></i>
-            </a>
-            <a href="{{ route('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border">
-                Küsi täpset plaani <i class="icon-angle-small-right"></i>
-            </a>
-        </div>
+{{-- ── Internal links ──────────────────────────────────────── --}}
+<section class="mg-page-section--cream mg-page-section--sm">
+  <div class="container">
+    <div class="mg-internal-links">
+      <a href="{{ lroute('magnoolia.site-plan') }}" class="mg-internal-link"><i class="fas fa-map"></i> {{ __('magnoolia.page.kodudjahinnad.link_plan') }}</a>
+      <a href="{{ route('home') }}#plaanid" class="mg-internal-link"><i class="fas fa-drafting-compass"></i> {{ __('magnoolia.page.kodudjahinnad.link_floorplans') }}</a>
+      <a href="{{ lroute('magnoolia.location') }}" class="mg-internal-link"><i class="fas fa-map-marker-alt"></i> {{ __('magnoolia.page.kodudjahinnad.link_loc') }}</a>
+      <a href="{{ lroute('magnoolia.ostuprotsess') }}" class="mg-internal-link"><i class="fas fa-list-ol"></i> {{ __('magnoolia.page.kodudjahinnad.link_proc') }}</a>
+      <a href="{{ lroute('magnoolia.contact') }}" class="mg-internal-link"><i class="fas fa-envelope"></i> {{ __('magnoolia.page.kodudjahinnad.link_cont') }}</a>
     </div>
+  </div>
 </section>
 
-{{-- ── Page FAQ ────────────────────────────────────────────────── --}}
-<section style="background:#fbfaf7;padding:60px 0;">
-    <div class="container">
-        <div class="sec-title text-center" style="margin-bottom:40px;">
-            <div class="sec-title__top justify-content-center">
-                <span class="line-left"></span>
-                <h6 class="sec-title__tagline bw-split-in-right">KKK</h6>
-                <span class="line-right"></span>
-            </div>
-            <h2 class="sec-title__title bw-split-in-left">Korduma kippuvad küsimused kodude ja hindade kohta</h2>
-        </div>
-        @php
-        $pageFaqs = [
-            ['q' => 'Mis on Magnoolia kodude hind?',
-             'a' => 'Konkreetsed hinnad täpsustuvad vastavalt kinnitatud hinnatabelile. Saatke päring — Diana Tali täpsustab hinna, plaani ja saadavuse konkreetse aadressi põhjal.'],
-            ['q' => 'Mis vahe on Plaan A ja Plaan B vahel?',
-             'a' => 'Plaan A on 4-toaline kodu (~129,6 m²), Plaan B on 5-toaline kodu (~143,2 m²). Mõlemad plaanid asuvad ridaelamu sektsioonis privaatse hoovialaga, terrassi ja rõduga.'],
-            ['q' => 'Kuidas valida I ja II etapi vahel?',
-             'a' => 'I etapp (Magnoolia tee 1 ja 3) valmib kevadel 2027. II etapp (Magnoolia tee 5–11) valmib kevadel 2028. Varasem etapp sobib neile, kes soovivad kiiremini sisse kolida. Küsi Diana käest konkreetsete kodude saadavust.'],
-            ['q' => 'Kuidas broneerida Magnoolia kodu?',
-             'a' => 'Saatke päring kontaktivormi kaudu või helistage Diana Talile (+372 58 16 40 78). Diana kinnitab saadavuse, selgitab broneerimisprotsessi ja lepib kokku järgmised sammud.'],
-            ['q' => 'Kas privaatse hooviala suurus on teada?',
-             'a' => 'Hooviala suurus täpsustub koos kinnitatud hinnatabeliga. Igal kodul on oma piiratud kasutusõigusega hooviala.'],
-        ];
-        @endphp
-        <div class="row gutter-y-20" itemscope itemtype="https://schema.org/FAQPage">
-            @foreach($pageFaqs as $i => $faq)
-            <div class="col-lg-6 col-md-6 wow fadeInUp" data-wow-duration="800ms" data-wow-delay="{{ $i * 80 }}ms"
-                 itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
-                <div style="background:#fff;border-radius:14px;padding:24px;height:100%;border:1px solid rgba(29,36,48,.07);">
-                    <h3 itemprop="name" style="font-size:15px;font-weight:700;color:#1d2430;margin:0 0 10px;">{{ $faq['q'] }}</h3>
-                    <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
-                        <p itemprop="text" style="font-size:14px;color:#6f6a61;line-height:1.7;margin:0;">{{ $faq['a'] }}</p>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- ── CTA block ───────────────────────────────────────────────── --}}
-<section style="background:#1d2430;padding:60px 0;">
-    <div class="container" style="text-align:center;">
-        <h2 style="font-size:28px;font-weight:700;color:#fff;margin-bottom:16px;">
-            Leidsid sobiva kodu?
-        </h2>
-        <p style="color:rgba(255,255,255,.65);font-size:16px;max-width:500px;margin:0 auto 32px;">
-            Küsi Diana käest konkreetse aadressi saadavust, täpset plaani ja pakkumist.
-        </p>
-        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
-            <a href="{{ route('magnoolia.contact') }}" class="zoomvilla-btn">
-                Küsi pakkumist <i class="icon-angle-small-right"></i>
-            </a>
-            <a href="tel:+37258164078" class="zoomvilla-btn zoomvilla-btn--border">
-                <i class="fas fa-phone" style="margin-right:8px;"></i>Helista Dianale
-            </a>
-            <a href="{{ route('magnoolia.site-plan') }}" class="zoomvilla-btn zoomvilla-btn--border">
-                Vaata asendiplaani <i class="icon-angle-small-right"></i>
-            </a>
-        </div>
-    </div>
-</section>
+{{-- ── CTA ──────────────────────────────────────────────────── --}}
+@include('sections.magnoolia.page-cta', [
+  'title'   => __('magnoolia.page.kodudjahinnad.cta_title'),
+  'sub'     => __('magnoolia.page.kodudjahinnad.cta_sub'),
+  'buttons' => [
+    ['label' => __('magnoolia.page.kodudjahinnad.cta_btn1'), 'url' => lroute('magnoolia.contact')],
+    ['label' => __('magnoolia.page.kodudjahinnad.cta_btn2'), 'url' => 'tel:+37258164078', 'outline' => true, 'icon' => 'fas fa-phone'],
+    ['label' => __('magnoolia.page.kodudjahinnad.cta_btn3'), 'url' => lroute('magnoolia.site-plan'), 'outline' => true],
+  ]
+])
 
 @endsection

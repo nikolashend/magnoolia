@@ -28,10 +28,10 @@
                 <div class="sec-title text-start">
                     <div class="sec-title__top justify-content-start">
                         <span class="line-left" style="background:rgba(200,148,67,.5);"></span>
-                        <h6 class="sec-title__tagline bw-split-in-right" style="color:#c89443;">Võta ühendust</h6>
+                        <h6 class="sec-title__tagline bw-split-in-right" style="color:#c89443;">{{ __('magnoolia.section.contact_eyebrow') }}</h6>
                     </div>
                     <h3 class="sec-title__title bw-split-in-left" style="color:#fff;">
-                        Soovid Magnoolia kodu kohta rohkem teada?
+                        {{ __('magnoolia.section.contact_title') }}
                     </h3>
                 </div>
 
@@ -39,11 +39,10 @@
                     {{ __('magnoolia.section.contact_body') }}
                 </p>
                 <p style="color:rgba(255,255,255,.75);font-size:15px;line-height:1.75;margin-bottom:20px;">
-                    Kui mõni kodu tundub sobiv, on kõige mõistlikum järgmine samm küsi da konkreetse aadressi saadavust, plaani ja pakkumist.
-                    Diana aitab kontrollida, millised kodud on veel vabad ja milline plaan sobib teie perele kõige paremini.
+                    {{ __('magnoolia.section.contact_body2') }}
                 </p>
                 <p style="color:rgba(200,148,67,.8);font-size:14px;line-height:1.6;margin-bottom:32px;font-style:italic;">
-                    Küsi vaba kodu, täpsustatud hinda või personaalselt sobivat plaani.
+                    {{ __('magnoolia.section.contact_body3') }}
                 </p>
 
                 {{-- Contact person --}}
@@ -91,16 +90,16 @@
                 @if($jaanikaConfirmed)
                 {{-- Jaanika mini-card — only when jaanika_confirmed => true in config --}}
                 <div style="background:rgba(255,255,255,.05);border-radius:16px;padding:20px 24px;margin-bottom:28px;border:1px solid rgba(255,255,255,.1);">
-                    <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;">Jaanika Salumäe</div>
+                    <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;">{{ __('magnoolia.jaanika.name') }}</div>
                     <div style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em;">
-                        Sisedisaini konsultatsioon · JP Design
+                        {{ __('magnoolia.jaanika.role') }}
                     </div>
                     <a href="#kontakt"
                        style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;
                               color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s;"
                        onmouseover="this.style.color='#c89443'" onmouseout="this.style.color='rgba(255,255,255,.7)'">
                         <i class="fas fa-paint-brush" style="color:#c89443;width:14px;"></i>
-                        Küsi sisedisaini nõustamist
+                        {{ __('magnoolia.jaanika.cta') }}
                     </a>
                 </div>
                 @endif
@@ -108,24 +107,24 @@
                 {{-- CTAs --}}
                 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px;">
                     <a href="tel:+37258164078" class="zoomvilla-btn">
-                        <i class="fas fa-phone" style="margin-right:8px;"></i>Helista
+                        <i class="fas fa-phone" style="margin-right:8px;"></i>{{ __('magnoolia.section.contact_cta_call') }}
                     </a>
                     <a href="mailto:diana@estlanda.ee" class="zoomvilla-btn zoomvilla-btn--border">
-                        <i class="fas fa-envelope" style="margin-right:8px;"></i>Saada e-kiri
+                        <i class="fas fa-envelope" style="margin-right:8px;"></i>{{ __('magnoolia.section.contact_cta_email') }}
                     </a>
                     <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border">
-                        Küsi pakkumist <i class="icon-angle-small-right"></i>
+                        {{ __('magnoolia.contact.cta_inquiry') }} <i class="icon-angle-small-right"></i>
                     </a>
                 </div>
 
                 {{-- Trust chips --}}
                 <div style="display:flex;flex-wrap:wrap;gap:10px;">
                     @foreach([
-                        '19 kodu',
-                        'A-energiaklass',
-                        'I etapp · kevad 2027',
-                        'Vaela küla · Kiili vald',
-                        'Tallinna lähedal',
+                        __('magnoolia.contact.trust_2'),
+                        __('magnoolia.contact.trust_1'),
+                        __('magnoolia.contact.trust_3'),
+                        __('magnoolia.contact.trust_4'),
+                        __('magnoolia.contact.trust_5'),
                     ] as $chip)
                     <div style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.7);
                                 background:rgba(255,255,255,.08);border-radius:100px;padding:6px 14px;
@@ -142,7 +141,7 @@
             <div class="col-lg-5 offset-lg-1 wow fadeInRight" data-wow-duration="1400ms" data-wow-delay="200ms">
                 <div style="background:#fff;border-radius:20px;padding:36px;">
                     <h4 style="font-size:20px;font-weight:700;color:#1d2430;margin-bottom:24px;">
-                        Küsi pakkumist
+                        {{ __('magnoolia.contact.cta_inquiry') }}
                     </h4>
 
                     <form action="{{ route('contact.send') }}" method="POST" style="display:flex;flex-direction:column;gap:16px;">
@@ -160,38 +159,38 @@
                                            background-repeat:no-repeat;background-position:right 14px center;
                                            padding-right:40px;"
                                     onfocus="this.style.borderColor='#c89443'" onblur="this.style.borderColor='rgba(29,36,48,.15)'">
-                                <option value="">Soovitud kodu (valikuline)</option>
+                                <option value="">{{ __('magnoolia.forms.unit') }}</option>
                                 @foreach($allUnitsForForm as $u)
                                     @if(($u['status'] ?? 'tbc') !== 'sold')
-                                    <option value="{{ $u['address'] }}">{{ $u['address'] }} — {{ $u['rooms'] ?? '?' }} tuba, {{ number_format($u['net_area'] ?? 0, 1) }} m²</option>
+                                    <option value="{{ $u['address'] }}">{{ $u['address'] }} — {{ $u['rooms'] ?? '?' }} {{ __('magnoolia.forms.unit_rooms') }}, {{ number_format($u['net_area'] ?? 0, 1) }} m²</option>
                                     @endif
                                 @endforeach
                             </select>
                         </div>
 
                         <div>
-                            <input type="text" name="name" placeholder="Nimi *" required
+                            <input type="text" name="name" placeholder="{{ __('magnoolia.forms.name') }} *" required
                                    style="width:100%;border:1.5px solid rgba(29,36,48,.15);border-radius:10px;
                                           padding:12px 16px;font-size:14px;outline:none;transition:border-color .2s;
                                           font-family:inherit;"
                                    onfocus="this.style.borderColor='#c89443'" onblur="this.style.borderColor='rgba(29,36,48,.15)'">
                         </div>
                         <div>
-                            <input type="email" name="email" placeholder="E-post *" required
+                            <input type="email" name="email" placeholder="{{ __('magnoolia.forms.email') }} *" required
                                    style="width:100%;border:1.5px solid rgba(29,36,48,.15);border-radius:10px;
                                           padding:12px 16px;font-size:14px;outline:none;transition:border-color .2s;
                                           font-family:inherit;"
                                    onfocus="this.style.borderColor='#c89443'" onblur="this.style.borderColor='rgba(29,36,48,.15)'">
                         </div>
                         <div>
-                            <input type="tel" name="phone" placeholder="Telefon"
+                            <input type="tel" name="phone" placeholder="{{ __('magnoolia.forms.phone') }}"
                                    style="width:100%;border:1.5px solid rgba(29,36,48,.15);border-radius:10px;
                                           padding:12px 16px;font-size:14px;outline:none;transition:border-color .2s;
                                           font-family:inherit;"
                                    onfocus="this.style.borderColor='#c89443'" onblur="this.style.borderColor='rgba(29,36,48,.15)'">
                         </div>
                         <div>
-                            <textarea name="message" placeholder="Sõnum — näiteks milline kodu huvitab" rows="4"
+                            <textarea name="message" placeholder="{{ __('magnoolia.forms.message_placeholder') }}" rows="4"
                                       style="width:100%;border:1.5px solid rgba(29,36,48,.15);border-radius:10px;
                                              padding:12px 16px;font-size:14px;outline:none;transition:border-color .2s;
                                              resize:vertical;font-family:inherit;"
@@ -203,19 +202,18 @@
                                    style="width:16px;height:16px;accent-color:#c89443;cursor:pointer;flex-shrink:0;margin-top:2px;">
                             <label for="mg-consent"
                                    style="font-size:13px;color:#6f6a61;line-height:1.5;cursor:pointer;">
-                                Nõustun, et minuga võetakse ühendust seoses Magnoolia kodude kohta info saamisega.
+                                {{ __('magnoolia.forms.consent_text') }}
                             </label>
                         </div>
 
                         <button type="submit" class="zoomvilla-btn" style="width:100%;justify-content:center;border:none;cursor:pointer;">
-                            Saada päring <i class="icon-angle-small-right"></i>
+                            {{ __('magnoolia.forms.submit') }} <i class="icon-angle-small-right"></i>
                         </button>
                     </form>
 
                     <p style="font-size:12px;color:#9a9490;text-align:center;margin-top:14px;margin-bottom:0;line-height:1.6;">
-                        Pärast päringu saatmist täpsustame valitud kodu saadavuse, plaani, hinna ja järgmise sammu.
-                        Kui soovite kiiremat vastust,
-                        <a href="tel:+37258164078" style="color:#c89443;text-decoration:none;font-weight:600;">helistage otse Dianale</a>.
+                        {{ __('magnoolia.forms.post_submit') }}
+                        <a href="tel:+37258164078" style="color:#c89443;text-decoration:none;font-weight:600;">{{ __('magnoolia.forms.post_submit_cta') }}</a>.
                     </p>
                 </div>
             </div>

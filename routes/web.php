@@ -33,6 +33,43 @@ Route::get('/asendiplaan',      [MagnooliaController::class, 'sitePlan'])      -
 Route::get('/asukoht',          [MagnooliaController::class, 'location'])      ->name('magnoolia.location');
 Route::get('/ehitusinfo',       [MagnooliaController::class, 'construction'])  ->name('magnoolia.construction');
 Route::get('/kontakt',          [MagnooliaController::class, 'contact'])       ->name('magnoolia.contact');
+Route::get('/sisedisain',       [MagnooliaController::class, 'interior'])      ->name('magnoolia.sisedisain');
+Route::get('/arhitektuur-ja-valisdisain', [MagnooliaController::class, 'architecture'])->name('magnoolia.arhitektuur');
+Route::get('/galerii',          [MagnooliaController::class, 'gallery'])       ->name('magnoolia.galerii');
+Route::get('/ostuprotsess',     [MagnooliaController::class, 'purchase'])      ->name('magnoolia.ostuprotsess');
+Route::get('/finantseerimine',  [MagnooliaController::class, 'financing'])     ->name('magnoolia.finantseerimine');
+Route::get('/kkk',              [MagnooliaController::class, 'faq'])           ->name('magnoolia.kkk');
+
+// ── Locale prefix groups: /ru/... and /en/... ────────────────────────────────
+foreach (['ru', 'en'] as $_loc) {
+    Route::prefix($_loc)
+        ->group(function () use ($_loc) {
+            Route::get('/', [HomeController::class, 'index'])
+                ->name($_loc . '.home');
+            Route::get('/kodud-ja-hinnad',  [MagnooliaController::class, 'homes'])
+                ->name($_loc . '.magnoolia.homes');
+            Route::get('/asendiplaan',      [MagnooliaController::class, 'sitePlan'])
+                ->name($_loc . '.magnoolia.site-plan');
+            Route::get('/asukoht',          [MagnooliaController::class, 'location'])
+                ->name($_loc . '.magnoolia.location');
+            Route::get('/ehitusinfo',       [MagnooliaController::class, 'construction'])
+                ->name($_loc . '.magnoolia.construction');
+            Route::get('/kontakt',          [MagnooliaController::class, 'contact'])
+                ->name($_loc . '.magnoolia.contact');
+            Route::get('/sisedisain',       [MagnooliaController::class, 'interior'])
+                ->name($_loc . '.magnoolia.sisedisain');
+            Route::get('/arhitektuur-ja-valisdisain', [MagnooliaController::class, 'architecture'])
+                ->name($_loc . '.magnoolia.arhitektuur');
+            Route::get('/galerii',          [MagnooliaController::class, 'gallery'])
+                ->name($_loc . '.magnoolia.galerii');
+            Route::get('/ostuprotsess',     [MagnooliaController::class, 'purchase'])
+                ->name($_loc . '.magnoolia.ostuprotsess');
+            Route::get('/finantseerimine',  [MagnooliaController::class, 'financing'])
+                ->name($_loc . '.magnoolia.finantseerimine');
+            Route::get('/kkk',              [MagnooliaController::class, 'faq'])
+                ->name($_loc . '.magnoolia.kkk');
+        });
+}
 
 // ── Sitemap ──────────────────────────────────────────────────────────────
 Route::get('/sitemap.xml', function () {

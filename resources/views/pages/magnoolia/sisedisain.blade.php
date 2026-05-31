@@ -1,0 +1,220 @@
+@extends('layouts.app')
+
+@section('title', __('magnoolia.page.sisedisain.page_title'))
+@section('meta_description', $page['description'] ?? '')
+@section('og_title', $page['title'] ?? '')
+@section('og_description', $page['description'] ?? '')
+
+@section('content')
+@php
+  $base = rtrim(config('magnoolia.seo.canonical_base', config('app.url', url('/'))), '/');
+  $interiorImages = [
+    ['file' => 'Interior 1.jpg',   'alt' => 'Magnoolia kodu elutuba — siseviimistluse näidislahendus',    'label' => 'Elutuba'],
+    ['file' => 'Interior 2.jpg',   'alt' => 'Magnoolia kodu avatud plaan — elutuba ja köök',              'label' => 'Elutuba / Köök'],
+    ['file' => 'Interior 3.jpg',   'alt' => 'Magnoolia ridaelamukodu magamistuba',                         'label' => 'Magamistuba'],
+    ['file' => 'Interior 4.jpg',   'alt' => 'Magnoolia kodu vannituba — viimistlusnäidis',                'label' => 'Vannituba'],
+    ['file' => 'Interior 5-2.jpg', 'alt' => 'Magnoolia ridaelamukodu sisevaade',                          'label' => 'Sisevaade'],
+    ['file' => 'Interior 5_1.jpg', 'alt' => 'Magnoolia ridaelamukodu detailvaade',                        'label' => 'Detailvaade'],
+  ];
+@endphp
+
+<script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@graph": [
+    {
+      "@@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@@type": "ListItem", "position": 1, "name": "Avaleht", "item": "{{ $base }}" },
+        { "@@type": "ListItem", "position": 2, "name": "Sisedisain", "item": "{{ $base }}/sisedisain" }
+      ]
+    },
+    {
+      "@@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@@type": "Question",
+          "name": "Mis viimistluspakett on Magnoolia kodudes?",
+          "acceptedAnswer": { "@@type": "Answer", "text": "Siseviimistluse täpsed valikud on kinnitamisel. Müügilepingus fikseeritakse konkreetne viimistluspakett." }
+        },
+        {
+          "@@type": "Question",
+          "name": "Kas siseviimistlust saab kohandada?",
+          "acceptedAnswer": { "@@type": "Answer", "text": "Kohandamisvõimalused sõltuvad ehitusetapist ja kokkuleppest arendajaga. Küsige Diana käest hetkel kehtiva info kohta." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+{{-- ── Hero ─────────────────────────────────────────────────── --}}
+<div class="mg-page-hero mg-page-hero--light">
+  <div class="container">
+    @include('partials.seo.breadcrumb', ['items' => [
+      ['label' => __('magnoolia.nav.home'), 'url' => route('home')],
+      ['label' => __('magnoolia.nav.interior')],
+    ]])
+    <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.sisedisain.eyebrow') }}</div>
+    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.sisedisain.page_h1') }}</h1>
+    <p class="mg-page-hero__lead">
+      {{ __('magnoolia.page.sisedisain.lead') }}
+    </p>
+    <p class="mg-page-hero__note">
+      {{ __('magnoolia.page.sisedisain.note') }}
+    </p>
+    <div class="mg-page-hero__ctas">
+      <a href="#sisepildid" class="zoomvilla-btn">{{ __('magnoolia.page.sisedisain.cta_view') }} <i class="icon-angle-small-right"></i></a>
+      <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border">{{ __('magnoolia.page.sisedisain.cta_inquiry') }}</a>
+    </div>
+  </div>
+</div>
+
+{{-- ── Disclaimer ───────────────────────────────────────────── --}}
+<section class="mg-page-section mg-page-section--warm">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <div style="display:flex;gap:16px;align-items:flex-start;background:#fff;border-radius:12px;padding:24px;border-left:4px solid #c89443;">
+          <i class="fas fa-info-circle" style="color:#c89443;font-size:20px;flex-shrink:0;margin-top:2px;"></i>
+          <div>
+            <div style="font-weight:700;color:#1d2430;margin-bottom:6px;">{{ __('magnoolia.page.sisedisain.disclaimer_title') }}</div>
+            <p style="font-size:14px;color:#6f6a61;margin:0;line-height:1.6;">
+              {{ __('magnoolia.page.sisedisain.disclaimer_body') }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{-- ── Interior gallery grid ───────────────────────────────── --}}
+<section class="mg-page-section mg-page-section--white" id="sisepildid">
+  <div class="container">
+    <div class="mg-section-heading" style="margin-bottom:40px;">
+      <div class="mg-section-heading__eyebrow">{{ __('magnoolia.page.sisedisain.gallery_eyebrow') }}</div>
+      <h2 class="mg-section-heading__title">{{ __('magnoolia.page.sisedisain.gallery_title') }}</h2>
+    </div>
+
+    <div class="mg-gallery-grid">
+      @foreach($interiorImages as $i => $img)
+        @php $exists = file_exists(public_path('assets/images/magnoolia/' . $img['file'])); @endphp
+        @if($exists)
+        <div class="mg-gallery-item {{ $i === 0 ? 'mg-gallery-item--wide' : '' }}"
+             onclick="mgLightboxOpen('{{ asset('assets/images/magnoolia/' . $img['file']) }}', '{{ $img['alt'] }}')"
+             style="cursor:pointer;">
+          <img src="{{ asset('assets/images/magnoolia/' . $img['file']) }}"
+               alt="{{ $img['alt'] }}"
+               loading="lazy" width="600" height="420" style="width:100%;height:100%;object-fit:cover;">
+          <div class="mg-gallery-item__caption">{{ $img['label'] }}</div>
+        </div>
+        @endif
+      @endforeach
+    </div>
+  </div>
+</section>
+
+{{-- ── Room by room ─────────────────────────────────────────── --}}
+<section class="mg-page-section mg-page-section--cream">
+  <div class="container">
+    <div class="mg-section-heading" style="margin-bottom:40px;">
+      <div class="mg-section-heading__eyebrow">Ruumide ülevaade</div>
+      <h2 class="mg-section-heading__title">Ruumide kaupa</h2>
+    </div>
+
+    <div class="row gutter-y-32">
+      @foreach([
+        [
+          'room'    => 'Elutuba + köök',
+          'icon'    => 'fas fa-couch',
+          'content' => 'Avatud planeeringuga elutuba koos kööginurgaga loob loomuliku ühisala, kus valgus liigub läbi kogu põhikorruseplaani. Terrassile viiv klaasuks avab eluruumi õue suunas.',
+          'note'    => 'Köögimööbli sisaldus täpsustub müügilepingus.',
+        ],
+        [
+          'room'    => 'Magamistoad',
+          'icon'    => 'fas fa-bed',
+          'content' => 'Plaan A sisaldab 4 tuba — kaks magamistuba ülemisel korrusel, lisaks võimalus kasutada üht tuba kontorina. Plaan B pakub 5 tuba suurema perekonna jaoks.',
+          'note'    => 'Magamistoade täpne suurus vastavalt korruse plaanile.',
+        ],
+        [
+          'room'    => 'Vannituba',
+          'icon'    => 'fas fa-bath',
+          'content' => 'Põhivannituba asub ülemisel korrusel. Tualettruum on eraldi põhikorrusel. Materjalivalikud on illustratiivsed.',
+          'note'    => 'Kakel, kraan ja sanitaar kinnitatakse viimistluspaketi raames.',
+        ],
+        [
+          'room'    => 'Saun (v.v.)',
+          'icon'    => 'fas fa-fire',
+          'content' => 'Osades kodu tüüpides on saun planeeritud. Täpne sauna paiknemine ja sisaldus sõltuvad konkreetsest kodust.',
+          'note'    => 'Küsige Diana käest, millised kodud sisaldavad sauna.',
+        ],
+      ] as $room)
+      <div class="col-lg-3 col-md-6">
+        <div style="background:#fff;border-radius:16px;padding:28px;height:100%;border:1px solid rgba(29,36,48,.06);">
+          <div style="width:44px;height:44px;background:rgba(200,148,67,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <i class="{{ $room['icon'] }}" style="color:#c89443;font-size:18px;"></i>
+          </div>
+          <div style="font-size:16px;font-weight:700;color:#1d2430;margin-bottom:10px;">{{ $room['room'] }}</div>
+          <p style="font-size:13px;color:#6f6a61;line-height:1.6;margin-bottom:12px;">{{ $room['content'] }}</p>
+          <p style="font-size:12px;color:#aaa;font-style:italic;margin:0;">{{ $room['note'] }}</p>
+        </div>
+      </div>
+      @endforeach
+    </div>
+  </div>
+</section>
+
+{{-- ── FAQ ─────────────────────────────────────────────────── --}}
+@include('sections.magnoolia.page-faq', [
+  'eyebrow' => __('magnoolia.page.sisedisain.faq_eyebrow'),
+  'title'   => __('magnoolia.page.sisedisain.faq_title'),
+  'bg'      => 'warm',
+  'faqs'    => __('magnoolia.page.sisedisain.faq_items'),
+])
+
+{{-- ── Internal links ──────────────────────────────────────── --}}
+<section class="mg-page-section--cream mg-page-section--sm">
+  <div class="container">
+    <div class="mg-internal-links">
+      <a href="{{ lroute('magnoolia.arhitektuur') }}" class="mg-internal-link"><i class="fas fa-building"></i> {{ __('magnoolia.page.sisedisain.link_arch') }}</a>
+      <a href="{{ lroute('magnoolia.galerii') }}" class="mg-internal-link"><i class="fas fa-images"></i> {{ __('magnoolia.page.sisedisain.link_gallery') }}</a>
+      <a href="{{ lroute('magnoolia.homes') }}" class="mg-internal-link"><i class="fas fa-table"></i> {{ __('magnoolia.page.sisedisain.link_homes') }}</a>
+      <a href="{{ lroute('magnoolia.contact') }}" class="mg-internal-link"><i class="fas fa-envelope"></i> {{ __('magnoolia.page.sisedisain.link_cont') }}</a>
+    </div>
+  </div>
+</section>
+
+@include('sections.magnoolia.page-cta', [
+  'title'   => __('magnoolia.page.sisedisain.cta_title'),
+  'sub'     => __('magnoolia.page.sisedisain.cta_sub'),
+  'buttons' => [
+    ['label' => __('magnoolia.page.sisedisain.cta_btn1'), 'url' => lroute('magnoolia.contact')],
+    ['label' => __('magnoolia.page.sisedisain.cta_btn2'), 'url' => lroute('magnoolia.galerii'), 'outline' => true],
+  ]
+])
+
+{{-- Lightbox --}}
+<div id="mg-lightbox" onclick="this.style.display='none'" style="display:none;">
+  <div class="mg-lightbox__inner">
+    <img id="mg-lightbox-img" src="" alt="">
+    <div id="mg-lightbox-cap"></div>
+  </div>
+</div>
+
+@endsection
+
+@push('scripts')
+<script>
+function mgLightboxOpen(src, alt) {
+  var lb = document.getElementById('mg-lightbox');
+  document.getElementById('mg-lightbox-img').src = src;
+  document.getElementById('mg-lightbox-img').alt = alt;
+  document.getElementById('mg-lightbox-cap').textContent = alt;
+  lb.style.display = 'flex';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { var lb = document.getElementById('mg-lightbox'); if(lb) lb.style.display='none'; }
+});
+</script>
+@endpush

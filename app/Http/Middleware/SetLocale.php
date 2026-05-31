@@ -16,13 +16,15 @@ class SetLocale
 
     public function handle(Request $request, Closure $next)
     {
-        $locale = Session::get('locale', config('app.locale'));
-
-        if (!in_array($locale, $this->supportedLocales)) {
-            $locale = config('app.locale');
-        }
+        // Locale is determined ONLY from the URL prefix.
+        // /ru/... → ru, /en/... → en, anything else → et (default)
+        // Session is never used as a source — it is only synced so other
+        // parts of the app (e.g. old session reads) stay consistent.
+        $segment = $request->segment(1); // 'ru', 'en', or first path slug
+        $locale  = in_array($segment, ['ru', 'en']) ? $segment : 'et';
 
         App::setLocale($locale);
+        Session::put('locale', $locale);
 
         return $next($request);
     }

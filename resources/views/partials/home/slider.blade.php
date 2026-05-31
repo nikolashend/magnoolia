@@ -27,39 +27,37 @@
 
                             <h5 class="main-slider-two__subtitle">
                                 <span class="line-left"></span>
-                                Vaela küla &middot; Kiili vald &middot; Harjumaa
+                                {!! __('magnoolia.hero.eyebrow') !!}
                             </h5>
 
                             <h1 class="main-slider-two__title">
-                                A-energiaklassi ridaelamukodud<br>
-                                <span>Tallinna lähedal</span>
+                                {!! __('magnoolia.hero.h1') !!}
                             </h1>
 
                             <p class="main-slider-two__text">
-                                Magnoolia ühendab ridaelamu mugavuse, eramaja privaatsuse ja
-                                uusarenduse kindluse Vaelas, Kiili vallas — 20 minutit Tallinnast.
+                                {{ __('magnoolia.hero.subheadline') }}
                             </p>
 
                             <div class="main-slider-two__btn">
                                 <a href="#hinnad" class="zoomvilla-btn">
-                                    Vaata kodusid ja hindu <i class="icon-angle-small-right"></i>
+                                    {{ __('magnoolia.hero.cta_primary') }} <i class="icon-angle-small-right"></i>
                                 </a>
                                 <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border" style="margin-left:16px;">
-                                    Küsi pakkumist <i class="icon-angle-small-right"></i>
+                                    {{ __('magnoolia.hero.cta_secondary') }} <i class="icon-angle-small-right"></i>
                                 </a>
                             </div>
 
                             {{-- Quick facts row --}}
                             <div class="mg-hero-facts">
-                                <div class="mg-hero-fact"><strong>19</strong><span>kodu</span></div>
-                                <div class="mg-hero-fact"><strong>~129 m²</strong><span>elamispind</span></div>
-                                <div class="mg-hero-fact"><strong>4–5</strong><span>tuba</span></div>
-                                <div class="mg-hero-fact"><strong>Kevad 2027</strong><span>I etapp</span></div>
-                                <div class="mg-hero-fact"><strong>20 min</strong><span>Tallinnast</span></div>
+                                <div class="mg-hero-fact"><strong>19</strong><span>{{ __('magnoolia.hero.fact_label_homes') }}</span></div>
+                                <div class="mg-hero-fact"><strong>~129 m²</strong><span>{{ __('magnoolia.hero.fact_label_area') }}</span></div>
+                                <div class="mg-hero-fact"><strong>4–5</strong><span>{{ __('magnoolia.hero.fact_label_rooms') }}</span></div>
+                                <div class="mg-hero-fact"><strong>{{ __('magnoolia.hero.stage_year') }}</strong><span>{{ __('magnoolia.hero.fact_label_stage') }}</span></div>
+                                <div class="mg-hero-fact"><strong>{{ __('magnoolia.hero.distance_value') }}</strong><span>{{ __('magnoolia.hero.fact_label_distance') }}</span></div>
                             </div>
                             <p style="margin-top:12px;margin-bottom:0;font-size:12px;
                                        color:rgba(255,255,255,.5);letter-spacing:.02em;">
-                                I etapp: Magnoolia tee 1 ja 3 &nbsp;&middot;&nbsp; II etapp: Magnoolia tee 5–11
+                                {!! __('magnoolia.hero.stage_streets') !!}
                             </p>
 
                         </div>

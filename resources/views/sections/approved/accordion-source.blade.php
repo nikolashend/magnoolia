@@ -7,14 +7,14 @@
                         <div class="sec-title text-start">
                             <div class="sec-title__top justify-content-start">
                                 <span class="line-left"></span>
-                                <h6 class="sec-title__tagline bw-split-in-right">Korduma kippuvad küsimused</h6>
+                                <h6 class="sec-title__tagline bw-split-in-right">{{ __('magnoolia.faq_home.eyebrow') }}</h6>
                                 <span class=" "></span>
                             </div>
-                            <h3 class="sec-title__title bw-split-in-left">Mida soovid <br> Magnoolia kohta teada?</h3>
+                            <h3 class="sec-title__title bw-split-in-left">{{ __('magnoolia.faq_home.title') }}</h3>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <p class="apartment-two__top__text">Oleme kogunud vastused kõige sagedamini esitatavatele küsimustele Magnoolia uusarenduse, kodude spetsifikatsiooni ja ostuprotsessi kohta.</p>
+                        <p class="apartment-two__top__text">{{ __('magnoolia.faq_home.intro') }}</p>
                     </div>
                 </div>
             </div>
@@ -28,66 +28,23 @@
                     <div class="col-lg-6">
                         <div class="faq-accordion zoomvilla-accordion" data-grp-name="zoomvilla-accordion">
                             <div class="apartment-two__content">
-                                <div class="accordion active">
+                                @foreach(__('magnoolia.faq_home.items') as $fi => $fitem)
+                                <div class="accordion {{ $fi === 0 ? 'active' : '' }}">
                                     <div class="accordion-title">
-                                        <h4><span class="accordion-title__number"></span>Millal kodud valmivad?</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
+                                        <h4><span class="accordion-title__number"></span>{{ $fitem['q'] }}</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
                                     </div>
                                     <div class="accordion-content">
                                         <div class="inner">
-                                            <p>Magnoolia ridaelamute ehitus toimub kahes etapis. I etapp (Magnoolia tee 1 ja 3) valmib kevad 2027, II etapp (Magnoolia tee 5 kuni 11) valmib kevad 2028.</p>
+                                            <p>{{ $fitem['a'] }}</p>
                                             <ul class="accordion-list list-unstyled">
-                                                <li><div class="accordion-list__item"><i class="icon-celemder"></i><span>I etapp — kevad 2027</span></div></li>
-                                                <li><div class="accordion-list__item"><i class="icon-celemder"></i><span>II etapp — kevad 2028</span></div></li>
-                                                <li><div class="accordion-list__item"><i class="icon-pin"></i><span>Vaela küla, Kiili vald</span></div></li>
+                                                @foreach($fitem['list'] as $li => $text)
+                                                <li><div class="accordion-list__item"><i class="{{ $fitem['icons'][$li] }}"></i><span>{{ $text }}</span></div></li>
+                                                @endforeach
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="accordion">
-                                    <div class="accordion-title">
-                                        <h4><span class="accordion-title__number"></span>Mis on A-energiaklass?</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
-                                    </div>
-                                    <div class="accordion-content">
-                                        <div class="inner">
-                                            <p>A-energiaklass tähendab madalat küttearvet ja keskkonnasõbralikkust. Magnoolia kodud on varustatud maasoojuspumba, soojusvahetiga ventilatsiooni ja põrandaküttega.</p>
-                                            <ul class="accordion-list list-unstyled">
-                                                <li><div class="accordion-list__item"><i class="icon-house"></i><span>Maasoojuspump</span></div></li>
-                                                <li><div class="accordion-list__item"><i class="icon-flooring"></i><span>Põrandaküte</span></div></li>
-                                                <li><div class="accordion-list__item"><i class="icon-trophy"></i><span>A-energiaklass</span></div></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion">
-                                    <div class="accordion-title">
-                                        <h4><span class="accordion-title__number"></span>Kui suur on kodu pindala?</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
-                                    </div>
-                                    <div class="accordion-content">
-                                        <div class="inner">
-                                            <p>Iga Magnoolia kodu on kahekorruseline ridaelamu kogupindalaga 129 m². Kodu juurde kuulub privaatne hooviala, terrass ja rõdu.</p>
-                                            <ul class="accordion-list list-unstyled">
-                                                <li><div class="accordion-list__item"><i class="icon-labyrinth"></i><span>129 m² elamispinda</span></div></li>
-                                                <li><div class="accordion-list__item"><i class="icon-real-estate"></i><span>Terrass + rõdu</span></div></li>
-                                                <li><div class="accordion-list__item"><i class="icon-bedroom"></i><span>4–5 tuba</span></div></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion">
-                                    <div class="accordion-title">
-                                        <h4><span class="accordion-title__number"></span>Kus asub Magnoolia?</h4><span class="accordion-title__icon"><i class="icon-arrow-top"></i></span>
-                                    </div>
-                                    <div class="accordion-content">
-                                        <div class="inner">
-                                            <p>Magnoolia asub Vaela külas Kiili vallas — looduskaunis ja rahulikul alal, vaid 20 minutit Tallinna keskusest.</p>
-                                            <ul class="accordion-list list-unstyled">
-                                                <li><div class="accordion-list__item"><i class="icon-pin"></i><span>Magnoolia tee, Vaela küla</span></div></li>
-                                                <li><div class="accordion-list__item"><i class="icon-labyrinth"></i><span>20 min Tallinnast</span></div></li>
-                                                <li><div class="accordion-list__item"><i class="icon-house"></i><span>Kiili vald</span></div></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

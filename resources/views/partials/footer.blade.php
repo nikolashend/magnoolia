@@ -7,16 +7,14 @@
             <div class="mg-footer__logo-col">
                 <a href="{{ route('home') }}" style="text-decoration:none;">
                     <span class="mg-footer__brand">Magnoolia</span>
-                    <span class="mg-footer__tagline">A-energiaklassi kodud</span>
+                    <span class="mg-footer__tagline">{{ __('magnoolia.footer.tagline') }}</span>
                 </a>
                 <p class="mg-footer__desc">
-                    Ridaelamu mugavus kohtub eramaja privaatsusega.
-                    19 A-energiaklassi kodu Vaelas, Kiili vallas —
-                    Tallinna lähedal, looduse keskel.
+                    {{ __('magnoolia.footer.desc') }}
                 </p>
                 <div class="mg-footer__langs">
                     @foreach(['et' => 'EE', 'ru' => 'RU', 'en' => 'EN'] as $locale => $label)
-                        <a href="{{ route('locale.switch', $locale) }}"
+                        <a href="{{ locale_url($locale) }}"
                            class="{{ app()->getLocale() === $locale ? 'active' : '' }}">{{ $label }}</a>
                     @endforeach
                 </div>
@@ -24,31 +22,33 @@
 
             {{-- Col 2: Projekt --}}
             <div>
-                <span class="mg-footer__col-title">Projekt</span>
+                <span class="mg-footer__col-title">{{ __('magnoolia.footer.col_project') }}</span>
                 <ul class="mg-footer__links">
-                    <li><a href="{{ route('magnoolia.homes') }}">Kodud ja hinnad</a></li>
-                    <li><a href="{{ route('magnoolia.site-plan') }}">Asendiplaan</a></li>
-                    <li><a href="{{ route('magnoolia.location') }}">Asukoht</a></li>
-                    <li><a href="{{ route('magnoolia.construction') }}">Ehitusinfo</a></li>
-                    <li><a href="{{ route('home') }}#sisedisain">Sisedisain</a></li>
+                    <li><a href="{{ lroute('magnoolia.homes') }}">{{ __('magnoolia.footer.nav_homes') }}</a></li>
+                    <li><a href="{{ lroute('magnoolia.site-plan') }}">{{ __('magnoolia.footer.nav_site_plan') }}</a></li>
+                    <li><a href="{{ lroute('magnoolia.location') }}">{{ __('magnoolia.footer.nav_location') }}</a></li>
+                    <li><a href="{{ lroute('magnoolia.construction') }}">{{ __('magnoolia.footer.nav_construction') }}</a></li>
+                    <li><a href="{{ lroute('magnoolia.sisedisain') }}">{{ __('magnoolia.footer.nav_interior') }}</a></li>
+                    <li><a href="{{ lroute('magnoolia.arhitektuur') }}">{{ __('magnoolia.footer.nav_architecture') }}</a></li>
+                    <li><a href="{{ lroute('magnoolia.galerii') }}">{{ __('magnoolia.footer.nav_gallery') }}</a></li>
                 </ul>
             </div>
 
             {{-- Col 3: Ostjale --}}
             <div>
-                <span class="mg-footer__col-title">Ostjale</span>
+                <span class="mg-footer__col-title">{{ __('magnoolia.footer.col_buyer') }}</span>
                 <ul class="mg-footer__links">
-                    <li><a href="{{ route('home') }}#ostuprotsess">Ostuprotsess</a></li>
-                    <li><a href="{{ route('home') }}#finantseerimine">Finantseerimine</a></li>
-                    <li><a href="{{ route('home') }}#faq">KKK</a></li>
-                    <li><a href="{{ route('magnoolia.contact') }}">Võta ühendust</a></li>
+                    <li><a href="{{ lroute('magnoolia.ostuprotsess') }}">{{ __('magnoolia.footer.nav_purchase') }}</a></li>
+                    <li><a href="{{ lroute('magnoolia.finantseerimine') }}">{{ __('magnoolia.footer.nav_financing') }}</a></li>
+                    <li><a href="{{ lroute('magnoolia.kkk') }}">{{ __('magnoolia.footer.nav_faq') }}</a></li>
+                    <li><a href="{{ lroute('magnoolia.contact') }}">{{ __('magnoolia.footer.nav_contact') }}</a></li>
                 </ul>
             </div>
 
             {{-- Col 4: Kontakt --}}
             <div>
-                <span class="mg-footer__col-title">Kontakt</span>
-                <div style="font-size:12px;color:rgba(255,255,255,.45);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">Diana Tali &mdash; Müügiinfo</div>
+                <span class="mg-footer__col-title">{{ __('magnoolia.footer.col_contact') }}</span>
+                <div style="font-size:12px;color:rgba(255,255,255,.45);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;">{{ __('magnoolia.contact.name') }} &mdash; {{ __('magnoolia.footer.diana_role') }}</div>
                 <a href="tel:+37258164078" class="mg-footer__contact-item">
                     <i class="fas fa-phone" aria-hidden="true"></i>
                     <span>+372 58 16 40 78</span>
@@ -62,8 +62,8 @@
                     <span>Magnoolia tee, Vaela küla,<br>Kiili vald, Harjumaa</span>
                 </div>
                 <div style="margin-top:20px;">
-                    <a href="{{ route('magnoolia.contact') }}" class="mg-btn mg-btn--ghost mg-btn--sm">
-                        Küsi pakkumist
+                    <a href="{{ lroute('magnoolia.contact') }}" class="mg-btn mg-btn--ghost mg-btn--sm">
+                        {{ __('magnoolia.footer.cta') }}
                     </a>
                 </div>
             </div>
@@ -73,11 +73,11 @@
 
     <div class="mg-container">
         <div class="mg-footer__bottom">
-            <p class="mg-footer__copy">&copy; {{ date('Y') }} Magnoolia / Estlanda OÜ. Kõik õigused kaitstud.</p>
+            <p class="mg-footer__copy">&copy; {{ date('Y') }} Magnoolia / Estlanda OÜ. {{ __('magnoolia.footer.copy') }}</p>
             <ul class="mg-footer__bottom-links">
-                <li><a href="#">Privaatsuspoliitika</a></li>
-                <li><a href="#">Kasutustingimused</a></li>
-                <li><a href="{{ route('magnoolia.contact') }}">Kontakt</a></li>
+                <li><a href="#">{{ __('magnoolia.footer.privacy') }}</a></li>
+                <li><a href="#">{{ __('magnoolia.footer.terms') }}</a></li>
+                <li><a href="{{ lroute('magnoolia.contact') }}">{{ __('magnoolia.footer.nav_contact') }}</a></li>
             </ul>
         </div>
     </div>

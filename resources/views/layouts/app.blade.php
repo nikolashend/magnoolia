@@ -103,6 +103,23 @@
 
     {{-- Schema JSON-LD --}}
     @include('partials.seo.schema')
+
+    @if(app()->getLocale() !== 'et')
+    <script>
+    (function() {
+        var locale = '{{ app()->getLocale() }}';
+        document.addEventListener('click', function(e) {
+            var a = e.target.closest('a[href]');
+            if (!a) return;
+            var href = a.getAttribute('href');
+            if (!href || href.charAt(0) !== '/' || href.indexOf('//') === 0) return;
+            if (/^\/(ru|en)(\/?$|\/)/.test(href)) return; // already prefixed
+            e.preventDefault();
+            window.location.href = '/' + locale + href;
+        });
+    })();
+    </script>
+    @endif
 </body>
 
 </html>

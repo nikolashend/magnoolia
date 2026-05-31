@@ -1,9 +1,7 @@
 @props([
     'title'           => null,
     'metaDescription' => null,
-])
-
-<!DOCTYPE html>
+])<!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}" data-locale="{{ app()->getLocale() }}" data-env="{{ app()->environment() }}">
 <head>
     <meta charset="UTF-8">

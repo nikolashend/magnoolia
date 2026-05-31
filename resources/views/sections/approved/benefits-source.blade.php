@@ -1,22 +1,22 @@
-﻿{{-- SOURCE: php-template/parts/home2/services.php | class: services-three section-space --}}
+{{-- SOURCE: php-template/parts/home2/services.php | class: services-three section-space --}}
     <section class="services-three section-space">
         <div class="container">
             <div class="sec-title text-center">
                 <div class="sec-title__top justify-content-center">
                     <span class="line-left"></span>
-                    <h6 class="sec-title__tagline bw-split-in-right">Miks Magnoolia?</h6>
+                    <h6 class="sec-title__tagline bw-split-in-right">{{ __('magnoolia.section.benefits_eyebrow') }}</h6>
                     <span class="line-right"></span>
                 </div>
-                <h3 class="sec-title__title bw-split-in-left">Ostja eelised, <br>mis loevad.</h3>
+                <h3 class="sec-title__title bw-split-in-left">{!! __('magnoolia.section.benefits_title') !!}</h3>
             </div>
             <div class="row gutter-y-30">
                 <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-trophy"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">A-energiaklass</a></h3>
-                            <p class="service-card__text">Madal energiaarve läbi maasoojuspumba ja soojustagastusega ventilatsiooni</p>
-                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
+                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.0.title') }}</a></h3>
+                            <p class="service-card__text">{{ __('magnoolia.benefits.0.text') }}</p>
+                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -25,9 +25,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-labyrinth"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">Privaatne hooviala</a></h3>
-                            <p class="service-card__text">Igal kodul on oma piiratud aed — eraõue ilma kortermaja mölluta</p>
-                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
+                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.1.title') }}</a></h3>
+                            <p class="service-card__text">{{ __('magnoolia.benefits.1.text') }}</p>
+                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -41,9 +41,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-real-estate"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">Rõdu ja terrass</a></h3>
-                            <p class="service-card__text">Iga kodu juurde kuulub isiklik terrass (18–24 m²) ja rõdu (9,5–11,5 m²)</p>
-                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
+                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.2.title') }}</a></h3>
+                            <p class="service-card__text">{{ __('magnoolia.benefits.2.text') }}</p>
+                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -52,9 +52,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-flooring"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">Põrandaküte</a></h3>
-                            <p class="service-card__text">Veesoojendusega põrandaküte igas toas, ka vannitoas</p>
-                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
+                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.3.title') }}</a></h3>
+                            <p class="service-card__text">{{ __('magnoolia.benefits.3.text') }}</p>
+                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -63,9 +63,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-house"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">Ventilatsioon</a></h3>
-                            <p class="service-card__text">Soojustagastusega sundventilatsioon tagab värske sisekliima aasta ringi</p>
-                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
+                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.4.title') }}</a></h3>
+                            <p class="service-card__text">{{ __('magnoolia.benefits.4.text') }}</p>
+                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -74,9 +74,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-garage"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">EV-laadimise valmidus</a></h3>
-                            <p class="service-card__text">Elektriautode laadimispunkti ettevalmistus mõlema parkimiskoha juurde</p>
-                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
+                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.5.title') }}</a></h3>
+                            <p class="service-card__text">{{ __('magnoolia.benefits.5.text') }}</p>
+                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -85,9 +85,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-real-estate"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">Päikesepaneelide valmidus</a></h3>
-                            <p class="service-card__text">Katusele on ette valmistatud päikesepaneelide hilisem paigaldus</p>
-                            <a href="#hinnad" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
+                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.6.title') }}</a></h3>
+                            <p class="service-card__text">{{ __('magnoolia.benefits.6.text') }}</p>
+                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -96,9 +96,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-pin"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#kontakt">Tallinna lähedal</a></h3>
-                            <p class="service-card__text">Vaela küla, Kiili vald — looduskeskkond 20 minutit Tallinna kesklinnast</p>
-                            <a href="#kontakt" class="service-card__link">LÄHEMALT<i class="icon-angle-small-right"></i></a>
+                            <h3 class="service-card__title"><a href="#kontakt">{{ __('magnoolia.benefits.7.title') }}</a></h3>
+                            <p class="service-card__text">{{ __('magnoolia.benefits.7.text') }}</p>
+                            <a href="#kontakt" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>

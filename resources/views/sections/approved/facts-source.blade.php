@@ -12,18 +12,18 @@
                         <div class="sec-title text-start">
                             <div class="sec-title__top justify-content-start">
                                 <span class="line-left"></span>
-                                <h6 class="sec-title__tagline bw-split-in-right">Magnoolia uusarendus</h6>
+                                <h6 class="sec-title__tagline bw-split-in-right">{{ __('magnoolia.section.why_tagline') }}</h6>
                             </div>
-                            <h3 class="sec-title__title bw-split-in-left">Ridaelamu mugavus.<br> Eramaja privaatsus.</h3>
+                            <h3 class="sec-title__title bw-split-in-left">{!! __('magnoolia.section.why_title') !!}</h3>
                         </div>
-                        <p class="about-two__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">19 A-energiaklassi kodu Vaela külas, Kiili vallas. Iga kodu on privaatse hooviala ja terrassiga — 20 minutit Tallinnast.</p>
+                        <p class="about-two__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">{{ __('magnoolia.section.why_desc') }}</p>
                         <ul class="about-two__list list-unstyled wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                            <li><div class="about-two__list__item"><i class="icon-house"></i><span>4–5 <br> tuba</span></div></li>
-                            <li><div class="about-two__list__item"><i class="icon-kitchen"></i><span>129 m² <br> netopind</span></div></li>
-                            <li><div class="about-two__list__item"><i class="icon-bedroom"></i><span>Rõdu <br> + terrass</span></div></li>
+                            <li><div class="about-two__list__item"><i class="icon-house"></i><span>{{ __('magnoolia.facts.rooms') }}</span></div></li>
+                            <li><div class="about-two__list__item"><i class="icon-kitchen"></i><span>{{ __('magnoolia.facts.area') }}</span></div></li>
+                            <li><div class="about-two__list__item"><i class="icon-bedroom"></i><span>{{ __('magnoolia.section.why_list_yard') }}</span></div></li>
                         </ul>
                         <div class="about-two__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                            Maasoojuspump, ventilatsioon, päikesepaneelide valmidus ja EV laadimise valmidus. <a href="#hinnad">VAATA KODUSID</a>
+                            {{ __('magnoolia.section.why_list_energy') }}. <a href="#hinnad">{{ __('magnoolia.hero.cta_primary') }}</a>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                         <div class="about-two__funfact__card__icon"><i class="icon-buildings"></i></div>
                         <div class="about-two__funfact__card__content">
                             <h3 class="about-two__funfact__card__count">19</h3>
-                            <p class="about-two__funfact__card__text">Kodu</p>
+                            <p class="about-two__funfact__card__text">{{ __('magnoolia.hero.fact_label_homes') }}</p>
                         </div>
                     </div>
                 </li>
@@ -54,7 +54,7 @@
                         <div class="about-two__funfact__card__icon"><i class="icon-pin"></i></div>
                         <div class="about-two__funfact__card__content">
                             <h3 class="about-two__funfact__card__count">20 min</h3>
-                            <p class="about-two__funfact__card__text">Tallinnast</p>
+                            <p class="about-two__funfact__card__text">{{ __('magnoolia.hero.fact_label_distance') }}</p>
                         </div>
                     </div>
                 </li>

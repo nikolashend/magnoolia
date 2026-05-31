@@ -9,7 +9,7 @@
                                 <img src="{{ asset('assets/images/magnoolia/Cam004.0000.jpg') }}" alt="Magnoolia ridaelamud välisvaade" class="about-one__image__one" style="width:409px;height:480px;object-fit:cover;object-position:center;display:block;">
                             </div>
                             <div class="about-one__experience wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
-                                <h3 class="about-one__experience__title">Valmib 2027</h3>
+                                <h3 class="about-one__experience__title">{{ __('magnoolia.section.why_completion') }}</h3>
                             </div>
                         </div>
                         <div class="about-one__image__item-two hover:shine">
@@ -25,20 +25,20 @@
                         <div class="sec-title text-start">
                             <div class="sec-title__top justify-content-start">
                                 <span class="line-left"></span>
-                                <h6 class="sec-title__tagline bw-split-in-right">Miks Magnoolia?</h6>
+                                <h6 class="sec-title__tagline bw-split-in-right">{{ __('magnoolia.section.why_eyebrow') }}</h6>
                             </div>
-                            <h3 class="sec-title__title bw-split-in-left">Läbimõeldud kodu. <br> Privaatne hooviala.</h3>
+                            <h3 class="sec-title__title bw-split-in-left">{!! __('magnoolia.section.about_title') !!}</h3>
                         </div>
-                        <p class="about-one__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">Magnoolia ei ole lihtsalt uus ridaelamu. See on koduformaat ostjale, kes tahab eramaja tunnet, oma õue ja uusarenduse kindlust, kuid ei soovi ise ehitusprotsessi juhtida. 19 iseseisvat A-energiaklassi kodu privaatse hooviala, terrassi ja rõduga — Vaela külas, 20 minutit Tallinnast.</p>
+                        <p class="about-one__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">{{ __('magnoolia.section.why_body2') }}</p>
                         <div class="about-one__features">
                             <ul class="about-one__features__list list-unstyled">
-                                <li class="wow fadeInUp" data-wow-duration="1500ms"><i class="icon-check-star"></i><span>Maasoojuspump, ventilatsioon ja põrandaküte</span></li>
-                                <li class="wow fadeInUp" data-wow-duration="1600ms"><i class="icon-check-star"></i><span>Privaatne hooviala, terrass ja rõdu igale kodule</span></li>
-                                <li class="wow fadeInUp" data-wow-duration="1700ms"><i class="icon-check-star"></i><span>EV laadimise ja päikesepaneelide valmidus</span></li>
+                                <li class="wow fadeInUp" data-wow-duration="1500ms"><i class="icon-check-star"></i><span>{{ __('magnoolia.section.why_list_energy') }}</span></li>
+                                <li class="wow fadeInUp" data-wow-duration="1600ms"><i class="icon-check-star"></i><span>{{ __('magnoolia.section.why_list_yard') }}</span></li>
+                                <li class="wow fadeInUp" data-wow-duration="1700ms"><i class="icon-check-star"></i><span>{{ __('magnoolia.section.why_list_ev') }}</span></li>
                             </ul>
                         </div>
                         <div class="about-one__btn">
-                            <a href="#hinnad" class="zoomvilla-btn">Vaata kodusid <i class="icon-angle-small-right"></i></a>
+                            <a href="#hinnad" class="zoomvilla-btn">{{ __('magnoolia.section.why_cta') }} <i class="icon-angle-small-right"></i></a>
                         </div>
                     </div>
                 </div>

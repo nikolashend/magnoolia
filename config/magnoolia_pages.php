@@ -97,6 +97,60 @@ return [
             'canonical'   => $base . '/kontakt',
         ],
 
+        'interior' => [
+            'slug'        => 'sisedisain',
+            'title'       => 'Magnoolia siseviimistlus — A-energiaklassi kodu sisekujundus',
+            'description' => 'Tutvu Magnoolia ridaelamukodude siseviimistluse näidislahendustega — elutuba, magamistuba, vannituba, saun ja köök. Moodne Skandinaavia-stiil Harjumaal.',
+            'h1'          => 'Magnoolia siseviimistlus ja sisekujunduse võimalused',
+            'breadcrumb'  => 'Sisedisain',
+            'canonical'   => $base . '/sisedisain',
+        ],
+
+        'architecture' => [
+            'slug'        => 'arhitektuur-ja-valisdisain',
+            'title'       => 'Magnoolia arhitektuur ja välisdisain — privaatse kodu tunne',
+            'description' => 'Magnoolia ridaelamukodud on projekteeritud majaomaniku tunnega: terrass, privaatne hooviala, rõdu ja moodne fassaad. Vaata välisvaateid ja arhitektuuri kirjeldust.',
+            'h1'          => 'Arhitektuur ja välisdisain — privaatse kodu tunne ridaelamu mugavusega',
+            'breadcrumb'  => 'Arhitektuur',
+            'canonical'   => $base . '/arhitektuur-ja-valisdisain',
+        ],
+
+        'gallery' => [
+            'slug'        => 'galerii',
+            'title'       => 'Magnoolia galerii — välisvaated, interjöörid ja plaanid',
+            'description' => 'Vaata Magnoolia A-energiaklassi ridaelamukodude renderpilte, interjööri näidiseid, asendiplaanikaarti ja korrusplaane.',
+            'h1'          => 'Magnoolia galerii — välisvaated, interjöörid ja asendiplaan',
+            'breadcrumb'  => 'Galerii',
+            'canonical'   => $base . '/galerii',
+        ],
+
+        'purchase' => [
+            'slug'        => 'ostuprotsess',
+            'title'       => 'Magnoolia kodu ostuprotsess — kuidas osta uut ridaelamukodu',
+            'description' => 'Sammud Magnoolia kodu ostmisel: kodu valimine, broneerimine, VÕL, AÕL ja üleandmine. Selge ülevaade ostja teekonnast.',
+            'h1'          => 'Magnoolia kodu ostuprotsess',
+            'breadcrumb'  => 'Ostuprotsess',
+            'canonical'   => $base . '/ostuprotsess',
+        ],
+
+        'financing' => [
+            'slug'        => 'finantseerimine',
+            'title'       => 'Magnoolia kodu finantseerimine ja eelarveplaneerimine',
+            'description' => 'Kuidas planeerida Magnoolia kodu ost — eelarve, pangalaen, omafinantseering ja ajaplaan. Üldine ülevaade ilma finantsnõuandeta.',
+            'h1'          => 'Finantseerimine ja kodu ostmise planeerimine',
+            'breadcrumb'  => 'Finantseerimine',
+            'canonical'   => $base . '/finantseerimine',
+        ],
+
+        'faq' => [
+            'slug'        => 'kkk',
+            'title'       => 'KKK — korduma kippuvad küsimused Magnoolia kodude kohta',
+            'description' => 'Vastused levinuimatele küsimustele Magnoolia kodude hindade, asukoha, ehitusinfo, siseviimistluse, ostuprotsessi ja kontakti kohta.',
+            'h1'          => 'Korduma kippuvad küsimused Magnoolia kodude kohta',
+            'breadcrumb'  => 'KKK',
+            'canonical'   => $base . '/kkk',
+        ],
+
     ],
 
 ];
