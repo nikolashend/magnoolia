@@ -5,7 +5,7 @@
 
 @section('content')
 @php
-  $base = rtrim(config('magnoolia.seo.canonical_base', config('app.url', url('/'))), '/');
+  $base = rtrim(config('magnoolia.seo.canonical_base', 'https://magnoolia.ee'), '/');
 
   $allImages = [
     // Exterior

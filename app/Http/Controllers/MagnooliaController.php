@@ -83,7 +83,7 @@ class MagnooliaController extends Controller
     public function architecture()
     {
         $page = config('magnoolia_pages.pages.architecture', []);
-        return view('pages.magnoolia.arhitektuur-ja-valisdisain', compact('page'));
+        return view('pages.magnoolia.arhitektuur', compact('page'));
     }
 
     /** GET /galerii */

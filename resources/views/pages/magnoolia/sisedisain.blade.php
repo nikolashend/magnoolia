@@ -7,7 +7,7 @@
 
 @section('content')
 @php
-  $base = rtrim(config('magnoolia.seo.canonical_base', config('app.url', url('/'))), '/');
+  $base = rtrim(config('magnoolia.seo.canonical_base', 'https://magnoolia.ee'), '/');
   $interiorImages = [
     ['file' => 'Interior 1.jpg',   'alt' => 'Magnoolia kodu elutuba — siseviimistluse näidislahendus',    'label' => 'Elutuba'],
     ['file' => 'Interior 2.jpg',   'alt' => 'Magnoolia kodu avatud plaan — elutuba ja köök',              'label' => 'Elutuba / Köök'],
@@ -119,37 +119,12 @@
 <section class="mg-page-section mg-page-section--cream">
   <div class="container">
     <div class="mg-section-heading" style="margin-bottom:40px;">
-      <div class="mg-section-heading__eyebrow">Ruumide ülevaade</div>
-      <h2 class="mg-section-heading__title">Ruumide kaupa</h2>
+      <div class="mg-section-heading__eyebrow">{{ __('magnoolia.page.sisedisain.rooms_eyebrow') }}</div>
+      <h2 class="mg-section-heading__title">{{ __('magnoolia.page.sisedisain.rooms_title') }}</h2>
     </div>
 
     <div class="row gutter-y-32">
-      @foreach([
-        [
-          'room'    => 'Elutuba + köök',
-          'icon'    => 'fas fa-couch',
-          'content' => 'Avatud planeeringuga elutuba koos kööginurgaga loob loomuliku ühisala, kus valgus liigub läbi kogu põhikorruseplaani. Terrassile viiv klaasuks avab eluruumi õue suunas.',
-          'note'    => 'Köögimööbli sisaldus täpsustub müügilepingus.',
-        ],
-        [
-          'room'    => 'Magamistoad',
-          'icon'    => 'fas fa-bed',
-          'content' => 'Plaan A sisaldab 4 tuba — kaks magamistuba ülemisel korrusel, lisaks võimalus kasutada üht tuba kontorina. Plaan B pakub 5 tuba suurema perekonna jaoks.',
-          'note'    => 'Magamistoade täpne suurus vastavalt korruse plaanile.',
-        ],
-        [
-          'room'    => 'Vannituba',
-          'icon'    => 'fas fa-bath',
-          'content' => 'Põhivannituba asub ülemisel korrusel. Tualettruum on eraldi põhikorrusel. Materjalivalikud on illustratiivsed.',
-          'note'    => 'Kakel, kraan ja sanitaar kinnitatakse viimistluspaketi raames.',
-        ],
-        [
-          'room'    => 'Saun (v.v.)',
-          'icon'    => 'fas fa-fire',
-          'content' => 'Osades kodu tüüpides on saun planeeritud. Täpne sauna paiknemine ja sisaldus sõltuvad konkreetsest kodust.',
-          'note'    => 'Küsige Diana käest, millised kodud sisaldavad sauna.',
-        ],
-      ] as $room)
+      @foreach(__('magnoolia.page.sisedisain.rooms') as $room)
       <div class="col-lg-3 col-md-6">
         <div style="background:#fff;border-radius:16px;padding:28px;height:100%;border:1px solid rgba(29,36,48,.06);">
           <div style="width:44px;height:44px;background:rgba(200,148,67,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">

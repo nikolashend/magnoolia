@@ -14,6 +14,31 @@ return [
         'contact'    => 'Kontakt',
     ],
 
+    /* Footer */
+    'footer' => [
+        'col_project'      => 'Projekt',
+        'col_buyer'        => 'Ostjale',
+        'col_contact'      => 'Kontakt',
+        'tagline'          => 'A-energiaklassi ridaelamukodud',
+        'desc'             => 'Ridaelamu mugavus kohtab eramaja privaatsust. 19 A-energiaklassi kodu Vaela külas, Kiili vallas — Tallinna lähedal, looduse keskel.',
+        'cta'              => 'Küsi pakkumist',
+        'copy'             => 'Kõik õigused kaitstud.',
+        'privacy'          => 'Privaatsuspoliitika',
+        'terms'            => 'Kasutustingimused',
+        'diana_role'       => 'Müügiinfo',
+        'nav_homes'        => 'Kodud ja hinnad',
+        'nav_site_plan'    => 'Asendiplaan',
+        'nav_location'     => 'Asukoht',
+        'nav_construction' => 'Ehitusinfo',
+        'nav_interior'     => 'Sisedisain',
+        'nav_architecture' => 'Arhitektuur',
+        'nav_gallery'      => 'Galerii',
+        'nav_purchase'     => 'Ostuprotsess',
+        'nav_financing'    => 'Finantseerimine',
+        'nav_faq'          => 'KKK',
+        'nav_contact'      => 'Võta ühendust',
+    ],
+
     /* Hero */
     'hero' => [
         'eyebrow'       => 'Vaela küla · Kiili vald · Harjumaa',

@@ -147,10 +147,10 @@ return [
             'floorplan_2'      => null,
         ],
         [
-            'id'               => 'tee-1-4',
-            'address'          => 'Magnoolia tee 1/4',
-            'building'         => 'Magnoolia tee 1',
-            'section'          => '1/4',
+            'id'               => 'tee-3-4',
+            'address'          => 'Magnoolia tee 3/4',
+            'building'         => 'Magnoolia tee 3',
+            'section'          => '3/4',
             'stage'            => 1,
             'completion'       => 'kevad 2027',
             'plan_type'        => 'type-b',
@@ -163,7 +163,7 @@ return [
             'parking'          => 2,
             'price'            => null,
             'status'           => 'available',
-            'masterplan_key'   => 'tee-1-pos-4',
+            'masterplan_key'   => 'tee-3-pos-4',
             'floorplan_1'      => null,
             'floorplan_2'      => null,
         ],
@@ -506,9 +506,19 @@ return [
     ],
 
     'seo' => [
-        // Leave null until final production domain is confirmed by client.
-        'canonical_base' => env('MAGNOOLIA_CANONICAL_BASE', null),
-        'og_image'       => 'assets/images/magnoolia/Cam001.0000.jpg',
+        // Production canonical domain. Set MAGNOOLIA_CANONICAL_DOMAIN in .env before launch.
+        // Staging: MAGNOOLIA_CANONICAL_DOMAIN=https://magnoolia.adme.ee
+        // Production: MAGNOOLIA_CANONICAL_DOMAIN=https://magnoolia.ee
+        'production_domain' => env('MAGNOOLIA_CANONICAL_DOMAIN', 'https://magnoolia.ee'),
+        // canonical_base always has a value: set MAGNOOLIA_CANONICAL_DOMAIN to override
+        'canonical_base'    => env('MAGNOOLIA_CANONICAL_DOMAIN', env('MAGNOOLIA_CANONICAL_BASE', 'https://magnoolia.ee')),
+        'og_image'          => 'assets/images/magnoolia/Cam001.0000.jpg',
+
+        // Indexing control
+        // staging: MAGNOOLIA_ENV=staging → adds <meta name="robots" content="noindex,nofollow">
+        // production: MAGNOOLIA_ENV=production → index,follow
+        'env'     => env('MAGNOOLIA_ENV', 'staging'),
+        'noindex' => env('MAGNOOLIA_NOINDEX', true),
     ],
 
 ];

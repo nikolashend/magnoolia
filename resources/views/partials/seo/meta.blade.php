@@ -5,17 +5,38 @@
 --}}
 @php
     $project = config('magnoolia.project', []);
-    $canonicalRaw = config('magnoolia.seo.canonical_base');
+    $canonicalRaw = config('magnoolia.seo.canonical_base') ?? config('magnoolia.seo.production_domain');
     $canonicalBase = rtrim($canonicalRaw ?: config('app.url', url('/')), '/');
+    $noindex = config('magnoolia.seo.noindex', true);
     $locale = app()->getLocale();
 
-    $homeEt = $canonicalBase;
-    $homeRu = $canonicalBase . '/ru';
-    $homeEn = $canonicalBase . '/en';
+    // Canonical URL uses canonical base + current path (domain-independent)
+    $currentPath = parse_url(url()->current(), PHP_URL_PATH) ?? '/';
+    $canonicalUrl = $canonicalBase . ($currentPath === '/' ? '' : $currentPath);
 
-    $canonicalUrl = request()->routeIs('home*')
-        ? ($locale === 'ru' ? $homeRu : ($locale === 'en' ? $homeEn : $homeEt))
-        : url()->current();
+    // ── hreflang: build page-equivalent URLs across locales ──────────────
+    $currentRouteName = request()->route()?->getName() ?? '';
+    // Strip locale prefix to get the ET base route name (e.g. ru.magnoolia.homes → magnoolia.homes)
+    $hreflangBase = preg_replace('/^(ru|en)\./', '', $currentRouteName);
+
+    $resolveAlt = function (string $routeName) use ($canonicalBase): string {
+        try {
+            $path = parse_url(route($routeName), PHP_URL_PATH) ?? '/';
+            return $canonicalBase . ($path === '/' ? '' : $path);
+        } catch (\Throwable $e) {
+            return $canonicalBase;
+        }
+    };
+
+    if ($hreflangBase === 'home' || $hreflangBase === '') {
+        $hreflangEt = $canonicalBase;
+        $hreflangRu = $canonicalBase . '/ru';
+        $hreflangEn = $canonicalBase . '/en';
+    } else {
+        $hreflangEt = $resolveAlt($hreflangBase);
+        $hreflangRu = $resolveAlt('ru.' . $hreflangBase);
+        $hreflangEn = $resolveAlt('en.' . $hreflangBase);
+    }
 
     $titles = [
         'et' => 'Magnoolia Kodud — A-energiaklassi ridaelamukodud Vaelas Tallinna lähedal',
@@ -54,11 +75,14 @@
 <meta name="twitter:description" content="@yield('og_description', $defaultDesc)">
 <meta name="twitter:image"       content="@yield('og_image', $defaultOgImg)">
 
+{{-- ── Robots ───────────────────────────────────────────────────── --}}
+<meta name="robots" content="{{ $noindex ? 'noindex,nofollow' : 'index,follow' }}">
+
 {{-- ── Canonical ────────────────────────────────────────────────── --}}
 <link rel="canonical" href="{{ $canonicalUrl }}">
 
 {{-- ── hreflang ─────────────────────────────────────────────────── --}}
-<link rel="alternate" hreflang="et"        href="{{ $homeEt }}">
-<link rel="alternate" hreflang="ru"        href="{{ $homeRu }}">
-<link rel="alternate" hreflang="en"        href="{{ $homeEn }}">
-<link rel="alternate" hreflang="x-default" href="{{ $homeEt }}">
+<link rel="alternate" hreflang="et"        href="{{ $hreflangEt }}">
+<link rel="alternate" hreflang="ru"        href="{{ $hreflangRu }}">
+<link rel="alternate" hreflang="en"        href="{{ $hreflangEn }}">
+<link rel="alternate" hreflang="x-default" href="{{ $hreflangEt }}">

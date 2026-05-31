@@ -7,7 +7,7 @@
 |--------------------------------------------------------------------------
 */
 
-$base = rtrim(env('MAGNOOLIA_CANONICAL_BASE', env('APP_URL', 'https://magnoolia.ee')), '/');
+$base = rtrim(env('MAGNOOLIA_CANONICAL_DOMAIN', env('MAGNOOLIA_CANONICAL_BASE', env('APP_URL', 'https://magnoolia.ee'))), '/');
 
 return [
 

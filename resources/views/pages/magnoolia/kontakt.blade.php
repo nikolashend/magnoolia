@@ -7,7 +7,7 @@
 
 @section('content')
 @php
-  $base  = rtrim(config('magnoolia.seo.canonical_base', config('app.url', url('/'))), '/');
+  $base  = rtrim(config('magnoolia.seo.canonical_base', 'https://magnoolia.ee'), '/');
   $email = config('magnoolia.project.contact_email', 'diana@estlanda.ee');
   $phone = config('magnoolia.project.contact_phone', '+37258164078');
   $phoneFormatted = '+372 58 164 078';
