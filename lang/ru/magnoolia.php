@@ -88,6 +88,20 @@ return [
         'gallery_eyebrow'  => 'Наши дома',
         'gallery_title'    => '19 независимых домов с частным двором и балконом.',
         'gallery_view'     => 'СМОТРЕТЬ',
+        'gallery_cards'    => [
+            ['img'=>'Cam001.0000.jpg',             'alt'=>'Magnoolia общий вид',              'title'=>'Общий вид — фасад',    'f'=>[['i'=>'icon-bedroom',   'v'=>'4–5 комнат'],['i'=>'icon-labyrinth','v'=>'~129–143 m²'],['i'=>'icon-real-estate','v'=>'Терраса + балкон']]],
+            ['img'=>'Cam004.0000.jpg',             'alt'=>'Magnoolia боковой вид',            'title'=>'Боковой вид — терраса', 'f'=>[['i'=>'icon-real-estate','v'=>'Терраса 18–24 m²'],['i'=>'icon-labyrinth','v'=>'Частный двор'],['i'=>'icon-trophy','v'=>'Энергокласс А']]],
+            ['img'=>'Cam005.0000.jpg',             'alt'=>'Magnoolia вид сзади',                 'title'=>'Вид сзади — балкон',          'f'=>[['i'=>'icon-real-estate','v'=>'Балкон 9,5–11,5 m²'],['i'=>'icon-house','v'=>'Зелёный вид'],['i'=>'icon-celemder','v'=>'Сдача 2027']]],
+            ['img'=>'Cam014.0000.jpg',             'alt'=>'Magnoolia обзор квартала',          'title'=>'Обзор квартала',             'f'=>[['i'=>'icon-buildings', 'v'=>'19 домов'],['i'=>'icon-pin','v'=>'Вяэла, Кийли'],['i'=>'icon-labyrinth','v'=>'Зелёное окружение']]],
+            ['img'=>'Magnoolia tee_ES_1_15.jpg',   'alt'=>'Magnoolia улица',                       'title'=>'Улица Magnoolia',                    'f'=>[['i'=>'icon-pin',        'v'=>'Деревня Вяэла'],['i'=>'icon-garage','v'=>'2 парковочных места'],['i'=>'icon-house','v'=>'Удобный подъезд']]],
+            ['img'=>'Magnoolia tee_ES_2.jpg',      'alt'=>'Magnoolia зелёный участок',         'title'=>'Зелёный парковый участок', 'f'=>[['i'=>'icon-labyrinth', 'v'=>'Зелёная среда'],['i'=>'icon-pin','v'=>'Харьюмаа'],['i'=>'icon-trophy','v'=>'Новая застройка']]],
+            ['img'=>'Magnoolia tee_ES_7.jpg',      'alt'=>'Magnoolia частный двор',           'title'=>'Частный дворик',             'f'=>[['i'=>'icon-labyrinth', 'v'=>'Собственный сад'],['i'=>'icon-real-estate','v'=>'Терраса у двора'],['i'=>'icon-trophy','v'=>'Приватность']]],
+            ['img'=>'Interior 1.jpg',              'alt'=>'Magnoolia гостиная и кухня',    'title'=>'Гостиная и кухня',         'f'=>[['i'=>'icon-flooring',  'v'=>'Тёплый пол'],['i'=>'icon-labyrinth','v'=>'Открытая планировка'],['i'=>'icon-house','v'=>'Энергокласс А']]],
+            ['img'=>'Interior 2.jpg',              'alt'=>'Magnoolia отделка',                    'title'=>'Внутренняя отделка',         'f'=>[['i'=>'icon-flooring',  'v'=>'Качественная отделка'],['i'=>'icon-trophy','v'=>'Современный дизайн'],['i'=>'icon-house','v'=>'Функциональность']]],
+            ['img'=>'magnoolia_cam07.jpg',          'alt'=>'Magnoolia вечерний вид',            'title'=>'Фасад в вечернем свете',  'f'=>[['i'=>'icon-labyrinth', 'v'=>'Красивая среда'],['i'=>'icon-garage','v'=>'Парковка'],['i'=>'icon-pin','v'=>'Вяэла, Кийли']]],
+        ],
+        'video_eyebrow'    => 'Галерея Magnoolia',
+        'video_title'      => 'Ознакомьтесь с домами и окружением Magnoolia.',
         'asendiplaan_desc'          => 'Посмотрите, в каком этапе и по какому адресу расположен дом. Точное расположение и планировку можно запросить —',
         'asendiplaan_diana_link'    => 'напишите Diana Tali',
         'asendiplaan_map_title'     => 'Застройка Magnoolia на карте',
@@ -998,6 +1012,18 @@ return [
             'link_loc'       => 'Расположение',
         ],
 
+    ],
+
+    /* Thank-you page */
+    'thankyou' => [
+        'page_title'       => 'Спасибо за запрос | Magnoolia',
+        'meta_description' => 'Ваш запрос получен. Мы свяжемся с вами в ближайшее время.',
+        'eyebrow'          => 'Запрос отправлен',
+        'heading'          => 'Спасибо! Мы скоро с вами свяжемся.',
+        'heading_name'     => 'Спасибо, :name! Мы скоро с вами свяжемся.',
+        'body'             => 'Ваш запрос получен. Диана рассмотрит его и ответит при первой возможности — обычно в течение одного рабочего дня.',
+        'cta_home'         => 'На главную страницу',
+        'cta_homes'        => 'Смотреть дома и цены',
     ],
 
 ];

@@ -40,6 +40,7 @@ Route::get('/galerii',          [MagnooliaController::class, 'gallery'])       -
 Route::get('/ostuprotsess',     [MagnooliaController::class, 'purchase'])      ->name('magnoolia.ostuprotsess');
 Route::get('/finantseerimine',  [MagnooliaController::class, 'financing'])     ->name('magnoolia.finantseerimine');
 Route::get('/kkk',              [MagnooliaController::class, 'faq'])           ->name('magnoolia.kkk');
+Route::get('/aitah',            [MagnooliaController::class, 'thankyou'])      ->name('magnoolia.thankyou');
 
 // ── Locale prefix groups: /ru/... and /en/... ────────────────────────────────
 foreach (['ru', 'en'] as $_loc) {
@@ -71,6 +72,8 @@ foreach (['ru', 'en'] as $_loc) {
                 ->name($_loc . '.magnoolia.finantseerimine');
             Route::get('/kkk',              [MagnooliaController::class, 'faq'])
                 ->name($_loc . '.magnoolia.kkk');
+            Route::get('/aitah',            [MagnooliaController::class, 'thankyou'])
+                ->name($_loc . '.magnoolia.thankyou');
         });
 }
 

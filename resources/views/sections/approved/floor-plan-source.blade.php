@@ -1,4 +1,4 @@
-{{-- ══════════════════════════════════════════════════════════════
+﻿{{-- ══════════════════════════════════════════════════════════════
     FLOOR PLAN — Phase 11 Recovery
     2 typology cards: 3 koduga (Plaan A) + 4 koduga (Plaan B)
     Each card: I korrus + II korrus labeled sections,
@@ -103,7 +103,7 @@
                                 <span class="mg-plan-floor__num">{{ __('magnoolia.floorplan.floor_1') }}</span>
                             </div>
                             <div class="mg-plan-floor__img-wrap">
-                                <img src="{{ $plan['floor1_src'] }}"
+                                <img loading="lazy" decoding="async" src="{{ $plan['floor1_src'] }}"
                                      alt="{{ $plan['floor1_alt'] }}"
                                      width="560" height="545"
                                      loading="lazy" decoding="async"
@@ -135,7 +135,7 @@
                                 <span class="mg-plan-floor__num">{{ __('magnoolia.floorplan.floor_2') }}</span>
                             </div>
                             <div class="mg-plan-floor__img-wrap">
-                                <img src="{{ $plan['floor2_src'] }}"
+                                <img loading="lazy" decoding="async" src="{{ $plan['floor2_src'] }}"
                                      alt="{{ $plan['floor2_alt'] }}"
                                      width="560" height="646"
                                      loading="lazy" decoding="async"
@@ -231,10 +231,10 @@
 
         {{-- Image area --}}
         <div style="flex:1;overflow-y:auto;padding:24px 28px;display:flex;justify-content:center;align-items:flex-start;">
-            <img id="mg-plan-lb-img"
+            <img loading="lazy" decoding="async" id="mg-plan-lb-img"
                  src=""
                  alt=""
-                 style="max-width:100%;height:auto;border-radius:10px;border:1px solid rgba(29,36,48,.08);display:block;">
+                 style="max-width:100%;height:auto;border-radius:10px;border:1px solid rgba(29,36,48,.08);display:block;" loading="lazy" decoding="async">
         </div>
 
         {{-- Footer CTA --}}

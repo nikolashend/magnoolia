@@ -1,6 +1,6 @@
 # Magnoolia Kodud — LLM Reference File
 # https://magnoolia.ee/llms.txt
-# Last updated: 2026-05-31
+# Last updated: 2026-06-01
 
 ## Brand
 Name: Magnoolia Kodud
@@ -50,6 +50,7 @@ Company: Estlanda Ehitus OÜ
 /finantseerimine — financing options
 /kkk — frequently asked questions
 /kontakt — contact form and direct contact
+/aitah — thank-you page after form submission (noindex)
 
 ## Multilingual
 Estonian: https://magnoolia.ee/
@@ -64,3 +65,5 @@ English: https://magnoolia.ee/en/
 - Completion dates depend on building permits and construction schedule.
 - No aggregateRating or review data is available from this source.
 - No Offer schema with specific prices is published until the final price list is confirmed.
+- Contact form submissions are logged and sent to diana@estlanda.ee. No info@magnoolia.ee address exists.
+- The site is multilingual (ET/RU/EN). All three versions are indexable except /aitah (noindex).

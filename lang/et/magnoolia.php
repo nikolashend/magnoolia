@@ -114,7 +114,23 @@ return [
         'benefits_link'  => 'LOEN LÄHEMALT',
         'about_title'    => 'Läbimõeldud kodu. Privaatne hooviala.',
 
+        'gallery_eyebrow'   => 'Meie kodud',
+        'gallery_title'    => '19 sõltumatut kodu privaatse hooviala ja rõduga.',
         'gallery_view'     => 'VAATA',
+        'gallery_cards'    => [
+            ['img'=>'Cam001.0000.jpg',             'alt'=>'Magnoolia üldvaade eest',          'title'=>'Üldvaade — välisfassaad',   'f'=>[['i'=>'icon-bedroom',   'v'=>'4–5 tuba'],['i'=>'icon-labyrinth','v'=>'~129–143 m²'],['i'=>'icon-real-estate','v'=>'Terrass + rõdu']]],
+            ['img'=>'Cam004.0000.jpg',             'alt'=>'Magnoolia külgvaade',             'title'=>'Külgvaade — terrass',          'f'=>[['i'=>'icon-real-estate','v'=>'Terrass 18–24 m²'],['i'=>'icon-labyrinth','v'=>'Privaatne aed'],['i'=>'icon-trophy','v'=>'A-energiaklass']]],
+            ['img'=>'Cam005.0000.jpg',             'alt'=>'Magnoolia tagavaade',                 'title'=>'Tagavaade — rõdu',             'f'=>[['i'=>'icon-real-estate','v'=>'Rõdu 9,5–11,5 m²'],['i'=>'icon-house','v'=>'Roheline vaade'],['i'=>'icon-celemder','v'=>'Valmib 2027']]],
+            ['img'=>'Cam014.0000.jpg',             'alt'=>'Magnoolia kvartalivaade',              'title'=>'Kvartali üldvaade',               'f'=>[['i'=>'icon-buildings', 'v'=>'19 kodu'],['i'=>'icon-pin','v'=>'Vaela, Kiili vald'],['i'=>'icon-labyrinth','v'=>'Rohelus ümber']]],
+            ['img'=>'Magnoolia tee_ES_1_15.jpg',   'alt'=>'Magnoolia koduTänav',             'title'=>'Kodutnav',                            'f'=>[['i'=>'icon-pin',        'v'=>'Vaela küla'],['i'=>'icon-garage','v'=>'2 parkimiskohta'],['i'=>'icon-house','v'=>'Hea ligipääs']]],
+            ['img'=>'Magnoolia tee_ES_2.jpg',      'alt'=>'Magnoolia kruntidevaheline ala',       'title'=>'Kruntide pargi ala',                  'f'=>[['i'=>'icon-labyrinth', 'v'=>'Roheline keskkond'],['i'=>'icon-pin','v'=>'Harjumaa'],['i'=>'icon-trophy','v'=>'Uus arendus']]],
+            ['img'=>'Magnoolia tee_ES_7.jpg',      'alt'=>'Magnoolia hooviala',                   'title'=>'Privaatne hooviala',                  'f'=>[['i'=>'icon-labyrinth', 'v'=>'Oma aed'],['i'=>'icon-real-estate','v'=>'Terrass tagaõuest'],['i'=>'icon-trophy','v'=>'Eramaja privaatsus']]],
+            ['img'=>'Interior 1.jpg',              'alt'=>'Magnoolia elutuba ja köök',   'title'=>'Elutuba ja köök',             'f'=>[['i'=>'icon-flooring',  'v'=>'Põrandaküte'],['i'=>'icon-labyrinth','v'=>'Avatud plaan'],['i'=>'icon-house','v'=>'A-energiaklass']]],
+            ['img'=>'Interior 2.jpg',              'alt'=>'Magnoolia siseviimistlus',             'title'=>'Siseviimistlus',                      'f'=>[['i'=>'icon-flooring',  'v'=>'Kvaliteetne viimistlus'],['i'=>'icon-trophy','v'=>'Kaasaegne disain'],['i'=>'icon-house','v'=>'Funktsionaalne']]],
+            ['img'=>'magnoolia_cam07.jpg',          'alt'=>'Magnoolia õuevaade',               'title'=>'Välisilme õhtuvalguses',       'f'=>[['i'=>'icon-labyrinth', 'v'=>'Kaunis keskkond'],['i'=>'icon-garage','v'=>'Parkimine'],['i'=>'icon-pin','v'=>'Vaela, Kiili vald']]],
+        ],
+        'video_eyebrow'    => 'Magnoolia galerii',
+        'video_title'      => 'Tutvu Magnoolia kodude ja keskkonnaga.',
 
         'asendiplaan_desc'          => 'Vaata, millises etapis ja aadressil iga kodu paikneb. Täpse asukoha ja plaani saab kinnitada —',
         'asendiplaan_diana_link'    => 'kirjuta Diana Talile',
@@ -976,6 +992,18 @@ return [
             'link_loc'       => 'Asukoht',
         ],
 
+    ],
+
+    /* Thank-you page */
+    'thankyou' => [
+        'page_title'       => 'Aitäh päringu eest | Magnoolia',
+        'meta_description' => 'Sinu päring on kätte saadud. Võtame sinuga esimesel võimalusel ühendust.',
+        'eyebrow'          => 'Päring saadetud',
+        'heading'          => 'Aitäh! Võtame sinuga peagi ühendust.',
+        'heading_name'     => 'Aitäh, :name! Võtame sinuga peagi ühendust.',
+        'body'             => 'Sinu päring on kätte saadud. Diana vaatab selle üle ja vastab esimesel võimalusel — tavaliselt ühe tööpäeva jooksul.',
+        'cta_home'         => 'Tagasi avalehele',
+        'cta_homes'        => 'Vaata kodusid ja hindu',
     ],
 
 ];

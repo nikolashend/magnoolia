@@ -1,4 +1,4 @@
-{{-- SOURCE: php-template/parts/home1/about.php | class: about-one section-space --}}
+﻿{{-- SOURCE: php-template/parts/home1/about.php | class: about-one section-space --}}
     <section class="about-one section-space" id="about" style="background-color:#ffffff;">
         <div class="container">
             <div class="row gutter-y-50">
@@ -6,7 +6,7 @@
                     <div class="about-one__image">
                         <div class="about-one__image__item">
                             <div class="about-one__image__item__inner hover:shine" style="overflow:hidden;width:409px;height:480px;">
-                                <img src="{{ asset('assets/images/magnoolia/Cam004.0000.jpg') }}" alt="Magnoolia ridaelamud välisvaade" class="about-one__image__one" style="width:409px;height:480px;object-fit:cover;object-position:center;display:block;">
+                                <img src="{{ asset('assets/images/magnoolia/Cam004.0000.jpg') }}" alt="Magnoolia ridaelamud välisvaade" class="about-one__image__one" style="width:409px;height:480px;object-fit:cover;object-position:center;display:block;" loading="lazy" decoding="async">
                             </div>
                             <div class="about-one__experience wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
                                 <h3 class="about-one__experience__title">{{ __('magnoolia.section.why_completion') }}</h3>
@@ -14,9 +14,9 @@
                         </div>
                         <div class="about-one__image__item-two hover:shine">
                             <div class="about-one__image__icon">
-                                <img src="{{ asset('assets/images/shapes/house-1-1.png') }}" alt="icon">
+                                <img src="{{ asset('assets/images/shapes/house-1-1.png') }}" alt="icon" loading="lazy" decoding="async">
                             </div>
-                            <img src="{{ asset('assets/images/magnoolia/Interior 4.jpg') }}" alt="Magnoolia sisevaade" class="about-one__image__one" style="width:336px;height:429px;object-fit:cover;display:block;">
+                            <img src="{{ asset('assets/images/magnoolia/Interior 4.jpg') }}" alt="Magnoolia sisevaade" class="about-one__image__one" style="width:336px;height:429px;object-fit:cover;display:block;" loading="lazy" decoding="async">
                         </div>
                     </div>
                 </div>
@@ -45,6 +45,6 @@
             </div>
         </div>
         <div class="about-one__shape">
-            <img src="{{ asset('assets/images/shapes/about-shape-1-1.png') }}" alt="image">
+            <img src="{{ asset('assets/images/shapes/about-shape-1-1.png') }}" alt="image" loading="lazy" decoding="async">
         </div>
     </section>

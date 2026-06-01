@@ -88,6 +88,20 @@ return [
         'gallery_eyebrow'  => 'Our homes',
         'gallery_title'    => '19 independent homes with private yard and balcony.',
         'gallery_view'     => 'VIEW',
+        'gallery_cards'    => [
+            ['img'=>'Cam001.0000.jpg',             'alt'=>'Magnoolia front view',               'title'=>'Front elevation',                     'f'=>[['i'=>'icon-bedroom',   'v'=>'4–5 rooms'],['i'=>'icon-labyrinth','v'=>'~129–143 m²'],['i'=>'icon-real-estate','v'=>'Terrace + balcony']]],
+            ['img'=>'Cam004.0000.jpg',             'alt'=>'Magnoolia side view',                'title'=>'Side view — terrace',              'f'=>[['i'=>'icon-real-estate','v'=>'Terrace 18–24 m²'],['i'=>'icon-labyrinth','v'=>'Private yard'],['i'=>'icon-trophy','v'=>'Energy class A']]],
+            ['img'=>'Cam005.0000.jpg',             'alt'=>'Magnoolia rear view',                'title'=>'Rear view — balcony',              'f'=>[['i'=>'icon-real-estate','v'=>'Balcony 9.5–11.5 m²'],['i'=>'icon-house','v'=>'Garden views'],['i'=>'icon-celemder','v'=>'Ready 2027']]],
+            ['img'=>'Cam014.0000.jpg',             'alt'=>'Magnoolia development overview',     'title'=>'Development overview',                'f'=>[['i'=>'icon-buildings', 'v'=>'19 homes'],['i'=>'icon-pin','v'=>'Vaela, Kiili'],['i'=>'icon-labyrinth','v'=>'Green surroundings']]],
+            ['img'=>'Magnoolia tee_ES_1_15.jpg',   'alt'=>'Magnoolia street',                   'title'=>'Magnoolia street',                    'f'=>[['i'=>'icon-pin',        'v'=>'Vaela village'],['i'=>'icon-garage','v'=>'2 parking spaces'],['i'=>'icon-house','v'=>'Good access']]],
+            ['img'=>'Magnoolia tee_ES_2.jpg',      'alt'=>'Magnoolia park area',                'title'=>'Green park area',                     'f'=>[['i'=>'icon-labyrinth', 'v'=>'Natural environment'],['i'=>'icon-pin','v'=>'Harjumaa'],['i'=>'icon-trophy','v'=>'New development']]],
+            ['img'=>'Magnoolia tee_ES_7.jpg',      'alt'=>'Magnoolia private yard',             'title'=>'Private yard',                        'f'=>[['i'=>'icon-labyrinth', 'v'=>'Own garden'],['i'=>'icon-real-estate','v'=>'Terrace off yard'],['i'=>'icon-trophy','v'=>'House-like privacy']]],
+            ['img'=>'Interior 1.jpg',              'alt'=>'Magnoolia living room and kitchen',  'title'=>'Living room & kitchen',               'f'=>[['i'=>'icon-flooring',  'v'=>'Underfloor heating'],['i'=>'icon-labyrinth','v'=>'Open plan'],['i'=>'icon-house','v'=>'Energy class A']]],
+            ['img'=>'Interior 2.jpg',              'alt'=>'Magnoolia interior finish',          'title'=>'Interior finish',                     'f'=>[['i'=>'icon-flooring',  'v'=>'Quality finishes'],['i'=>'icon-trophy','v'=>'Modern design'],['i'=>'icon-house','v'=>'Functional layout']]],
+            ['img'=>'magnoolia_cam07.jpg',          'alt'=>'Magnoolia exterior at dusk',         'title'=>'Exterior at dusk',                    'f'=>[['i'=>'icon-labyrinth', 'v'=>'Beautiful setting'],['i'=>'icon-garage','v'=>'Parking'],['i'=>'icon-pin','v'=>'Vaela, Kiili']]],
+        ],
+        'video_eyebrow'    => 'Magnoolia gallery',
+        'video_title'      => 'Explore Magnoolia homes and surroundings.',
         'asendiplaan_desc'          => 'See which phase and address each home is in. Exact location and floor plan can be requested —',
         'asendiplaan_diana_link'    => 'write to Diana Tali',
         'asendiplaan_map_title'     => 'Magnoolia development on the map',
@@ -998,6 +1012,18 @@ return [
             'link_loc'       => 'Location',
         ],
 
+    ],
+
+    /* Thank-you page */
+    'thankyou' => [
+        'page_title'       => 'Thank you for your enquiry | Magnoolia',
+        'meta_description' => 'Your enquiry has been received. We will get back to you as soon as possible.',
+        'eyebrow'          => 'Enquiry received',
+        'heading'          => 'Thank you! We will be in touch shortly.',
+        'heading_name'     => 'Thank you, :name! We will be in touch shortly.',
+        'body'             => 'Your enquiry has been received. Diana will review it and respond at the earliest opportunity — usually within one business day.',
+        'cta_home'         => 'Back to home',
+        'cta_homes'        => 'View homes & prices',
     ],
 
 ];

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\RateLimiter;
+use App\Models\MagnooliaLead;
 
 /**
  * MagnooliaController — Phase 14
@@ -80,39 +82,98 @@ class MagnooliaController extends Controller
      */
     public function contactSend(Request $request)
     {
+        // Honeypot — bots fill this hidden field, humans don't
+        if ($request->filled('website')) {
+            return redirect()->to(lroute('magnoolia.contact') . '#kontaktivorm')
+                ->with('contact_success', true)
+                ->with('contact_name', $request->input('name', ''));
+        }
+
+        // Rate limit: max 3 submissions per 10 minutes per IP
+        $rateLimitKey = 'contact|' . $request->ip();
+        if (RateLimiter::tooManyAttempts($rateLimitKey, 3)) {
+            $seconds = RateLimiter::availableIn($rateLimitKey);
+            return redirect()->back()
+                ->withErrors(['email' => __('magnoolia.contact.rate_limit_message', [], app()->getLocale()) ?: 'Liiga palju päringuid. Proovi ' . ceil($seconds / 60) . ' minuti pärast uuesti.'])
+                ->withInput();
+        }
+        RateLimiter::hit($rateLimitKey, 600); // 10-minute window
+
         $validated = $request->validate([
-            'name'          => 'required|string|max:255',
-            'email'         => 'required|email|max:255',
+            'name'          => 'required|string|min:2|max:120',
+            'email'         => 'required|email|max:190',
             'phone'         => 'nullable|string|max:50',
             'message'       => 'nullable|string|max:2000',
             'selected_unit' => 'nullable|string|max:100',
             'consent'       => 'accepted',
         ]);
 
-        $toEmail   = config('magnoolia.project.contact_email', 'diana@estlanda.ee');
-        $unitLabel = $validated['selected_unit'] ? ' — ' . $validated['selected_unit'] : '';
+        $toEmail    = config('magnoolia.project.contact_email', 'diana@estlanda.ee');
+        $unitLabel  = $validated['selected_unit'] ? ' — ' . $validated['selected_unit'] : '';
+        $locale     = app()->getLocale();
+        $sourceUrl  = $request->headers->get('referer', $request->url());
+        $referrer   = $request->session()->previousUrl() ?? $request->headers->get('referer');
+        $ip         = $request->ip();
+        $userAgent  = substr($request->userAgent() ?? '', 0, 500);
+        $utmSource  = $request->query('utm_source');
+        $utmMedium  = $request->query('utm_medium');
+        $utmCampaign= $request->query('utm_campaign');
 
-        try {
-            Mail::raw(
-                "Uus päring Magnoolia kodulehelt{$unitLabel}\n\n"
-                . "Nimi:      {$validated['name']}\n"
-                . "E-post:    {$validated['email']}\n"
-                . "Telefon:   " . ($validated['phone'] ?? '—') . "\n"
-                . "Kodu:      " . ($validated['selected_unit'] ?? '—') . "\n\n"
-                . "Sõnum:\n" . ($validated['message'] ?? '—'),
-                function ($message) use ($toEmail, $validated, $unitLabel) {
-                    $message->to($toEmail)
-                            ->replyTo($validated['email'], $validated['name'])
-                            ->subject("Magnoolia päring{$unitLabel} — {$validated['name']}");
-                }
-            );
-        } catch (\Exception $e) {
-            Log::error('Magnoolia contact form mail failed: ' . $e->getMessage(), $validated);
+        // Build email body
+        $body = "Uus päring Magnoolia kodulehelt{$unitLabel}\n"
+            . str_repeat('-', 50) . "\n"
+            . "Nimi:      {$validated['name']}\n"
+            . "E-post:    {$validated['email']}\n"
+            . "Telefon:   " . ($validated['phone'] ?? '—') . "\n"
+            . "Kodu:      " . ($validated['selected_unit'] ?? '—') . "\n\n"
+            . "Sõnum:\n" . ($validated['message'] ?? '—') . "\n\n"
+            . str_repeat('-', 50) . "\n"
+            . "Keel:      {$locale}\n"
+            . "Lehekülg:  {$sourceUrl}\n"
+            . "Referrer:  " . ($referrer ?? '—') . "\n"
+            . "IP:        {$ip}\n"
+            . "Aeg:       " . now()->setTimezone('Europe/Tallinn')->format('d.m.Y H:i:s T') . "\n";
+        if ($utmSource) {
+            $body .= "UTM:       source={$utmSource} medium={$utmMedium} campaign={$utmCampaign}\n";
         }
 
-        return redirect()
-            ->to(lroute('magnoolia.contact') . '#kontaktivorm')
-            ->with('contact_success', true)
+        // 1) Send mail
+        $mailStatus = 'sent';
+        try {
+            Mail::raw($body, function ($message) use ($toEmail, $validated, $unitLabel) {
+                $message->to($toEmail)
+                        ->replyTo($validated['email'], $validated['name'])
+                        ->subject("Magnoolia päring{$unitLabel} — {$validated['name']}");
+            });
+        } catch (\Exception $e) {
+            $mailStatus = 'failed';
+            Log::error('Magnoolia contact form mail failed: ' . $e->getMessage(), ['email' => $validated['email']]);
+        }
+
+        // 2) Log lead to DB (fail silently so mail failure doesn't break UX)
+        try {
+            MagnooliaLead::create([
+                'name'          => $validated['name'],
+                'email'         => $validated['email'],
+                'phone'         => $validated['phone'] ?? null,
+                'selected_unit' => $validated['selected_unit'] ?? null,
+                'message'       => $validated['message'] ?? null,
+                'locale'        => $locale,
+                'source_url'    => $sourceUrl,
+                'referrer'      => $referrer,
+                'utm_source'    => $utmSource,
+                'utm_medium'    => $utmMedium,
+                'utm_campaign'  => $utmCampaign,
+                'ip_address'    => $ip,
+                'user_agent'    => $userAgent,
+                'mail_status'   => $mailStatus,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Magnoolia lead DB log failed: ' . $e->getMessage());
+        }
+
+        // Redirect to locale thank-you page
+        return redirect()->to(lroute('magnoolia.thankyou'))
             ->with('contact_name', $validated['name']);
     }
 
@@ -156,5 +217,12 @@ class MagnooliaController extends Controller
     {
         $page = config('magnoolia_pages.pages.faq', []);
         return view('pages.magnoolia.kkk', compact('page'));
+    }
+
+    /** GET /aitah  (ET) | /ru/spasibo (RU) | /en/thank-you (EN) */
+    public function thankyou()
+    {
+        $name = session('contact_name');
+        return view('pages.magnoolia.aitah', compact('name'));
     }
 }

@@ -8,6 +8,9 @@
   $base = rtrim(config('magnoolia.seo.canonical_base', 'https://magnoolia.ee'), '/');
 @endphp
 
+@php
+  $steps = __('magnoolia.page.ostuprotsess.steps');
+@endphp
 <script type="application/ld+json">
 {
   "@@context": "https://schema.org",
@@ -17,6 +20,23 @@
       "itemListElement": [
         { "@@type": "ListItem", "position": 1, "name": "Avaleht", "item": "{{ $base }}" },
         { "@@type": "ListItem", "position": 2, "name": "Ostuprotsess", "item": "{{ $base }}/ostuprotsess" }
+      ]
+    },
+    {
+      "@@type": "HowTo",
+      "@@id": "{{ $base }}/ostuprotsess#howto",
+      "name": "Kuidas osta Magnoolia kodu",
+      "description": "Samm-sammuline juhend Magnoolia ridaelamukodu ostmiseks — alates kodude vaatamisest kuni notariaalse lepinguni.",
+      "totalTime": "P90D",
+      "step": [
+        @foreach($steps as $i => $step)
+        {
+          "@@type": "HowToStep",
+          "position": {{ $i + 1 }},
+          "name": "{{ e($step['title']) }}",
+          "text": "{{ e($step['body']) }}"
+        }{{ !$loop->last ? ',' : '' }}
+        @endforeach
       ]
     },
     {

@@ -171,6 +171,11 @@
                               data-event="contact_form_start" data-page="contact">
                         @csrf
 
+                        {{-- Honeypot: hidden from humans, bots fill it → silent discard in controller --}}
+                        <div style="display:none;" aria-hidden="true">
+                            <input type="text" name="website" tabindex="-1" autocomplete="off" value="">
+                        </div>
+
                         {{-- Selected unit (prefilled by modal CTA) --}}
                         @php $allUnitsForForm = config('magnoolia.units', []); @endphp
                         <div>

@@ -1,10 +1,10 @@
-{{-- SOURCE: php-template/parts/home2/about.php | class: about-two --}}
+﻿{{-- SOURCE: php-template/parts/home2/about.php | class: about-two --}}
     <section class="about-two" id="about">
         <div class="container">
             <div class="row align-items-end gutter-y-30">
                 <div class="col-lg-6">
                     <div class="about-two__thumb hover:shine" style="width:1075px;min-height:839px;">
-                        <img src="{{ asset('assets/images/magnoolia/Cam005.0000.jpg') }}" alt="Magnoolia A-energiaklassi kodud Vaela külas" style="width:100%;height:100%;min-height:839px;object-fit:cover;display:block;">
+                        <img src="{{ asset('assets/images/magnoolia/Cam005.0000.jpg') }}" alt="Magnoolia A-energiaklassi kodud Vaela külas" style="width:100%;height:100%;min-height:839px;object-fit:cover;display:block;" loading="lazy" decoding="async">
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -61,17 +61,17 @@
                 <li class="about-two__funfact__item about-two__funfact__item--two wow fadeInRight" data-wow-duration="1500ms" data-wow-delay="500ms">
                     <div class="house-solituions">
                         <a href="#" class="house-solituions__icon"><i class="icon-arrow-up"></i></a>
-                        <img src="{{ asset('assets/images/shapes/text-round-1-1.png') }}" alt="image">
+                        <img src="{{ asset('assets/images/shapes/text-round-1-1.png') }}" alt="image" loading="lazy" decoding="async">
                     </div>
                 </li>
             </ul>
         </div>
         <div class="about-two__happy-client wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
             <div class="about-two__happy-client__thumb">
-                <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-1.jpg') }}" alt="image"><a href="#"><i class="fas fa-plus"></i></a></div>
-                <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-2.jpg') }}" alt="image"><a href="#"><i class="fas fa-plus"></i></a></div>
-                <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-3.png') }}" alt="image"><a href="#"><i class="fas fa-plus"></i></a></div>
-                <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-4.png') }}" alt="image"><a href="#"><i class="fas fa-plus"></i></a></div>
+                <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-1.jpg') }}" alt="image" loading="lazy" decoding="async"><a href="#"><i class="fas fa-plus"></i></a></div>
+                <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-2.jpg') }}" alt="image" loading="lazy" decoding="async"><a href="#"><i class="fas fa-plus"></i></a></div>
+                <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-3.png') }}" alt="image" loading="lazy" decoding="async"><a href="#"><i class="fas fa-plus"></i></a></div>
+                <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-4.png') }}" alt="image" loading="lazy" decoding="async"><a href="#"><i class="fas fa-plus"></i></a></div>
             </div>
             <div class="about-two__happy-client__content">
                 <h4 class="about-two__happy-client__title">I etapp kevad 2027</h4>
@@ -82,6 +82,6 @@
             </div>
         </div>
         <div class="about-two__shape wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="500ms">
-            <img src="{{ asset('assets/images/shapes/about-2-2.png') }}" alt="shape">
+            <img src="{{ asset('assets/images/shapes/about-2-2.png') }}" alt="shape" loading="lazy" decoding="async">
         </div>
     </section>

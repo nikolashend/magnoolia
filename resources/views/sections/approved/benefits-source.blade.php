@@ -1,4 +1,4 @@
-{{-- SOURCE: php-template/parts/home2/services.php | class: services-three section-space --}}
+﻿{{-- SOURCE: php-template/parts/home2/services.php | class: services-three section-space --}}
     <section class="services-three section-space">
         <div class="container">
             <div class="sec-title text-center">
@@ -8,6 +8,7 @@
                     <span class="line-right"></span>
                 </div>
                 <h3 class="sec-title__title bw-split-in-left">{!! __('magnoolia.section.benefits_title') !!}</h3>
+                <p class="sec-title__text wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms" style="max-width:620px;margin:16px auto 0;">{{ __('magnoolia.section.benefits_subtitle') }}</p>
             </div>
             <div class="row gutter-y-30">
                 <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
@@ -34,7 +35,7 @@
                 </div>
                 <div class="col-lg-6 col-md-12 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
                     <div class="service-card__image">
-                        <img src="{{ asset('assets/images/magnoolia/Interior 1.jpg') }}" alt="Magnoolia sisevaade" style="width:100%;height:347px;object-fit:cover;display:block;">
+                        <img src="{{ asset('assets/images/magnoolia/Interior 1.jpg') }}" alt="Magnoolia sisevaade" style="width:100%;height:347px;object-fit:cover;display:block;" loading="lazy" decoding="async">
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
