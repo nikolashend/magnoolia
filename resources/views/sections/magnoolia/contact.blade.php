@@ -151,17 +151,17 @@
                         {{-- Success flash --}}
                         @if(session('contact_success'))
                         <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:12px;padding:16px 20px;margin-bottom:8px;">
-                            <div style="font-size:15px;font-weight:700;color:#2e7d32;margin-bottom:4px;">✓ Päring saadetud!</div>
+                            <div style="font-size:15px;font-weight:700;color:#2e7d32;margin-bottom:4px;">{{ __('magnoolia.forms.flash_success_title') }}</div>
                             <p style="font-size:13px;color:#388e3c;margin:0;line-height:1.6;">
-                                Aitäh, {{ session('contact_name', 'kliendile') }}! Vastame teile tavaliselt ühe tööpäeva jooksul.
-                                Kiiremal juhul saab helistada: <a href="tel:+37258164078" style="color:#2e7d32;font-weight:600;">+372 58 164 078</a>.
+                                {{ __('magnoolia.forms.flash_success_body', ['name' => session('contact_name', '')]) }}
+                                <a href="tel:+37258164078" style="color:#2e7d32;font-weight:600;">+372 58 164 078</a>.
                             </p>
                         </div>
                         @endif
                         {{-- Error flash --}}
                         @if($errors->any())
                         <div style="background:#fce4ec;border:1px solid #f48fb1;border-radius:12px;padding:16px 20px;margin-bottom:8px;">
-                            <div style="font-size:14px;font-weight:700;color:#c62828;margin-bottom:6px;">Palun täida kõik kohustuslikud väljad:</div>
+                            <div style="font-size:14px;font-weight:700;color:#c62828;margin-bottom:6px;">{{ __('magnoolia.forms.flash_error_title') }}</div>
                             <ul style="margin:0;padding-left:18px;font-size:13px;color:#c62828;">
                                 @foreach($errors->all() as $err)<li>{{ $err }}</li>@endforeach
                             </ul>

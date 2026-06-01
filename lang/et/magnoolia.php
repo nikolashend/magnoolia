@@ -47,6 +47,14 @@ return [
         'stage_badge'   => 'I etapp valmib kevad 2027 · II etapp valmib kevad 2028',
         'cta_primary'   => 'Vaata kodusid ja hindu',
         'cta_secondary' => 'Küsi pakkumist',
+        'fact_label_homes'    => 'kodu',
+        'fact_label_area'     => 'elamispind',
+        'fact_label_rooms'    => 'tuba',
+        'fact_label_stage'    => 'I etapp',
+        'fact_label_distance' => 'Tallinnast',
+        'fact_label_energy'   => 'energiaklass',
+        'stage_year'          => 'kevad 2027',
+        'distance_value'      => '20 min',
     ],
 
     /* Facts bar */
@@ -134,6 +142,9 @@ return [
 
         'asendiplaan_desc'          => 'Vaata, millises etapis ja aadressil iga kodu paikneb. Täpse asukoha ja plaani saab kinnitada —',
         'asendiplaan_diana_link'    => 'kirjuta Diana Talile',
+        'asendiplaan_compare_pre'   => 'Praegu saab kodusid võrrelda',
+        'asendiplaan_compare_link'  => 'hinnatabeli, etappide ja plaanitüüpide järgi',
+        'asendiplaan_compare_map'   => 'Interaktiivne kaart täieneb koos projekti valmimisega.',
         'asendiplaan_map_title'     => 'Magnoolia arendus kaardil',
         'asendiplaan_map_body'      => 'Igal kodul on oma privaatne hooviala, parkimiskohad ja läbimõeldud ligipääs. Arendus asub Vaela külas, ligikaudu ~20 minutit Tallinnast.',
         'asendiplaan_legend1'       => 'Magnoolia tee — 19 kodu',
@@ -151,6 +162,20 @@ return [
         'asendiplaan_trust_energy'  => 'energiaklass',
         'asendiplaan_trust_stage1'  => 'I etapp',
         'asendiplaan_trust_tallinn' => 'Tallinnast',
+        'asendiplaan_page_caption'   => 'Magnoolia ridaelamukodud · Vaela küla, Kiili vald',
+        'asendiplaan_page_note'      => 'Illustratiivne välisvaade. Interaktiivne asendiplaan täieneb koos projekti valmimisega.',
+    ],
+
+    /* Benefits cards (benefits-source.blade) */
+    'benefits' => [
+        ['icon' => 'icon-trophy',      'title' => 'A-energiaklass',                  'text' => 'Madalad kommunaalkulud tänu maasoojuspumbale ja soojustagastusega ventilatsioonile'],
+        ['icon' => 'icon-labyrinth',   'title' => 'Privaatne hooviala',              'text' => 'Igal kodul oma piiratud hooviala – privaatsus ilma kortermaja müruta'],
+        ['icon' => 'icon-real-estate', 'title' => 'Rõdu ja terrass',                 'text' => 'Isiklik terrass (18–24 m²) ja rõdu (9,5–11,5 m²) iga kodu juures'],
+        ['icon' => 'icon-flooring',    'title' => 'Põrandaküte',                     'text' => 'Vesipõrandaküte igas toas, sealhulgas vannitoas'],
+        ['icon' => 'icon-house',       'title' => 'Ventilatsioon',                   'text' => 'Soojustagastusega mehaaniline ventilatsioon tagab värske õhu aastaringselt'],
+        ['icon' => 'icon-garage',      'title' => 'Elektriauto laadimise ettevalmistus', 'text' => 'EV laadimiskaabli ettevalmistus mõlema parkimiskoha juures'],
+        ['icon' => 'icon-real-estate', 'title' => 'Päikesepaneelide ettevalmistus',  'text' => 'Katus on ette valmistatud tulevaste päikesepaneelide paigalduseks'],
+        ['icon' => 'icon-pin',         'title' => 'Tallinna lähedal',                'text' => 'Vaela küla, Kiili vald – looduslik keskkond ~20 minutit Tallinna kesklinnast'],
     ],
 
     /* Pricing table */
@@ -241,6 +266,9 @@ return [
         'consent_text'        => 'Nõustun, et minuga võetakse ühendust seoses Magnoolia kodude infoga.',
         'post_submit'         => 'Pärast päringu saatmist kinnitame saadavuse, korrusplaani, hinna ja järgmised sammud.',
         'post_submit_cta'     => 'helista Dianale otse',
+        'flash_success_title' => '✓ Päring saadetud!',
+        'flash_success_body'  => 'Aitäh, :name! Vastame teile tavaliselt ühe tööpäeva jooksul. Kiiremal juhul saab helistada:',
+        'flash_error_title'   => 'Palun täida kõik kohustuslikud väljad:',
         'unit_rooms'          => 'tuba',
     ],
 

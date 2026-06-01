@@ -97,10 +97,10 @@
               </div>
             </div>
           @endif
-          <div class="mg-image-card__caption">Magnoolia ridaelamukodud · Vaela küla, Kiili vald</div>
+          <div class="mg-image-card__caption">{{ __('magnoolia.section.asendiplaan_page_caption') }}</div>
         </div>
         <p class="mg-seo-note" style="margin-top:16px;">
-          Illustratiivne välisvaade. Interaktiivne asendiplaan täieneb koos projekti valmimisega.
+          {{ __('magnoolia.section.asendiplaan_page_note') }}
         </p>
       </div>
 

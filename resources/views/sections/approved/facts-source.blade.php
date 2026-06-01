@@ -45,7 +45,7 @@
                         <div class="about-two__funfact__card__icon"><i class="icon-house"></i></div>
                         <div class="about-two__funfact__card__content">
                             <h3 class="about-two__funfact__card__count">A</h3>
-                            <p class="about-two__funfact__card__text">Energiaklass</p>
+                            <p class="about-two__funfact__card__text">{{ __('magnoolia.hero.fact_label_energy') }}</p>
                         </div>
                     </div>
                 </li>
@@ -74,10 +74,10 @@
                 <div class="about-two__happy-client__thumb__item"><img src="{{ asset('assets/images/resources/avater-2-4.png') }}" alt="image" loading="lazy" decoding="async"><a href="#"><i class="fas fa-plus"></i></a></div>
             </div>
             <div class="about-two__happy-client__content">
-                <h4 class="about-two__happy-client__title">I etapp kevad 2027</h4>
+                <h4 class="about-two__happy-client__title">{{ __('magnoolia.hero.stage_badge') }}</h4>
                 <div class="about-two__happy-client__star">
                     <i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i>
-                    <span>Vaela küla, Kiili vald</span>
+                    <span>{{ __('magnoolia.hero.eyebrow') }}</span>
                 </div>
             </div>
         </div>
