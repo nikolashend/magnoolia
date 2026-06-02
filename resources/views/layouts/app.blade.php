@@ -37,7 +37,28 @@
     <!-- Magnoolia Design System -->
     <link rel="stylesheet" href="{{ asset('assets/css/magnoolia.css') }}?v={{ filemtime(public_path('assets/css/magnoolia.css')) }}">
 
+    {{-- LCP hero preload (homepage only) --}}
+    @if(request()->routeIs('home'))
+    <link rel="preload" as="image"
+          href="{{ asset('assets/images/magnoolia/Cam001.0000.jpg') }}"
+          imagesrcset="{{ asset('assets/images/magnoolia/Cam001.0000.jpg') }}"
+          fetchpriority="high">
+    @endif
+
+    {{-- Reduced motion: respect user OS preference --}}
+    <style>
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+    </style>
+
     @stack('styles')
+    @stack('head')
 </head>
 
 <body class="@yield('body_class', 'custom-cursor')">
@@ -100,6 +121,37 @@
     <script src="{{ asset('assets/js/zoomvilla.js') }}"></script>
 
     @stack('scripts')
+
+    {{-- Magnoolia dataLayer tracking bridge --}}
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    document.addEventListener('click', function(e) {
+        var target = e.target.closest('[data-event]');
+        if (!target) return;
+        window.dataLayer.push({
+            event:       target.dataset.event,
+            page_locale: document.documentElement.lang || null,
+            page_url:    window.location.href,
+            unit_id:     target.dataset.unitId  || null,
+            unit:        target.dataset.unit    || null,
+            locale:      target.dataset.locale  || null,
+            cta:         target.textContent.trim().slice(0, 80)
+        });
+    });
+    // Form events
+    (function() {
+        var form = document.querySelector('form[data-event="contact_form_start"]');
+        if (!form) return;
+        var sent = false;
+        form.addEventListener('focusin', function() {
+            if (sent) return; sent = true;
+            window.dataLayer.push({ event: 'contact_form_start', page_url: window.location.href });
+        });
+        form.addEventListener('submit', function() {
+            window.dataLayer.push({ event: 'contact_form_submit', page_url: window.location.href });
+        });
+    })();
+    </script>
 
     {{-- Schema JSON-LD --}}
     @include('partials.seo.schema')

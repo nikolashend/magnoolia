@@ -68,7 +68,7 @@ return [
 
     /*
      * UNIT DATA
-     * Stage 1: Magnoolia tee 1 (4 homes) + Magnoolia tee 3 (3 homes) = 7 homes, kevad 2027
+     * Stage 1: Magnoolia tee 1 (3 homes) + Magnoolia tee 3 (4 homes) = 7 homes, kevad 2027
      * Stage 2: Magnoolia tee 5-11 (3 homes each) = 12 homes, kevad 2028
      * Total: 19 homes
      *

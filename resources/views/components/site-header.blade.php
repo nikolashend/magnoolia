@@ -7,7 +7,7 @@
     <div class="site-header__inner">
 
         {{-- Logo --}}
-        <a href="{{ route('home') }}" class="site-header__logo" aria-label="{{ config('magnoolia.project.brand_name') }} — tagasi avalehele">
+        <a href="{{ route('home') }}" class="site-header__logo" aria-label="{{ config('magnoolia.project.brand_name') }} — {{ __('magnoolia.nav.logo_back_aria') }}">
             @if(config('magnoolia.media.logo_dark'))
                 <img src="{{ asset(config('magnoolia.media.logo_dark')) }}"
                      alt="{{ config('magnoolia.project.brand_name') }}"
@@ -18,7 +18,7 @@
         </a>
 
         {{-- Desktop navigation --}}
-        <nav aria-label="Põhinavigatsioon" data-nav-menu>
+        <nav aria-label="{{ __('magnoolia.nav.main_nav_aria') }}" data-nav-menu>
             <ul class="site-header__nav" role="list">
                 @foreach(config('magnoolia.navigation', []) as $item)
                     <li>
@@ -35,7 +35,7 @@
             <x-language-switcher />
             <x-cta-button
                 href="{{ route('home') }}#contact"
-                label="Küsi infot"
+                :label="__('magnoolia.nav.header_cta')"
                 variant="primary"
                 size="small"
                 data-cta-id="header_cta"
@@ -48,7 +48,7 @@
                 aria-controls="mobile-nav"
                 data-nav-toggle
                 style="display:none;"
-                aria-label="Ava menüü">
+                aria-label="{{ __('magnoolia.nav.mobile_menu') }}">
             <span aria-hidden="true">☰</span>
         </button>
 

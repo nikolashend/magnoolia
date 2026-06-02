@@ -109,7 +109,7 @@ class MagnooliaController extends Controller
         ]);
 
         $toEmail    = config('magnoolia.project.contact_email', 'diana@estlanda.ee');
-        $unitLabel  = $validated['selected_unit'] ? ' — ' . $validated['selected_unit'] : '';
+        $unitLabel  = $validated['selected_unit'] ?: __('magnoolia.forms.unit_none');
         $locale     = app()->getLocale();
         $sourceUrl  = $request->headers->get('referer', $request->url());
         $referrer   = $request->session()->previousUrl() ?? $request->headers->get('referer');
@@ -120,7 +120,7 @@ class MagnooliaController extends Controller
         $utmCampaign= $request->query('utm_campaign');
 
         // Build email body
-        $body = "Uus päring Magnoolia kodulehelt{$unitLabel}\n"
+        $body = "Uus päring Magnoolia kodulehelt — {$unitLabel}\n"
             . str_repeat('-', 50) . "\n"
             . "Nimi:      {$validated['name']}\n"
             . "E-post:    {$validated['email']}\n"
@@ -143,7 +143,7 @@ class MagnooliaController extends Controller
             Mail::raw($body, function ($message) use ($toEmail, $validated, $unitLabel) {
                 $message->to($toEmail)
                         ->replyTo($validated['email'], $validated['name'])
-                        ->subject("Magnoolia päring{$unitLabel} — {$validated['name']}");
+                        ->subject("Magnoolia päring — {$unitLabel} — {$locale}");
             });
         } catch (\Exception $e) {
             $mailStatus = 'failed';

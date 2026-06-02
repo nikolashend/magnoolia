@@ -14,6 +14,7 @@
 <script>
 window.mgUnitsData  = @json(config('magnoolia.units'));
 window.mgStagesData = @json(config('magnoolia.stages'));
+window.mgI18n       = @json(__('magnoolia.modal'));
 window.mgFloor1Img  = '{{ $floor1 }}';
 window.mgFloor2Img  = '{{ $floor2 }}';
 window._mgCurrentUnit = null;
@@ -53,7 +54,7 @@ window._mgLastFocus = null;
                          style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;"></div>
                 </div>
                 <button onclick="mgCloseUnit()"
-                        aria-label="Sulge"
+                        aria-label="{{ __('magnoolia.modal.close_label') }}"
                         id="mg-modal-close-btn"
                         style="width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(29,36,48,.15);
                                background:transparent;cursor:pointer;display:flex;align-items:center;
@@ -73,19 +74,19 @@ window._mgLastFocus = null;
                         style="padding:14px 18px;border:none;border-bottom:2px solid #c89443;margin-bottom:-1px;
                                background:none;cursor:pointer;font-size:14px;font-weight:600;color:#1d2430;
                                transition:color .2s,border-color .2s;">
-                    Ülevaade
+                    {{ __('magnoolia.modal.tab_overview') }}
                 </button>
                 <button onclick="mgTab(1)" id="mg-tab-1"
                         style="padding:14px 18px;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;
                                background:none;cursor:pointer;font-size:14px;font-weight:600;color:#9a9490;
                                transition:color .2s,border-color .2s;">
-                    1.&nbsp;korrus
+                    {{ __('magnoolia.modal.tab_floor1') }}
                 </button>
                 <button onclick="mgTab(2)" id="mg-tab-2"
                         style="padding:14px 18px;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;
                                background:none;cursor:pointer;font-size:14px;font-weight:600;color:#9a9490;
                                transition:color .2s,border-color .2s;">
-                    2.&nbsp;korrus
+                    {{ __('magnoolia.modal.tab_floor2') }}
                 </button>
             </div>
         </div>
@@ -108,15 +109,15 @@ window._mgLastFocus = null;
             {{-- Technical features --}}
             <div style="margin-bottom:24px;">
                 <h4 style="font-size:12px;font-weight:700;color:#9a9490;text-transform:uppercase;
-                           letter-spacing:.08em;margin-bottom:14px;">Tehnilised lahendused</h4>
+                           letter-spacing:.08em;margin-bottom:14px;">{{ __('magnoolia.modal.tech_heading') }}</h4>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
                     @foreach([
-                        ['icon' => 'icon-trophy',    'text' => 'A-energiaklass'],
-                        ['icon' => 'icon-flooring',  'text' => 'Põrandaküte igas toas'],
-                        ['icon' => 'icon-house',     'text' => 'Soojustagastusega ventilatsioon'],
-                        ['icon' => 'icon-real-estate','text' => 'Maasoojuspump'],
-                        ['icon' => 'icon-garage',    'text' => 'EV-laadimise valmidus'],
-                        ['icon' => 'icon-real-estate','text' => 'Päikesepaneelide valmidus'],
+                        ['icon' => 'icon-trophy',    'text' => __('magnoolia.modal.feat_energy')],
+                        ['icon' => 'icon-flooring',  'text' => __('magnoolia.modal.feat_floor_heat')],
+                        ['icon' => 'icon-house',     'text' => __('magnoolia.modal.feat_ventilation')],
+                        ['icon' => 'icon-real-estate','text' => __('magnoolia.modal.feat_heat_pump')],
+                        ['icon' => 'icon-garage',    'text' => __('magnoolia.modal.feat_ev')],
+                        ['icon' => 'icon-real-estate','text' => __('magnoolia.modal.feat_solar')],
                     ] as $feat)
                     <div style="display:flex;align-items:center;gap:10px;background:#f7f4ef;border-radius:8px;padding:10px 12px;">
                         <i class="{{ $feat['icon'] }}"
@@ -141,19 +142,18 @@ window._mgLastFocus = null;
 
             {{-- Disclaimer --}}
             <p style="font-size:12px;color:#9a9490;line-height:1.7;margin:0;">
-                Plaanilahendus võib sõltuvalt kodust erineda.
-                Täpse plaani saadame valitud kodu kohta.
+                {{ __('magnoolia.modal.plan_disclaimer') }}
             </p>
         </div>
 
         {{-- ── Tab: 1. korrus ────────────────────────────────── --}}
         <div id="mg-panel-floor1" style="padding:24px 28px;flex:1;display:none;">
-            <h4 style="font-size:14px;font-weight:700;color:#1d2430;margin-bottom:16px;">1. korrus</h4>
+            <h4 style="font-size:14px;font-weight:700;color:#1d2430;margin-bottom:16px;">{{ __('magnoolia.modal.tab_floor1') }}</h4>
             <a id="mg-floor1-link" href="{{ $floor1 }}" class="img-popup"
                data-event="floor_plan_view" data-floor="1">
                 <img id="mg-floor1-img"
                      src="{{ $floor1 }}"
-                     alt="Magnoolia 1. korruse plaan"
+                     alt="{{ __('magnoolia.modal.floor1_alt') }}"
                      loading="lazy"
                      width="424" height="413"
                      style="width:100%;height:auto;border-radius:8px;border:1px solid rgba(29,36,48,.1);">
@@ -166,22 +166,22 @@ window._mgLastFocus = null;
                    style="display:inline-flex;align-items:center;gap:8px;font-size:13px;
                           color:#c89443;font-weight:600;text-decoration:none;">
                     <i class="icon-download"></i>
-                    Laadi alla
+                    {{ __('magnoolia.modal.download') }}
                 </a>
             </div>
             <p style="font-size:12px;color:#9a9490;margin-top:16px;line-height:1.7;">
-                Tüüplahendus. Täpne plaan sõltub valitud kodust.
+                {{ __('magnoolia.modal.floor_disclaimer') }}
             </p>
         </div>
 
         {{-- ── Tab: 2. korrus ────────────────────────────────── --}}
         <div id="mg-panel-floor2" style="padding:24px 28px;flex:1;display:none;">
-            <h4 style="font-size:14px;font-weight:700;color:#1d2430;margin-bottom:16px;">2. korrus</h4>
+            <h4 style="font-size:14px;font-weight:700;color:#1d2430;margin-bottom:16px;">{{ __('magnoolia.modal.tab_floor2') }}</h4>
             <a id="mg-floor2-link" href="{{ $floor2 }}" class="img-popup"
                data-event="floor_plan_view" data-floor="2">
                 <img id="mg-floor2-img"
                      src="{{ $floor2 }}"
-                     alt="Magnoolia 2. korruse plaan"
+                     alt="{{ __('magnoolia.modal.floor2_alt') }}"
                      loading="lazy"
                      width="371" height="428"
                      style="width:100%;height:auto;border-radius:8px;border:1px solid rgba(29,36,48,.1);">
@@ -194,11 +194,11 @@ window._mgLastFocus = null;
                    style="display:inline-flex;align-items:center;gap:8px;font-size:13px;
                           color:#c89443;font-weight:600;text-decoration:none;">
                     <i class="icon-download"></i>
-                    Laadi alla
+                    {{ __('magnoolia.modal.download') }}
                 </a>
             </div>
             <p style="font-size:12px;color:#9a9490;margin-top:16px;line-height:1.7;">
-                Tüüplahendus. Täpne plaan sõltub valitud kodust.
+                {{ __('magnoolia.modal.floor_disclaimer') }}
             </p>
         </div>
 
@@ -210,7 +210,7 @@ window._mgLastFocus = null;
                     data-event="unit_modal_cta"
                     style="width:100%;justify-content:center;border:none;cursor:pointer;
                            font-size:15px;padding:14px;margin-bottom:10px;">
-                Küsi selle kodu pakkumist <i class="icon-angle-small-right"></i>
+                {{ __('magnoolia.modal.cta_main') }} <i class="icon-angle-small-right"></i>
             </button>
             <a href="tel:+37258164078"
                data-event="phone_click" data-page="unit_modal"
@@ -219,7 +219,7 @@ window._mgLastFocus = null;
                       padding:8px;border-radius:8px;transition:color .2s;"
                onmouseover="this.style.color='#c89443'" onmouseout="this.style.color='#6f6a61'">
                 <i class="fas fa-phone" style="color:#c89443;font-size:13px;"></i>
-                Helista Dianale
+                {{ __('magnoolia.modal.cta_phone') }}
             </a>
         </div>
     </div>
@@ -228,11 +228,12 @@ window._mgLastFocus = null;
 {{-- ── Modal JavaScript ─────────────────────────────────────── --}}
 <script>
 (function () {
+    var I18N = window.mgI18n || {};
     var LABELS = {
-        available: 'Vaba',
-        reserved:  'Broneeritud',
-        sold:      'Müüdud',
-        tbc:       'Täpsustamisel'
+        available: I18N.status_available || 'Vaba',
+        reserved:  I18N.status_reserved  || 'Broneeritud',
+        sold:      I18N.status_sold      || 'Müüdud',
+        tbc:       I18N.status_tbc       || 'Täpsustamisel'
     };
     var COLORS = {
         available: { bg: '#e8f5e9', color: '#2e7d32' },
@@ -256,19 +257,19 @@ window._mgLastFocus = null;
 
     function fitNote(unit, status) {
         var stageMsg = String(unit.stage || 1) === '1'
-            ? 'I etapi kodu eelis on varasem valmimine (kevad 2027).'
-            : 'II etapi kodu eelis on hilisem etapp ja paindlikum valik.';
+            ? (I18N.stage1_advantage || 'I etapi kodu eelis on varasem valmimine (kevad 2027).')
+            : (I18N.stage2_advantage || 'II etapi kodu eelis on hilisem etapp ja paindlikum valik.');
 
         if (status === 'sold') {
-            return 'See kodu on müüdud. Vaata vabu kodusid samas arenduses.';
+            return I18N.fit_sold || 'See kodu on müüdud. Vaata vabu kodusid samas arenduses.';
         }
         if (status === 'reserved') {
-            return stageMsg + ' Kodu on hetkel broneeritud — küsi saadavuse täpsustust.';
+            return (I18N.fit_reserved || '%s Kodu on hetkel broneeritud.').replace('%s', stageMsg);
         }
         if (status === 'tbc') {
-            return stageMsg + ' Detailid on täpsustamisel — küsi hinnainfot ja plaani.';
+            return (I18N.fit_tbc || '%s Detailid on täpsustamisel.').replace('%s', stageMsg);
         }
-        return stageMsg + ' Kodu on saadaval — küsi personaalselt sobiv pakkumine.';
+        return (I18N.fit_available || '%s Kodu on saadaval.').replace('%s', stageMsg);
     }
 
     window.mgOpenUnit = function (unitId) {
@@ -307,21 +308,21 @@ window._mgLastFocus = null;
             '<span style="display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;'
             + 'background:' + stCol.bg + ';color:' + stCol.color + ';">' + stLbl + '</span>'
             + (unit.completion
-                ? '<span style="font-size:13px;color:#6f6a61;">Valmib&nbsp;' + unit.completion + '</span>'
+                ? '<span style="font-size:13px;color:#6f6a61;">' + (I18N.completion_prefix || 'Valmib') + '\u00a0' + unit.completion + '</span>'
                 : '');
 
         /* Specs grid */
-        var ptLabel = unit.plan_type === 'type-a' ? 'Plaan A' : (unit.plan_type === 'type-b' ? 'Plaan B' : 'Täpsustamisel');
+        var ptLabel = unit.plan_type === 'type-a' ? (I18N.plan_a || 'Plaan A') : (unit.plan_type === 'type-b' ? (I18N.plan_b || 'Plaan B') : (I18N.plan_tbc || 'Täpsustamisel'));
         document.getElementById('mg-specs-grid').innerHTML =
-            specCell('Tube',        unit.rooms || '—')
-            + specCell('Netopind',  fmtArea(unit.net_area) || '—')
-            + specCell('Terrass',   fmtArea(unit.terrace_area) || '—')
-            + specCell('R\u00f5du',      fmtArea(unit.balcony_area) || '—')
-            + specCell('Panipaik',  unit.storage_area ? fmtArea(unit.storage_area) : 'Täpsustamisel')
-            + specCell('Hooviala',  unit.private_yard_area ? fmtArea(unit.private_yard_area) : 'Täpsustamisel')
-            + specCell('Parkimine', (unit.parking || 2) + '\u00d7')
-            + specCell('Valmimine', unit.completion || 'Täpsustamisel')
-            + specCell('Plaanitüüp', ptLabel);
+            specCell(I18N.spec_rooms      || 'Tube',       unit.rooms || '—')
+            + specCell(I18N.spec_area     || 'Netopind',   fmtArea(unit.net_area) || '—')
+            + specCell(I18N.spec_terrace  || 'Terrass',    fmtArea(unit.terrace_area) || '—')
+            + specCell(I18N.spec_balcony  || 'R\u00f5du',  fmtArea(unit.balcony_area) || '—')
+            + specCell(I18N.spec_storage  || 'Panipaik',   unit.storage_area ? fmtArea(unit.storage_area) : (I18N.plan_tbc || 'Täpsustamisel'))
+            + specCell(I18N.spec_yard     || 'Hooviala',   unit.private_yard_area ? fmtArea(unit.private_yard_area) : (I18N.plan_tbc || 'Täpsustamisel'))
+            + specCell(I18N.spec_parking  || 'Parkimine',  (unit.parking || 2) + '\u00d7')
+            + specCell(I18N.spec_completion || 'Valmimine', unit.completion || (I18N.plan_tbc || 'Täpsustamisel'))
+            + specCell(I18N.spec_plan_type || 'Plaanit\u00fc\u00fcp', ptLabel);
 
         /* Plan link row */
         var planLinkRow = document.getElementById('mg-modal-plan-link-row');
@@ -336,9 +337,9 @@ window._mgLastFocus = null;
                     '<a href="#plaanid" onclick="mgCloseUnit();setTimeout(function(){mgHighlightPlan(\'' + planHlType + '\')},450);return true;" '
                     + 'style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;'
                     + 'color:#c89443;text-decoration:none;" '
-                    + 'aria-label="Vaata korrusplaane">'
+                    + 'aria-label="' + (I18N.view_plan_aria || 'Vaata korrusplaane') + '">'
                     + '<i class="icon-real-estate" aria-hidden="true"></i>'
-                    + 'Vaata ' + ptLabel + ' plaani'
+                    + (I18N.view_plan_label || 'Vaata %s plaani').replace('%s', ptLabel)
                     + '</a>';
             } else {
                 planLinkRow.style.display = 'none';
@@ -351,29 +352,29 @@ window._mgLastFocus = null;
         if (unit.price) {
             priceEl.innerHTML =
                 '<div style="display:flex;justify-content:space-between;align-items:center;">'
-                + '<span style="font-size:13px;color:#6f6a61;">Hind</span>'
+                + '<span style="font-size:13px;color:#6f6a61;">' + (I18N.price_label || 'Hind') + '</span>'
                 + '<span style="font-size:24px;font-weight:700;color:#1d2430;">\u20ac\u00a0'
                 + Number(unit.price).toLocaleString('et-EE') + '</span>'
                 + '</div>';
         } else {
             priceEl.innerHTML =
                 '<div style="display:flex;justify-content:space-between;align-items:center;">'
-                + '<span style="font-size:13px;color:#6f6a61;">Hind</span>'
-                + '<span style="font-size:16px;font-weight:700;color:#c89443;">Hind täpsustamisel</span>'
+                + '<span style="font-size:13px;color:#6f6a61;">' + (I18N.price_label || 'Hind') + '</span>'
+                + '<span style="font-size:16px;font-weight:700;color:#c89443;">' + (I18N.price_tbc || 'Hind täpsustamisel') + '</span>'
                 + '</div>';
         }
 
         var fit = document.getElementById('mg-fit-note');
         if (fit) {
             fit.style.display = 'block';
-            fit.innerHTML = '<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#9a9490;margin-bottom:6px;">Miks see kodu võib sobida</div>'
+            fit.innerHTML = '<div style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#9a9490;margin-bottom:6px;">' + (I18N.fit_heading || 'Miks see kodu v\u00f5ib sobida') + '</div>'
                 + '<p style="margin:0;font-size:13px;line-height:1.55;color:#4a4540;">' + fitNote(unit, st) + '</p>';
         }
 
         /* CTA button */
         var ctaBtn = document.getElementById('mg-modal-cta-btn');
         if (st === 'sold') {
-            ctaBtn.innerHTML = 'Vaata vabu kodusid <i class="icon-angle-small-right"></i>';
+            ctaBtn.innerHTML = (I18N.cta_sold || 'Vaata vabu kodusid') + ' <i class="icon-angle-small-right"></i>';
             ctaBtn.onclick = function () {
                 mgCloseUnit();
                 if (window.mgFilter) { window.mgFilter('available'); }
@@ -383,10 +384,10 @@ window._mgLastFocus = null;
                 }, 400);
             };
         } else if (st === 'reserved') {
-            ctaBtn.innerHTML = 'K\u00fcsi saadavust <i class="icon-angle-small-right"></i>';
+            ctaBtn.innerHTML = (I18N.cta_reserved || 'K\u00fcsi saadavust') + ' <i class="icon-angle-small-right"></i>';
             ctaBtn.onclick = window.mgSelectAndContact;
         } else {
-            ctaBtn.innerHTML = 'K\u00fcsi pakkumist <i class="icon-angle-small-right"></i>';
+            ctaBtn.innerHTML = (I18N.cta_available || 'K\u00fcsi pakkumist') + ' <i class="icon-angle-small-right"></i>';
             ctaBtn.onclick = window.mgSelectAndContact;
         }
 
@@ -455,8 +456,8 @@ window._mgLastFocus = null;
             /* Prefill message textarea if empty */
             var msg = document.querySelector('textarea[name="message"]');
             if (msg && msg.value.trim() === '') {
-                msg.value = 'Tere! Soovin lisainfot valitud Magnoolia kodu kohta: ' + unit.address + '.\n'
-                    + 'Palun saatke täpne saadavus, plaan ja pakkumine.';
+                msg.value = (I18N.prefill_greeting || 'Tere! Soovin lisainfot valitud Magnoolia kodu kohta: %s.').replace('%s', unit.address) + '\n'
+                    + (I18N.prefill_action || 'Palun saatke t\u00e4pne saadavus, plaan ja pakkumine.');
             }
         }
         mgCloseUnit();

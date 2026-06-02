@@ -1,10 +1,10 @@
 {{-- MAGNOOLIA MOBILE STICKY CTA --}}
-<div class="mg-sticky-cta" id="mg-sticky-cta" aria-label="Kiire kontaktmenüü">
+<div class="mg-sticky-cta" id="mg-sticky-cta" aria-label="{{ __('magnoolia.nav.mobile_menu') }}">
     <a href="{{ route('home') }}#hinnad" class="mg-sticky-cta__btn mg-sticky-cta__btn--ghost">
-        Kodud &amp; hinnad
+        {{ __('magnoolia.footer.nav_homes') }}
     </a>
     <a href="{{ route('home') }}#kontakt" class="mg-sticky-cta__btn">
-        Küsi pakkumist
+        {{ __('magnoolia.footer.cta') }}
     </a>
 </div>
 <script>

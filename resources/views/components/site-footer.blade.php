@@ -19,7 +19,7 @@
 
             {{-- Contact placeholder --}}
             <div>
-                <p style="font-size:var(--text-xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-muted-gold);margin-bottom:var(--space-sm);">Kontakt</p>
+                <p style="font-size:var(--text-xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-muted-gold);margin-bottom:var(--space-sm);">{{ __('magnoolia.footer.col_contact') }}</p>
                 <p style="font-size:var(--text-sm);color:rgba(245,243,240,0.7);margin:0 0 4px;">
                     <a href="tel:{{ config('magnoolia.project.contact_phone') }}"
                        style="color:inherit;text-decoration:none;">
@@ -36,7 +36,7 @@
 
             {{-- Developer placeholder --}}
             <div>
-                <p style="font-size:var(--text-xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-muted-gold);margin-bottom:var(--space-sm);">Arendaja</p>
+                <p style="font-size:var(--text-xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--color-muted-gold);margin-bottom:var(--space-sm);">{{ __('magnoolia.footer.col_developer') }}</p>
                 <p style="font-size:var(--text-sm);color:rgba(245,243,240,0.7);margin:0;">
                     {{ config('magnoolia.project.developer') }}
                 </p>
@@ -47,12 +47,12 @@
         {{-- Bottom bar --}}
         <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:var(--space-md);display:flex;flex-wrap:wrap;gap:var(--space-md);justify-content:space-between;align-items:center;">
             <p style="font-size:var(--text-xs);color:rgba(245,243,240,0.4);margin:0;">
-                &copy; {{ date('Y') }} {{ config('magnoolia.project.brand_name') }}. Kõik õigused kaitstud.
+                &copy; {{ date('Y') }} {{ config('magnoolia.project.brand_name') }}. {{ __('magnoolia.footer.copy') }}
             </p>
-            <nav aria-label="Juriidilised lingid">
+            <nav aria-label="{{ __('magnoolia.footer.legal_nav_label') }}">
                 <ul style="list-style:none;margin:0;padding:0;display:flex;gap:var(--space-md);">
-                    <li><a href="#" style="font-size:var(--text-xs);color:rgba(245,243,240,0.4);text-decoration:none;">Privaatsuspoliitika</a></li>
-                    <li><a href="#" style="font-size:var(--text-xs);color:rgba(245,243,240,0.4);text-decoration:none;">Kasutustingimused</a></li>
+                    <li><a href="#" style="font-size:var(--text-xs);color:rgba(245,243,240,0.4);text-decoration:none;">{{ __('magnoolia.footer.privacy') }}</a></li>
+                    <li><a href="#" style="font-size:var(--text-xs);color:rgba(245,243,240,0.4);text-decoration:none;">{{ __('magnoolia.footer.terms') }}</a></li>
                 </ul>
             </nav>
             <x-language-switcher dark />
