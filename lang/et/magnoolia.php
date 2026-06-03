@@ -297,6 +297,10 @@ return [
         'cta_homes'      => 'Vaata vabu kodusid',
         'cta_ask'        => 'Küsi selle plaani kohta',
         'lightbox_close' => 'Sulge',
+        'floor1_alt'     => '%s — esimese korruse plaan',
+        'floor2_alt'     => '%s — teise korruse plaan',
+        'enlarge_aria_1' => 'Suurenda %s 1. korruse plaani',
+        'enlarge_aria_2' => 'Suurenda %s 2. korruse plaani',
         'disclaimer'     => 'Korrusplaanid on illustratiivsed ja võivad erineda konkreetse kodu lõplikust lahendusest. Täpne plaan, ruumijagamine ja tehnilised detailid kinnitatakse konkreetse aadressi põhjal.',
     ],
 

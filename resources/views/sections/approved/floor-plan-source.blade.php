@@ -33,8 +33,8 @@
             'units'      => $typeAUnits,
             'floor1_src' => $floor1,
             'floor2_src' => $floor2,
-            'floor1_alt' => 'Plaan A – esimese korruse plaan',
-            'floor2_alt' => 'Plaan A – teise korruse plaan',
+            'floor1_alt' => sprintf(__('magnoolia.floorplan.floor1_alt'), 'Plaan A'),
+            'floor2_alt' => sprintf(__('magnoolia.floorplan.floor2_alt'), 'Plaan A'),
         ],
         [
             'id'         => 'plaan-b',
@@ -45,8 +45,8 @@
             'units'      => $typeBUnits,
             'floor1_src' => $floor1,
             'floor2_src' => $floor2,
-            'floor1_alt' => 'Plaan B – esimese korruse plaan',
-            'floor2_alt' => 'Plaan B – teise korruse plaan',
+            'floor1_alt' => sprintf(__('magnoolia.floorplan.floor1_alt'), 'Plaan B'),
+            'floor2_alt' => sprintf(__('magnoolia.floorplan.floor2_alt'), 'Plaan B'),
         ],
     ];
 @endphp
@@ -112,7 +112,7 @@
                                     <button type="button"
                                             class="mg-plan-enlarge"
                                             onclick="mgOpenPlanLightbox('{{ $plan['label'] }}','{{ __('magnoolia.floorplan.floor_1') }}','{{ $plan['floor1_src'] }}','{{ $plan['floor1_alt'] }}')"
-                                            aria-label="Suurenda {{ $plan['label'] }} I korruse plaani">
+                                            aria-label="{{ sprintf(__('magnoolia.floorplan.enlarge_aria_1'), $plan['label']) }}">
                                         <i class="icon-zoom-1" aria-hidden="true"></i>
                                         {{ __('magnoolia.floorplan.enlarge') }}
                                     </button>
@@ -144,7 +144,7 @@
                                     <button type="button"
                                             class="mg-plan-enlarge"
                                             onclick="mgOpenPlanLightbox('{{ $plan['label'] }}','{{ __('magnoolia.floorplan.floor_2') }}','{{ $plan['floor2_src'] }}','{{ $plan['floor2_alt'] }}')"
-                                            aria-label="Suurenda {{ $plan['label'] }} II korruse plaani">
+                                            aria-label="{{ sprintf(__('magnoolia.floorplan.enlarge_aria_2'), $plan['label']) }}">
                                         <i class="icon-zoom-1" aria-hidden="true"></i>
                                         {{ __('magnoolia.floorplan.enlarge') }}
                                     </button>

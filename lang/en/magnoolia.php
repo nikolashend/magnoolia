@@ -300,6 +300,10 @@ return [
         'cta_homes'      => 'View available homes',
         'cta_ask'        => 'Ask about this plan',
         'lightbox_close' => 'Close',
+        'floor1_alt'     => '%s — ground floor plan',
+        'floor2_alt'     => '%s — upper floor plan',
+        'enlarge_aria_1' => 'Enlarge %s ground floor plan',
+        'enlarge_aria_2' => 'Enlarge %s upper floor plan',
         'disclaimer'     => 'Floor plans are illustrative and may differ from the actual home. The exact plan, room layout and technical details are confirmed based on the specific address.',
     ],
 
