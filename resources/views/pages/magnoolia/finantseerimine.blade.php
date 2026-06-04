@@ -73,6 +73,19 @@
   </div>
 </section>
 
+<section class="mg-page-section mg-page-section--white">
+  <div class="container">
+    <div style="background:#f8f5f0;border-radius:16px;padding:28px 32px;border:1px solid rgba(29,36,48,.08);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+      <div>
+        <div style="font-size:11px;color:#c89443;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">Finantseerimispartner</div>
+        <div style="font-size:24px;font-weight:700;color:#1d2430;line-height:1.2;margin-bottom:8px;">Bigbank</div>
+        <p style="font-size:14px;color:#6f6a61;line-height:1.6;margin:0;max-width:620px;">Kodulaenu tingimused ja laenupakkumine sõltuvad ostja profiilist. Võrdle pankade pakkumisi ning küsi vajadusel lisainfot müügitiimilt.</p>
+      </div>
+      <a href="https://www.bigbank.ee/" target="_blank" rel="noopener noreferrer" class="zoomvilla-btn">Ava Bigbank <i class="icon-angle-small-right"></i></a>
+    </div>
+  </div>
+</section>
+
 {{-- ── 4 informational sections ────────────────────────────── --}}
 <section class="mg-page-section mg-page-section--white" id="finants-info">
   <div class="container">

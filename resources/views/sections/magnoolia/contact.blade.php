@@ -1,11 +1,10 @@
 {{-- ══════════════════════════════════════════════════════════════
     CONTACT — Clean contact block without fake team placeholders
-    Phase 11: diana_photo_approved + jaanika_confirmed feature flags
+    Phase 11: diana_photo_approved feature flag
     No fake agents, no fake photos. Config-driven only.
     ══════════════════════════════════════════════════════════════ --}}
 @php
     $dianaPhotoApproved = config('magnoolia.project.diana_photo_approved', false);
-    $jaanikaConfirmed   = config('magnoolia.project.jaanika_confirmed', false);
 @endphp
 <section class="section-space" id="kontakt" style="background:#151515;position:relative;overflow:hidden;">
 
@@ -88,23 +87,6 @@
                         </a>
                     </div>
                 </div>
-
-                @if($jaanikaConfirmed)
-                {{-- Jaanika mini-card — only when jaanika_confirmed => true in config --}}
-                <div style="background:rgba(255,255,255,.05);border-radius:16px;padding:20px 24px;margin-bottom:28px;border:1px solid rgba(255,255,255,.1);">
-                    <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;">{{ __('magnoolia.jaanika.name') }}</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.5);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em;">
-                        {{ __('magnoolia.jaanika.role') }}
-                    </div>
-                    <a href="#kontakt"
-                       style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;
-                              color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s;"
-                       onmouseover="this.style.color='#c89443'" onmouseout="this.style.color='rgba(255,255,255,.7)'">
-                        <i class="fas fa-paint-brush" style="color:#c89443;width:14px;"></i>
-                        {{ __('magnoolia.jaanika.cta') }}
-                    </a>
-                </div>
-                @endif
 
                 {{-- CTAs --}}
                 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px;">

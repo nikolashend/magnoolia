@@ -2452,6 +2452,55 @@ body {
     overflow-x: hidden;
 }
 
+/* ── Homepage trust strip ───────────────────────────────────── */
+.mg-trust-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.mg-trust-strip__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 100%;
+  padding: 18px 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #faf7f1 100%);
+  border: 1px solid rgba(200, 148, 67, 0.20);
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(29, 36, 48, 0.06);
+}
+
+.mg-trust-strip__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: rgba(200, 148, 67, 0.12);
+  color: #c89443;
+  font-size: 15px;
+}
+
+.mg-trust-strip__text {
+  display: block;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1d2430;
+  font-weight: 600;
+}
+
+/* ── Homepage AI answer spacing ─────────────────────────────── */
+.mg-ai-answer-grid > [class*="col-"] {
+  margin-bottom: 24px;
+}
+
+.mg-ai-answer-card {
+  height: 100%;
+}
+
 /* ── Buyer note mobile ───────────────────────────────────────── */
 @media (max-width: 576px) {
     .mg-buyer-note {
@@ -2465,6 +2514,10 @@ body {
     .mg-benefit-card {
         padding: 20px 16px;
     }
+
+  .mg-trust-strip {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* ── Gallery strip mobile ────────────────────────────────────── */
@@ -2473,6 +2526,19 @@ body {
         height: 200px;
         object-fit: cover;
     }
+
+  .mg-trust-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .mg-trust-strip__item {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .mg-ai-answer-grid > [class*="col-"] {
+    margin-bottom: 16px;
+  }
 }
 
 /* ── Accordion list: override theme 290px → 100% width ──────── */

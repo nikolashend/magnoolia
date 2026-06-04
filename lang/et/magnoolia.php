@@ -224,6 +224,8 @@ return [
             'Terrass ja rõdu vastavalt kodu tüübile',
             '2 parkimiskohta',
         ],
+        'extras_title'   => 'Lisatasu eest valikud',
+        'excluded_prefix'=> 'Standardhinnast välja jäetud:',
         'disclaimer' => 'Hinnad ja tingimused kinnitatakse müügipakkumises. Arendajal on õigus teha muudatusi.',
         'intro'      => 'Vali kodu, võrdle pindasid ja küsi täpsustatud pakkumist. Hinnad täpsustuvad vastavalt arendaja hinnatabelile.',
     ],
@@ -335,6 +337,22 @@ return [
                 'list'  => ['Magnoolia tee, Vaela küla', '~20 min Tallinnast', 'Kiili vald'],
                 'icons' => ['icon-pin', 'icon-labyrinth', 'icon-house'],
             ],
+        ],
+    ],
+
+    /* AI answer block (home page) */
+    'ai_faq' => [
+        'eyebrow'  => 'Kiirvastused Magnoolia kohta',
+        'title'    => 'Vastused enne päringu saatmist',
+        'seo_note' => 'Magnoolia — A-energiaklassi ridaelamukodu Kiili vallas · uus kodu Tallinna lähedal · ridaelamu Vaela külas · uusarendus Harjumaal · kodu privaatse hooviga · ridaelamukodu müük · 4–5-toaline kodu rõdu ja terrassiga',
+        'items' => [
+            ['q' => 'Kus Magnoolia asub?', 'a' => 'Magnoolia asub Vaela külas, Kiili vallas, Harjumaal — ligikaudu 20 minuti kaugusel Tallinnast.', 'icon' => 'icon-pin'],
+            ['q' => 'Millal Magnoolia kodud valmivad?', 'a' => 'I etapp (Magnoolia tee 1 ja 3) valmib kevadel 2027. II etapp (Magnoolia tee 5–11) valmib kevadel 2028.', 'icon' => 'icon-celemder'],
+            ['q' => 'Kui palju kodusid on ja kui suured need on?', 'a' => 'Arenduses on 19 uut A-energiaklassi kodu. 4-toaline kodu on umbes 129,6 m² ja 5-toaline umbes 143,2 m². Kõigil kodudel on terrass, rõdu, panipaik ja 2 parkimiskohta.', 'icon' => 'icon-buildings'],
+            ['q' => 'Mis on Magnoolia kodude hind?', 'a' => 'Konkreetne hind sõltub arendaja kinnitatud hinnakirjast. Hinna ja saadavuse teada saamiseks saada päring — Diana Tali vastab kiiresti.', 'icon' => 'icon-real-estate'],
+            ['q' => 'Kas igal kodul on privaatne hooviala?', 'a' => 'Jah, igal Magnoolia kodul on oma piirdega ja haljastatud hooviala. See annab eramaja tunde ilma ise ehitust korraldamata.', 'icon' => 'icon-labyrinth'],
+            ['q' => 'Kas kodudel on terrass ja rõdu?', 'a' => 'Jah. Igal kodul on privaatne terrass esimesel korrusel ja rõdu teisel korrusel — mõlemad avanevad hoovi poole.', 'icon' => 'fas fa-stairs'],
+            ['q' => 'Millised tehnosüsteemid kodudes on?', 'a' => 'Magnoolia kodudes on maasoojuspump, soojustagastusega ventilatsioon, vesipõrandaküte kõigis tubades ja vannitoas ning valmidus EV-laadimiseks ja päikesepaneelideks.', 'icon' => 'fas fa-bolt'],
         ],
     ],
 

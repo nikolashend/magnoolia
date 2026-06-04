@@ -6,6 +6,8 @@
 @php
     $units  = config('magnoolia.units', []);
     $stages = config('magnoolia.stages', []);
+    $campaign = config('magnoolia.campaign', []);
+    $commercial = config('magnoolia.commercial', []);
 
     // Group units by stage for grouped table headers
     $byStage = [];
@@ -93,6 +95,14 @@
         </p>
 
         {{-- ── DESKTOP TABLE ──────────────────────────────────────── --}}
+        @if(($campaign['enabled'] ?? false) && !empty($campaign['body']))
+        <div class="wow fadeInUp" data-wow-duration="900ms"
+             style="margin-bottom:18px;background:#1d2430;border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:10px;">
+            <span style="background:#c89443;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.06em;">{{ $campaign['title'] ?? 'KAMPAANIA' }}</span>
+            <span style="color:rgba(255,255,255,.82);font-size:14px;">{{ $campaign['body'] }}</span>
+        </div>
+        @endif
+
         <div class="d-none d-lg-block wow fadeInUp" data-wow-duration="1200ms">
           @foreach($byStage as $stageNum => $stageUnits)
           @php $sCfg = $stages[$stageNum] ?? null; @endphp
@@ -124,6 +134,7 @@
                     @php
                         $st  = $unit['status'] ?? 'tbc';
                         $cfg = $statusCfg[$st] ?? $statusCfg['tbc'];
+                        $publicPrice = ($unit['price_public'] ?? false) ? ($unit['price'] ?? null) : null;
                     @endphp
                     <tr class="mg-unit-row"
                         data-event="unit_row_click"
@@ -155,8 +166,8 @@
                         <td style="padding:15px 16px;text-align:center;color:#6f6a61;font-size:13px;">{{ !empty($unit['balcony_area']) ? number_format($unit['balcony_area'],1).' m²' : '—' }}</td>
                         <td style="padding:15px 16px;text-align:center;color:#6f6a61;">{{ $unit['parking'] ?? 2 }}×</td>
                         <td style="padding:15px 16px;text-align:right;font-weight:700;
-                                   color:{{ ($unit['price'] ?? null) ? '#1d2430' : '#c89443' }};font-size:{{ ($unit['price'] ?? null) ? '15' : '12' }}px;">
-                            {{ $unit['price'] ? '€ '.number_format($unit['price'], 0, ',', ' ') : __('magnoolia.pricing.price_tbc_inline') }}
+                                   color:{{ $publicPrice ? '#1d2430' : '#c89443' }};font-size:{{ $publicPrice ? '15' : '12' }}px;">
+                            {{ $publicPrice ? '€ '.number_format($publicPrice, 0, ',', ' ') : __('magnoolia.pricing.price_tbc_inline') }}
                         </td>
                         <td style="padding:15px 16px;text-align:center;">
                             <span class="mg-status {{ $cfg['class'] }}"
@@ -187,6 +198,7 @@
                 $st  = $unit['status'] ?? 'tbc';
                 $cfg = $statusCfg[$st] ?? $statusCfg['tbc'];
                 $sCfg = $stages[$unit['stage'] ?? 0] ?? null;
+                $publicPrice = ($unit['price_public'] ?? false) ? ($unit['price'] ?? null) : null;
             @endphp
             <div class="mg-unit-card"
                  data-status="{{ $st }}"
@@ -232,7 +244,7 @@
                 </div>
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div style="font-weight:700;color:#1d2430;font-size:15px;">
-                        {{ $unit['price'] ? '€ '.number_format($unit['price'], 0, ',', ' ') : __('magnoolia.pricing.price_tbc') }}
+                        {{ $publicPrice ? '€ '.number_format($publicPrice, 0, ',', ' ') : __('magnoolia.pricing.price_tbc') }}
                     </div>
                     @if($st !== 'sold')
                     <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm"
@@ -251,13 +263,29 @@
             <div style="flex:1;min-width:240px;">
                 <h4 style="font-size:15px;font-weight:700;color:#1d2430;margin-bottom:14px;">{{ __('magnoolia.pricing.includes_title') }}</h4>
                 <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
-                    @foreach(__('magnoolia.pricing.includes_items') as $item)
+                    @foreach(($commercial['included'] ?? __('magnoolia.pricing.includes_items')) as $item)
                     <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:#6f6a61;">
                         <i class="icon-check-star" style="color:#c89443;margin-top:2px;flex-shrink:0;"></i>
                         {{ $item }}
                     </li>
                     @endforeach
                 </ul>
+            </div>
+            <div style="flex:1;min-width:240px;">
+                <h4 style="font-size:15px;font-weight:700;color:#1d2430;margin-bottom:14px;">{{ __('magnoolia.pricing.extras_title') }}</h4>
+                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
+                    @foreach(($commercial['extras'] ?? []) as $extra)
+                    <li style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;font-size:13px;color:#6f6a61;">
+                        <span>{{ $extra['name'] }}</span>
+                        <strong style="color:#1d2430;white-space:nowrap;">€ {{ number_format((int) ($extra['price'] ?? 0), 0, ',', ' ') }}</strong>
+                    </li>
+                    @endforeach
+                </ul>
+                @if(!empty($commercial['excluded']))
+                <div style="margin-top:12px;font-size:12px;color:#9a9490;">
+                    {{ __('magnoolia.pricing.excluded_prefix') }} {{ implode(' · ', $commercial['excluded']) }}
+                </div>
+                @endif
             </div>
             <div style="flex:1;min-width:240px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;">
                 <p style="font-size:13px;color:#9a9490;font-style:italic;margin:0;">{{ __('magnoolia.pricing.disclaimer') }}</p>

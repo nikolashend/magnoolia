@@ -66,18 +66,6 @@
                 </li>
             </ul>
         </div>
-        <div class="container" style="margin-top:24px;">
-            <div class="row justify-content-center">
-                <div class="col-lg-11">
-                    <div class="mg-trust-strip" id="why-magnoolia-trust" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;">
-                        <div class="mg-trust-strip__item">{{ __('magnoolia.hero.stage_badge') }}</div>
-                        <div class="mg-trust-strip__item">{{ __('magnoolia.hero.stage_address_note') }}</div>
-                        <div class="mg-trust-strip__item">{{ __('magnoolia.contact.name') }} — {{ __('magnoolia.footer.diana_role') }}</div>
-                        <div class="mg-trust-strip__item">{{ config('magnoolia.project.location') }}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="about-two__shape wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="500ms">
             <img src="{{ asset('assets/images/shapes/about-2-2.png') }}" alt="" loading="lazy" decoding="async">
         </div>

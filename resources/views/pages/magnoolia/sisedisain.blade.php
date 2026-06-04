@@ -49,7 +49,7 @@
 </script>
 
 {{-- ── Hero ─────────────────────────────────────────────────── --}}
-<div class="mg-page-hero mg-page-hero--light" style="background-image:linear-gradient(to right, rgba(29,36,48,.80) 55%, rgba(29,36,48,.4)), url('{{ asset('assets/images/magnoolia/Interior%201.jpg') }}');background-size:cover;background-position:center;">
+<div class="mg-page-hero" style="background-image:linear-gradient(to right, rgba(29,36,48,.80) 55%, rgba(29,36,48,.4)), url('{{ asset('assets/images/magnoolia/Interior%201.jpg') }}');background-size:cover;background-position:center;">
   <div class="container">
     @include('partials.seo.breadcrumb', ['items' => [
       ['label' => __('magnoolia.nav.home'), 'url' => route('home')],
@@ -84,6 +84,22 @@
             </p>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mg-page-section mg-page-section--white">
+  <div class="container">
+    <div style="max-width:760px;margin:0 auto;background:#f8f5f0;border-radius:16px;padding:28px 30px;border:1px solid rgba(29,36,48,.08);display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+      <div>
+        <div style="font-size:11px;color:#c89443;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">Sisedisaini kontakt</div>
+        <div style="font-size:22px;font-weight:700;color:#1d2430;line-height:1.2;">Aet Piel</div>
+        <p style="font-size:14px;color:#6f6a61;line-height:1.6;margin:10px 0 0;">Siseviimistluse ja sisekujunduse küsimustes aitab Aet Piel. Küsi saadavust ja valikute infot otse.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;min-width:230px;">
+        <a href="tel:+37258164078" class="zoomvilla-btn" style="justify-content:center;"><i class="fas fa-phone" style="margin-right:8px;"></i>+372 58 164 078</a>
+        <a href="mailto:diana@estlanda.ee" class="zoomvilla-btn zoomvilla-btn--border" style="justify-content:center;"><i class="fas fa-envelope" style="margin-right:8px;"></i>diana@estlanda.ee</a>
       </div>
     </div>
   </div>

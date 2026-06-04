@@ -8,11 +8,17 @@
 @php
     $floor1 = asset('assets/images/magnoolia/PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg');
     $floor2 = asset('assets/images/magnoolia/PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg');
+    $modalUnits = collect(config('magnoolia.units', []))->map(function ($unit) {
+        if (!($unit['price_public'] ?? false)) {
+            $unit['price'] = null;
+        }
+        return $unit;
+    })->values();
 @endphp
 
 {{-- ── Unit data islands (JSON) ──────────────────────────────── --}}
 <script>
-window.mgUnitsData  = @json(config('magnoolia.units'));
+window.mgUnitsData  = @json($modalUnits);
 window.mgStagesData = @json(config('magnoolia.stages'));
 window.mgI18n       = @json(__('magnoolia.modal'));
 window.mgFloor1Img  = '{{ $floor1 }}';
@@ -349,7 +355,7 @@ window._mgLastFocus = null;
 
         /* Price */
         var priceEl = document.getElementById('mg-unit-price-row');
-        if (unit.price) {
+        if (unit.price && unit.price_public) {
             priceEl.innerHTML =
                 '<div style="display:flex;justify-content:space-between;align-items:center;">'
                 + '<span style="font-size:13px;color:#6f6a61;">' + (I18N.price_label || 'Hind') + '</span>'
@@ -363,6 +369,25 @@ window._mgLastFocus = null;
                 + '<span style="font-size:16px;font-weight:700;color:#c89443;">' + (I18N.price_tbc || 'Hind täpsustamisel') + '</span>'
                 + '</div>';
         }
+
+            /* Floorplans */
+            var floor1Url = unit.floorplan_1_pdf ? ('/' + String(unit.floorplan_1_pdf).replace(/^\/+/, '')) : window.mgFloor1Img;
+            var floor2Url = unit.floorplan_2_pdf ? ('/' + String(unit.floorplan_2_pdf).replace(/^\/+/, '')) : window.mgFloor2Img;
+            var floor1Img = unit.floorplan_1_image ? ('/' + String(unit.floorplan_1_image).replace(/^\/+/, '')) : window.mgFloor1Img;
+            var floor2Img = unit.floorplan_2_image ? ('/' + String(unit.floorplan_2_image).replace(/^\/+/, '')) : window.mgFloor2Img;
+
+            var floor1Link = document.getElementById('mg-floor1-link');
+            var floor2Link = document.getElementById('mg-floor2-link');
+            var floor1Download = document.getElementById('mg-floor1-download');
+            var floor2Download = document.getElementById('mg-floor2-download');
+            var floor1ImgEl = document.getElementById('mg-floor1-img');
+            var floor2ImgEl = document.getElementById('mg-floor2-img');
+            if (floor1Link) floor1Link.href = floor1Url;
+            if (floor2Link) floor2Link.href = floor2Url;
+            if (floor1Download) floor1Download.href = floor1Url;
+            if (floor2Download) floor2Download.href = floor2Url;
+            if (floor1ImgEl) floor1ImgEl.src = floor1Img;
+            if (floor2ImgEl) floor2ImgEl.src = floor2Img;
 
         var fit = document.getElementById('mg-fit-note');
         if (fit) {

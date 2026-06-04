@@ -209,6 +209,8 @@ return [
             'Underfloor heating and ventilation',
             'Terrace/balcony depending on home type',
         ],
+        'extras_title'    => 'Optional extras',
+        'excluded_prefix' => 'Excluded from base price:',
         'disclaimer' => 'Exact conditions are confirmed in the sales offer.',
         'buyer_note'      => 'Prices and availability are being finalised. Choose a home and',
         'buyer_note_link' => 'Diana',

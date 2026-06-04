@@ -102,6 +102,13 @@
         <p class="mg-seo-note" style="margin-top:16px;">
           {{ __('magnoolia.section.asendiplaan_page_note') }}
         </p>
+        <a href="{{ asset('assets/magnoolia/asendiplaan/asendiplaan.pdf') }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="zoomvilla-btn zoomvilla-btn--border"
+           style="margin-top:12px;">
+          {{ __('magnoolia.modal.download') }} PDF <i class="icon-angle-small-right"></i>
+        </a>
       </div>
 
       {{-- Stage summary --}}

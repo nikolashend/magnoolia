@@ -11,23 +11,72 @@
                 <nav class="main-header__nav main-menu">
                     <ul class="main-menu__list">
                         @php
-                            $navItems = \Illuminate\Support\Facades\Cache::remember('nav_items_active', 300, fn() =>
-                                \App\Models\NavItem::active()->ordered()->get()
-                            );
+                            $fallbackNavItems = collect([
+                                [
+                                    'label' => __('magnoolia.nav.about'),
+                                    'href' => lroute('home') . '#about',
+                                    'route_name' => 'home',
+                                    'open_blank' => false,
+                                ],
+                                [
+                                    'label' => __('magnoolia.nav.homes'),
+                                    'href' => lroute('magnoolia.homes'),
+                                    'route_name' => 'magnoolia.homes',
+                                    'open_blank' => false,
+                                ],
+                                [
+                                    'label' => __('magnoolia.nav.masterplan'),
+                                    'href' => lroute('magnoolia.site-plan'),
+                                    'route_name' => 'magnoolia.site-plan',
+                                    'open_blank' => false,
+                                ],
+                                [
+                                    'label' => __('magnoolia.nav.building'),
+                                    'href' => lroute('magnoolia.construction'),
+                                    'route_name' => 'magnoolia.construction',
+                                    'open_blank' => false,
+                                ],
+                                [
+                                    'label' => __('magnoolia.nav.contact'),
+                                    'href' => lroute('magnoolia.contact'),
+                                    'route_name' => 'magnoolia.contact',
+                                    'open_blank' => false,
+                                ],
+                            ]);
+
+                            try {
+                                $navItems = \Illuminate\Support\Facades\Cache::remember('nav_items_active', 300, fn() =>
+                                    \Illuminate\Support\Facades\Schema::hasTable('nav_items')
+                                        ? \App\Models\NavItem::active()->ordered()->get()
+                                        : collect()
+                                );
+                            } catch (\Throwable $e) {
+                                $navItems = collect();
+                            }
+
+                            if ($navItems->isEmpty()) {
+                                $navItems = $fallbackNavItems;
+                            }
+
                             $currentRoute = request()->route()?->getName() ?? '';
                         @endphp
                         @foreach($navItems as $item)
                             @php
-                                $isCurrent = $item->route_name && (
-                                    $currentRoute === $item->route_name ||
-                                    $currentRoute === 'ru.' . $item->route_name ||
-                                    $currentRoute === 'en.' . $item->route_name
+                                $routeName = is_array($item) ? ($item['route_name'] ?? null) : $item->route_name;
+                                $href = is_array($item) ? ($item['href'] ?? '#') : $item->getHref();
+                                $label = is_array($item) ? ($item['label'] ?? '') : $item->getLabel();
+                                $openBlank = is_array($item) ? (bool) ($item['open_blank'] ?? false) : (bool) $item->open_blank;
+
+                                $isCurrent = $routeName && (
+                                    $currentRoute === $routeName ||
+                                    $currentRoute === 'ru.' . $routeName ||
+                                    $currentRoute === 'en.' . $routeName
                                 );
                             @endphp
                             <li class="{{ $isCurrent ? 'current' : '' }}">
-                                <a href="{{ $item->getHref() }}"
-                                   @if($item->open_blank) target="_blank" rel="noopener" @endif>
-                                    {{ $item->getLabel() }}
+                                <a href="{{ $href }}"
+                                   @if($openBlank) target="_blank" rel="noopener" @endif>
+                                    {{ $label }}
                                 </a>
                             </li>
                         @endforeach
