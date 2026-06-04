@@ -1,5 +1,5 @@
 ﻿{{-- SOURCE: php-template/parts/home1/about.php | class: about-one section-space --}}
-    <section class="about-one section-space" id="about" style="background-color:#ffffff;">
+    <section class="about-one section-space" id="why-magnoolia" style="background-color:#ffffff;">
         <div class="container">
             <div class="row gutter-y-50">
                 <div class="col-lg-6 wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
@@ -14,7 +14,7 @@
                         </div>
                         <div class="about-one__image__item-two hover:shine">
                             <div class="about-one__image__icon">
-                                <img src="{{ asset('assets/images/shapes/house-1-1.png') }}" alt="icon" loading="lazy" decoding="async">
+                                <img src="{{ asset('assets/images/shapes/house-1-1.png') }}" alt="" loading="lazy" decoding="async">
                             </div>
                             <img src="{{ asset('assets/images/magnoolia/Interior 4.jpg') }}" alt="Magnoolia sisevaade" class="about-one__image__one" style="width:336px;height:429px;object-fit:cover;display:block;" loading="lazy" decoding="async">
                         </div>
@@ -45,6 +45,6 @@
             </div>
         </div>
         <div class="about-one__shape">
-            <img src="{{ asset('assets/images/shapes/about-shape-1-1.png') }}" alt="image" loading="lazy" decoding="async">
+            <img src="{{ asset('assets/images/shapes/about-shape-1-1.png') }}" alt="" loading="lazy" decoding="async">
         </div>
     </section>

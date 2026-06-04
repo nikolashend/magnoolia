@@ -15,9 +15,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-trophy"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.0.title') }}</a></h3>
+                            <h3 class="service-card__title"><a href="{{ lroute('home') }}#hinnad">{{ __('magnoolia.benefits.0.title') }}</a></h3>
                             <p class="service-card__text">{{ __('magnoolia.benefits.0.text') }}</p>
-                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
+                            <a href="{{ lroute('home') }}#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -26,9 +26,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-labyrinth"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.1.title') }}</a></h3>
+                            <h3 class="service-card__title"><a href="{{ lroute('home') }}#hinnad">{{ __('magnoolia.benefits.1.title') }}</a></h3>
                             <p class="service-card__text">{{ __('magnoolia.benefits.1.text') }}</p>
-                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
+                            <a href="{{ lroute('home') }}#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -42,9 +42,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-real-estate"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.2.title') }}</a></h3>
+                            <h3 class="service-card__title"><a href="{{ lroute('home') }}#hinnad">{{ __('magnoolia.benefits.2.title') }}</a></h3>
                             <p class="service-card__text">{{ __('magnoolia.benefits.2.text') }}</p>
-                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
+                            <a href="{{ lroute('home') }}#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -53,9 +53,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-flooring"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.3.title') }}</a></h3>
+                            <h3 class="service-card__title"><a href="{{ lroute('home') }}#hinnad">{{ __('magnoolia.benefits.3.title') }}</a></h3>
                             <p class="service-card__text">{{ __('magnoolia.benefits.3.text') }}</p>
-                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
+                            <a href="{{ lroute('home') }}#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -64,9 +64,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-house"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.4.title') }}</a></h3>
+                            <h3 class="service-card__title"><a href="{{ lroute('home') }}#hinnad">{{ __('magnoolia.benefits.4.title') }}</a></h3>
                             <p class="service-card__text">{{ __('magnoolia.benefits.4.text') }}</p>
-                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
+                            <a href="{{ lroute('home') }}#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -75,9 +75,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-garage"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.5.title') }}</a></h3>
+                            <h3 class="service-card__title"><a href="{{ lroute('home') }}#hinnad">{{ __('magnoolia.benefits.5.title') }}</a></h3>
                             <p class="service-card__text">{{ __('magnoolia.benefits.5.text') }}</p>
-                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
+                            <a href="{{ lroute('home') }}#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -86,9 +86,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-real-estate"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#hinnad">{{ __('magnoolia.benefits.6.title') }}</a></h3>
+                            <h3 class="service-card__title"><a href="{{ lroute('home') }}#hinnad">{{ __('magnoolia.benefits.6.title') }}</a></h3>
                             <p class="service-card__text">{{ __('magnoolia.benefits.6.text') }}</p>
-                            <a href="#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
+                            <a href="{{ lroute('home') }}#hinnad" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>
@@ -97,9 +97,9 @@
                     <div class="service-card">
                         <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-pin"></i></span></div>
                         <div class="service-card__content"><div class="service-card__content__inner">
-                            <h3 class="service-card__title"><a href="#kontakt">{{ __('magnoolia.benefits.7.title') }}</a></h3>
+                            <h3 class="service-card__title"><a href="{{ lroute('magnoolia.contact') }}#kontaktivorm">{{ __('magnoolia.benefits.7.title') }}</a></h3>
                             <p class="service-card__text">{{ __('magnoolia.benefits.7.text') }}</p>
-                            <a href="#kontakt" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
+                            <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
                         </div></div>
                         <div class="service-card__shape"></div>
                     </div>

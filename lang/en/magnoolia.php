@@ -29,6 +29,7 @@ return [
         'subheadline'  => '19 new townhouses with private yard, balcony, terrace and smart energy systems. Phase 1 spring 2027, Phase 2 spring 2028.',
         'stage_badge'  => 'Phase 1 spring 2027 · Phase 2 spring 2028',
         'stage_streets'=> 'Phase 1: Magnoolia tee 1 and 3 &nbsp;&middot;&nbsp; Phase 2: Magnoolia tee 5–11',
+        'stage_address_note' => 'Phase I: Magnoolia tee 1 and 3 · Phase II: Magnoolia tee 5–11',
         'cta_primary'  => 'View homes & prices',
         'cta_secondary'=> 'Request a quote',
         'fact_label_homes'    => 'homes',

@@ -51,8 +51,8 @@
             </p>
             <nav aria-label="{{ __('magnoolia.footer.legal_nav_label') }}">
                 <ul style="list-style:none;margin:0;padding:0;display:flex;gap:var(--space-md);">
-                    <li><a href="#" style="font-size:var(--text-xs);color:rgba(245,243,240,0.4);text-decoration:none;">{{ __('magnoolia.footer.privacy') }}</a></li>
-                    <li><a href="#" style="font-size:var(--text-xs);color:rgba(245,243,240,0.4);text-decoration:none;">{{ __('magnoolia.footer.terms') }}</a></li>
+                    <li><span style="font-size:var(--text-xs);color:rgba(245,243,240,0.4);text-decoration:none;">{{ __('magnoolia.footer.privacy') }}</span></li>
+                    <li><span style="font-size:var(--text-xs);color:rgba(245,243,240,0.4);text-decoration:none;">{{ __('magnoolia.footer.terms') }}</span></li>
                 </ul>
             </nav>
             <x-language-switcher dark />

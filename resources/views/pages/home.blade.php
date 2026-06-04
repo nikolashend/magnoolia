@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Magnoolia Kodud — A-energiaklassi ridaelamukodud Tallinna lähedal')
-@section('meta_description', 'Magnoolia on 19 A-energiaklassi ridaelamukodu arendus Vaela külas, Kiili vallas — privaatse hooviala, terrassi ja Tallinna lähedusega. I etapp kevad 2027.')
-@section('og_title', 'Magnoolia — A-energiaklassi kodud Tallinna lähedal')
+@section('title', __('home.meta_title'))
+@section('meta_description', __('home.meta_description'))
+@section('og_title', __('home.meta_title'))
 @section('body_class', 'custom-cursor')
 
 @section('content')

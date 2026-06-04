@@ -67,3 +67,32 @@ if (! function_exists('lroute')) {
         return $base . '/' . $locale . '/' . $path;
     }
 }
+
+if (! function_exists('magnoolia_locale_code')) {
+    /**
+     * Return locale code for HTML / OG / schema usage.
+     */
+    function magnoolia_locale_code(?string $locale = null): string
+    {
+        $locale = $locale ?: app()->getLocale();
+
+        return match ($locale) {
+            'ru' => 'ru-EE',
+            'en' => 'en-EE',
+            default => 'et-EE',
+        };
+    }
+}
+
+if (! function_exists('magnoolia_url')) {
+    /**
+     * Build an absolute URL on the configured canonical domain.
+     */
+    function magnoolia_url(string $path = ''): string
+    {
+        $base = rtrim(config('magnoolia.canonical_domain', config('magnoolia.seo.canonical_base', config('app.url', url('/')))), '/');
+        $path = '/' . ltrim($path, '/');
+
+        return $base . ($path === '/' ? '' : $path);
+    }
+}

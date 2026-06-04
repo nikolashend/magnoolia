@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 @php
-    $base = rtrim(config('magnoolia.seo.canonical_base') ?? config('magnoolia.seo.production_domain', config('app.url', url('/'))), '/');
+  $base = rtrim(config('magnoolia.canonical_domain', config('magnoolia.seo.canonical_base', config('app.url', url('/')))), '/');
 
     // All slugs: [et-slug, ru-slug, en-slug, priority, changefreq]
     // Locale prefixes: ET = no prefix, RU = /ru/slug, EN = /en/slug

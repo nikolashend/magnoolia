@@ -1,9 +1,9 @@
 @php
     $project = config('magnoolia.project', []);
-  $canonicalRaw = config('magnoolia.seo.canonical_base');
-  $canonicalBase = rtrim($canonicalRaw ?: config('app.url', url('/')), '/');
-    $heroImage = asset(config('magnoolia.seo.og_image', 'assets/images/magnoolia/Cam001.0000.jpg'));
-    $masterplanImage = asset('assets/images/magnoolia/magnoolia_cam09.jpg');
+    $canonicalBase = rtrim(config('magnoolia.canonical_domain', config('magnoolia.seo.canonical_base', config('app.url', url('/')))), '/');
+    $localeCode = magnoolia_locale_code();
+    $heroImage = magnoolia_url(config('magnoolia.seo.og_image', 'assets/images/magnoolia/Cam001.0000.jpg'));
+    $masterplanImage = magnoolia_url('assets/images/magnoolia/magnoolia_cam09.jpg');
 @endphp
 <script type="application/ld+json">
 {
@@ -14,7 +14,7 @@
       "@@id": "{{ $canonicalBase }}/#website",
       "url": "{{ $canonicalBase }}",
       "name": "{{ $project['name'] ?? 'Magnoolia Kodud' }}",
-      "inLanguage": "et-EE",
+      "inLanguage": "{{ $localeCode }}",
       "publisher": {
         "@@id": "{{ $canonicalBase }}/#organization"
       }

@@ -15,6 +15,8 @@
 
 return [
 
+    'canonical_domain' => env('MAGNOOLIA_CANONICAL_DOMAIN', 'https://magnoolia.ee'),
+
     'project' => [
         'name'          => 'Magnoolia Kodud',
         'brand_name'    => 'Magnoolia',

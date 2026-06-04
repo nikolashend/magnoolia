@@ -57,7 +57,7 @@
                             </div>
                             <p style="margin-top:12px;margin-bottom:0;font-size:12px;
                                        color:rgba(255,255,255,.5);letter-spacing:.02em;">
-                                {!! __('magnoolia.hero.stage_streets') !!}
+                                {{ __('magnoolia.hero.stage_address_note') }}
                             </p>
 
                         </div>

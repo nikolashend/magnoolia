@@ -163,10 +163,10 @@
 
                     {{-- Card CTAs --}}
                     <div class="mg-plan-card__ctas">
-                        <a href="#hinnad" class="zoomvilla-btn">
+                        <a href="{{ lroute('home') }}#hinnad" class="zoomvilla-btn">
                             {{ __('magnoolia.floorplan.cta_homes') }} <i class="icon-angle-small-right" aria-hidden="true"></i>
                         </a>
-                        <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border">
+                        <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="zoomvilla-btn zoomvilla-btn--border">
                             {{ __('magnoolia.floorplan.cta_ask') }} <i class="icon-angle-small-right" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -240,14 +240,14 @@
         {{-- Footer CTA --}}
         <div style="padding:18px 28px;border-top:1px solid rgba(29,36,48,.08);
                     display:flex;gap:12px;flex-wrap:wrap;flex-shrink:0;background:#fff;">
-            <a href="#kontakt"
+                <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm"
                onclick="mgClosePlanLightbox()"
                class="zoomvilla-btn"
                style="flex:1;min-width:160px;justify-content:center;text-align:center;">
                 {{ __('magnoolia.floorplan.cta_ask') }} <i class="icon-angle-small-right" aria-hidden="true"></i>
             </a>
             <a id="mg-plan-lb-dl"
-               href=""
+                    href="{{ lroute('home') }}"
                download
                class="mg-plan-dl"
                style="min-height:48px;align-self:center;">

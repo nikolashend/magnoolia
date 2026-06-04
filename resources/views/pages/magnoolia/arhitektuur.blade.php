@@ -96,7 +96,7 @@
     <div class="mg-feature-row {{ $row['reverse'] ? 'mg-feature-row--reverse' : '' }}" style="margin-bottom:60px;">
       <div class="mg-feature-row__img">
         <img src="{{ asset('assets/images/magnoolia/' . $row['img']) }}"
-             alt="{{ $row['alt'] }}"
+             alt="{{ $row['alt'] ?? $row['title'] ?? 'Magnoolia' }}"
              loading="lazy" width="560" height="400">
       </div>
       <div class="mg-feature-row__content">

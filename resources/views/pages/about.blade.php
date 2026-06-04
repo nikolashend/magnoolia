@@ -10,7 +10,7 @@
     'breadcrumbs' => [__('about.page_title') => route('about')],
 ])
 
-<section class="about-one section-space" id="about">
+<section class="about-one section-space" id="about-overview">
     <div class="container">
         <div class="row gutter-y-50">
             <div class="col-lg-6 wow fadeInLeft" data-wow-duration="1500ms" data-wow-delay="300ms">
@@ -26,7 +26,7 @@
                     </div>
                     <div class="about-one__image__item-two hover:shine">
                         <div class="about-one__image__icon">
-                            <img src="{{ asset('assets/images/shapes/house-1-1.png') }}" alt="icon">
+                            <img src="{{ asset('assets/images/shapes/house-1-1.png') }}" alt="">
                         </div>
                         <img src="{{ asset('assets/images/about/about-s-1-1.jpg') }}" alt="about"
                              class="about-one__image__one">
@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="about-one__shape">
-        <img src="{{ asset('assets/images/shapes/about-shape-1-1.png') }}" alt="image">
+        <img src="{{ asset('assets/images/shapes/about-shape-1-1.png') }}" alt="">
     </div>
 </section>
 

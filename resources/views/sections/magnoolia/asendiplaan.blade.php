@@ -29,10 +29,10 @@
             <h3 class="sec-title__title bw-split-in-left" style="color:#fff;">{{ __('magnoolia.section.masterplan_title') }}</h3>
             <p style="color:rgba(255,255,255,.6);margin-top:16px;font-size:16px;max-width:620px;margin-left:auto;margin-right:auto;">
                 {{ __('magnoolia.section.asendiplaan_desc') }}
-                <a href="#kontakt" style="color:#c89443;text-decoration:none;font-weight:600;">{{ __('magnoolia.section.asendiplaan_diana_link') }}</a>.
+                <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" style="color:#c89443;text-decoration:none;font-weight:600;">{{ __('magnoolia.section.asendiplaan_diana_link') }}</a>.
             </p>
             <p style="color:rgba(255,255,255,.45);margin-top:10px;font-size:13px;max-width:700px;margin-left:auto;margin-right:auto;">
-                {{ __('magnoolia.section.asendiplaan_compare_pre') }} <a href="#hinnad" style="color:rgba(200,148,67,.7);text-decoration:none;">{{ __('magnoolia.section.asendiplaan_compare_link') }}</a>.
+                {{ __('magnoolia.section.asendiplaan_compare_pre') }} <a href="{{ lroute('home') }}#hinnad" style="color:rgba(200,148,67,.7);text-decoration:none;">{{ __('magnoolia.section.asendiplaan_compare_link') }}</a>.
                 {{ __('magnoolia.section.asendiplaan_compare_map') }}
             </p>
         </div>
@@ -130,10 +130,10 @@
                         </div>
                     </div>
 
-                    <a href="#hinnad" class="zoomvilla-btn" data-event="cta_click" data-dest="hinnad">
+                    <a href="{{ lroute('home') }}#hinnad" class="zoomvilla-btn" data-event="cta_click" data-dest="hinnad">
                         {{ __('magnoolia.section.asendiplaan_cta_homes') }} <i class="icon-angle-small-right"></i>
                     </a>
-                    <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border" data-event="cta_click" data-dest="kontakt" style="margin-top:12px;">
+                    <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="zoomvilla-btn zoomvilla-btn--border" data-event="cta_click" data-dest="kontakt" style="margin-top:12px;">
                         {{ __('magnoolia.section.asendiplaan_cta_ask') }} <i class="icon-angle-small-right"></i>
                     </a>
                 </div>
@@ -163,7 +163,7 @@
                     <div style="display:flex;align-items:center;gap:10px;">
                         <span style="width:10px;height:10px;border-radius:50%;background:{{ $color }};flex-shrink:0;"></span>
                         @if(($unit['status'] ?? '') !== 'sold')
-                        <a href="#kontakt" style="background:#c89443;color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;">{{ __('magnoolia.section.asendiplaan_mobile_ask') }}</a>
+                        <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" style="background:#c89443;color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;">{{ __('magnoolia.section.asendiplaan_mobile_ask') }}</a>
                         @endif
                     </div>
                 </div>

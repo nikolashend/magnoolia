@@ -29,6 +29,7 @@ return [
         'subheadline'  => '19 новых таунхаусов с частным двором, балконом, террасой и продуманными энергорешениями. I этап — весна 2027, II этап — весна 2028.',
         'stage_badge'  => 'I этап весна 2027 · II этап весна 2028',
         'stage_streets'=> 'I этап: Magnoolia tee 1 и 3 &nbsp;&middot;&nbsp; II этап: Magnoolia tee 5–11',
+        'stage_address_note' => 'I этап: Magnoolia tee 1 и 3 · II этап: Magnoolia tee 5–11',
         'cta_primary'  => 'Смотреть дома и цены',
         'cta_secondary'=> 'Запросить предложение',
         'fact_label_homes'    => 'домов',

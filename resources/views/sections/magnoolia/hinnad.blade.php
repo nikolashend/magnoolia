@@ -45,7 +45,7 @@
             <i class="fas fa-info-circle" style="color:#c89443;font-size:16px;margin-top:2px;flex-shrink:0;"></i>
             <p style="margin:0;font-size:14px;color:#4a4540;line-height:1.6;">
                 {{ __('magnoolia.pricing.buyer_note') }}
-                <a href="#kontakt" style="color:#c89443;font-weight:600;text-decoration:none;">{{ __('magnoolia.pricing.buyer_note_link') }}</a>
+                <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" style="color:#c89443;font-weight:600;text-decoration:none;">{{ __('magnoolia.pricing.buyer_note_link') }}</a>
                 {{ __('magnoolia.pricing.buyer_note_end') }}
             </p>
         </div>
@@ -82,7 +82,7 @@
         <p style="text-align:center;font-size:13px;color:#9a9490;margin-bottom:28px;margin-top:-4px;">
             <i class="icon-info" style="color:#c89443;margin-right:5px;"></i>
             <em>{{ __('magnoolia.pricing.buyer_tip_pre') }}
-            <a href="#kontakt" style="color:#c89443;text-decoration:none;font-weight:600;">{{ __('magnoolia.pricing.buyer_tip_link') }}</a>
+            <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" style="color:#c89443;text-decoration:none;font-weight:600;">{{ __('magnoolia.pricing.buyer_tip_link') }}</a>
             {{ __('magnoolia.pricing.buyer_tip_end') }}</em>
         </p>
 
@@ -166,10 +166,10 @@
                         </td>
                         <td style="padding:15px 16px;text-align:center;white-space:nowrap;">
                             @if($st === 'sold')
-                                <a href="#hinnad" class="mg-table-cta mg-table-cta--muted"
+                                <a href="{{ lroute('home') }}#hinnad" class="mg-table-cta mg-table-cta--muted"
                                    data-event="unit_view" data-unit-id="{{ $unit['address'] }}">{{ __($cfg['cta_key']) }}</a>
                             @else
-                                <a href="#kontakt?unit={{ urlencode($unit['address']) }}" class="mg-table-cta"
+                                <a href="{{ lroute('magnoolia.contact') }}?unit={{ urlencode($unit['address']) }}#kontaktivorm" class="mg-table-cta"
                                    data-event="unit_modal_open" data-unit-id="{{ $unit['address'] }}">{{ __($cfg['cta_key']) }}</a>
                             @endif
                         </td>
@@ -235,7 +235,7 @@
                         {{ $unit['price'] ? '€ '.number_format($unit['price'], 0, ',', ' ') : __('magnoolia.pricing.price_tbc') }}
                     </div>
                     @if($st !== 'sold')
-                    <a href="#kontakt"
+                    <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm"
                        style="background:#c89443;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
                         {{ __($cfg['cta_key']) }}
                     </a>
@@ -262,10 +262,10 @@
             <div style="flex:1;min-width:240px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;">
                 <p style="font-size:13px;color:#9a9490;font-style:italic;margin:0;">{{ __('magnoolia.pricing.disclaimer') }}</p>
                 <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                    <a href="#kontakt" class="zoomvilla-btn">
+                    <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="zoomvilla-btn">
                         {{ __('magnoolia.pricing.cta_inquiry') }} <i class="icon-angle-small-right"></i>
                     </a>
-                    <a href="#asendiplaan" class="zoomvilla-btn zoomvilla-btn--border">
+                    <a href="{{ lroute('home') }}#asendiplaan" class="zoomvilla-btn zoomvilla-btn--border">
                         {{ __('magnoolia.nav.masterplan') }} <i class="icon-angle-small-right"></i>
                     </a>
                 </div>

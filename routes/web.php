@@ -78,6 +78,16 @@ foreach (['ru', 'en'] as $_loc) {
 }
 
 // ── Sitemap ──────────────────────────────────────────────────────────────
+Route::get('/robots.txt', function () {
+    $noindex = config('magnoolia.seo.noindex', true) || request()->is('aitah') || request()->is('ru/aitah') || request()->is('en/aitah');
+
+    $content = $noindex
+        ? "User-agent: *\nDisallow: /\n\nSitemap: https://magnoolia.ee/sitemap.xml\n"
+        : "User-agent: *\nAllow: /\n\nSitemap: https://magnoolia.ee/sitemap.xml\n";
+
+    return response($content, 200)->header('Content-Type', 'text/plain; charset=UTF-8');
+})->name('robots');
+
 Route::get('/sitemap.xml', function () {
     return response()->view('sitemap')->header('Content-Type', 'application/xml');
 })->name('sitemap');

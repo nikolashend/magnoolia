@@ -51,6 +51,7 @@ return [
         'h1'            => 'A-energiaklassi ridaelamukodud Tallinna lähedal',
         'subheadline'   => 'Magnoolia ühendab ridaelamu mugavuse, eramaja privaatsuse ja uusarenduse kindluse Vaela külas, Kiili vallas.',
         'stage_badge'   => 'I etapp valmib kevad 2027 · II etapp valmib kevad 2028',
+        'stage_address_note' => 'I etapp: Magnoolia tee 1 ja 3 · II etapp: Magnoolia tee 5–11',
         'cta_primary'   => 'Vaata kodusid ja hindu',
         'cta_secondary' => 'Küsi pakkumist',
         'fact_label_homes'    => 'kodu',

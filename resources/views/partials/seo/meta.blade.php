@@ -5,9 +5,8 @@
 --}}
 @php
     $project = config('magnoolia.project', []);
-    $canonicalRaw = config('magnoolia.seo.canonical_base') ?? config('magnoolia.seo.production_domain');
-    $canonicalBase = rtrim($canonicalRaw ?: config('app.url', url('/')), '/');
-    $noindex = config('magnoolia.seo.noindex', true);
+    $canonicalBase = rtrim(config('magnoolia.canonical_domain', config('magnoolia.seo.canonical_base', config('app.url', url('/')))), '/');
+    $noindex = config('magnoolia.seo.noindex', true) || request()->is('aitah') || request()->is('ru/aitah') || request()->is('en/aitah');
     $locale = app()->getLocale();
 
     // Canonical URL uses canonical base + current path (domain-independent)
@@ -50,7 +49,7 @@
     ];
     $defaultTitle = $titles[$locale] ?? $titles['et'];
     $defaultDesc  = $descs[$locale]  ?? $descs['et'];
-    $defaultOgImg = asset(config('magnoolia.seo.og_image', 'assets/images/magnoolia/Cam001.0000.jpg'));
+    $defaultOgImg = magnoolia_url(config('magnoolia.seo.og_image', 'assets/images/magnoolia/Cam001.0000.jpg'));
 @endphp
 
 {{-- ── Primary meta ─────────────────────────────────────────────── --}}
@@ -60,7 +59,7 @@
 {{-- ── OpenGraph ─────────────────────────────────────────────────── --}}
 <meta property="og:type"        content="website">
 <meta property="og:site_name"   content="{{ $project['name'] ?? 'Magnoolia Kodud' }}">
-<meta property="og:locale"      content="{{ $locale === 'ru' ? 'ru_EE' : ($locale === 'en' ? 'en_EE' : 'et_EE') }}">
+<meta property="og:locale"      content="{{ str_replace('-', '_', magnoolia_locale_code($locale)) }}">
 <meta property="og:title"       content="@yield('og_title', $defaultTitle)">
 <meta property="og:description" content="@yield('og_description', $defaultDesc)">
 <meta property="og:url"         content="{{ $canonicalUrl }}">
