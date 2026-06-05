@@ -4,8 +4,8 @@
     Phase 7 TODO: interaktiivsed SVG hotspotid koordinaatidega
     ══════════════════════════════════════════════════════════════ --}}
 @php
-    $allUnits = config('magnoolia.units', []);
-    $stages   = config('magnoolia.stages', []);
+    $allUnits = $mgPublic['units'] ?? [];
+    $stages   = $mgPublic['stages'] ?? [];
     $mapCfg   = config('magnoolia_map', []);
     $hotspots = $mapCfg['hotspots'] ?? [];
     $showDevHotspots = (bool) ($mapCfg['show_dev_hotspots'] ?? false);

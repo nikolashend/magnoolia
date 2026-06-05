@@ -8,7 +8,7 @@
 @php
     $floor1 = asset('assets/images/magnoolia/PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg');
     $floor2 = asset('assets/images/magnoolia/PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg');
-    $modalUnits = collect(config('magnoolia.units', []))->map(function ($unit) {
+    $modalUnits = collect($mgPublic['units'] ?? [])->map(function ($unit) {
         if (!($unit['price_public'] ?? false)) {
             $unit['price'] = null;
         }
@@ -19,7 +19,7 @@
 {{-- ── Unit data islands (JSON) ──────────────────────────────── --}}
 <script>
 window.mgUnitsData  = @json($modalUnits);
-window.mgStagesData = @json(config('magnoolia.stages'));
+window.mgStagesData = @json($mgPublic['stages'] ?? []);
 window.mgI18n       = @json(__('magnoolia.modal'));
 window.mgFloor1Img  = '{{ $floor1 }}';
 window.mgFloor2Img  = '{{ $floor2 }}';

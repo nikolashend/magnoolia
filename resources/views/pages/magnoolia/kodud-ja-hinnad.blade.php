@@ -8,8 +8,8 @@
 @section('content')
 @php
   $base   = rtrim(config('magnoolia.seo.canonical_base', 'https://magnoolia.ee'), '/');
-  $units  = collect(config('magnoolia.units', []));
-  $stages = config('magnoolia.stages', []);
+  $units  = collect($mgPublic['units'] ?? []);
+  $stages = $mgPublic['stages'] ?? [];
 @endphp
 
 <script type="application/ld+json">

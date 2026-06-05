@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use App\Models\MagnooliaLead;
+use App\Services\Magnoolia\MagnooliaPublicDataRepository;
 
 /**
  * MagnooliaController — Phase 14
@@ -15,6 +16,11 @@ use App\Models\MagnooliaLead;
  */
 class MagnooliaController extends Controller
 {
+    public function __construct(
+        private readonly MagnooliaPublicDataRepository $publicDataRepository,
+    ) {
+    }
+
     /**
      * Locale is set by SetLocale middleware from URL segment.
      * No need to handle it in the controller.
@@ -70,7 +76,7 @@ class MagnooliaController extends Controller
         $selectedUnit = $request->query('unit', '');
 
         // Validate against known unit IDs / addresses to prevent injection
-        $validUnits = array_column(config('magnoolia.units', []), null, 'id');
+        $validUnits = array_column($this->publicDataRepository->getUnits(), null, 'id');
         $unitData   = $validUnits[$selectedUnit] ?? null;
 
         return view('pages.magnoolia.kontakt', compact('page', 'selectedUnit', 'unitData'));
@@ -118,6 +124,18 @@ class MagnooliaController extends Controller
         $utmSource  = $request->query('utm_source');
         $utmMedium  = $request->query('utm_medium');
         $utmCampaign= $request->query('utm_campaign');
+        $utmContent = $request->query('utm_content');
+
+        $publicPayload = $this->publicDataRepository->getPublicPayload();
+        $publishedVersion = (int) ($publicPayload['meta']['version'] ?? 0);
+        $publishedUnits = collect($publicPayload['units'] ?? []);
+        $selectedUnitRow = $publishedUnits->first(function (array $unit) use ($validated) {
+            $selected = (string) ($validated['selected_unit'] ?? '');
+            return ($unit['address'] ?? '') === $selected || ($unit['id'] ?? '') === $selected || ($unit['unit_key'] ?? '') === $selected;
+        });
+
+        $sourcePage = parse_url($sourceUrl ?? '', PHP_URL_PATH) ?: $request->path();
+        $sourceComponent = $request->input('source_component', 'contact_form');
 
         // Build email body
         $body = "Uus päring Magnoolia kodulehelt — {$unitLabel}\n"
@@ -129,12 +147,15 @@ class MagnooliaController extends Controller
             . "Sõnum:\n" . ($validated['message'] ?? '—') . "\n\n"
             . str_repeat('-', 50) . "\n"
             . "Keel:      {$locale}\n"
+            . "Published version: {$publishedVersion}\n"
+            . "Status (published): " . (($selectedUnitRow['status'] ?? null) ?: '—') . "\n"
+            . "Public price state: " . ((($selectedUnitRow['price_public'] ?? false) ? 'public' : 'hidden')) . "\n"
             . "Lehekülg:  {$sourceUrl}\n"
             . "Referrer:  " . ($referrer ?? '—') . "\n"
             . "IP:        {$ip}\n"
             . "Aeg:       " . now()->setTimezone('Europe/Tallinn')->format('d.m.Y H:i:s T') . "\n";
         if ($utmSource) {
-            $body .= "UTM:       source={$utmSource} medium={$utmMedium} campaign={$utmCampaign}\n";
+            $body .= "UTM:       source={$utmSource} medium={$utmMedium} campaign={$utmCampaign} content={$utmContent}\n";
         }
 
         // 1) Send mail
@@ -157,6 +178,13 @@ class MagnooliaController extends Controller
                 'email'         => $validated['email'],
                 'phone'         => $validated['phone'] ?? null,
                 'selected_unit' => $validated['selected_unit'] ?? null,
+                'unit_key'      => $selectedUnitRow['unit_key'] ?? null,
+                'unit_address'  => $selectedUnitRow['address'] ?? ($validated['selected_unit'] ?? null),
+                'published_version' => $publishedVersion,
+                'status_at_submission' => $selectedUnitRow['status'] ?? null,
+                'price_public_at_submission' => isset($selectedUnitRow['price_public']) ? (bool) $selectedUnitRow['price_public'] : null,
+                'source_page'   => is_string($sourcePage) ? mb_substr($sourcePage, 0, 255) : null,
+                'source_component' => mb_substr((string) $sourceComponent, 0, 120),
                 'message'       => $validated['message'] ?? null,
                 'locale'        => $locale,
                 'source_url'    => $sourceUrl,
@@ -164,6 +192,7 @@ class MagnooliaController extends Controller
                 'utm_source'    => $utmSource,
                 'utm_medium'    => $utmMedium,
                 'utm_campaign'  => $utmCampaign,
+                'utm_content'   => $utmContent,
                 'ip_address'    => $ip,
                 'user_agent'    => $userAgent,
                 'mail_status'   => $mailStatus,

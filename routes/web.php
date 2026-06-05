@@ -10,6 +10,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\MagnooliaController;
+use App\Http\Controllers\Admin\Magnoolia\MagnooliaAdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -141,4 +142,37 @@ Route::get('/styleguide', function () {
 
 // Auth (redirect to Filament admin login)
 Route::get('/login', fn() => redirect('/admin/login'))->name('login');
-Route::get('/register', fn() => redirect('/admin/login'))->name('register');
+Route::get('/register', fn() => abort(404))->name('register');
+
+// ── Phase 24: Magnoolia Admin Control Plane ───────────────────────────────
+Route::prefix('admin/magnoolia')
+    ->name('admin.magnoolia.')
+    ->middleware(['auth', 'verified', 'magnoolia.admin', 'throttle:60,1'])
+    ->group(function () {
+        Route::get('/', [MagnooliaAdminController::class, 'dashboard'])->name('dashboard');
+
+        Route::get('/units', [MagnooliaAdminController::class, 'units'])->name('units.index');
+        Route::get('/units/{unit}/edit', [MagnooliaAdminController::class, 'editUnit'])->name('units.edit');
+        Route::put('/units/{unit}', [MagnooliaAdminController::class, 'updateUnit'])->name('units.update');
+
+        Route::get('/validate', [MagnooliaAdminController::class, 'validateDraft'])->name('validate');
+        Route::get('/preview', [MagnooliaAdminController::class, 'preview'])->name('preview');
+
+        Route::get('/export/csv', [MagnooliaAdminController::class, 'exportCsv'])->name('export.csv');
+        Route::post('/import/csv/preview', [MagnooliaAdminController::class, 'importCsvPreview'])->name('import.csv.preview');
+        Route::post('/import/csv/apply', [MagnooliaAdminController::class, 'importCsvApply'])->name('import.csv.apply');
+
+        Route::get('/publications', [MagnooliaAdminController::class, 'publications'])->name('publications.index');
+
+        Route::middleware(['magnoolia.publish-admin'])->group(function () {
+            Route::get('/audit', [MagnooliaAdminController::class, 'audit'])->name('audit');
+            Route::get('/campaign', [MagnooliaAdminController::class, 'campaign'])->name('campaign');
+            Route::post('/campaign', [MagnooliaAdminController::class, 'updateCampaign'])->name('campaign.update');
+
+            Route::get('/publish', [MagnooliaAdminController::class, 'publishForm'])->name('publish.form');
+            Route::post('/publish', [MagnooliaAdminController::class, 'publish'])->name('publish');
+
+            Route::get('/publications/{id}/rollback', [MagnooliaAdminController::class, 'rollbackForm'])->name('publications.rollback.form');
+            Route::post('/publications/{id}/rollback', [MagnooliaAdminController::class, 'rollback'])->name('publications.rollback');
+        });
+    });

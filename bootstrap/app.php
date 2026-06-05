@@ -11,6 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->alias([
+            'magnoolia.admin' => \App\Http\Middleware\EnsureMagnooliaAdmin::class,
+            'magnoolia.publish-admin' => \App\Http\Middleware\EnsureMagnooliaPublishAdmin::class,
+            'magnoolia.login-throttle' => \App\Http\Middleware\MagnooliaLoginThrottle::class,
+        ]);
+
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
         ]);

@@ -14,7 +14,7 @@ class User extends Authenticatable implements FilamentUser
 {
     public function canAccessPanel(Panel $panel): bool
     {
-        return true;
+        return in_array($this->role, ['magnoolia_admin', 'magnoolia_editor'], true);
     }
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -28,6 +28,8 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'role',
+        'email_verified_at',
     ];
 
     /**
@@ -51,5 +53,15 @@ class User extends Authenticatable implements FilamentUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isMagnooliaAdmin(): bool
+    {
+        return $this->role === 'magnoolia_admin';
+    }
+
+    public function isMagnooliaEditor(): bool
+    {
+        return $this->role === 'magnoolia_editor';
     }
 }

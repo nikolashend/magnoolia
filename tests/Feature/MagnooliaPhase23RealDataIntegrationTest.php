@@ -49,7 +49,7 @@ class MagnooliaPhase23RealDataIntegrationTest extends TestCase
         $modal = file_get_contents(resource_path('views/partials/unit-modal.blade.php')) ?: '';
 
         $this->assertStringContainsString('$publicPrice = ($unit[\'price_public\'] ?? false) ? ($unit[\'price\'] ?? null) : null;', $hinnad);
-        $this->assertStringContainsString('$modalUnits = collect(config(\'magnoolia.units\', []))->map(function ($unit) {', $modal);
+        $this->assertStringContainsString('$modalUnits = collect($mgPublic[\'units\'] ?? [])->map(function ($unit) {', $modal);
         $this->assertStringContainsString('if (!($unit[\'price_public\'] ?? false)) {', $modal);
         $this->assertStringContainsString('if (unit.price && unit.price_public)', $modal);
     }

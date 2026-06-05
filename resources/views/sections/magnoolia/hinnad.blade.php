@@ -4,10 +4,10 @@
     Source: config/magnoolia.php → units, stages arrays
     ══════════════════════════════════════════════════════════════ --}}
 @php
-    $units  = config('magnoolia.units', []);
-    $stages = config('magnoolia.stages', []);
-    $campaign = config('magnoolia.campaign', []);
-    $commercial = config('magnoolia.commercial', []);
+    $units  = $mgPublic['units'] ?? [];
+    $stages = $mgPublic['stages'] ?? [];
+    $campaign = $mgPublic['campaign'] ?? [];
+    $commercial = $mgPublic['commercial'] ?? [];
 
     // Group units by stage for grouped table headers
     $byStage = [];

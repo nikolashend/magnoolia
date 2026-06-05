@@ -159,7 +159,7 @@
                         </div>
 
                         {{-- Selected unit (prefilled by modal CTA) --}}
-                        @php $allUnitsForForm = config('magnoolia.units', []); @endphp
+                        @php $allUnitsForForm = $mgPublic['units'] ?? []; @endphp
                         <div>
                             <select name="selected_unit" id="mg-selected-unit-select"
                                     style="width:100%;border:1.5px solid rgba(29,36,48,.15);border-radius:10px;

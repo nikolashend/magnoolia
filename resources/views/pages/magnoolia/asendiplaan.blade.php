@@ -8,7 +8,7 @@
 @section('content')
 @php
   $base  = rtrim(config('magnoolia.seo.canonical_base', 'https://magnoolia.ee'), '/');
-  $units = collect(config('magnoolia.units', []));
+  $units = collect($mgPublic['units'] ?? []);
 
   // Group by building
   $byBuilding = $units->groupBy('building');
@@ -187,7 +187,7 @@
               @foreach($buildingUnits as $unit)
                 @php
                   $chipClass = 'mg-unit-chip--' . ($unit['status'] === 'sold' ? 'sold' : ($unit['status'] === 'reserved' ? 'reserved' : 'available'));
-                  $planLabel = $unit['plan_type'] === 'type-b' ? 'B' : 'A';
+                  $planLabel = (($unit['plan_type'] ?? null) === 'type-b') ? 'B' : 'A';
                   $canOpen   = in_array($unit['status'], ['available', 'reserved']);
                 @endphp
                 <span
