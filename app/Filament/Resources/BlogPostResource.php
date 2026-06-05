@@ -7,6 +7,7 @@ use App\Models\BlogPost;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Actions;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -37,9 +38,9 @@ class BlogPostResource extends Resource
                 Tables\Columns\IconColumn::make('is_published')->boolean(),
                 Tables\Columns\TextColumn::make('published_at')->dateTime()->sortable(),
             ])
-            ->actions([Tables\Actions\EditAction::make()])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([
-                Tables\Actions\DeleteBulkAction::make(),
+            ->actions([Actions\EditAction::make()])
+            ->bulkActions([Actions\BulkActionGroup::make([
+                Actions\DeleteBulkAction::make(),
             ])]);
     }
 

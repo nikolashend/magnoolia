@@ -7,6 +7,7 @@ use App\Models\NavItem;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Actions;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -93,9 +94,9 @@ class NavItemResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
+                Actions\EditAction::make()
                     ->hidden(fn (NavItem $record) => $record->trashed()),
-                Tables\Actions\Action::make('restore')
+                Actions\Action::make('restore')
                     ->label('Restore')
                     ->icon('heroicon-o-arrow-uturn-left')
                     ->color('success')
@@ -104,20 +105,20 @@ class NavItemResource extends Resource
                     ->modalHeading('Restore menu item?')
                     ->modalDescription('The item will be made active again and reappear in the navigation.')
                     ->action(fn (NavItem $record) => $record->restore()),
-                Tables\Actions\DeleteAction::make()
+                Actions\DeleteAction::make()
                     ->hidden(fn (NavItem $record) => $record->trashed())
                     ->label('Move to trash'),
-                Tables\Actions\ForceDeleteAction::make()
+                Actions\ForceDeleteAction::make()
                     ->visible(fn (NavItem $record) => $record->trashed())
                     ->label('Delete permanently')
                     ->modalDescription('This will permanently delete the menu item. This cannot be undone.'),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make()
                         ->label('Move to trash'),
-                    Tables\Actions\RestoreBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make()
+                    Actions\RestoreBulkAction::make(),
+                    Actions\ForceDeleteBulkAction::make()
                         ->label('Delete permanently'),
                 ]),
             ]);

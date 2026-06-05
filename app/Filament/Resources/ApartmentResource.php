@@ -7,6 +7,7 @@ use App\Models\Apartment;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Resources\Resource;
+use Filament\Actions;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -78,9 +79,9 @@ class ApartmentResource extends Resource
                     'rented'   => 'Rented',
                 ]),
             ])
-            ->actions([Tables\Actions\EditAction::make()])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([
-                Tables\Actions\DeleteBulkAction::make(),
+            ->actions([Actions\EditAction::make()])
+            ->bulkActions([Actions\BulkActionGroup::make([
+                Actions\DeleteBulkAction::make(),
             ])]);
     }
 
