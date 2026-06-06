@@ -12,6 +12,7 @@
         if (!($unit['price_public'] ?? false)) {
             $unit['price'] = null;
         }
+        unset($unit['price_cents']); // never expose raw cents to client JS
         return $unit;
     })->values();
 @endphp

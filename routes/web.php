@@ -28,8 +28,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home')->defaults('local
 Route::get('/ru', [HomeController::class, 'index'])->name('home.ru')->defaults('locale', 'ru');
 Route::get('/en', [HomeController::class, 'index'])->name('home.en')->defaults('locale', 'en');
 
-// ── Magnoolia standalone pages (Phase 14) ────────────────────────────────
+// ── Magnoolia standalone pages (Phase 14 + Phase 25) ────────────────────────────────
 Route::get('/kodud-ja-hinnad',  [MagnooliaController::class, 'homes'])        ->name('magnoolia.homes');
+Route::get('/kodud/{slug}',     [MagnooliaController::class, 'unitDetail'])   ->name('magnoolia.unit');
+Route::get('/vordle',           [MagnooliaController::class, 'compare'])      ->name('magnoolia.compare');
 Route::get('/asendiplaan',      [MagnooliaController::class, 'sitePlan'])      ->name('magnoolia.site-plan');
 Route::get('/asukoht',          [MagnooliaController::class, 'location'])      ->name('magnoolia.location');
 Route::get('/ehitusinfo',       [MagnooliaController::class, 'construction'])  ->name('magnoolia.construction');
@@ -51,6 +53,12 @@ foreach (['ru', 'en'] as $_loc) {
                 ->name($_loc . '.home');
             Route::get('/kodud-ja-hinnad',  [MagnooliaController::class, 'homes'])
                 ->name($_loc . '.magnoolia.homes');
+            $unitPath    = $_loc === 'en' ? '/homes/{slug}' : '/kodud/{slug}';
+            $comparePath = $_loc === 'en' ? '/compare' : '/sravnit';
+            Route::get($unitPath,    [MagnooliaController::class, 'unitDetail'])
+                ->name($_loc . '.magnoolia.unit');
+            Route::get($comparePath, [MagnooliaController::class, 'compare'])
+                ->name($_loc . '.magnoolia.compare');
             Route::get('/asendiplaan',      [MagnooliaController::class, 'sitePlan'])
                 ->name($_loc . '.magnoolia.site-plan');
             Route::get('/asukoht',          [MagnooliaController::class, 'location'])

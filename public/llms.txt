@@ -1,6 +1,6 @@
 # Magnoolia Kodud — LLM Reference File
 # https://magnoolia.ee/llms.txt
-# Last updated: 2026-06-01
+# Last updated: 2026-06-06
 
 ## Brand
 Name: Magnoolia Kodud
@@ -40,7 +40,31 @@ Company: Estlanda Ehitus OÜ
 
 ## Key pages
 /kodud-ja-hinnad — all 19 homes, floor plans, prices
-/asendiplaan — site plan showing home placement
+/asendiplaan — site plan showing home placement, interactive unit discovery
+/vordle — unit comparison page (up to 3 homes side by side)
+
+## Unit pages (Phase 25 — individual home detail pages)
+/kodud/magnoolia-tee-1-1 — Magnoolia tee 1/1, 5 rooms, 129.6 m², private yard 959.7 m², stage I
+/kodud/magnoolia-tee-1-2 — Magnoolia tee 1/2, 4 rooms, 129.2 m², private yard 513.2 m², stage I
+/kodud/magnoolia-tee-1-3 — Magnoolia tee 1/3, 5 rooms, 129.6 m², private yard 636.7 m², stage I
+/kodud/magnoolia-tee-3-1 — Magnoolia tee 3/1, 5 rooms, 129.6 m², private yard 509.5 m², stage I
+/kodud/magnoolia-tee-3-2 — Magnoolia tee 3/2, 4 rooms, 129.2 m², private yard ~500 m², stage I
+/kodud/magnoolia-tee-3-3 — Magnoolia tee 3/3, 5 rooms, 129.6 m², private yard ~600 m², stage I
+/kodud/magnoolia-tee-3-4 — Magnoolia tee 3/4, 4 rooms, 129.2 m², stage I
+/kodud/magnoolia-tee-5-1 — Magnoolia tee 5/1, stage II, price on request
+/kodud/magnoolia-tee-5-2 — Magnoolia tee 5/2, stage II, price on request
+/kodud/magnoolia-tee-5-3 — Magnoolia tee 5/3, stage II, price on request
+/kodud/magnoolia-tee-7-1 — Magnoolia tee 7/1, stage II, price on request
+/kodud/magnoolia-tee-7-2 — Magnoolia tee 7/2, stage II, price on request
+/kodud/magnoolia-tee-7-3 — Magnoolia tee 7/3, stage II, price on request
+/kodud/magnoolia-tee-9-1 — Magnoolia tee 9/1, stage II, price on request
+/kodud/magnoolia-tee-9-2 — Magnoolia tee 9/2, stage II, price on request
+/kodud/magnoolia-tee-9-3 — Magnoolia tee 9/3, stage II, price on request
+/kodud/magnoolia-tee-11-1 — Magnoolia tee 11/1, stage II, price on request
+/kodud/magnoolia-tee-11-2 — Magnoolia tee 11/2, stage II, price on request
+/kodud/magnoolia-tee-11-3 — Magnoolia tee 11/3, stage II, price on request
+Purpose: individual Magnoolia townhouse pages with floor plans, area data, status and enquiry context.
+Do not list admin or preview routes.
 /asukoht — location, distances, neighbourhood
 /ehitusinfo — technical specifications, construction phases
 /sisedisain — interior design preview

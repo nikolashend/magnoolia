@@ -81,7 +81,7 @@ class MagnooliaUnitsImportConfigCommand extends Command
             }
 
             $row = [
-                'slug' => Str::slug($unit['address']),
+                'slug' => Str::slug(str_replace('/', '-', $unit['address'])),
                 'address' => $unit['address'],
                 'building_number' => $buildingNumber,
                 'section_number' => $sectionNumber,
@@ -101,6 +101,8 @@ class MagnooliaUnitsImportConfigCommand extends Command
                 'floorplan_floor_1' => (string) ($unit['floorplan_1_pdf'] ?? ''),
                 'floorplan_floor_2' => (string) ($unit['floorplan_2_pdf'] ?? ''),
                 'asendiplaan_key' => $unit['masterplan_key'] ?? null,
+                'plan_type' => $unit['plan_type'] ?? null,
+                'public_page_visible' => true,
                 'featured' => false,
                 'sort_order' => $index + 1,
                 'internal_note' => null,

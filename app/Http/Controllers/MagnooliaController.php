@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use App\Models\MagnooliaLead;
 use App\Services\Magnoolia\MagnooliaPublicDataRepository;
+use App\Services\Magnoolia\MagnooliaUnitDiscoveryService;
 
 /**
  * MagnooliaController — Phase 14
@@ -18,6 +19,7 @@ class MagnooliaController extends Controller
 {
     public function __construct(
         private readonly MagnooliaPublicDataRepository $publicDataRepository,
+        private readonly MagnooliaUnitDiscoveryService $discovery,
     ) {
     }
 
@@ -253,5 +255,54 @@ class MagnooliaController extends Controller
     {
         $name = session('contact_name');
         return view('pages.magnoolia.aitah', compact('name'));
+    }
+
+    /**
+     * GET /kodud/{slug}  (ET)
+     * GET /ru/kodud/{slug}  (RU)
+     * GET /en/homes/{slug}  (EN)
+     * Individual unit detail page.
+     */
+    public function unitDetail(string $slug)
+    {
+        $unit = $this->discovery->findBySlug($slug);
+
+        if ($unit === null) {
+            abort(404);
+        }
+
+        $similar  = $this->discovery->similar($unit, 3);
+        $adjacent = $this->discovery->adjacent($unit);
+        $locale   = app()->getLocale();
+
+        $payload  = $this->publicDataRepository->getPublicPayload();
+        $publishedVersion = $payload['meta']['version'] ?? null;
+
+        $hreflang = [
+            'et' => MagnooliaUnitDiscoveryService::unitPageUrl($unit, 'et'),
+            'ru' => MagnooliaUnitDiscoveryService::unitPageUrl($unit, 'ru'),
+            'en' => MagnooliaUnitDiscoveryService::unitPageUrl($unit, 'en'),
+        ];
+
+        return view('pages.magnoolia.unit-detail', compact(
+            'unit', 'similar', 'adjacent', 'locale', 'publishedVersion', 'hreflang',
+        ));
+    }
+
+    /**
+     * GET /vordle  (ET)
+     * GET /ru/sravnit  (RU)
+     * GET /en/compare  (EN)
+     * Unit comparison page.
+     */
+    public function compare(Request $request)
+    {
+        $slugsParam = $request->query('units', '');
+        $slugs = array_filter(array_map('trim', explode(',', (string) $slugsParam)));
+        $compareUnits = $this->discovery->comparePayload(array_slice($slugs, 0, 3));
+
+        $allUnits = $this->discovery->allUnits();
+
+        return view('pages.magnoolia.compare', compact('compareUnits', 'allUnits'));
     }
 }

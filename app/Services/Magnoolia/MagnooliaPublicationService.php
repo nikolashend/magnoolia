@@ -63,6 +63,8 @@ class MagnooliaPublicationService
                         'floorplan_1_pdf' => $u->floorplan_floor_1,
                         'floorplan_2_pdf' => $u->floorplan_floor_2,
                         'masterplan_key' => $u->asendiplaan_key,
+                        'plan_type' => $u->plan_type,
+                        'public_page_visible' => $u->public_page_visible,
                     ];
                 })
                 ->values()

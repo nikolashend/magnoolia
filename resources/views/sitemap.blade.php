@@ -53,6 +53,44 @@
     <xhtml:link rel="alternate" hreflang="en"        href="{{ $base }}/en"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="{{ $base }}"/>
   </url>
+@php
+  // Unit pages (Phase 25) — add all visible units in 3 locales
+  $publicUnits = app(\App\Services\Magnoolia\MagnooliaPublicDataRepository::class)->getUnits();
+  $visibleUnits = array_filter($publicUnits, fn($u) => ($u['public_page_visible'] ?? true) !== false);
+@endphp
+@foreach($visibleUnits as $pu)
+@php $puSlug = $pu['slug'] ?? $pu['unit_key']; @endphp
+  <url>
+    <loc>{{ $base }}/kodud/{{ $puSlug }}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <lastmod>{{ now()->toDateString() }}</lastmod>
+    <xhtml:link rel="alternate" hreflang="et"        href="{{ $base }}/kodud/{{ $puSlug }}"/>
+    <xhtml:link rel="alternate" hreflang="ru"        href="{{ $base }}/ru/kodud/{{ $puSlug }}"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="{{ $base }}/en/homes/{{ $puSlug }}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ $base }}/kodud/{{ $puSlug }}"/>
+  </url>
+  <url>
+    <loc>{{ $base }}/ru/kodud/{{ $puSlug }}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <lastmod>{{ now()->toDateString() }}</lastmod>
+    <xhtml:link rel="alternate" hreflang="et"        href="{{ $base }}/kodud/{{ $puSlug }}"/>
+    <xhtml:link rel="alternate" hreflang="ru"        href="{{ $base }}/ru/kodud/{{ $puSlug }}"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="{{ $base }}/en/homes/{{ $puSlug }}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ $base }}/kodud/{{ $puSlug }}"/>
+  </url>
+  <url>
+    <loc>{{ $base }}/en/homes/{{ $puSlug }}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <lastmod>{{ now()->toDateString() }}</lastmod>
+    <xhtml:link rel="alternate" hreflang="et"        href="{{ $base }}/kodud/{{ $puSlug }}"/>
+    <xhtml:link rel="alternate" hreflang="ru"        href="{{ $base }}/ru/kodud/{{ $puSlug }}"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="{{ $base }}/en/homes/{{ $puSlug }}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="{{ $base }}/kodud/{{ $puSlug }}"/>
+  </url>
+@endforeach
 @foreach($slugPages as [$slug, $priority, $changefreq])
   {{-- ET --}}
   <url>

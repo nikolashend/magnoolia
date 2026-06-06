@@ -97,6 +97,8 @@ class MagnooliaPublicDataRepository
                 'floorplan_1_pdf' => $unit->floorplan_floor_1,
                 'floorplan_2_pdf' => $unit->floorplan_floor_2,
                 'masterplan_key' => $unit->asendiplaan_key,
+                'plan_type' => $unit->plan_type,
+                'public_page_visible' => $unit->public_page_visible ?? true,
             ];
         })->values()->all();
 
