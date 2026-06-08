@@ -88,6 +88,9 @@
     {{-- Unit detail modal (Phase 7) --}}
     @include('partials.unit-modal')
 
+    {{-- Mobile navigation drawer --}}
+    @include('partials.mobile-menu')
+
     {{-- Search Popup --}}
     @include('partials.search-popup')
 
