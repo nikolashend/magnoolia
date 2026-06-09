@@ -258,6 +258,8 @@ return [
         'trust_3'     => 'I etapp · kevad 2027',
         'trust_4'     => 'Vaela küla · Kiili vald',
         'trust_5'     => 'Tallinna lähedal',
+        'sales_label' => 'Müügikonsultant',
+        'sales_title' => 'Müügikonsultant, Magnoolia',
     ],
 
     /* Forms */
@@ -449,10 +451,42 @@ return [
             'lead'       => 'Arhitektuurirenderdused, siseviimistluse näidised ja korruseplaanid ühes kohas.',
             'note'       => 'Kõik pildid on illustratiivsed renderdused. Lõplik väljanägemine kinnitatakse ehitusprojektis.',
             'seo_note'   => 'Renderdused on illustratiivsed. Klõpsa pildil, et avada suurem vaade.',
-            'filter_all' => 'Kõik',
-            'filter_ext' => 'Välisvaated',
-            'filter_int' => 'Interjöör',
-            'filter_pl'  => 'Plaanid',
+            'filter_all'     => 'Kõik',
+            'filter_ext'     => 'Välisvaated',
+            'filter_int'     => 'Interjöör',
+            'filter_pl'      => 'Plaanid',
+            'filter_env'     => 'Keskkond',
+            'filter_aria'    => 'Galerii kategooriad',
+            'grid_aria'      => 'Galerii pildid',
+            'lightbox_open'  => 'Ava suurelt',
+            // Alt texts
+            'alt_cam001' => 'Magnoolia ridaelamukodud — lõunaküljelt',
+            'alt_cam004' => 'Magnoolia ridaelamukodud — fassaadivaade',
+            'alt_cam005' => 'Magnoolia ridaelamukodud — terrass',
+            'alt_cam014' => 'Magnoolia ridaelamukodud — sissepääsuvaade',
+            'alt_cam07'  => 'Magnoolia ridaelamukodu — perspektiivvaade',
+            'alt_cam09'  => 'Magnoolia ridaelamukodu — hooviala',
+            'alt_int1'   => 'Magnoolia kodu sisevaade — elutuba',
+            'alt_int2'   => 'Magnoolia kodu sisevaade — köök',
+            'alt_int3'   => 'Magnoolia kodu sisevaade — magamistuba',
+            'alt_int4'   => 'Magnoolia kodu sisevaade — vannituba',
+            'alt_int5a'  => 'Magnoolia kodu sisevaade — trepp',
+            'alt_int5b'  => 'Magnoolia kodu sisevaade — terrass',
+            'alt_env_lasteaed' => 'Vaela lasteaed',
+            'alt_env_cycling'  => 'Jalgrattasõit Kiili ümbruses',
+            'alt_env_loodus'   => 'Looduslik ümbrus Kiilis',
+            'alt_env_uhendus'  => 'Hea ühendus Tallinnaga',
+            'alt_env_turvaline'=> 'Turvaline ja kogukondlik keskkond',
+            // Labels
+            'label_ext'     => 'Välisvaade',
+            'label_int'     => 'Sisevaade',
+            'label_terr'    => 'Terrass',
+            'label_yard'    => 'Hooviala',
+            'label_living'  => 'Elutuba',
+            'label_kitchen' => 'Köök',
+            'label_bedroom' => 'Magamistuba',
+            'label_bath'    => 'Vannituba',
+            'label_env'     => 'Ümbrus',
             'cta_title'  => 'Meeldib, mida näed?',
             'cta_sub'    => 'Küsi Diana käest vabade kodude kohta.',
             'cta_btn1'   => 'Küsi pakkumist',
@@ -599,6 +633,44 @@ return [
             'edit_body1'      => 'Vaela küla on väike ja rahulik asula Kiili valla põhjaosas. Looduslähedus on siin päris — metsad, põllud ja vaikus, aga töö Tallinnas on poole tunni kaugusel.',
             'edit_body2'      => 'Piirkond sobib ideaalselt peredele, kes otsivad alternatiivi tihedale linnakeskkonnale, kuid ei taha loobuda linnainfrastruktuuri lähedusest.',
             'edit_cta'        => 'Küsi asukoha kohta',
+
+            // Phase 26 additions — education, shopping, sport, transport sections
+            'edu_eyebrow'    => 'Haridus ja pereelu',
+            'edu_title'      => 'Lasteaed ja kool kõnnimatka kaugusel',
+            'edu_sub'        => 'Vaela küla ja Kiili vald pakuvad häid võimalusi lastega peredele.',
+            'edu_card1_title'=> 'Vaela lasteaed',
+            'edu_card1_body' => 'Kõnnimatka kaugusel koduuksest. Nõutavate kohtade täpsemad tingimused küsige vallalt.',
+            'edu_card1_alt'  => 'Vaela lasteaed Magnoolia kodude lähedal',
+            'edu_card2_title'=> 'Vaela lasteaed — õueala',
+            'edu_card2_body' => 'Turvaline ja kaitstud keskkond lastele looduses mängimiseks.',
+            'edu_card2_alt'  => 'Vaela lasteaed — õueala',
+            'edu_card3_title'=> 'Kiili kool',
+            'edu_card3_body' => 'Kiili põhikool ja gümnaasiumi võimalus Kiili vallas.',
+            'edu_card3_alt'  => 'Kiili kool Harjumaal',
+            'edu_card4_title'=> 'Kiili spordihoone',
+            'edu_card4_body' => 'Sportimisvõimalused laste ja täiskasvanute jaoks.',
+            'edu_card4_alt'  => 'Kiili spordihoone',
+
+            'shop_eyebrow'   => 'Ostud ja teenused',
+            'shop_title'     => 'Kõik vajalik käeulatuses',
+            'shop_body'      => 'IKEA, Selver, Decathlon ja Kurna Park on kõik lühikese sõidu kaugusel. Igapäevased ostud, kodukaubad ja vaba aja veetmise võimalused on hästi tagatud.',
+
+            'sport_eyebrow'  => 'Sport, loodus ja aktiivne elu',
+            'sport_title'    => 'Kergliiklusteed, mets ja avatus',
+            'sport_alt_cycling'   => 'Kergliiklustee Kiili piirkonnas',
+            'sport_alt_bike'      => 'Jalgrattasõit Kiilis',
+            'sport_alt_hall'      => 'Kiili spordihall',
+            'sport_alt_nature'    => 'Looduslik ümbrus',
+            'sport_alt_sunset'    => 'Kiili päikeseloojang',
+            'sport_alt_community' => 'Turvaline kogukondlik keskkond',
+
+            'transport_eyebrow'  => 'Ühendus Tallinnaga',
+            'transport_title'    => 'Tallinn on autoga mugavalt ligipääsetav',
+            'transport_body'     => 'Tallinna suund jääb igapäevase liikumise jaoks praktiliseks. Tallinna–Tartu ja Tallinna–Pärnu maantee on mõlemad kiiresti käeulatuses.',
+            'transport_note'     => 'Sõltuvalt liiklusest umbes 20–30 min autoga. Ühistransport Kiili suunda on olemas, kuid auto tagab suurema paindlikkuse.',
+            'transport_cta'      => 'Ava Google Maps',
+            'transport_img_alt'  => 'Hea ühendus Tallinnaga',
+
             'card1_title'     => 'Looduslähedane elukeskkond',
             'card1_body'      => 'Vaela küla pakub rahulikku rohelist ruumi, kus kodune hooviala leiab tegelikult kasutust.',
             'card2_title'     => 'Hea ligipääs Tallinnasse',
@@ -779,6 +851,20 @@ return [
             'link_gallery'     => 'Galerii',
             'link_homes'       => 'Kodud ja hinnad',
             'link_cont'        => 'Täpsusta viimistlust',
+
+            // Phase 26: Prestige pakett
+            'prestige_eyebrow' => 'Prestige pakett',
+            'prestige_title'   => 'Rahulik ja kvaliteetne kodutunne',
+            'prestige_sub'     => 'Magnoolia kodude siseviimistlus on valitud rahuliku, kvaliteetse ja ajatu kodutunde järgi.',
+            'sanitary_title'   => 'Sanitaarruumid',
+            'sanitary_extra'   => 'Lisatasu eest',
+            'materials_title'  => 'Materjalid ja tehnosüsteemid',
+            'replacement_disclaimer' => 'Arendajal on õigus vajadusel asendada veebilehel näidatud tooted samaväärsetega.',
+
+            // Phase 26: Aet Piel
+            'aet_eyebrow'    => 'Personaalne sisekujundus',
+            'aet_role'       => 'Sisekujundaja',
+            'aet_body'       => 'Soovi korral saab personaalse sisekujunduse võimalusi täpsustada otse Aet Pieliga.',
         ],
 
         'kodudjahinnad' => [
@@ -1019,6 +1105,14 @@ return [
             'link_homes'     => 'Kodud ja hinnad',
             'link_faq'       => 'KKK',
             'link_cont'      => 'Küsi pakkumist',
+
+            // Phase 26: Bigbank
+            'bigbank_eyebrow'    => 'Finantseerimispartner',
+            'bigbank_title'      => 'Kodulaenu võimalus Bigbanki kaudu',
+            'bigbank_body'       => 'Bigbank pakub kodulaenu võimalust uusarenduse soetamiseks. Laenupakkumine sõltub taotleja individuaalsest olukorrast. Tutvuge tingimustega Bigbanki veebilehel.',
+            'bigbank_disclaimer' => 'See ei ole finantsnõustamine. Täpsed tingimused sõltuvad taotleja profiilist.',
+            'bigbank_cta'        => 'Taotle Bigbank kodulaenu',
+            'bigbank_note'       => 'Avaneb uues aknas. Bigbank on iseseisev finantsasutus, mitte Estlanda Ehituse partner.',
         ],
 
         'kontakt' => [
@@ -1118,6 +1212,30 @@ return [
         'completion_row'    => 'Valmib\u00a0',
         'prefill_greeting'  => 'Tere! Soovin lisainfot valitud Magnoolia kodu kohta: %s.',
         'prefill_action'    => 'Palun saatke täpne saadavus, plaan ja pakkumine.',
+    ],
+
+    // ── Phase 26 additions ───────────────────────────────────────────
+    'disclaimer' => [
+        'images' => 'Pildid ja 3D visualiseeringud on illustratiivsed, võivad sisaldada ebatäpsusi ning erineda tegelikkusest.',
+    ],
+
+    'inquiry' => [
+        'title'           => 'Küsi pakkumist',
+        'submit_label'    => 'Saada päring',
+        'close_label'     => 'Sulge',
+        'success_message' => 'Aitäh! Võtame teiega peagi ühendust.',
+        'or_direct'       => 'Või võta otse ühendust:',
+    ],
+
+    'form' => [
+        'name'                => 'Nimi',
+        'name_placeholder'    => 'Teie nimi',
+        'phone'               => 'Telefon',
+        'email'               => 'E-post',
+        'message'             => 'Sõnum',
+        'message_placeholder' => 'Küsi küsimust, täpsusta kodu ...',
+        'consent_html'        => 'Nõustun oma andmete töötlemisega, et saada vastust päringule. <a href="/privaatsuspoliitika" style="color:#c89443;">Privaatsuspoliitika</a>.',
+        'submit_error'        => 'Saatmine ebaõnnestus. Proovige uuesti või helistage meile.',
     ],
 
 ];

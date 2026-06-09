@@ -73,15 +73,41 @@
   </div>
 </section>
 
-<section class="mg-page-section mg-page-section--white">
+{{-- ── Phase 26: Bigbank partner block ────────────────────── --}}
+<section class="mg-page-section mg-page-section--white" id="bigbank">
   <div class="container">
-    <div style="background:#f8f5f0;border-radius:16px;padding:28px 32px;border:1px solid rgba(29,36,48,.08);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;">
-      <div>
-        <div style="font-size:11px;color:#c89443;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">Finantseerimispartner</div>
-        <div style="font-size:24px;font-weight:700;color:#1d2430;line-height:1.2;margin-bottom:8px;">Bigbank</div>
-        <p style="font-size:14px;color:#6f6a61;line-height:1.6;margin:0;max-width:620px;">Kodulaenu tingimused ja laenupakkumine sõltuvad ostja profiilist. Võrdle pankade pakkumisi ning küsi vajadusel lisainfot müügitiimilt.</p>
+    <div style="background:#f8f5f0;border-radius:16px;padding:36px 40px;border:1px solid rgba(29,36,48,.08);">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:28px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:280px;">
+          <div style="font-size:11px;color:#c89443;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;">{{ __('magnoolia.page.finantseerimine.bigbank_eyebrow') }}</div>
+          {{-- Bigbank logo / name --}}
+          @if(file_exists(public_path('assets/magnoolia/logos/bigbank.svg')))
+          <img src="{{ asset('assets/magnoolia/logos/bigbank.svg') }}"
+               alt="Bigbank"
+               width="140" height="40"
+               loading="lazy"
+               decoding="async"
+               style="height:40px;width:auto;margin-bottom:16px;display:block;">
+          @else
+          <div style="font-size:28px;font-weight:900;color:#003DA5;letter-spacing:-.02em;margin-bottom:16px;">Bigbank</div>
+          @endif
+          <h3 style="font-size:18px;font-weight:700;color:#1d2430;margin:0 0 12px;">{{ __('magnoolia.page.finantseerimine.bigbank_title') }}</h3>
+          <p style="font-size:14px;color:#6f6a61;line-height:1.7;margin:0 0 8px;">{{ __('magnoolia.page.finantseerimine.bigbank_body') }}</p>
+          <p style="font-size:12px;color:#aaa;font-style:italic;margin:0;">{{ __('magnoolia.page.finantseerimine.bigbank_disclaimer') }}</p>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;min-width:200px;">
+          <a href="https://www.bigbank.ee/kodulaen/"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="zoomvilla-btn"
+             data-mg-analytics="magnoolia_bigbank_click"
+             style="width:100%;text-align:center;text-transform:uppercase;font-size:13px;letter-spacing:.06em;">
+            {{ __('magnoolia.page.finantseerimine.bigbank_cta') }}
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:6px;" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+          <p style="font-size:11px;color:#bbb;margin:0;line-height:1.5;">{{ __('magnoolia.page.finantseerimine.bigbank_note') }}</p>
+        </div>
       </div>
-      <a href="https://www.bigbank.ee/" target="_blank" rel="noopener noreferrer" class="zoomvilla-btn">Ava Bigbank <i class="icon-angle-small-right"></i></a>
     </div>
   </div>
 </section>

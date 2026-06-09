@@ -5,39 +5,37 @@
 
 @section('content')
 @php
-  $base = rtrim(config('magnoolia.seo.canonical_base', 'https://magnoolia.ee'), '/');
+  $base   = rtrim(config('magnoolia.seo.canonical_base', 'https://magnoolia.ee'), '/');
+  $locale = app()->getLocale();
 
+  // Phase 26 — updated gallery structure
   $allImages = [
-    // Exterior
-    ['file' => 'Cam001.0000.jpg',          'alt' => 'Magnoolia ridaelamukodud — lõunaküljelt',          'cat' => 'valised',  'label' => 'Välisvaade'],
-    ['file' => 'Cam004.0000.jpg',          'alt' => 'Magnoolia ridaelamukodud — fassaadivaade',          'cat' => 'valised',  'label' => 'Välisvaade'],
-    ['file' => 'Cam005.0000.jpg',          'alt' => 'Magnoolia ridaelamukodud — terrass',                'cat' => 'valised',  'label' => 'Terrass'],
-    ['file' => 'Cam014.0000.jpg',          'alt' => 'Magnoolia ridaelamukodud — sissepääsuvaade',        'cat' => 'valised',  'label' => 'Välisvaade'],
-    ['file' => 'magnoolia_cam07.jpg',      'alt' => 'Magnoolia ridaelamukodu — perspektiivvaade',        'cat' => 'valised',  'label' => 'Välisvaade'],
-    ['file' => 'magnoolia_cam09.jpg',      'alt' => 'Magnoolia ridaelamukodu — hooviala',                'cat' => 'valised',  'label' => 'Hooviala'],
-    ['file' => 'Magnoolia tee_ES_1_15.jpg','alt' => 'Magnoolia tee eskiis',                              'cat' => 'valised',  'label' => 'Eskiis'],
-    ['file' => 'Magnoolia tee_ES_2.jpg',   'alt' => 'Magnoolia ridaelamukodu mahuuuring',                'cat' => 'valised',  'label' => 'Eskiis'],
-    ['file' => 'Magnoolia tee_ES_7.jpg',   'alt' => 'Magnoolia tee — keskkonna eskiis',                  'cat' => 'valised',  'label' => 'Eskiis'],
-    ['file' => 'Magnoolia tee_ES_8.jpg',   'alt' => 'Magnoolia tee — tänavaperspektiiv',                 'cat' => 'valised',  'label' => 'Eskiis'],
-    ['file' => 'Magnoolia tee_ES_10.jpg',  'alt' => 'Magnoolia tee — looduskeskkond',                    'cat' => 'valised',  'label' => 'Eskiis'],
-    // Interior
-    ['file' => 'Interior 1.jpg',           'alt' => 'Magnoolia kodu sisekujunduse näidis — elutuba',     'cat' => 'interjer', 'label' => 'Elutuba'],
-    ['file' => 'Interior 2.jpg',           'alt' => 'Magnoolia kodu avatud plaan — elutuba ja köök',     'cat' => 'interjer', 'label' => 'Elutuba / Köök'],
-    ['file' => 'Interior 3.jpg',           'alt' => 'Magnoolia ridaelamukodu magamistuba',                'cat' => 'interjer', 'label' => 'Magamistuba'],
-    ['file' => 'Interior 4.jpg',           'alt' => 'Magnoolia kodu vannituba',                          'cat' => 'interjer', 'label' => 'Vannituba'],
-    ['file' => 'Interior 5-2.jpg',         'alt' => 'Magnoolia ridaelamukodu sisevaade',                 'cat' => 'interjer', 'label' => 'Sisevaade'],
-    ['file' => 'Interior 5_1.jpg',         'alt' => 'Magnoolia ridaelamukodu detailvaade',               'cat' => 'interjer', 'label' => 'Detailvaade'],
-    // Floor plans
-    ['file' => 'PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg',
-                                           'alt' => 'Magnoolia ridaelamukodu I korruse plaan',           'cat' => 'plaanid',  'label' => 'I korrus'],
-    ['file' => 'PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg',
-                                           'alt' => 'Magnoolia ridaelamukodu II korruse plaan',          'cat' => 'plaanid',  'label' => 'II korrus'],
+    // ── Exterior (3D renders) ─────────────────────────────────────
+    ['src' => asset('assets/magnoolia/gallery/exterior/Cam001.jpg'),   'alt' => __('magnoolia.page.galerii.alt_cam001'),   'cat' => 'valised',  'label' => __('magnoolia.page.galerii.label_ext')],
+    ['src' => asset('assets/magnoolia/gallery/exterior/Cam004.jpg'),   'alt' => __('magnoolia.page.galerii.alt_cam004'),   'cat' => 'valised',  'label' => __('magnoolia.page.galerii.label_ext')],
+    ['src' => asset('assets/magnoolia/gallery/exterior/Cam005.jpg'),   'alt' => __('magnoolia.page.galerii.alt_cam005'),   'cat' => 'valised',  'label' => __('magnoolia.page.galerii.label_terr')],
+    ['src' => asset('assets/magnoolia/gallery/exterior/Cam014.jpg'),   'alt' => __('magnoolia.page.galerii.alt_cam014'),   'cat' => 'valised',  'label' => __('magnoolia.page.galerii.label_ext')],
+    ['src' => asset('assets/magnoolia/gallery/exterior/magnoolia_cam07.jpg'), 'alt' => __('magnoolia.page.galerii.alt_cam07'), 'cat' => 'valised', 'label' => __('magnoolia.page.galerii.label_ext')],
+    ['src' => asset('assets/magnoolia/gallery/exterior/magnoolia_cam09.jpg'), 'alt' => __('magnoolia.page.galerii.alt_cam09'), 'cat' => 'valised', 'label' => __('magnoolia.page.galerii.label_yard')],
+    // ── Interior ─────────────────────────────────────────────────
+    ['src' => asset('assets/magnoolia/gallery/interior/Interior-1.jpg'),   'alt' => __('magnoolia.page.galerii.alt_int1'), 'cat' => 'interjer', 'label' => __('magnoolia.page.galerii.label_living')],
+    ['src' => asset('assets/magnoolia/gallery/interior/Interior-2.jpg'),   'alt' => __('magnoolia.page.galerii.alt_int2'), 'cat' => 'interjer', 'label' => __('magnoolia.page.galerii.label_kitchen')],
+    ['src' => asset('assets/magnoolia/gallery/interior/Interior-3.jpg'),   'alt' => __('magnoolia.page.galerii.alt_int3'), 'cat' => 'interjer', 'label' => __('magnoolia.page.galerii.label_bedroom')],
+    ['src' => asset('assets/magnoolia/gallery/interior/Interior-4.jpg'),   'alt' => __('magnoolia.page.galerii.alt_int4'), 'cat' => 'interjer', 'label' => __('magnoolia.page.galerii.label_bath')],
+    ['src' => asset('assets/magnoolia/gallery/interior/Interior-5-1.jpg'), 'alt' => __('magnoolia.page.galerii.alt_int5a'),'cat' => 'interjer', 'label' => __('magnoolia.page.galerii.label_int')],
+    ['src' => asset('assets/magnoolia/gallery/interior/Interior-5-2.jpg'), 'alt' => __('magnoolia.page.galerii.alt_int5b'),'cat' => 'interjer', 'label' => __('magnoolia.page.galerii.label_terr')],
+    // ── Environment ───────────────────────────────────────────────
+    ['src' => asset('assets/magnoolia/gallery/environment/vaela-lasteaed.webp'), 'alt' => __('magnoolia.page.galerii.alt_env_lasteaed'), 'cat' => 'keskkond', 'label' => __('magnoolia.page.galerii.label_env')],
+    ['src' => asset('assets/magnoolia/gallery/environment/kiili-cycling.jpg'),   'alt' => __('magnoolia.page.galerii.alt_env_cycling'),  'cat' => 'keskkond', 'label' => __('magnoolia.page.galerii.label_env')],
+    ['src' => asset('assets/magnoolia/gallery/environment/kiili-loodus.jpg'),    'alt' => __('magnoolia.page.galerii.alt_env_loodus'),   'cat' => 'keskkond', 'label' => __('magnoolia.page.galerii.label_env')],
+    ['src' => asset('assets/magnoolia/gallery/environment/hea-uhendus-tallinnaga.avif'), 'alt' => __('magnoolia.page.galerii.alt_env_uhendus'), 'cat' => 'keskkond', 'label' => __('magnoolia.page.galerii.label_env')],
+    ['src' => asset('assets/magnoolia/gallery/environment/turvaline-keskkond.avif'),     'alt' => __('magnoolia.page.galerii.alt_env_turvaline'), 'cat' => 'keskkond', 'label' => __('magnoolia.page.galerii.label_env')],
   ];
 
-  // Filter to existing files only
-  $images = collect($allImages)->filter(fn($img) =>
-    file_exists(public_path('assets/images/magnoolia/' . $img['file']))
-  );
+  // Only include images that actually exist on disk
+  $images = collect($allImages)->filter(fn($img) => file_exists(public_path(
+    str_replace(asset(''), '', $img['src'])
+  )));
 @endphp
 
 <script type="application/ld+json">
@@ -77,41 +75,60 @@
 <section class="mg-page-section mg-page-section--white">
   <div class="container">
 
-    {{-- Filter bar --}}
-    <div class="mg-gallery-filter" style="margin-bottom:36px;" id="gallery-filter">
+    {{-- Phase 26: Category tabs (keyboard accessible) --}}
+    <div class="mg-gallery-filter"
+         role="tablist"
+         aria-label="{{ __('magnoolia.page.galerii.filter_aria') }}"
+         style="margin-bottom:36px;display:flex;gap:8px;flex-wrap:wrap;"
+         id="gallery-filter">
       @foreach([
         ['cat' => 'kõik',    'label' => __('magnoolia.page.galerii.filter_all')],
         ['cat' => 'valised', 'label' => __('magnoolia.page.galerii.filter_ext')],
         ['cat' => 'interjer','label' => __('magnoolia.page.galerii.filter_int')],
-        ['cat' => 'plaanid', 'label' => __('magnoolia.page.galerii.filter_pl')],
-      ] as $filter)
+        ['cat' => 'keskkond','label' => __('magnoolia.page.galerii.filter_env')],
+      ] as $idx => $filter)
       <button class="mg-gallery-filter__btn {{ $filter['cat'] === 'kõik' ? 'is-active' : '' }}"
+              role="tab"
+              aria-selected="{{ $filter['cat'] === 'kõik' ? 'true' : 'false' }}"
               data-filter="{{ $filter['cat'] }}"
-              type="button">
+              type="button"
+              tabindex="{{ $filter['cat'] === 'kõik' ? '0' : '-1' }}"
+              id="gallery-tab-{{ $filter['cat'] }}">
         {{ $filter['label'] }}
       </button>
       @endforeach
     </div>
 
     {{-- Grid --}}
-    <div class="mg-gallery-grid" id="gallery-grid">
+    <div class="mg-gallery-grid" id="gallery-grid" aria-live="polite" aria-label="{{ __('magnoolia.page.galerii.grid_aria') }}">
       @foreach($images as $i => $img)
-      <div class="mg-gallery-item {{ $i < 2 ? 'mg-gallery-item--wide' : '' }}"
+      @php $imgIdx = is_int($i) ? $i : $loop->index; @endphp
+      <div class="mg-gallery-item {{ $imgIdx < 2 ? 'mg-gallery-item--wide' : '' }}"
            data-category="{{ $img['cat'] }}"
-           onclick="mgLightboxOpen('{{ asset('assets/images/magnoolia/' . $img['file']) }}', '{{ $img['alt'] }}')"
+           tabindex="0"
+           role="button"
+           aria-label="{{ __('magnoolia.page.galerii.lightbox_open') }}: {{ $img['alt'] }}"
+           data-lightbox-src="{{ $img['src'] }}"
+           data-lightbox-alt="{{ $img['alt'] }}"
+           onclick="mgLightboxOpen('{{ $img['src'] }}', '{{ addslashes($img['alt']) }}')"
+           onkeydown="if(event.key==='Enter'||event.key===' ')mgLightboxOpen('{{ $img['src'] }}', '{{ addslashes($img['alt']) }}')"
            style="cursor:pointer;">
-        <img src="{{ asset('assets/images/magnoolia/' . $img['file']) }}"
+        <img src="{{ $img['src'] }}"
              alt="{{ $img['alt'] }}"
-             loading="{{ $i < 4 ? 'eager' : 'lazy' }}"
+             loading="{{ $imgIdx < 4 ? 'eager' : 'lazy' }}"
+             decoding="async"
              width="500" height="380"
              style="width:100%;height:100%;object-fit:cover;">
-        <div class="mg-gallery-item__caption">{{ $img['label'] }}</div>
+        <div class="mg-gallery-item__caption" aria-hidden="true">{{ $img['label'] }}</div>
       </div>
       @endforeach
     </div>
 
     <p class="mg-seo-note" style="margin-top:24px;text-align:center;">
       {{ __('magnoolia.page.galerii.seo_note') }}
+    </p>
+    <p style="font-size:11px;color:#aaa;text-align:center;margin-top:8px;">
+      *{{ __('magnoolia.disclaimer.images') }}
     </p>
   </div>
 </section>

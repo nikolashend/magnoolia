@@ -88,6 +88,9 @@
     {{-- Unit detail modal (Phase 7) --}}
     @include('partials.unit-modal')
 
+    {{-- Phase 26: Inquiry drawer --}}
+    <x-magnoolia.inquiry-drawer />
+
     {{-- Mobile navigation drawer --}}
     @include('partials.mobile-menu')
 

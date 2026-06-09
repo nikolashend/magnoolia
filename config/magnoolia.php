@@ -69,9 +69,19 @@ return [
     'units' => require __DIR__ . '/magnoolia_units.php',
 
     'campaign' => [
-        'enabled' => true,
-        'title' => 'KAMPAANIA',
-        'body' => 'Esimestele ostjatele hinnasoodustus 20 000 eurot hinnakirjas näidatud summast.',
+        'enabled'        => true,
+        'amount_eur'     => 20000,
+        'type'           => 'discount_or_kitchen_package',
+        'deadline'       => '2026-07-31',
+        'legal_final'    => false,
+        'title'          => 'Kampaania',
+        'body_et'        => 'Kampaania: võlaõiguslepingu sõlmimisel enne 2026. aasta juuli lõppu kehtib hinnasoodustus 20 000 € hinnakirjas näidatud maksumusest.',
+        'body_short_et'  => '20 000 € soodustus — pakkumine kehtib juuli 2026 lõpuni',
+        'body_ru'        => 'Акция: при подписании договора до конца июля 2026 года действует скидка 20 000 € от прайс-листа.',
+        'body_short_ru'  => 'Скидка 20 000 € — предложение действует до конца июля 2026',
+        'body_en'        => 'Campaign: a discount of €20 000 off the listed price applies when signing a contract before the end of July 2026.',
+        'body_short_en'  => '€20 000 discount — offer valid until end of July 2026',
+        'disclaimer_et'  => 'Täpsemad kampaaniatingimused kinnitab Diana Tali.',
     ],
 
     'commercial' => [

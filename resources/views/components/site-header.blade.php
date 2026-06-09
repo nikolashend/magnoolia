@@ -33,13 +33,23 @@
         {{-- Right side: language switcher + CTA --}}
         <div class="site-header__right" style="display:flex;align-items:center;gap:var(--space-md);">
             <x-language-switcher />
-            <x-cta-button
-                href="{{ route('home') }}#contact"
-                :label="__('magnoolia.nav.header_cta')"
-                variant="primary"
-                size="small"
-                data-cta-id="header_cta"
-            />
+            {{-- JS: opens inquiry drawer. No-JS: fallback to /kontakt --}}
+            <button type="button"
+                    class="cta-btn cta-btn--primary cta-btn--sm"
+                    data-mg-inquiry-open
+                    data-source-component="header_cta"
+                    data-mg-analytics="magnoolia_cta_click"
+                    style="padding: 0.5rem 1.25rem; font-size: var(--text-xs);">
+                {{ __('magnoolia.nav.header_cta') }}
+            </button>
+            <noscript>
+              <a href="{{ lroute('magnoolia.contact') }}"
+                 class="cta-btn cta-btn--primary cta-btn--sm"
+                 data-mg-inquiry-fallback
+                 style="padding: 0.5rem 1.25rem; font-size: var(--text-xs);">
+                {{ __('magnoolia.nav.header_cta') }}
+              </a>
+            </noscript>
         </div>
 
         {{-- Mobile nav toggle (Phase 2) --}}

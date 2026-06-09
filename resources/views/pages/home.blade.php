@@ -22,6 +22,12 @@
     {{-- 6. GALLERY STRIP / city-house section-space (index / home1/city-house.php) --}}
     @include('sections.approved.gallery-strip-source')
 
+    {{-- Phase 26: Lifestyle proof block — 4 cards with real location images --}}
+    @include('sections.magnoolia.lifestyle-proof')
+
+    {{-- Phase 26: Compact pricing/availability teaser --}}
+    @include('sections.magnoolia.pricing-teaser')
+
     {{-- 7. HINNAD JA PLAANID — pricing table --}}
     @include('sections.magnoolia.hinnad')
 

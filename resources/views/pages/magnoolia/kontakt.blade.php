@@ -88,6 +88,47 @@
   </div>
 </section>
 
+{{-- ── Phase 26: Diana Tali — müügikonsultant ──────────────── --}}
+<section class="mg-page-section mg-page-section--white">
+  <div class="container">
+    <div style="max-width:760px;margin:0 auto;">
+      <div style="background:#fff;border-radius:16px;padding:36px;box-shadow:0 4px 20px rgba(29,36,48,.06);display:flex;align-items:flex-start;gap:28px;flex-wrap:wrap;">
+        <div style="flex-shrink:0;">
+          @if(file_exists(public_path('assets/magnoolia/people/diana-tali.webp')))
+          <img src="{{ asset('assets/magnoolia/people/diana-tali.webp') }}"
+               alt="Diana Tali — Müügikonsultant"
+               width="96" height="96"
+               style="width:96px;height:96px;border-radius:50%;object-fit:cover;">
+          @else
+          <div style="width:96px;height:96px;border-radius:50%;background:#e5ddd0;display:flex;align-items:center;justify-content:center;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9c8b7e" stroke-width="1.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          @endif
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:11px;color:#c89443;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">{{ __('magnoolia.contact.sales_label') }}</div>
+          <div style="font-size:26px;font-weight:700;color:#1d2430;margin-bottom:4px;">Diana Tali</div>
+          <div style="font-size:14px;color:#888;margin-bottom:20px;">{{ __('magnoolia.contact.sales_title') }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;">
+            <a href="tel:+37258164078"
+               data-mg-analytics="magnoolia_phone_click"
+               style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:#1d2430;color:#fff;text-decoration:none;border-radius:8px;font-size:15px;font-weight:700;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.57a16 16 0 0 0 6.29 6.29l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              +372 58 16 40 78
+            </a>
+            <a href="mailto:diana@estlanda.ee"
+               data-mg-analytics="magnoolia_email_click"
+               style="display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:#f8f5f0;color:#c89443;text-decoration:none;border-radius:8px;font-size:14px;font-weight:700;border:1.5px solid #c89443;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              diana@estlanda.ee
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 {{-- ── Direct contact (horizontal full-width card) ──────────── --}}
 <section class="mg-page-section mg-page-section--cream">
   <div class="container">
@@ -96,13 +137,17 @@
       <div class="row gutter-y-20">
         <div class="col-lg-3 col-md-6">
           <div style="font-size:13px;color:#888;margin-bottom:6px;">{{ __('magnoolia.page.kontakt.direct_phone') }}</div>
-          <a href="tel:{{ $phone }}" style="font-size:22px;font-weight:700;color:#1d2430;text-decoration:none;display:block;">
+          <a href="tel:{{ $phone }}"
+             data-mg-analytics="magnoolia_phone_click"
+             style="font-size:22px;font-weight:700;color:#1d2430;text-decoration:none;display:block;">
             {{ $phoneFormatted }}
           </a>
         </div>
         <div class="col-lg-3 col-md-6">
           <div style="font-size:13px;color:#888;margin-bottom:6px;">{{ __('magnoolia.page.kontakt.direct_email') }}</div>
-          <a href="mailto:{{ $email }}" style="font-size:16px;font-weight:600;color:#c89443;text-decoration:none;display:block;word-break:break-all;">
+          <a href="mailto:{{ $email }}"
+             data-mg-analytics="magnoolia_email_click"
+             style="font-size:16px;font-weight:600;color:#c89443;text-decoration:none;display:block;word-break:break-all;">
             {{ $email }}
           </a>
         </div>

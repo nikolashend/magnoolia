@@ -89,17 +89,123 @@
   </div>
 </section>
 
-<section class="mg-page-section mg-page-section--white">
+{{-- ── Phase 26: Prestige pakett — sanitaarruumid ─────────── --}}
+<section class="mg-page-section mg-page-section--white" id="prestige">
   <div class="container">
-    <div style="max-width:760px;margin:0 auto;background:#f8f5f0;border-radius:16px;padding:28px 30px;border:1px solid rgba(29,36,48,.08);display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;">
-      <div>
-        <div style="font-size:11px;color:#c89443;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">Sisedisaini kontakt</div>
-        <div style="font-size:22px;font-weight:700;color:#1d2430;line-height:1.2;">Aet Piel</div>
-        <p style="font-size:14px;color:#6f6a61;line-height:1.6;margin:10px 0 0;">Siseviimistluse ja sisekujunduse küsimustes aitab Aet Piel. Küsi saadavust ja valikute infot otse.</p>
+    <div class="mg-section-heading" style="margin-bottom:40px;">
+      <div class="mg-section-heading__eyebrow">{{ __('magnoolia.page.sisedisain.prestige_eyebrow') }}</div>
+      <h2 class="mg-section-heading__title">{{ __('magnoolia.page.sisedisain.prestige_title') }}</h2>
+      <p class="mg-section-heading__subtitle">{{ __('magnoolia.page.sisedisain.prestige_sub') }}</p>
+    </div>
+
+    <div class="row gutter-y-32">
+
+      {{-- Sanitaarruumid --}}
+      <div class="col-lg-6">
+        <div style="background:#f8f5f0;border-radius:16px;padding:28px;height:100%;border-left:4px solid #c89443;">
+          <h3 style="font-size:16px;font-weight:700;color:#1d2430;margin:0 0 16px;display:flex;align-items:center;gap:10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c89443" stroke-width="2" aria-hidden="true"><path d="M4 12a8 8 0 0 1 16 0Z"/><path d="M2 12h20"/><path d="M4 12v8"/><path d="M20 12v8"/></svg>
+            {{ __('magnoolia.page.sisedisain.sanitary_title') }}
+          </h3>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
+            @foreach([
+              'RAK Resort rimless WC-pott',
+              'Loputuskasti nupp SLIM — kroom või must',
+              'Valamu Balteco Onyx 40',
+              'Damixa Core valamusegisti',
+              'ACO plaaditud dušširenn',
+              'Dušiklaas alumiiniumraamis, ulatub laeni',
+              'Damixa Core duššilift',
+            ] as $item)
+            <li style="display:flex;align-items:baseline;gap:10px;font-size:13.5px;color:#444;line-height:1.5;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c89443" stroke-width="2.5" style="flex-shrink:0;margin-top:2px;" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              {{ $item }}
+            </li>
+            @endforeach
+            <li style="display:flex;align-items:baseline;gap:10px;font-size:13px;color:#888;font-style:italic;line-height:1.5;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2.5" style="flex-shrink:0;margin-top:2px;" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              {{ __('magnoolia.page.sisedisain.sanitary_extra') }}: Balteco Nova valamukapp
+            </li>
+          </ul>
+        </div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:10px;min-width:230px;">
-        <a href="tel:+37258164078" class="zoomvilla-btn" style="justify-content:center;"><i class="fas fa-phone" style="margin-right:8px;"></i>+372 58 164 078</a>
-        <a href="mailto:diana@estlanda.ee" class="zoomvilla-btn zoomvilla-btn--border" style="justify-content:center;"><i class="fas fa-envelope" style="margin-right:8px;"></i>diana@estlanda.ee</a>
+
+      {{-- Materjalid ja pinnad --}}
+      <div class="col-lg-6">
+        <div style="background:#f8f5f0;border-radius:16px;padding:28px;height:100%;border-left:4px solid #c89443;">
+          <h3 style="font-size:16px;font-weight:700;color:#1d2430;margin:0 0 16px;display:flex;align-items:center;gap:10px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c89443" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v6"/></svg>
+            {{ __('magnoolia.page.sisedisain.materials_title') }}
+          </h3>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
+            @foreach([
+              'Milk Oak Rustic Light — põrandaparkett',
+              'Ivory Oak Rustic Light — alternatiiv',
+              'Tikkurila Symphony Opus II G497',
+              'Tikkurila Symphony Opus II L497',
+              'Ukselink BETA SLIM — must / harjatud kroom / grafiit',
+              'Puitliist 65×15, värvitud',
+              'Jung LS 990 mattvalge',
+              'Põrandakütte display',
+              'Korteri fonotelefon (video intercom)',
+              'IP20 / IP65 kohtvalgustid',
+            ] as $item)
+            <li style="display:flex;align-items:baseline;gap:10px;font-size:13.5px;color:#444;line-height:1.5;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c89443" stroke-width="2.5" style="flex-shrink:0;margin-top:2px;" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              {{ $item }}
+            </li>
+            @endforeach
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    {{-- Developer replacement disclaimer --}}
+    <div style="margin-top:24px;padding:14px 20px;background:#f0ede8;border-radius:8px;font-size:12px;color:#888;font-style:italic;">
+      {{ __('magnoolia.page.sisedisain.replacement_disclaimer') }}
+    </div>
+  </div>
+</section>
+
+{{-- ── Phase 26: Aet Piel — personaalne sisekujundus ──────── --}}
+<section class="mg-page-section mg-page-section--cream">
+  <div class="container">
+    <div style="max-width:760px;margin:0 auto;background:#fff;border-radius:16px;padding:32px 36px;border:1px solid rgba(29,36,48,.08);display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:240px;">
+        <div style="font-size:11px;color:#c89443;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;">{{ __('magnoolia.page.sisedisain.aet_eyebrow') }}</div>
+        <div style="font-size:24px;font-weight:700;color:#1d2430;line-height:1.2;margin-bottom:4px;">Aet Piel</div>
+        <div style="font-size:13px;color:#888;margin-bottom:14px;">{{ __('magnoolia.page.sisedisain.aet_role') }}</div>
+        <p style="font-size:14px;color:#6f6a61;line-height:1.6;margin:0 0 16px;">{{ __('magnoolia.page.sisedisain.aet_body') }}</p>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <a href="tel:+3725553858"
+             data-mg-analytics="magnoolia_phone_click"
+             style="font-size:15px;font-weight:700;color:#1d2430;text-decoration:none;display:flex;align-items:center;gap:8px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c89443" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.57a16 16 0 0 0 6.29 6.29l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +372 555 38 586
+          </a>
+          <a href="mailto:aet@piel.ee"
+             data-mg-analytics="magnoolia_email_click"
+             style="font-size:14px;color:#c89443;text-decoration:none;display:flex;align-items:center;gap:8px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            aet@piel.ee
+          </a>
+          <a href="https://www.aetpiel.com" target="_blank" rel="noopener noreferrer"
+             style="font-size:12px;color:#aaa;text-decoration:none;">www.aetpiel.com</a>
+        </div>
+      </div>
+      <div style="flex-shrink:0;">
+        @if(file_exists(public_path('assets/magnoolia/logos/aet-piel.png')))
+        <img src="{{ asset('assets/magnoolia/logos/aet-piel.png') }}"
+             alt="Aet Piel — sisekujundus"
+             width="120" height="60"
+             loading="lazy" decoding="async"
+             style="max-width:120px;height:auto;">
+        @else
+        <div style="padding:12px 20px;border:2px solid #c89443;border-radius:8px;font-size:16px;font-weight:700;color:#c89443;letter-spacing:.06em;white-space:nowrap;">
+          AET PIEL
+        </div>
+        @endif
       </div>
     </div>
   </div>
