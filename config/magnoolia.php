@@ -130,16 +130,18 @@ return [
         // Production canonical domain. Set MAGNOOLIA_CANONICAL_DOMAIN in .env before launch.
         // Staging: MAGNOOLIA_CANONICAL_DOMAIN=https://magnoolia.adme.ee
         // Production: MAGNOOLIA_CANONICAL_DOMAIN=https://magnoolia.ee
-        'production_domain' => env('MAGNOOLIA_CANONICAL_DOMAIN', 'https://magnoolia.ee'),
-        // canonical_base always has a value: set MAGNOOLIA_CANONICAL_DOMAIN to override
+        'production_domain' => env('MAGNOOLIA_PUBLIC_DOMAIN', env('MAGNOOLIA_CANONICAL_DOMAIN', 'https://magnoolia.ee')),
+        'staging_domain'    => env('MAGNOOLIA_STAGING_DOMAIN', 'https://magnoolia.adme.ee'),
+        // canonical_base: resolves from MAGNOOLIA_PUBLIC_DOMAIN when indexable, otherwise APP_URL
         'canonical_base'    => env('MAGNOOLIA_CANONICAL_DOMAIN', env('MAGNOOLIA_CANONICAL_BASE', 'https://magnoolia.ee')),
         'og_image'          => 'assets/images/magnoolia/Cam001.0000.jpg',
 
-        // Indexing control
-        // staging: MAGNOOLIA_ENV=staging → adds <meta name="robots" content="noindex,nofollow">
-        // production: MAGNOOLIA_ENV=production → index,follow
-        'env'     => env('MAGNOOLIA_ENV', 'staging'),
-        'noindex' => env('MAGNOOLIA_NOINDEX', true),
+        // Indexing control — MAGNOOLIA_INDEXABLE=true → index,follow,max-image-preview:large
+        //                     MAGNOOLIA_INDEXABLE=false (default) → noindex,nofollow
+        // Legacy support: MAGNOOLIA_NOINDEX=false also enables indexing
+        'indexable' => env('MAGNOOLIA_INDEXABLE', false),
+        'env'       => env('MAGNOOLIA_ENV', 'staging'),
+        'noindex'   => env('MAGNOOLIA_NOINDEX', true),
     ],
 
 ];

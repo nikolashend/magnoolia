@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'meta_title' => 'Metateave — ' . env('APP_NAME', 'Magnoolia'),
-    'meta_description' => 'Esmaklassilised korterid ja kinnisvara.',
+    'meta_title' => 'Magnoolia — A-energiaklassi ridaelamukodud Tallinna lähedal',
+    'meta_description' => 'Magnoolia Kodud on 19 A-energiaklassi ridaelamukodu Vaela külas, Kiili vallas. Privaatne hooviala, terrass, rõdu, maasoojuspump ja uusarenduse kindlus ~20 minutit Tallinnast.',
     'slider' => [
         'subtitle' => 'Tere tulemast Magnooliale!',
         'title_1' => 'Suurepärased Kinnisvara <span>Pakkumised <img src="/assets/images/shapes/hero-shape-1-3.png" alt="line"></span> Teie unistuste kodu.',

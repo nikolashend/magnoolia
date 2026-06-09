@@ -99,10 +99,28 @@
                         </div>
                     </div>
                     <div class="main-header__btn">
-                        <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn"
-                           data-event="header_cta">{{ __('magnoolia.contact.cta_inquiry') }}</a>
+                        {{-- Phase 27: opens inquiry drawer (JS). No-JS: fallback to /kontakt --}}
+                        <button type="button"
+                                class="zoomvilla-btn"
+                                data-mg-inquiry-open
+                                data-source-component="header_cta"
+                                data-mg-analytics="magnoolia_cta_click">
+                            {{ __('magnoolia.contact.cta_inquiry') }}
+                        </button>
+                        <noscript>
+                            <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm"
+                               class="zoomvilla-btn"
+                               data-mg-inquiry-fallback>
+                                {{ __('magnoolia.contact.cta_inquiry') }}
+                            </a>
+                        </noscript>
                     </div>
-                    <div class="mobile-nav__btn mobile-nav__toggler">
+                    <div class="mobile-nav__btn"
+                         data-nav-toggle
+                         role="button"
+                         aria-label="{{ __('magnoolia.nav.mobile_menu') }}"
+                         aria-expanded="false"
+                         aria-controls="mg-mobile-nav">
                         <span></span><span></span><span></span>
                     </div>
                 </div>

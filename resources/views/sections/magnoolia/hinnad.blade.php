@@ -72,12 +72,14 @@
         </div>
 
         {{-- Count indicator --}}
+        @php $unitTotal = count($units); @endphp
         <div style="text-align:center;margin-bottom:16px;margin-top:-12px;">
             <span id="mg-filter-count"
                   data-count-all-pre="{{ __('magnoolia.pricing.count_all_pre') }}"
                   data-count-filter-pre="{{ __('magnoolia.pricing.count_filter_pre') }}"
                   data-count-suffix="{{ __('magnoolia.pricing.count_suffix') }}"
-                  style="font-size:13px;color:#9a9490;font-style:italic;">{{ __('magnoolia.pricing.count_all_pre') }} {{ count($units) }} {{ __('magnoolia.pricing.count_suffix') }}</span>
+                  data-total="{{ $unitTotal }}"
+                  style="font-size:13px;color:#9a9490;font-style:italic;">@if($unitTotal > 0){{ __('magnoolia.pricing.count_all_pre') }} {{ $unitTotal }} {{ __('magnoolia.pricing.count_suffix') }}@else&nbsp;@endif</span>
         </div>
 
         {{-- Buyer helper tip --}}
@@ -327,7 +329,7 @@
             var show = key === 'all' || card.dataset.status === key || card.dataset.stage === key;
             card.style.display = show ? '' : 'none';
         });
-        /* Update count */
+        /* Update count — never show 0 when total>0 and all-filter */
         setTimeout(function () {
             var rows  = document.querySelectorAll('.mg-unit-row');
             var el = document.getElementById('mg-filter-count');
@@ -337,6 +339,9 @@
                 var allPre    = el.dataset.countAllPre    || '';
                 var filterPre = el.dataset.countFilterPre || '';
                 var suffix    = el.dataset.countSuffix    || '';
+                var total     = parseInt(el.dataset.total || rows.length, 10);
+                /* Safety: if rows.length is 0 but data-total > 0, keep server-rendered text */
+                if (rows.length === 0 && total > 0) return;
                 el.textContent = visible === rows.length
                     ? allPre + ' ' + rows.length + ' ' + suffix
                     : filterPre + ' ' + visible + ' ' + suffix;

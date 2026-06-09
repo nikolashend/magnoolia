@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'meta_title' => 'Главная — ' . env('APP_NAME', 'Magnoolia'),
-    'meta_description' => 'Первоклассная недвижимость — квартиры и услуги.',
+    'meta_title' => 'Magnoolia — энергоэффективные рядные дома рядом с Таллинном',
+    'meta_description' => 'Magnoolia Kodud — 19 энергоэффективных рядных домов класса A в деревне Vaela, волости Kiili, у Таллинна. Личный двор, террасы, балконы. I этап — весна 2027, II этап — весна 2028.',
     'slider' => [
         'subtitle' => 'Добро пожаловать в Magnoolia!',
         'title_1' => 'Отличная Недвижимость <span>для Вас <img src="/assets/images/shapes/hero-shape-1-3.png" alt="line"></span> Ваш идеальный дом.',

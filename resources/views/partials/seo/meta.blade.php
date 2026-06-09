@@ -6,7 +6,9 @@
 @php
     $project = config('magnoolia.project', []);
     $canonicalBase = rtrim(config('magnoolia.canonical_domain', config('magnoolia.seo.canonical_base', config('app.url', url('/')))), '/');
-    $noindex = config('magnoolia.seo.noindex', true) || request()->is('aitah') || request()->is('ru/aitah') || request()->is('en/aitah');
+    $isIndexable = config('magnoolia.seo.indexable', false) || !config('magnoolia.seo.noindex', true);
+    $isThankYou  = request()->is('aitah') || request()->is('ru/aitah') || request()->is('en/aitah');
+    $noindex = !$isIndexable || $isThankYou;
     $locale = app()->getLocale();
 
     // Canonical URL uses canonical base + current path (domain-independent)
@@ -75,7 +77,7 @@
 <meta name="twitter:image"       content="@yield('og_image', $defaultOgImg)">
 
 {{-- ── Robots ───────────────────────────────────────────────────── --}}
-<meta name="robots" content="{{ $noindex ? 'noindex,nofollow' : 'index,follow' }}">
+<meta name="robots" content="{{ $noindex ? 'noindex,nofollow' : 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1' }}">
 
 {{-- ── Canonical ────────────────────────────────────────────────── --}}
 <link rel="canonical" href="{{ $canonicalUrl }}">

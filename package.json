@@ -4,13 +4,17 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "magnoolia:optimize:images": "node scripts/magnoolia-optimize-images.mjs",
+        "magnoolia:visual:mobile": "node scripts/magnoolia-visual-mobile.mjs"
     },
     "devDependencies": {
+        "@playwright/test": "^1.60.0",
         "@tailwindcss/vite": "^4.0.0",
         "axios": "^1.11.0",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^2.0.0",
+        "sharp": "^0.34.5",
         "tailwindcss": "^4.0.0",
         "vite": "^7.0.7"
     }

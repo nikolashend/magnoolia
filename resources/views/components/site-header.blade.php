@@ -52,14 +52,17 @@
             </noscript>
         </div>
 
-        {{-- Mobile nav toggle (Phase 2) --}}
+        {{-- Mobile nav toggle (Phase 27) --}}
         <button class="site-header__mobile-toggle"
                 aria-expanded="false"
-                aria-controls="mobile-nav"
+                aria-controls="mg-mobile-nav"
                 data-nav-toggle
-                style="display:none;"
                 aria-label="{{ __('magnoolia.nav.mobile_menu') }}">
-            <span aria-hidden="true">☰</span>
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <line x1="2" y1="5" x2="20" y2="5"/>
+                <line x1="2" y1="11" x2="20" y2="11"/>
+                <line x1="2" y1="17" x2="20" y2="17"/>
+            </svg>
         </button>
 
     </div>

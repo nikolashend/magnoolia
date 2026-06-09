@@ -4,7 +4,7 @@
    ========================================================== */
 
 /* ----------------------------------------------------------
-   1. CSS VARIABLES — COLOR SYSTEM
+   1. CSS VARIABLES ? COLOR SYSTEM
    ---------------------------------------------------------- */
 :root {
   /* Core palette */
@@ -1105,7 +1105,7 @@ a {
 .mg-sticky-cta .mg-btn { flex: 1; justify-content: center; padding: 14px 12px; font-size: var(--text-xs); }
 
 /* ----------------------------------------------------------
-   15. SECTION PATTERNS — HOME PAGE
+   15. SECTION PATTERNS ? HOME PAGE
    ---------------------------------------------------------- */
 
 /* Miks Magnoolia */
@@ -1329,7 +1329,7 @@ a {
    20. RESPONSIVE BREAKPOINTS
    ---------------------------------------------------------- */
 
-/* Tablet — 992px */
+/* Tablet ? 992px */
 @media (max-width: 992px) {
   :root {
     --section-y-lg: 80px;
@@ -1338,7 +1338,7 @@ a {
 
   .mg-header__nav  { display: none; }
   .mg-header__hamburger { display: flex; }
-  .mg-mobile-nav   { display: block; }
+  /* mg-mobile-nav visibility controlled by .is-open class (Phase 27) */
 
   .mg-facts-bar__grid { grid-template-columns: repeat(3, 1fr); }
   .mg-facts-bar__item:nth-child(4), .mg-facts-bar__item:nth-child(5) { border-top: 1px solid rgba(255,255,255,0.08); }
@@ -1354,7 +1354,7 @@ a {
   .mg-cta-panel__actions { justify-content: center; }
 }
 
-/* Mobile — 768px */
+/* Mobile ? 768px */
 @media (max-width: 768px) {
   :root {
     --section-y-lg: 64px;
@@ -1384,7 +1384,7 @@ a {
   .mg-cta-panel { padding: 32px 20px; }
 }
 
-/* Small mobile — 430px */
+/* Small mobile ? 430px */
 @media (max-width: 430px) {
   .mg-hero__title { font-size: var(--text-3xl); }
   .mg-hero__meta  { flex-direction: column; gap: 12px; }
@@ -1397,7 +1397,7 @@ a {
   .mg-facts-bar__item:nth-child(5) { border-top: none; }
 }
 
-/* Desktop — min-width: 1200px */
+/* Desktop ? min-width: 1200px */
 @media (min-width: 1200px) {
   .mg-header__nav ul li a { padding: 8px 16px; }
 }
@@ -1743,7 +1743,7 @@ a {
   position: relative;
 }
 .mg-includes-box li::before {
-  content: "✓";
+  content: "?";
   position: absolute;
   left: 0;
   color: var(--mg-gold);
@@ -1959,7 +1959,7 @@ a {
   will-change: transform;
 }
 
-/* ── Hero facts row ───────────────────────────────────────────── */
+/* ?? Hero facts row ????????????????????????????????????????????? */
 .mg-hero-facts {
     display: flex;
     flex-wrap: wrap;
@@ -1980,7 +1980,7 @@ a {
     color: #555;
 }
 
-/* ── Pricing status: tbc ──────────────────────────────────────── */
+/* ?? Pricing status: tbc ???????????????????????????????????????? */
 .mg-status--tbc {
     background: #f0ebe3;
     color: #8a7e6e;
@@ -1994,7 +1994,7 @@ a {
     text-transform: uppercase;
 }
 
-/* ── Filter bar ────────────────────────────────────────── */
+/* ?? Filter bar ?????????????????????????????????????????? */
 [data-filter] {
     padding: 8px 20px;
     border-radius: 100px;
@@ -2019,7 +2019,7 @@ a {
     border-color: #1d2430;
 }
 
-/* ── Stage group header ───────────────────────────── */
+/* ?? Stage group header ????????????????????????????? */
 [data-stage-group] {
     border-radius: 12px 12px 0 0;
 }
@@ -2029,7 +2029,7 @@ a {
     margin-bottom: 0;
 }
 
-/* ── Masterplan hotspot container ─────────────────── */
+/* ?? Masterplan hotspot container ??????????????????? */
 .mg-masterplan__hotspots {
     position: absolute;
     inset: 0;
@@ -2056,7 +2056,7 @@ a {
 .mg-masterplan__hotspot[data-status="sold"]       { background: #f44336; }
 .mg-masterplan__hotspot[data-status="tbc"]        { background: #c89443; }
 
-/* ── Mobile sticky CTA bar ───────────────────────── */
+/* ?? Mobile sticky CTA bar ????????????????????????? */
 .mg-sticky-cta {
     position: fixed;
     bottom: 0;
@@ -2101,10 +2101,10 @@ a {
 .mg-sticky-cta__btn--ghost:hover { background: rgba(255,255,255,.1); color: #fff; }
 @media (min-width: 992px) { .mg-sticky-cta { display: none !important; } }
 
-/* ═══════════════════════════════════════════════════════════════
-   UNIT DETAIL MODAL — Phase 7
+/* ???????????????????????????????????????????????????????????????
+   UNIT DETAIL MODAL ? Phase 7
    Slide-in panel for unit details, floor plans, CTA.
-   ═══════════════════════════════════════════════════════════════ */
+   ??????????????????????????????????????????????????????????????? */
 
 /* Table row / mobile card hover state when selectable */
 .mg-unit-row:focus-visible,
@@ -2179,11 +2179,11 @@ a {
     letter-spacing: .02em;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   PHASE 8 — GLOBAL PREMIUM POLISH
-   ═══════════════════════════════════════════════════════════════ */
+/* ???????????????????????????????????????????????????????????????
+   PHASE 8 ? GLOBAL PREMIUM POLISH
+   ??????????????????????????????????????????????????????????????? */
 
-/* ── Buyer note in Hinnad ─────────────────────────────────────── */
+/* ?? Buyer note in Hinnad ??????????????????????????????????????? */
 .mg-buyer-note {
     background: #fff8ef;
     border-left: 3px solid #c89443;
@@ -2195,7 +2195,7 @@ a {
     line-height: 1.6;
 }
 
-/* ── Remove all LÄHEMALT link underline on service cards ─────── */
+/* ?? Remove all L?HEMALT link underline on service cards ??????? */
 .service-card__link {
     text-transform: uppercase;
     font-size: 11px;
@@ -2203,23 +2203,23 @@ a {
     font-weight: 700;
 }
 
-/* ── Service card — remove faux arrow on cardless sections ───── */
+/* ?? Service card ? remove faux arrow on cardless sections ????? */
 .service-card p.service-card__text {
     font-size: 14px;
     line-height: 1.65;
 }
 
-/* ── Consistent button sizing across site ────────────────────── */
+/* ?? Consistent button sizing across site ?????????????????????? */
 .zoomvilla-btn {
     white-space: nowrap;
 }
 
-/* ── Hinnad filter button active/hover polish ────────────────── */
+/* ?? Hinnad filter button active/hover polish ?????????????????? */
 [data-filter]:hover {
     border-color: #c89443 !important;
 }
 
-/* ── Table sold row: mute hover so it doesn't look available ─── */
+/* ?? Table sold row: mute hover so it doesn't look available ??? */
 .mg-unit-row[data-status="sold"]:hover {
     background: inherit !important;
 }
@@ -2234,7 +2234,7 @@ a {
     pointer-events: auto;
 }
 
-/* ── Floor plan section image quality ────────────────────────── */
+/* ?? Floor plan section image quality ?????????????????????????? */
 .property-plans__image img,
 .process-plan__thumb img {
     max-width: 100%;
@@ -2243,14 +2243,14 @@ a {
     display: block;
 }
 
-/* ── Contact trust chips mobile wrap ─────────────────────────── */
+/* ?? Contact trust chips mobile wrap ??????????????????????????? */
 @media (max-width: 576px) {
     .mg-trust-chips {
         justify-content: flex-start;
     }
 }
 
-/* ── Modal: sold state CTA style override ────────────────────── */
+/* ?? Modal: sold state CTA style override ?????????????????????? */
 #mg-modal-cta-btn[data-sold] {
     background: #9a9490;
 }
@@ -2258,7 +2258,7 @@ a {
     background: #808080;
 }
 
-/* ── Process plan CTA buttons: always column, never row ─────── */
+/* ?? Process plan CTA buttons: always column, never row ??????? */
 .property-plans__btn {
     display: flex !important;
     flex-direction: column !important;
@@ -2276,11 +2276,11 @@ a {
     }
 }
 
-/* ══════════════════════════════════════════════════════════════
-   PHASE 9 — MOBILE UX + PREMIUM POLISH + FOOTER TRUTH
-   ══════════════════════════════════════════════════════════════ */
+/* ??????????????????????????????????????????????????????????????
+   PHASE 9 ? MOBILE UX + PREMIUM POLISH + FOOTER TRUTH
+   ?????????????????????????????????????????????????????????????? */
 
-/* ── Footer premium ──────────────────────────────────────────── */
+/* ?? Footer premium ???????????????????????????????????????????? */
 .mg-footer__contact-item {
     display: flex;
     align-items: center;
@@ -2300,7 +2300,7 @@ a {
     flex-shrink: 0;
 }
 
-/* ── Hero heading mobile ─────────────────────────────────────── */
+/* ?? Hero heading mobile ??????????????????????????????????????? */
 @media (max-width: 576px) {
     .main-slider-two__title {
         font-size: clamp(26px, 7vw, 42px);
@@ -2331,7 +2331,7 @@ a {
     }
 }
 
-/* ── Hero facts bar mobile ───────────────────────────────────── */
+/* ?? Hero facts bar mobile ????????????????????????????????????? */
 @media (max-width: 576px) {
     .mg-hero-facts {
         display: grid;
@@ -2350,7 +2350,7 @@ a {
     }
 }
 
-/* ── Hinnad mobile cards ─────────────────────────────────────── */
+/* ?? Hinnad mobile cards ??????????????????????????????????????? */
 @media (max-width: 576px) {
     .mg-unit-card {
         padding: 18px 16px !important;
@@ -2372,7 +2372,7 @@ a {
     }
 }
 
-/* ── Unit modal mobile ───────────────────────────────────────── */
+/* ?? Unit modal mobile ????????????????????????????????????????? */
 @media (max-width: 576px) {
     #mg-modal-panel {
         width: 100vw !important;
@@ -2389,14 +2389,14 @@ a {
     }
 }
 
-/* ── Asendiplaan mobile list item tap target ─────────────────── */
+/* ?? Asendiplaan mobile list item tap target ??????????????????? */
 @media (max-width: 991px) {
     .mg-asendiplaan-item {
         min-height: 48px;
     }
 }
 
-/* ── Contact form mobile ─────────────────────────────────────── */
+/* ?? Contact form mobile ??????????????????????????????????????? */
 @media (max-width: 576px) {
     #kontakt .col-lg-5 > div,
     #kontakt [style*="border-radius:20px"] {
@@ -2410,7 +2410,7 @@ a {
     }
 }
 
-/* ── Sticky CTA: hide below contact section ──────────────────── */
+/* ?? Sticky CTA: hide below contact section ???????????????????? */
 /* JS class .mg-cta-hide added by scroll observer */
 .mg-mobile-cta.mg-cta-hide {
     transform: translateY(120%);
@@ -2418,7 +2418,7 @@ a {
     pointer-events: none;
 }
 
-/* ── Section headings mobile scale ──────────────────────────── */
+/* ?? Section headings mobile scale ???????????????????????????? */
 @media (max-width: 576px) {
     .sec-title__title {
         font-size: clamp(22px, 6vw, 36px);
@@ -2428,7 +2428,7 @@ a {
     }
 }
 
-/* ── Footer mobile ───────────────────────────────────────────── */
+/* ?? Footer mobile ????????????????????????????????????????????? */
 @media (max-width: 576px) {
     .mg-footer__grid {
         grid-template-columns: 1fr !important;
@@ -2447,12 +2447,12 @@ a {
     }
 }
 
-/* ── No horizontal scroll anywhere ──────────────────────────── */
+/* ?? No horizontal scroll anywhere ???????????????????????????? */
 body {
     overflow-x: hidden;
 }
 
-/* ── Homepage trust strip ───────────────────────────────────── */
+/* ?? Homepage trust strip ????????????????????????????????????? */
 .mg-trust-strip {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2492,7 +2492,7 @@ body {
   font-weight: 600;
 }
 
-/* ── Homepage AI answer spacing ─────────────────────────────── */
+/* ?? Homepage AI answer spacing ??????????????????????????????? */
 .mg-ai-answer-grid > [class*="col-"] {
   margin-bottom: 24px;
 }
@@ -2501,7 +2501,7 @@ body {
   height: 100%;
 }
 
-/* ── Buyer note mobile ───────────────────────────────────────── */
+/* ?? Buyer note mobile ????????????????????????????????????????? */
 @media (max-width: 576px) {
     .mg-buyer-note {
         border-radius: 0 8px 8px 0 !important;
@@ -2509,7 +2509,7 @@ body {
     }
 }
 
-/* ── Benefits section mobile ─────────────────────────────────── */
+/* ?? Benefits section mobile ??????????????????????????????????? */
 @media (max-width: 768px) {
     .mg-benefit-card {
         padding: 20px 16px;
@@ -2520,7 +2520,7 @@ body {
   }
 }
 
-/* ── Gallery strip mobile ────────────────────────────────────── */
+/* ?? Gallery strip mobile ?????????????????????????????????????? */
 @media (max-width: 576px) {
     .mg-gallery-strip .swiper-slide img {
         height: 200px;
@@ -2541,7 +2541,7 @@ body {
   }
 }
 
-/* ── Accordion list: override theme 290px → 100% width ──────── */
+/* ?? Accordion list: override theme 290px ? 100% width ???????? */
 .apartment-two__content .accordion-content .accordion-list {
     display: flex;
     flex-direction: row;
@@ -2561,13 +2561,13 @@ body {
     align-items: flex-start;
 }
 
-/* ── Hero readability premium tune ───────────────────────────── */
+/* ?? Hero readability premium tune ????????????????????????????? */
 .main-slider-two__title span {
   -webkit-text-stroke: 0.8px rgba(255,255,255,.35);
   color: rgba(255,255,255,.92);
 }
 
-/* ── Floor plan typology module ──────────────────────────────── */
+/* ?? Floor plan typology module ???????????????????????????????? */
 .mg-typology-card {
   background: #fff;
   border-radius: 18px;
@@ -2678,10 +2678,10 @@ body {
   }
 }
 
-/* ══════════════════════════════════════════════════════════════
-   PHASE 11 — FLOOR PLAN RECOVERY MODULE
+/* ??????????????????????????????????????????????????????????????
+   PHASE 11 ? FLOOR PLAN RECOVERY MODULE
    Premium typology cards with labeled floors + plan lightbox
-   ══════════════════════════════════════════════════════════════ */
+   ?????????????????????????????????????????????????????????????? */
 
 /* Section subtitle */
 .mg-section-subtitle {
@@ -2917,7 +2917,7 @@ body {
 .mg-plan-chip--a { background: #eef2ff; color: #3949ab; border-color: rgba(57,73,171,.2); }
 .mg-plan-chip--b { background: #e8f5e9; color: #388e3c; border-color: rgba(56,142,60,.2); }
 
-/* ── Phase 11 mobile responsive ───────────────────────────── */
+/* ?? Phase 11 mobile responsive ????????????????????????????? */
 @media (max-width: 576px) {
   .mg-plan-card__ctas {
     flex-direction: column;
@@ -2939,11 +2939,11 @@ body {
   }
 }
 
-/* ══════════════════════════════════════════════════════════════
-   PHASE 15 — Page-level premium CSS system
-   ══════════════════════════════════════════════════════════════ */
+/* ??????????????????????????????????????????????????????????????
+   PHASE 15 ? Page-level premium CSS system
+   ?????????????????????????????????????????????????????????????? */
 
-/* ── Page hero ──────────────────────────────────────────────── */
+/* ?? Page hero ???????????????????????????????????????????????? */
 .mg-page-hero {
   background: #1d2430;
   margin-top: -160px;
@@ -3018,7 +3018,7 @@ body {
   margin-top: 32px;
 }
 
-/* ── Page section base ─────────────────────────────────────── */
+/* ?? Page section base ??????????????????????????????????????? */
 .mg-page-section {
   padding: 72px 0;
 }
@@ -3034,7 +3034,7 @@ body {
 .mg-page-section--dark   { background: #1d2430; }
 .mg-page-section--darker { background: #151b26; }
 
-/* ── Section heading ───────────────────────────────────────── */
+/* ?? Section heading ????????????????????????????????????????? */
 .mg-section-heading {
   margin-bottom: 48px;
 }
@@ -3079,7 +3079,7 @@ body {
   margin-right: auto;
 }
 
-/* ── Proof / feature card ──────────────────────────────────── */
+/* ?? Proof / feature card ???????????????????????????????????? */
 .mg-proof-card {
   background: #fff;
   border-radius: 16px;
@@ -3119,7 +3119,7 @@ body {
   margin: 0;
 }
 
-/* ── Comparison card (plan A/B) ────────────────────────────── */
+/* ?? Comparison card (plan A/B) ?????????????????????????????? */
 .mg-comparison-card {
   background: #fff;
   border-radius: 20px;
@@ -3200,7 +3200,7 @@ body {
   flex-wrap: wrap;
 }
 
-/* ── Timeline (ostuprotsess) ───────────────────────────────── */
+/* ?? Timeline (ostuprotsess) ????????????????????????????????? */
 .mg-timeline {
   list-style: none;
   padding: 0;
@@ -3253,7 +3253,7 @@ body {
   margin: 0;
 }
 
-/* ── Image card ────────────────────────────────────────────── */
+/* ?? Image card ?????????????????????????????????????????????? */
 .mg-image-card {
   border-radius: 16px;
   overflow: hidden;
@@ -3280,7 +3280,7 @@ body {
   padding: 32px 18px 16px;
 }
 
-/* ── Editorial grid (2-col text + image) ───────────────────── */
+/* ?? Editorial grid (2-col text + image) ????????????????????? */
 .mg-editorial-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -3294,7 +3294,7 @@ body {
   .mg-editorial-row--reverse { direction: ltr; }
 }
 
-/* ── Location fallback card ────────────────────────────────── */
+/* ?? Location fallback card ?????????????????????????????????? */
 .mg-location-fallback {
   background: #fff;
   border-radius: 20px;
@@ -3330,7 +3330,7 @@ body {
   margin-top: 16px;
 }
 
-/* ── Distance table ────────────────────────────────────────── */
+/* ?? Distance table ?????????????????????????????????????????? */
 .mg-distance-table {
   width: 100%;
   border-collapse: collapse;
@@ -3355,7 +3355,7 @@ body {
 .mg-distance-table td:first-child { font-weight: 600; color: #1d2430; width: 40%; }
 .mg-distance-table td:last-child { color: #888; font-size: 13px; }
 
-/* ── Gallery grid ──────────────────────────────────────────── */
+/* ?? Gallery grid ???????????????????????????????????????????? */
 .mg-gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -3403,7 +3403,7 @@ body {
 }
 .mg-gallery-item:hover .mg-gallery-item__overlay i { color: #fff; }
 
-/* ── Gallery filter bar ────────────────────────────────────── */
+/* ?? Gallery filter bar ?????????????????????????????????????? */
 .mg-gallery-filter {
   display: flex;
   gap: 8px;
@@ -3428,7 +3428,7 @@ body {
   color: #fff;
 }
 
-/* ── SEO note / disclaimer ─────────────────────────────────── */
+/* ?? SEO note / disclaimer ??????????????????????????????????? */
 .mg-seo-note {
   background: rgba(200,148,67,.06);
   border-left: 3px solid #c89443;
@@ -3441,7 +3441,7 @@ body {
 }
 .mg-seo-note strong { color: #1d2430; }
 
-/* ── Internal links strip ──────────────────────────────────── */
+/* ?? Internal links strip ???????????????????????????????????? */
 .mg-internal-links {
   display: flex;
   gap: 12px;
@@ -3471,7 +3471,7 @@ body {
 }
 .mg-internal-link i { font-size: 11px; }
 
-/* ── CTA strip (dark bottom) ───────────────────────────────── */
+/* ?? CTA strip (dark bottom) ????????????????????????????????? */
 .mg-page-cta {
   background: #1d2430;
   padding: 72px 0;
@@ -3497,7 +3497,7 @@ body {
   flex-wrap: wrap;
 }
 
-/* ── Stage badge ───────────────────────────────────────────── */
+/* ?? Stage badge ????????????????????????????????????????????? */
 .mg-stage-badge {
   display: inline-block;
   font-size: 10px;
@@ -3511,7 +3511,7 @@ body {
 .mg-stage-badge--1 { background: #e8f1ff; color: #2b5db3; }
 .mg-stage-badge--2 { background: #e8f5e9; color: #2e7d32; }
 
-/* ── How-to block ──────────────────────────────────────────── */
+/* ?? How-to block ???????????????????????????????????????????? */
 .mg-how-to {
   background: #fff;
   border-radius: 20px;
@@ -3548,11 +3548,11 @@ body {
 }
 .mg-how-to__desc { font-size: 13px; color: #6f6a61; line-height: 1.6; }
 
-/* ── Row gutter utilities (complement Bootstrap gutter-y-20) ── */
+/* ?? Row gutter utilities (complement Bootstrap gutter-y-20) ?? */
 .gutter-y-16 { --bs-gutter-y: 16px; }
 .gutter-y-28 { --bs-gutter-y: 28px; }
 
-/* ── FAQ card grid ─────────────────────────────────────────── */
+/* ?? FAQ card grid ??????????????????????????????????????????? */
 .mg-faq-card {
   background: #fff;
   border-radius: 14px;
@@ -3579,7 +3579,7 @@ body {
   margin: 0;
 }
 
-/* ── Conversion intent cards (kontakt page) ─────────────────── */
+/* ?? Conversion intent cards (kontakt page) ??????????????????? */
 .mg-intent-card {
   display: flex;
   align-items: flex-start;
@@ -3610,7 +3610,7 @@ body {
 .mg-intent-card__title { font-size: 14px; font-weight: 700; color: #1d2430; margin: 0 0 4px; }
 .mg-intent-card__sub { font-size: 13px; color: #6f6a61; margin: 0; line-height: 1.5; }
 
-/* ── Feature row (image + text side by side) ────────────────── */
+/* ?? Feature row (image + text side by side) ?????????????????? */
 .mg-feature-row {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -3674,7 +3674,7 @@ body {
 }
 .mg-feature-row__list li i { color: #c89443; margin-top: 2px; flex-shrink: 0; font-size: 12px; }
 
-/* ── Unit group list (asendiplaan) ─────────────────────────── */
+/* ?? Unit group list (asendiplaan) ??????????????????????????? */
 .mg-unit-group { margin-bottom: 32px; }
 .mg-unit-group__address {
   font-size: 11px;
@@ -3713,7 +3713,7 @@ body {
 .mg-unit-chip--reserved .mg-unit-chip__dot  { background: #c89443; }
 .mg-unit-chip--sold .mg-unit-chip__dot      { background: #ccc; }
 
-/* ── Lightbox minimal ──────────────────────────────────────── */
+/* ?? Lightbox minimal ???????????????????????????????????????? */
 #mg-lightbox {
   display: none;
   position: fixed;
@@ -3759,7 +3759,7 @@ body {
   max-width: 80%;
 }
 
-/* ── Phase 13 ────────────────────────────────────────────────── */
+/* ?? Phase 13 ?????????????????????????????????????????????????? */
 .is-plan-highlighted {
   outline: 3px solid #c89443;
   outline-offset: 4px;
@@ -3771,7 +3771,7 @@ body {
   100% { box-shadow: 0 0 0 0 rgba(200, 148, 67, 0); outline-color: transparent; }
 }
 
-/* ── FAQ accordion (kkk page) ──────────────────────────────── */
+/* ?? FAQ accordion (kkk page) ???????????????????????????????? */
 button.mg-faq-card__q {
   all: unset;
   box-sizing: border-box;
@@ -3813,3 +3813,291 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 .mg-faq-card__a[hidden] {
   display: none;
 }
+
+/* ===================================================================
+   PHASE 27 ? Mobile-First Design System Rescue
+   Additions: mobile nav, header, typography, spacing, CTAs, footer
+   =================================================================== */
+
+/* -- Mobile toggle visibility ------------------------------- */
+.site-header__mobile-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--mg-off-white);
+  padding: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+@media (max-width: 991px) {
+  .site-header__mobile-toggle { display: flex; }
+  .site-header__right { display: none !important; }
+  .site-header__nav   { display: none !important; }
+}
+
+/* -- New mobile nav drawer (Phase 27) ----------------------- */
+.mg-mobile-nav {
+  position: fixed;
+  top: 0;
+  left: auto;   /* reset inset:0 from legacy rule */
+  right: 0;
+  bottom: 0;
+  z-index: 9000;
+  width: min(320px, 92vw);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(.4,0,.2,1), visibility 0s linear 0.28s;
+  box-shadow: -4px 0 32px rgba(0,0,0,.18);
+  /* Hidden on all viewports by default ? shown only when .is-open */
+  visibility: hidden;
+  pointer-events: none;
+}
+.mg-mobile-nav.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition: transform 0.28s cubic-bezier(.4,0,.2,1), visibility 0s;
+}
+.mg-mobile-nav__overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 8999;          /* below drawer (9000), above page */
+  background: rgba(29,36,48,.52);
+  /* no backdrop-filter here ? blur was covering the drawer */
+}
+/* overlay is now a separate sibling element, shown via JS class */
+.mg-mobile-nav__overlay.is-active { display: block; }
+
+.mg-mobile-nav__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #f0ede8;
+  flex-shrink: 0;
+}
+.mg-mobile-nav__logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1d2430;
+  text-decoration: none;
+  letter-spacing: .02em;
+}
+.mg-mobile-nav__close {
+  background: transparent;
+  border: 1px solid #e5e0d8;
+  color: #1d2430;
+  cursor: pointer;
+  padding: 8px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s;
+}
+.mg-mobile-nav__close:hover { background: #f7f4ef; }
+
+.mg-mobile-nav__cta-primary {
+  padding: 16px 20px;
+  flex-shrink: 0;
+}
+.mg-mobile-nav__cta-btn {
+  display: block;
+  width: 100%;
+  padding: 13px 20px;
+  background: #c89443;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .15s, transform .1s;
+}
+.mg-mobile-nav__cta-btn:hover {
+  background: #b07d35;
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.mg-mobile-nav__links {
+  padding: 0 0 8px;
+  flex: 1;
+}
+.mg-mobile-nav__links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mg-mobile-nav__links ul li {
+  border-bottom: 1px solid #f0ede8;
+}
+.mg-mobile-nav__links ul li a {
+  display: flex;
+  align-items: center;
+  padding: 13px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1d2430;
+  text-decoration: none;
+  min-height: 44px;
+  transition: background .12s, color .12s;
+}
+.mg-mobile-nav__links ul li a:hover {
+  background: #f7f4ef;
+  color: #c89443;
+}
+
+.mg-mobile-nav__contact {
+  padding: 18px 20px 14px;
+  border-top: 1px solid #f0ede8;
+  flex-shrink: 0;
+}
+.mg-mobile-nav__contact-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #c89443;
+  margin-bottom: 8px;
+}
+.mg-mobile-nav__contact-phone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1d2430;
+  text-decoration: none;
+  min-height: 44px;
+}
+.mg-mobile-nav__contact-phone:hover { color: #c89443; }
+
+.mg-mobile-nav__lang {
+  padding: 12px 20px 20px;
+  flex-shrink: 0;
+  border-top: 1px solid #f0ede8;
+}
+
+/* -- Mobile typography scale (Phase 27) --------------------- */
+@media (max-width: 767px) {
+  h1, .mg-hero__title, .mg-page-hero__title {
+    font-size: clamp(28px, 8vw, 38px) !important;
+    line-height: 1.1 !important;
+  }
+  h2 { font-size: clamp(22px, 6vw, 30px) !important; line-height: 1.15 !important; }
+  h3 { font-size: clamp(18px, 5vw, 23px) !important; }
+  body, p { font-size: 15px; }
+  .mg-page-hero__lead { font-size: 15px !important; }
+}
+
+/* -- Mobile spacing (Phase 27) ------------------------------ */
+@media (max-width: 767px) {
+  .section-space     { padding: 56px 0 !important; }
+  .mg-page-section   { padding: 56px 0 !important; }
+  .mg-page-section--sm { padding: 32px 0 !important; }
+  .mg-hero           { min-height: 88vh !important; }
+}
+@media (max-width: 430px) {
+  .section-space     { padding: 44px 0 !important; }
+  .mg-page-section   { padding: 44px 0 !important; }
+}
+
+/* -- Mobile cards (Phase 27) -------------------------------- */
+@media (max-width: 767px) {
+  .mg-comparison-card { padding: 20px !important; }
+  .mg-comparison-card + .mg-comparison-card { margin-top: 16px; }
+  .mg-unit-card { padding: 16px !important; }
+}
+@media (max-width: 575px) {
+  .row .col-lg-3,
+  .row .col-md-6 { flex: 0 0 100%; max-width: 100%; }
+}
+
+/* -- Pricing teaser mobile (Phase 27) ---------------------- */
+@media (max-width: 767px) {
+  /* Ensure teaser is full-width stacked on mobile */
+  .section-space > .container > div[style*="display:flex"][style*="flex-wrap:wrap"] {
+    flex-direction: column !important;
+  }
+}
+
+/* -- Footer mobile (Phase 27) ------------------------------- */
+@media (max-width: 767px) {
+  .site-footer > .container > div:first-child {
+    flex-direction: column;
+    gap: 28px !important;
+  }
+}
+
+/* -- "0 homes" guard (Phase 27) ----------------------------- */
+.mg-unit-count-zero {
+  display: none;
+}
+[data-mg-units-loaded="false"] .mg-unit-count-zero {
+  display: block;
+}
+
+/* -- Sticky mobile CTA (Phase 27) --------------------------- */
+.mg-sticky-cta {
+  display: none;
+}
+@media (max-width: 767px) {
+  .mg-sticky-cta {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 500;
+    padding: 12px 16px 16px;
+    background: rgba(255,255,255,.97);
+    border-top: 1px solid #e5e0d8;
+    gap: 10px;
+    transform: translateY(100%);
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 -4px 24px rgba(0,0,0,.1);
+  }
+  .mg-sticky-cta.is-visible { transform: translateY(0); }
+  .mg-sticky-cta.is-hidden  { transform: translateY(100%); }
+  .mg-sticky-cta__btn {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+  }
+  .mg-sticky-cta__btn--primary {
+    background: #c89443;
+    color: #fff;
+  }
+  .mg-sticky-cta__btn--secondary {
+    background: transparent;
+    color: #1d2430;
+    border: 1px solid #d0cac0;
+  }
+}
+

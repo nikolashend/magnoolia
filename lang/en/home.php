@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'meta_title' => 'Home — ' . env('APP_NAME', 'Magnoolia'),
-    'meta_description' => 'Premium real estate — apartments and properties.',
+    'meta_title' => 'Magnoolia — A-Class Townhouse Homes Near Tallinn',
+    'meta_description' => 'Magnoolia Kodud: 19 A-energy-class townhomes in Vaela village, Kiili municipality, near Tallinn. Private yard, terrace and balcony. Stage I ready spring 2027, Stage II spring 2028.',
     'slider' => [
         'subtitle' => 'Welcome to Magnoolia!',
         'title_1' => 'Many Property <span>Places <img src="/assets/images/shapes/hero-shape-1-3.png" alt="line"></span> Service Best Home.',

@@ -14,8 +14,15 @@ return [
         'contact'    => 'Kontakt',
         'main_nav_aria'  => 'Põhinavigatsioon',
         'logo_back_aria' => 'Tagasi avalehele',
-        'header_cta'     => 'Küsi infot',
-        'mobile_menu'    => 'Ava menüü',
+        'header_cta'       => 'Küsi infot',
+        'mobile_menu'      => 'Ava menüü',
+        'architecture'     => 'Arhitektuur',
+        'gallery'          => 'Galerii',
+        'purchase'         => 'Ostuprotsess',
+        'financing'        => 'Finantseerimine',
+        'faq'              => 'KKK',
+        'close'            => 'Sulge',
+        'mobile_nav_label' => 'Mobiilne navigatsioon',
     ],
 
     /* Footer */
@@ -353,7 +360,7 @@ return [
             ['q' => 'Kui palju kodusid on ja kui suured need on?', 'a' => 'Arenduses on 19 uut A-energiaklassi kodu. 4-toaline kodu on umbes 129,6 m² ja 5-toaline umbes 143,2 m². Kõigil kodudel on terrass, rõdu, panipaik ja 2 parkimiskohta.', 'icon' => 'icon-buildings'],
             ['q' => 'Mis on Magnoolia kodude hind?', 'a' => 'Konkreetne hind sõltub arendaja kinnitatud hinnakirjast. Hinna ja saadavuse teada saamiseks saada päring — Diana Tali vastab kiiresti.', 'icon' => 'icon-real-estate'],
             ['q' => 'Kas igal kodul on privaatne hooviala?', 'a' => 'Jah, igal Magnoolia kodul on oma piirdega ja haljastatud hooviala. See annab eramaja tunde ilma ise ehitust korraldamata.', 'icon' => 'icon-labyrinth'],
-            ['q' => 'Kas kodudel on terrass ja rõdu?', 'a' => 'Jah. Igal kodul on privaatne terrass esimesel korrusel ja rõdu teisel korrusel — mõlemad avanevad hoovi poole.', 'icon' => 'fas fa-stairs'],
+            ['q' => 'Kas kodudel on terrass ja rõdu?', 'a' => 'Jah. Igal kodul on privaatne terrass esimesel korrusel ja rõdu teisel korrusel — mõlemad avanevad hoovi poole.', 'icon' => 'fas fa-layer-group'],
             ['q' => 'Millised tehnosüsteemid kodudes on?', 'a' => 'Magnoolia kodudes on maasoojuspump, soojustagastusega ventilatsioon, vesipõrandaküte kõigis tubades ja vannitoas ning valmidus EV-laadimiseks ja päikesepaneelideks.', 'icon' => 'fas fa-bolt'],
         ],
     ],
@@ -1239,3 +1246,4 @@ return [
     ],
 
 ];
+

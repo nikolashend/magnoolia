@@ -1,5 +1,5 @@
 {{-- MAGNOOLIA FOOTER Phase 2 --}}
-<footer class="mg-footer" id="footer">
+<footer class="mg-footer site-footer" id="footer">
     <div class="mg-container">
         <div class="mg-footer__grid">
 

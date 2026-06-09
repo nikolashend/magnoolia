@@ -14,11 +14,15 @@ return [
         'logo_back_aria' => 'Back to home page',
         'header_cta'     => 'Enquire',
         'mobile_menu'    => 'Open menu',
-        'gallery'    => 'Gallery',
-        'faq'        => 'FAQ',
-        'architecture'=> 'Architecture',
-        'process'    => 'Buying Process',
-        'financing'  => 'Financing',
+        'gallery'          => 'Gallery',
+        'faq'              => 'FAQ',
+        'architecture'     => 'Architecture',
+        'process'          => 'Buying Process',
+        'purchase'         => 'Buying Process',
+        'financing'        => 'Financing',
+        'contact'          => 'Contact',
+        'close'            => 'Close',
+        'mobile_nav_label' => 'Mobile navigation',
     ],
 
     /* Hero */
@@ -356,7 +360,7 @@ return [
             ['q' => 'How many homes are there and what sizes?',      'a' => 'The development has 19 new energy class A terrace homes. A 4-room home is ~129.6 m², a 5-room home ~143.2 m². All include a terrace, balcony, storage room and 2 parking spaces.',                 'icon' => 'icon-buildings'],
             ['q' => 'What is the price of Magnoolia homes?',         'a' => 'Specific prices are subject to the developer\'s price list. To find out the price and availability, send an enquiry — Diana Tali will respond promptly.',                                             'icon' => 'icon-real-estate'],
             ['q' => 'Does each home have a private garden?',         'a' => 'Yes, each Magnoolia home has its own enclosed, landscaped garden. This provides the feel of a detached house without managing the construction yourself.',                                           'icon' => 'icon-labyrinth'],
-            ['q' => 'Do the homes have a terrace and balcony?',      'a' => 'Yes. Each home includes a private terrace (18–24 m²) on the ground floor and a balcony (9.5–11.5 m²) on the first floor — both private, facing the garden.',                                       'icon' => 'fas fa-stairs'],
+            ['q' => 'Do the homes have a terrace and balcony?',      'a' => 'Yes. Each home includes a private terrace (18–24 m²) on the ground floor and a balcony (9.5–11.5 m²) on the first floor — both private, facing the garden.',                                       'icon' => 'fas fa-layer-group'],
             ['q' => 'What engineering systems are in the homes?',    'a' => 'Magnoolia homes feature a ground-source heat pump, heat-recovery ventilation, water underfloor heating in all rooms and the bathroom, plus technical readiness for EV charging and solar panels.',   'icon' => 'fas fa-bolt'],
         ],
     ],
@@ -1213,3 +1217,4 @@ return [
     ],
 
 ];
+
