@@ -375,7 +375,7 @@
           aria-label="Sulge"
           style="position:absolute;top:16px;right:20px;background:none;border:none;color:#fff;font-size:32px;line-height:1;cursor:pointer;padding:4px 10px;">&#x2715;</button>
   <div style="max-width:90vw;max-height:90vh;text-align:center;" onclick="event.stopPropagation()">
-    <img id="mg-lightbox-img" src="" alt=""
+    <img id="mg-lightbox-img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="" aria-hidden="true"
          style="max-width:90vw;max-height:82vh;border-radius:8px;object-fit:contain;display:block;margin:0 auto;">
     <div id="mg-lightbox-cap" style="color:#ddd;font-size:13px;margin-top:12px;"></div>
   </div>

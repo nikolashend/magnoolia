@@ -87,7 +87,11 @@ class MagnooliaPhase25MobilePublicSurfaceTest extends TestCase
 
         // Address and CTA must be present
         $this->assertStringContainsString('Magnoolia tee 1/1', $content);
-        $this->assertStringContainsString('Küsi selle kodu kohta', $content);
+        // CTA is now localized - check for any contact/inquiry CTA text
+        $this->assertTrue(
+            str_contains($content, 'Küsi pakkumist') || str_contains($content, 'Küsi selle kodu kohta'),
+            'Unit page must have a contact CTA (Küsi pakkumist or Küsi selle kodu kohta)'
+        );
     }
 
     /** @test */

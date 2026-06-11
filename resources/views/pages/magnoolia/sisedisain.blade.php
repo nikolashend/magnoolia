@@ -262,6 +262,68 @@
   </div>
 </section>
 
+{{-- ── Phase 28: PPTX-sourced materials gallery ────────────── --}}
+@php
+  $pptxDir = 'assets/magnoolia/sisedisain/pptx/Magnoolia__kodud_Prestige_Sisedisain/webp';
+  $pptxBase = public_path($pptxDir);
+  $pptxImages = [];
+  if (is_dir($pptxBase)) {
+    $alts = [
+      'image1.webp'  => 'Magnoolia Prestige siseviimistlus — vannitoa näidislahendus',
+      'image2.webp'  => 'Magnoolia Prestige — sanitaarruum ja viimistlusdetailid',
+      'image3.webp'  => 'Magnoolia Prestige — plaadilahendus vannitoas',
+      'image4.webp'  => 'Magnoolia Prestige — duširuumi viimistlus',
+      'image5.webp'  => 'Magnoolia Prestige — köögimöbel ja pinnad',
+      'image6.webp'  => 'Magnoolia Prestige — elutoa viimistlus',
+      'image9.webp'  => 'Magnoolia Prestige — valgustus ja elektritarvikud',
+      'image14.webp' => 'Magnoolia Prestige — põrandakatted',
+      'image15.webp' => 'Magnoolia Prestige — materjalidetailid',
+      'image16.webp' => 'Magnoolia Prestige — sisearhitektuurne lahendus',
+    ];
+    foreach ($alts as $fname => $alt) {
+      if (file_exists($pptxBase . '/' . $fname)) {
+        $pptxImages[] = ['file' => $fname, 'alt' => $alt, 'url' => asset($pptxDir . '/' . $fname)];
+      }
+    }
+  }
+@endphp
+
+@if(count($pptxImages) > 0)
+<section class="mg-page-section mg-page-section--white" id="pptx-gallery">
+  <div class="container">
+    <div class="mg-section-heading" style="margin-bottom:40px;">
+      <div class="mg-section-heading__eyebrow">{{ __('magnoolia.page.sisedisain.gallery_eyebrow') }}</div>
+      <h2 class="mg-section-heading__title">
+        {{ app()->getLocale()==='ru' ? 'Примеры материалов и отделки — пакет Prestige' : (app()->getLocale()==='en' ? 'Material & finish samples — Prestige package' : 'Materjalid ja viimistlusnäidised — Prestige pakett') }}
+      </h2>
+      <p class="mg-section-heading__subtitle" style="font-style:italic;font-size:13px;color:#9a9490;">
+        {{ app()->getLocale()==='ru' ? 'Изображения носят иллюстративный характер. Точные характеристики уточняются в договоре.' : (app()->getLocale()==='en' ? 'Images are illustrative. Exact specifications are confirmed in the sales contract.' : 'Pildid on illustratiivsed. Täpsed karakteristikud kinnitatakse müügilepingus.') }}
+      </p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+      @foreach($pptxImages as $i => $img)
+      <div style="border-radius:12px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;background:#f0ede8;"
+           onclick="mgLightboxOpen('{{ $img['url'] }}', '{{ addslashes($img['alt']) }}')">
+        <img src="{{ $img['url'] }}"
+             alt="{{ $img['alt'] }}"
+             width="560" height="420"
+             loading="{{ $i < 4 ? 'eager' : 'lazy' }}"
+             decoding="async"
+             style="width:100%;height:100%;object-fit:cover;transition:transform .3s;"
+             onmouseover="this.style.transform='scale(1.03)'"
+             onmouseout="this.style.transform='scale(1)'">
+      </div>
+      @endforeach
+    </div>
+
+    <div style="margin-top:24px;padding:14px 20px;background:#f0ede8;border-radius:8px;font-size:12px;color:#888;font-style:italic;text-align:center;">
+      {{ app()->getLocale()==='ru' ? 'Siseviimistluse ja lisavalikute täpsed tingimused kinnitatakse müügipakkumises.' : (app()->getLocale()==='en' ? 'Exact interior finish conditions are confirmed in the sales offer.' : 'Siseviimistluse ja lisavalikute täpsed tingimused kinnitatakse müügipakkumises.') }}
+    </div>
+  </div>
+</section>
+@endif
+
 {{-- ── FAQ ─────────────────────────────────────────────────── --}}
 @include('sections.magnoolia.page-faq', [
   'eyebrow' => __('magnoolia.page.sisedisain.faq_eyebrow'),
@@ -294,7 +356,7 @@
 {{-- Lightbox --}}
 <div id="mg-lightbox" onclick="this.style.display='none'" style="display:none;">
   <div class="mg-lightbox__inner">
-    <img id="mg-lightbox-img" src="" alt="">
+    <img id="mg-lightbox-img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="" aria-hidden="true">
     <div id="mg-lightbox-cap"></div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 # Magnoolia Kodud — LLM Reference File
 # https://magnoolia.ee/llms.txt
-# Last updated: 2026-06-06
+# Last updated: 2026-06-11 (Phase 28)
 
 ## Brand
 Name: Magnoolia Kodud
@@ -23,14 +23,27 @@ Phase I: Magnoolia tee 1 and Magnoolia tee 3 — 7 homes — planned completion 
 Phase II: Magnoolia tee 5, 7, 9 and 11 — 12 homes — planned completion spring 2028
 
 ## Home specifications
-Plan A: 4 rooms, ~129.6 m² net area
-Plan B: 5 rooms, ~143.2 m² net area
+Plan A: 4–5 rooms, ~129.2–129.6 m² net area (depending on unit)
+Plan B: 4–5 rooms, ~129.2–143.2 m² net area (depending on unit)
 Every home includes: private yard, terrace, balcony, 2 parking spaces
 Heating: ground source heat pump (planned), underfloor heating in every room
 Ventilation: heat-recovery mechanical ventilation (planned)
 EV charging: readiness at parking spaces (planned)
 Solar panels: roof preparation for future installation (planned)
 Energy class: A (designed to A-class requirements)
+
+## Interior finish (Prestige package — illustrative)
+Wall tiles: 60×120 cm in bathrooms, sauna anteroom, showers (~121 m² per unit)
+Floor tiles: 60×60 cm in hallway, WC, sauna rooms (~104 m² per unit)
+Heating: underfloor water heating in all rooms
+Energy class: A
+Interior design consultant: Aet Piel (aet@piel.ee, +372 555 38 586, www.aetpiel.com)
+Note: Exact material brands and finish packages are confirmed in the sales offer.
+
+## Developer
+Company: Estlanda Ehitus OÜ
+Website: https://estlanda.ee
+Logo: Available (Estlanda brand logo)
 
 ## Contact
 Sales representative: Diana Tali

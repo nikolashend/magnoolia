@@ -4101,3 +4101,154 @@ button.mg-faq-card__q[aria-expanded="true"] i {
   }
 }
 
+
+
+/* -- Header logo: fixed wrapper so logo never affects header height -- */
+.main-header__logo {
+  overflow: hidden;
+  display: flex !important;
+  align-items: center;
+  flex-shrink: 0;
+  height: 72px;
+  max-height: 72px;
+}
+.main-header__logo a {
+  display: flex !important;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+/* -- Header logo responsive sizing ------------------------------- */
+.mg-header-logo-img {
+  height: 72px !important;
+  width: auto !important;
+  display: block !important;
+  object-fit: contain;
+  max-height: 72px !important;
+  flex-shrink: 0;
+}
+@media (max-width: 991px) {
+  .main-header__logo { height: 44px; max-height: 44px; }
+  .mg-header-logo-img {
+    height: 44px !important;
+    max-height: 44px !important;
+  }
+}
+@media (max-width: 575px) {
+  .main-header__logo { height: 36px; max-height: 36px; }
+  .mg-header-logo-img {
+    height: 36px !important;
+    max-height: 36px !important;
+  }
+}
+
+/* ── Mobile fixes (Phase 28 feedback) ─────────────────────────────────── */
+
+/* Fix 3: Header full width on mobile – remove container-fluid gutter */
+@media (max-width: 767px) {
+  .main-header .container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .main-header__inner {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+/* Fix 1: Hero block – add horizontal padding so text doesn't touch edges */
+@media (max-width: 576px) {
+  .main-slider-two__content {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+}
+
+/* Fix 2: Hero buttons – remove inline margin-left that offsets second btn */
+@media (max-width: 576px) {
+  .main-slider-two__btn a {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: center;
+  }
+}
+
+/* Fix 1: Trust chips covered by sticky CTA bar – add bottom clearance */
+@media (max-width: 767px) {
+  /* chips wrapper itself gets bottom padding so sticky bar doesn't cover last row */
+  .mg-contact-trust-chips {
+    padding-bottom: 96px;
+  }
+  #kontakt {
+    padding-bottom: 20px !important;
+  }
+  .mg-footer {
+    padding-bottom: 90px !important;
+  }
+}
+
+/* Fix 2: Contact block – hide right-side background stripe on mobile */
+@media (max-width: 767px) {
+  .mg-contact-bg-accent {
+    display: none !important;
+  }
+}
+
+/* Fix 4: About-one first image – full width on mobile */
+@media (max-width: 767px) {
+  .about-one__image__item__inner {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 220px;
+  }
+  .about-one__image__item__inner img,
+  .about-one__image__one {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 220px;
+    object-fit: cover;
+  }
+  .about-one__image {
+    overflow: hidden;
+  }
+}
+
+/* Fix 2 (scroll-top): lift above sticky CTA bar on mobile */
+@media (max-width: 767px) {
+  .scroll-top.active {
+    bottom: 96px !important;
+  }
+}
+
+/* Fix 3 (about-two Cam005): remove fixed 1075px width on mobile */
+@media (max-width: 767px) {
+  .about-two__thumb {
+    width: 100% !important;
+    min-height: 260px !important;
+    max-width: 100% !important;
+    overflow: hidden;
+  }
+  .about-two__thumb img {
+    width: 100% !important;
+    height: 260px !important;
+    min-height: unset !important;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+/* Fix 5: About-one second image (Valmib 2027 interior) – full width on mobile */
+@media (max-width: 767px) {
+  .about-one__image__item-two {
+    width: 100% !important;
+    margin-top: 16px;
+  }
+  .about-one__image__item-two img {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    display: block;
+  }
+}

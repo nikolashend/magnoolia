@@ -8,8 +8,8 @@
 @endphp
 <section class="section-space" id="kontakt" style="background:#151515;position:relative;overflow:hidden;">
 
-    {{-- Background accent image --}}
-    <div style="position:absolute;right:0;top:0;bottom:0;width:45%;pointer-events:none;z-index:0;">
+    {{-- Background accent image (hidden on mobile to avoid mid-stripe artifact) --}}
+    <div class="mg-contact-bg-accent" style="position:absolute;right:0;top:0;bottom:0;width:45%;pointer-events:none;z-index:0;">
         <img src="{{ asset('assets/images/magnoolia/Interior 5-2.jpg') }}"
              alt=""
              aria-hidden="true"
@@ -104,7 +104,7 @@
                 </div>
 
                 {{-- Trust chips --}}
-                <div style="display:flex;flex-wrap:wrap;gap:10px;">
+                <div class="mg-contact-trust-chips" style="display:flex;flex-wrap:wrap;gap:10px;">
                     @foreach([
                         __('magnoolia.contact.trust_2'),
                         __('magnoolia.contact.trust_1'),

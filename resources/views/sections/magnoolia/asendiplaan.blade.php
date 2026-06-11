@@ -121,7 +121,12 @@
                             <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">{{ __('magnoolia.section.asendiplaan_trust_energy') }}</div>
                         </div>
                         <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:16px;">
-                            <div style="font-size:16px;font-weight:700;color:#c89443;">kevad 2027</div>
+                            @php
+                                $s1comp = $mgPublic['settings']['stage_1_completion'] ?? 'kevad 2027';
+                                $locale = app()->getLocale();
+                                $s1label = $locale==='ru' ? str_ireplace(['kevad','spring'],['весна','весна'], $s1comp) : ($locale==='en' ? str_ireplace(['kevad 2027','kevad 2028','kevad'],['spring 2027','spring 2028','spring'], $s1comp) : $s1comp);
+                            @endphp
+                            <div style="font-size:16px;font-weight:700;color:#c89443;">{{ $s1label }}</div>
                             <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">{{ __('magnoolia.section.asendiplaan_trust_stage1') }}</div>
                         </div>
                         <div style="background:rgba(255,255,255,.07);border-radius:12px;padding:16px;">

@@ -1,87 +1,87 @@
 # Phase 27 Visual Screenshot Index
 
-Generated: 2026-06-09T14:20:50.199Z
+Generated: 2026-06-11T13:43:47.321Z
 Base URL: http://localhost:8000
 
 ## Results
 
 | File | Status | Issues |
 |------|--------|--------|
-| phase27-home-et-320.png | WARN | broken-images:1 |
-| phase27-kodud-ja-hinnad-et-320.png | PASS |  |
-| phase27-asendiplaan-et-320.png | PASS |  |
-| phase27-asukoht-et-320.png | WARN | broken-images:1 |
-| phase27-ehitusinfo-et-320.png | PASS |  |
-| phase27-sisedisain-et-320.png | WARN | broken-images:1 |
-| phase27-arhitektuur-et-320.png | WARN | broken-images:1 |
-| phase27-galerii-et-320.png | WARN | broken-images:1 |
-| phase27-finantseerimine-et-320.png | PASS |  |
-| phase27-ostuprotsess-et-320.png | PASS |  |
-| phase27-kkk-et-320.png | PASS |  |
-| phase27-kontakt-et-320.png | PASS |  |
+| phase27-home-et-320.png | WARN | horizontal-overflow, broken-images:1 |
+| /kodud-ja-hinnad (failed) | FAIL | HTTP 404 |
+| /asendiplaan (failed) | FAIL | HTTP 404 |
+| /asukoht (failed) | FAIL | HTTP 404 |
+| /ehitusinfo (failed) | FAIL | HTTP 404 |
+| /sisedisain (failed) | FAIL | HTTP 404 |
+| /arhitektuur-ja-valisdisain (failed) | FAIL | HTTP 404 |
+| /galerii (failed) | FAIL | HTTP 404 |
+| /finantseerimine (failed) | FAIL | HTTP 404 |
+| /ostuprotsess (failed) | FAIL | HTTP 404 |
+| /kkk (failed) | FAIL | HTTP 404 |
+| /kontakt (failed) | FAIL | HTTP 404 |
 | phase27-home-et-375.png | WARN | broken-images:1 |
-| phase27-kodud-ja-hinnad-et-375.png | PASS |  |
-| phase27-asendiplaan-et-375.png | PASS |  |
-| phase27-asukoht-et-375.png | WARN | broken-images:1 |
-| phase27-ehitusinfo-et-375.png | PASS |  |
-| phase27-sisedisain-et-375.png | WARN | broken-images:1 |
-| phase27-arhitektuur-et-375.png | WARN | broken-images:1 |
-| phase27-galerii-et-375.png | WARN | broken-images:1 |
-| phase27-finantseerimine-et-375.png | PASS |  |
-| phase27-ostuprotsess-et-375.png | PASS |  |
-| phase27-kkk-et-375.png | PASS |  |
-| phase27-kontakt-et-375.png | PASS |  |
+| /kodud-ja-hinnad (failed) | FAIL | HTTP 404 |
+| /asendiplaan (failed) | FAIL | HTTP 404 |
+| /asukoht (failed) | FAIL | HTTP 404 |
+| /ehitusinfo (failed) | FAIL | HTTP 404 |
+| /sisedisain (failed) | FAIL | HTTP 404 |
+| /arhitektuur-ja-valisdisain (failed) | FAIL | HTTP 404 |
+| /galerii (failed) | FAIL | HTTP 404 |
+| /finantseerimine (failed) | FAIL | HTTP 404 |
+| /ostuprotsess (failed) | FAIL | HTTP 404 |
+| /kkk (failed) | FAIL | HTTP 404 |
+| /kontakt (failed) | FAIL | HTTP 404 |
 | phase27-home-et-390.png | WARN | broken-images:1 |
-| phase27-kodud-ja-hinnad-et-390.png | PASS |  |
-| phase27-asendiplaan-et-390.png | PASS |  |
-| phase27-asukoht-et-390.png | WARN | broken-images:1 |
-| phase27-ehitusinfo-et-390.png | PASS |  |
-| phase27-sisedisain-et-390.png | WARN | broken-images:1 |
-| phase27-arhitektuur-et-390.png | WARN | broken-images:1 |
-| phase27-galerii-et-390.png | WARN | broken-images:1 |
-| phase27-finantseerimine-et-390.png | PASS |  |
-| phase27-ostuprotsess-et-390.png | PASS |  |
-| phase27-kkk-et-390.png | PASS |  |
-| phase27-kontakt-et-390.png | PASS |  |
+| /kodud-ja-hinnad (failed) | FAIL | HTTP 404 |
+| /asendiplaan (failed) | FAIL | HTTP 404 |
+| /asukoht (failed) | FAIL | HTTP 404 |
+| /ehitusinfo (failed) | FAIL | HTTP 404 |
+| /sisedisain (failed) | FAIL | HTTP 404 |
+| /arhitektuur-ja-valisdisain (failed) | FAIL | HTTP 404 |
+| /galerii (failed) | FAIL | HTTP 404 |
+| /finantseerimine (failed) | FAIL | HTTP 404 |
+| /ostuprotsess (failed) | FAIL | HTTP 404 |
+| /kkk (failed) | FAIL | HTTP 404 |
+| /kontakt (failed) | FAIL | HTTP 404 |
 | phase27-home-et-430.png | WARN | broken-images:1 |
-| phase27-kodud-ja-hinnad-et-430.png | PASS |  |
-| phase27-asendiplaan-et-430.png | PASS |  |
-| phase27-asukoht-et-430.png | WARN | broken-images:1 |
-| phase27-ehitusinfo-et-430.png | PASS |  |
-| phase27-sisedisain-et-430.png | WARN | broken-images:1 |
-| phase27-arhitektuur-et-430.png | WARN | broken-images:1 |
-| phase27-galerii-et-430.png | WARN | broken-images:1 |
-| phase27-finantseerimine-et-430.png | PASS |  |
-| phase27-ostuprotsess-et-430.png | PASS |  |
-| phase27-kkk-et-430.png | PASS |  |
-| phase27-kontakt-et-430.png | PASS |  |
+| /kodud-ja-hinnad (failed) | FAIL | HTTP 404 |
+| /asendiplaan (failed) | FAIL | HTTP 404 |
+| /asukoht (failed) | FAIL | HTTP 404 |
+| /ehitusinfo (failed) | FAIL | HTTP 404 |
+| /sisedisain (failed) | FAIL | HTTP 404 |
+| /arhitektuur-ja-valisdisain (failed) | FAIL | HTTP 404 |
+| /galerii (failed) | FAIL | HTTP 404 |
+| /finantseerimine (failed) | FAIL | HTTP 404 |
+| /ostuprotsess (failed) | FAIL | HTTP 404 |
+| /kkk (failed) | FAIL | HTTP 404 |
+| /kontakt (failed) | FAIL | HTTP 404 |
 | phase27-home-et-768.png | WARN | broken-images:1 |
-| phase27-kodud-ja-hinnad-et-768.png | PASS |  |
-| phase27-asendiplaan-et-768.png | PASS |  |
-| phase27-asukoht-et-768.png | WARN | broken-images:1 |
-| phase27-ehitusinfo-et-768.png | PASS |  |
-| phase27-sisedisain-et-768.png | WARN | broken-images:1 |
-| phase27-arhitektuur-et-768.png | WARN | broken-images:1 |
-| phase27-galerii-et-768.png | WARN | broken-images:1 |
-| phase27-finantseerimine-et-768.png | PASS |  |
-| phase27-ostuprotsess-et-768.png | PASS |  |
-| phase27-kkk-et-768.png | PASS |  |
-| phase27-kontakt-et-768.png | PASS |  |
+| /kodud-ja-hinnad (failed) | FAIL | HTTP 404 |
+| /asendiplaan (failed) | FAIL | HTTP 404 |
+| /asukoht (failed) | FAIL | HTTP 404 |
+| /ehitusinfo (failed) | FAIL | HTTP 404 |
+| /sisedisain (failed) | FAIL | HTTP 404 |
+| /arhitektuur-ja-valisdisain (failed) | FAIL | HTTP 404 |
+| /galerii (failed) | FAIL | HTTP 404 |
+| /finantseerimine (failed) | FAIL | HTTP 404 |
+| /ostuprotsess (failed) | FAIL | HTTP 404 |
+| /kkk (failed) | FAIL | HTTP 404 |
+| /kontakt (failed) | FAIL | HTTP 404 |
 | phase27-home-et-1440.png | WARN | broken-images:1 |
-| phase27-kodud-ja-hinnad-et-1440.png | PASS |  |
-| phase27-asendiplaan-et-1440.png | PASS |  |
-| phase27-asukoht-et-1440.png | WARN | broken-images:1 |
-| phase27-ehitusinfo-et-1440.png | PASS |  |
-| phase27-sisedisain-et-1440.png | WARN | broken-images:1 |
-| phase27-arhitektuur-et-1440.png | WARN | broken-images:1 |
-| phase27-galerii-et-1440.png | WARN | broken-images:1 |
-| phase27-finantseerimine-et-1440.png | PASS |  |
-| phase27-ostuprotsess-et-1440.png | PASS |  |
-| phase27-kkk-et-1440.png | PASS |  |
-| phase27-kontakt-et-1440.png | PASS |  |
+| /kodud-ja-hinnad (failed) | FAIL | HTTP 404 |
+| /asendiplaan (failed) | FAIL | HTTP 404 |
+| /asukoht (failed) | FAIL | HTTP 404 |
+| /ehitusinfo (failed) | FAIL | HTTP 404 |
+| /sisedisain (failed) | FAIL | HTTP 404 |
+| /arhitektuur-ja-valisdisain (failed) | FAIL | HTTP 404 |
+| /galerii (failed) | FAIL | HTTP 404 |
+| /finantseerimine (failed) | FAIL | HTTP 404 |
+| /ostuprotsess (failed) | FAIL | HTTP 404 |
+| /kkk (failed) | FAIL | HTTP 404 |
+| /kontakt (failed) | FAIL | HTTP 404 |
 
 ## Summary
 - Total screenshots: 72
-- Passed: 42
-- Warnings: 30
-- Failed: 0
+- Passed: 0
+- Warnings: 6
+- Failed: 66

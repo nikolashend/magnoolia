@@ -119,7 +119,7 @@
     </div>
     @elseif(!$pricePublic)
     <div style="font-size:18px;font-weight:600;color:rgba(255,255,255,.55);margin:16px 0 20px;font-style:italic;">
-      Hind täpsustamisel
+      {{ __('magnoolia.pricing.price_tbc_inline') }}
     </div>
     @endif
 
@@ -130,7 +130,7 @@
          data-event="unit_detail_cta"
          data-unit="{{ $unit['unit_key'] }}"
          data-source="unit_page_hero">
-        Küsi selle kodu kohta <i class="icon-angle-small-right"></i>
+        {{ __('magnoolia.pricing.cta_inquiry') }} <i class="icon-angle-small-right"></i>
       </a>
       @endif
       @if($floorplan1)
@@ -139,7 +139,7 @@
          data-event="unit_floorplan_preview"
          data-unit="{{ $unit['unit_key'] }}"
          data-source="unit_page_hero">
-        Vaata korruseplaane <i class="icon-angle-small-right"></i>
+        {{ __('magnoolia.floorplan.enlarge') }} <i class="icon-angle-small-right"></i>
       </a>
       @endif
     </div>
@@ -167,12 +167,12 @@
               ['label' => 'Panipaik',         'value' => isset($unit['storage_area']) && $unit['storage_area'] ? $unit['storage_area'] . ' m²' : null],
               ['label' => 'Eraaed',           'value' => isset($unit['private_yard_area']) && $unit['private_yard_area'] ? $unit['private_yard_area'] . ' m²' : null],
               ['label' => 'Parkimiskohad',    'value' => isset($unit['parking_spaces']) ? $unit['parking_spaces'] . ' kohta' : null],
-              ['label' => 'Etapp',            'value' => $stageLabel],
-              ['label' => 'Valmimisaeg',      'value' => $completion],
-              ['label' => 'Plaan',            'value' => $planLabel ? 'Plaan ' . $planLabel : null],
-              ['label' => 'Energiaklass',     'value' => 'A'],
-              ['label' => 'Staatus',          'value' => $statusLabel],
-              ['label' => 'Hind',             'value' => $priceStr ?? ($pricePublic ? null : 'Hind täpsustamisel')],
+              ['label' => __('magnoolia.pricing.stage'),      'value' => $stageLabel],
+              ['label' => __('magnoolia.pricing.completion'),  'value' => $completion],
+              ['label' => __('magnoolia.pricing.cta_site_plan'), 'value' => $planLabel ? 'Plaan ' . $planLabel : null],
+              ['label' => __('magnoolia.pricing.area_class'),  'value' => 'A'],
+              ['label' => __('magnoolia.pricing.status'),      'value' => $statusLabel],
+              ['label' => __('magnoolia.pricing.price'),       'value' => $priceStr ?? ($pricePublic ? null : __('magnoolia.pricing.price_tbc_inline'))],
             ];
           @endphp
           @foreach($specs as $i => $spec)

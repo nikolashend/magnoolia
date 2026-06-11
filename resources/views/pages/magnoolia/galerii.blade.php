@@ -157,7 +157,7 @@
 {{-- Lightbox --}}
 <div id="mg-lightbox" onclick="this.style.display='none'" style="display:none;">
   <div class="mg-lightbox__inner">
-    <img id="mg-lightbox-img" src="" alt="">
+    <img id="mg-lightbox-img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="" aria-hidden="true">
     <div id="mg-lightbox-cap"></div>
   </div>
 </div>

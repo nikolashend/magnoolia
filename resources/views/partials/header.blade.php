@@ -3,8 +3,22 @@
     <div class="container-fluid">
         <div class="main-header__inner">
             <div class="main-header__logo logo-retina">
-                <a href="{{ lroute('home') }}" aria-label="Magnoolia koduleht" style="text-decoration:none;">
-                    <span style="font-size:22px;font-weight:700;color:#1E1F24;letter-spacing:0.05em;line-height:1;">Magnoolia</span>
+                <a href="{{ lroute('home') }}" aria-label="Magnoolia koduleht" style="text-decoration:none;display:flex;align-items:center;">
+                    @php $mgLogoLight = public_path('assets/magnoolia/logos/magnoolia-light.webp'); $mgLogoDark = public_path('assets/magnoolia/logos/magnoolia-dark.webp'); @endphp
+                    @php $mgLogoTrim = public_path('assets/magnoolia/logos/magnoolia-light-trim.webp'); @endphp
+                    @if(file_exists($mgLogoTrim))
+                        <picture>
+                            <source srcset="{{ asset('assets/magnoolia/logos/magnoolia-light-trim-320w.webp') }}" media="(max-width:480px)" type="image/webp">
+                            <img src="{{ asset('assets/magnoolia/logos/magnoolia-light-trim.webp') }}"
+                                 alt="Magnoolia Kodud"
+                                 width="554" height="480"
+                                 loading="eager"
+                                 decoding="async"
+                                 class="mg-header-logo-img">
+                        </picture>
+                    @else
+                        <span style="font-size:22px;font-weight:700;color:#1E1F24;letter-spacing:0.05em;line-height:1;">Magnoolia</span>
+                    @endif
                 </a>
             </div>
             <div class="main-header__middle">

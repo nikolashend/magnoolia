@@ -311,11 +311,15 @@
   var UNITS = {!! $unitsJson !!};
 
   var statusLabels = {
-    'available': 'Saadaval', 'reserved': 'Broneeritud', 'sold': 'Müüdud', 'tbc': 'Tulemas'
+    'available': '{{ __("magnoolia.pricing.status_available") }}',
+    'reserved': '{{ __("magnoolia.pricing.status_reserved") }}',
+    'sold': '{{ __("magnoolia.pricing.status_sold") }}',
+    'tbc': '{{ __("magnoolia.pricing.status_tbc") }}'
   };
   var statusColors = {
     'available': '#4caf50', 'reserved': '#c89443', 'sold': '#888', 'tbc': '#9c27b0'
   };
+  var priceTbcLabel = '{{ __("magnoolia.pricing.price_tbc_inline") }}';
 
   function findUnit(key) {
     return UNITS.find(function(u) { return u.key === key || u.slug === key; }) || null;
@@ -335,14 +339,14 @@
 
     var planMap = {'type-a': 'A', 'type-b': 'B'};
     var planLabel = unit.plan_type ? 'Plaan ' + (planMap[unit.plan_type] || '') : '';
-    var priceStr  = unit.price ? unit.price.toLocaleString('et-EE') + ' €' : (unit.price_public ? null : 'Hind täpsustamisel');
+    var priceStr  = unit.price ? unit.price.toLocaleString('et-EE') + ' €' : (unit.price_public ? null : priceTbcLabel);
     var statusLabel = statusLabels[unit.status] || unit.status;
     var statusColor = statusColors[unit.status] || '#888';
 
     body.innerHTML = [
       '<div style="margin-bottom:16px;">',
         '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">',
-          '<span style="background:' + (unit.stage===1?'#c89443':'#5b8dd9') + ';color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">' + (unit.stage===1?'I etapp':'II etapp') + '</span>',
+          '<span style="background:' + (unit.stage===1?'#c89443':'#5b8dd9') + ';color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">' + (unit.stage===1?'{{ __("magnoolia.section.asendiplaan_stage1_label") ?? "I etapp" }}':'{{ __("magnoolia.section.asendiplaan_stage2_label") ?? "II etapp" }}') + '</span>',
           planLabel ? '<span style="background:#f5f0e8;color:#8a7760;font-size:11px;font-weight:600;padding:3px 8px;border-radius:12px;">' + planLabel + '</span>' : '',
         '</div>',
         '<div style="font-size:22px;font-weight:700;color:#1d2430;margin-bottom:6px;">' + unit.address + '</div>',

@@ -28,6 +28,9 @@
     {{-- Phase 26: Compact pricing/availability teaser --}}
     @include('sections.magnoolia.pricing-teaser')
 
+    {{-- Phase 28: Compact homepage availability board (all 19 homes, by stage) --}}
+    @include('sections.magnoolia.home-availability-board')
+
     {{-- 7. HINNAD JA PLAANID — pricing table --}}
     @include('sections.magnoolia.hinnad')
 

@@ -5,8 +5,19 @@
 
             {{-- Col 1: Brand --}}
             <div class="mg-footer__logo-col">
-                <a href="{{ route('home') }}" style="text-decoration:none;">
-                    <span class="mg-footer__brand">Magnoolia</span>
+                <a href="{{ route('home') }}" style="text-decoration:none;display:block;margin-bottom:6px;">
+                    @if(file_exists(public_path('assets/magnoolia/logos/magnoolia-footer.webp')))
+                        <picture>
+                            <img src="{{ asset('assets/magnoolia/logos/magnoolia-footer.webp') }}"
+                                 alt="Magnoolia Kodud"
+                                 width="554" height="480"
+                                 loading="lazy"
+                                 decoding="async"
+                                 style="height:42px;width:auto;display:block;object-fit:contain;margin-bottom:14px;">
+                        </picture>
+                    @else
+                        <span class="mg-footer__brand">Magnoolia</span>
+                    @endif
                     <span class="mg-footer__tagline">{{ __('magnoolia.footer.tagline') }}</span>
                 </a>
                 <p class="mg-footer__desc">
@@ -70,6 +81,26 @@
 
         </div>{{-- /.mg-footer__grid --}}
     </div>
+
+    {{-- Estlanda developer trust bar --}}
+    @if(file_exists(public_path('assets/magnoolia/logos/estlanda-2.webp')))
+    <div class="mg-container" style="padding-top:24px;padding-bottom:8px;border-top:1px solid rgba(255,255,255,.08);">
+        <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+            <span style="font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em;text-transform:uppercase;">{{ __('magnoolia.footer.col_developer') }}</span>
+            <a href="https://estlanda.ee" target="_blank" rel="noopener noreferrer" style="opacity:.55;transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='.55'">
+                <picture>
+                    <source srcset="{{ asset('assets/magnoolia/logos/estlanda-2-240w.webp') }}" media="(max-width:480px)" type="image/webp">
+                    <img src="{{ asset('assets/magnoolia/logos/estlanda-2.webp') }}"
+                         alt="Estlanda OÜ"
+                         width="160" height="20"
+                         loading="lazy"
+                         decoding="async"
+                         style="height:20px;width:auto;display:block;filter:brightness(0) invert(1);">
+                </picture>
+            </a>
+        </div>
+    </div>
+    @endif
 
     <div class="mg-container">
         <div class="mg-footer__bottom">

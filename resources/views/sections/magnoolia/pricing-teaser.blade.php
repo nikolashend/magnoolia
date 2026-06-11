@@ -59,12 +59,20 @@
           @else Vali endale sobiv Magnoolia kodu
           @endif
         </h2>
+        @php
+          $stageLabel1 = $locale==='ru' ? 'I этап' : ($locale==='en' ? 'Phase I' : 'I etapp');
+          $stageLabel2 = $locale==='ru' ? 'II этап' : ($locale==='en' ? 'Phase II' : 'II etapp');
+          $homesLabel  = $locale==='ru' ? ' домов' : ($locale==='en' ? ' homes' : ' kodu');
+          $plansLabel  = $locale==='ru' ? 'Планировка A и B' : ($locale==='en' ? 'Plan A & B' : 'Plaan A ja B');
+          $completionSuffix1 = $locale==='ru' ? str_replace(['kevad','Kevad'],['весна','Весна'], $stage1Complete) : ($locale==='en' ? str_replace(['kevad 2027','kevad 2028','Kevad 2027','Kevad 2028'],['spring 2027','spring 2028','Spring 2027','Spring 2028'], $stage1Complete) : $stage1Complete);
+          $completionSuffix2 = $locale==='ru' ? str_replace(['kevad','Kevad'],['весна','Весна'], $stage2Complete) : ($locale==='en' ? str_replace(['kevad 2027','kevad 2028','Kevad 2027','Kevad 2028'],['spring 2027','spring 2028','Spring 2027','Spring 2028'], $stage2Complete) : $stage2Complete);
+        @endphp
         <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
           @foreach([
-            ['icon'=>'🏠','val'=>$total . ($locale==='ru' ? ' домов' : ($locale==='en' ? ' homes' : ' kodu'))],
-            ['icon'=>'📅','val'=>'I etapp ' . $stage1Complete],
-            ['icon'=>'📅','val'=>'II etapp ' . $stage2Complete],
-            ['icon'=>'📐','val'=>$locale==='ru' ? 'Планировка A и B' : ($locale==='en' ? 'Plan A & B' : 'Plaan A ja B')],
+            ['icon'=>'🏠','val'=>$total . $homesLabel],
+            ['icon'=>'📅','val'=>$stageLabel1 . ' · ' . $completionSuffix1],
+            ['icon'=>'📅','val'=>$stageLabel2 . ' · ' . $completionSuffix2],
+            ['icon'=>'📐','val'=>$plansLabel],
           ] as $fact)
           <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,.85);">
             <span aria-hidden="true">{{ $fact['icon'] }}</span>

@@ -231,10 +231,11 @@
 
         {{-- Image area --}}
         <div style="flex:1;overflow-y:auto;padding:24px 28px;display:flex;justify-content:center;align-items:flex-start;">
-            <img loading="lazy" decoding="async" id="mg-plan-lb-img"
-                 src=""
+            <img decoding="async" id="mg-plan-lb-img"
+                 src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
                  alt=""
-                 style="max-width:100%;height:auto;border-radius:10px;border:1px solid rgba(29,36,48,.08);display:block;" loading="lazy" decoding="async">
+                 aria-hidden="true"
+                 style="max-width:100%;height:auto;border-radius:10px;border:1px solid rgba(29,36,48,.08);display:block;">
         </div>
 
         {{-- Footer CTA --}}
