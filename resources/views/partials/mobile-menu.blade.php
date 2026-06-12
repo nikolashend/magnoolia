@@ -12,8 +12,17 @@
 
     {{-- Header --}}
     <div class="mg-mobile-nav__header">
-        <a href="{{ route('home') }}" class="mg-mobile-nav__logo" onclick="mgMobileNavClose()">
-            {{ config('magnoolia.project.brand_name') }}
+        <a href="{{ route('home') }}" class="mg-mobile-nav__logo" onclick="mgMobileNavClose()" style="display:flex;align-items:center;">
+            @if(file_exists(public_path('assets/magnoolia/logos/magnoolia-logo2-mob-2x.webp')))
+                <img src="{{ asset('assets/magnoolia/logos/magnoolia-logo2-mob-2x.webp') }}"
+                     alt="Magnoolia Kodud"
+                     width="274" height="88"
+                     loading="eager"
+                     decoding="async"
+                     style="height:40px;width:auto;display:block;object-fit:contain;">
+            @else
+                {{ config('magnoolia.project.brand_name') }}
+            @endif
         </a>
         <button type="button" class="mg-mobile-nav__close" onclick="mgMobileNavClose()" aria-label="{{ __('magnoolia.nav.close') }}">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
