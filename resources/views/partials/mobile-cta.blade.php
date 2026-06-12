@@ -3,9 +3,13 @@
     <a href="{{ route('home') }}#hinnad" class="mg-sticky-cta__btn mg-sticky-cta__btn--ghost">
         {{ __('magnoolia.footer.nav_homes') }}
     </a>
-    <a href="{{ route('home') }}#kontakt" class="mg-sticky-cta__btn">
+    <button type="button"
+            class="mg-sticky-cta__btn"
+            data-mg-inquiry-open
+            data-source-component="mobile_sticky_cta"
+            data-mg-analytics="magnoolia_cta_click">
         {{ __('magnoolia.footer.cta') }}
-    </a>
+    </button>
 </div>
 <script>
 (function () {

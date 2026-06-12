@@ -2086,11 +2086,15 @@ a {
     padding: 11px 16px;
     font-size: 14px;
     font-weight: 700;
+    font-family: inherit;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
     display: block;
     transition: background .2s;
+    -webkit-appearance: none;
+    appearance: none;
+    line-height: 1.2;
 }
 .mg-sticky-cta__btn:hover  { background: #a77832; color: #fff; }
 .mg-sticky-cta__btn--ghost {
