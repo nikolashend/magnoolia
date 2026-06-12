@@ -4,14 +4,18 @@
         <div class="main-header__inner">
             <div class="main-header__logo logo-retina">
                 <a href="{{ lroute('home') }}" aria-label="Magnoolia koduleht" style="text-decoration:none;display:flex;align-items:center;">
-                    @php $mgLogoLight = public_path('assets/magnoolia/logos/magnoolia-light.webp'); $mgLogoDark = public_path('assets/magnoolia/logos/magnoolia-dark.webp'); @endphp
-                    @php $mgLogoTrim = public_path('assets/magnoolia/logos/magnoolia-light-trim.webp'); @endphp
-                    @if(file_exists($mgLogoTrim))
+                    @php $mgLogo2 = public_path('assets/magnoolia/logos/magnoolia-logo2.webp'); @endphp
+                    @if(file_exists($mgLogo2))
                         <picture>
-                            <source srcset="{{ asset('assets/magnoolia/logos/magnoolia-light-trim-320w.webp') }}" media="(max-width:480px)" type="image/webp">
-                            <img src="{{ asset('assets/magnoolia/logos/magnoolia-light-trim.webp') }}"
+                            {{-- Mobile: единый файл 274x88 → CSS 137x44, downscale всегда резкий --}}
+                            <source
+                                media="(max-width:767px)"
+                                srcset="{{ asset('assets/magnoolia/logos/magnoolia-logo2-mob-2x.webp') }}"
+                                type="image/webp">
+                            {{-- Desktop --}}
+                            <img src="{{ asset('assets/magnoolia/logos/magnoolia-logo2.webp') }}"
                                  alt="Magnoolia Kodud"
-                                 width="554" height="480"
+                                 width="448" height="144"
                                  loading="eager"
                                  decoding="async"
                                  class="mg-header-logo-img">

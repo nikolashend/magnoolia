@@ -4128,6 +4128,7 @@ button.mg-faq-card__q[aria-expanded="true"] i {
   object-fit: contain;
   max-height: 72px !important;
   flex-shrink: 0;
+  image-rendering: auto;
 }
 @media (max-width: 991px) {
   .main-header__logo { height: 44px; max-height: 44px; }
@@ -4137,10 +4138,10 @@ button.mg-faq-card__q[aria-expanded="true"] i {
   }
 }
 @media (max-width: 575px) {
-  .main-header__logo { height: 36px; max-height: 36px; }
+  .main-header__logo { height: 44px; max-height: 44px; }
   .mg-header-logo-img {
-    height: 36px !important;
-    max-height: 36px !important;
+    height: 44px !important;
+    max-height: 44px !important;
   }
 }
 
