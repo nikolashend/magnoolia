@@ -1,0 +1,542 @@
+{
+  "meta": {
+    "phase": 29,
+    "generated_by": "scripts/magnoolia-generate-rowhouse-assets.mjs",
+    "note": "Row markers derived from detected footprints; per-home markers are approximate (equal subdivision). Colour masks and the technical plan are internal-only and never published."
+  },
+  "overview": {
+    "primary": {
+      "768": "assets/magnoolia/rowhouse-selection/overview/development-primary-768.webp",
+      "1280": "assets/magnoolia/rowhouse-selection/overview/development-primary-1280.webp",
+      "2048": "assets/magnoolia/rowhouse-selection/overview/development-primary-2048.webp",
+      "base": "assets/magnoolia/rowhouse-selection/overview/development-primary.webp"
+    },
+    "secondary": {
+      "768": "assets/magnoolia/rowhouse-selection/overview/development-secondary-768.webp",
+      "1280": "assets/magnoolia/rowhouse-selection/overview/development-secondary-1280.webp",
+      "2048": "assets/magnoolia/rowhouse-selection/overview/development-secondary-2048.webp",
+      "base": "assets/magnoolia/rowhouse-selection/overview/development-secondary.webp"
+    },
+    "has_secondary_view": true
+  },
+  "asendiplaan": {
+    "clean": {
+      "768": "assets/magnoolia/rowhouse-selection/asendiplaan/magnoolia-asendiplaan-clean-768.webp",
+      "1024": "assets/magnoolia/rowhouse-selection/asendiplaan/magnoolia-asendiplaan-clean-1024.webp",
+      "1600": "assets/magnoolia/rowhouse-selection/asendiplaan/magnoolia-asendiplaan-clean-1600.webp",
+      "base": "assets/magnoolia/rowhouse-selection/asendiplaan/magnoolia-asendiplaan-clean.webp"
+    },
+    "enlarge_pdf": "assets/magnoolia/asendiplaan/VEEBI _ASENDIPLAAN.pdf"
+  },
+  "rows": [
+    {
+      "building": 1,
+      "pos": "tee-1",
+      "image": {
+        "480": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-1-row-480.webp",
+        "768": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-1-row-768.webp",
+        "1280": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-1-row-1280.webp",
+        "base": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-1-row.webp"
+      },
+      "map_highlight": {
+        "x": 0.7881,
+        "y": 0.806,
+        "box": [
+          0.704,
+          0.7147,
+          0.875,
+          0.8424
+        ],
+        "approximate": false
+      },
+      "homes": [
+        {
+          "unit_key": "tee-1-1",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-1-1-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-1-1-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-1-1.webp"
+          },
+          "map_highlight": {
+            "x": 0.7379,
+            "y": 0.8239,
+            "box": [
+              0.704,
+              0.8024,
+              0.783,
+              0.8417
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-1-2",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-1-2-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-1-2-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-1-2.webp"
+          },
+          "map_highlight": {
+            "x": 0.7672,
+            "y": 0.7333,
+            "box": [
+              0.747,
+              0.7147,
+              0.788,
+              0.7468
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-1-3",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-1-3-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-1-3-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-1-3.webp"
+          },
+          "map_highlight": {
+            "x": 0.8283,
+            "y": 0.8225,
+            "box": [
+              0.784,
+              0.7889,
+              0.875,
+              0.8424
+            ],
+            "approximate": true
+          }
+        }
+      ]
+    },
+    {
+      "building": 3,
+      "pos": "tee-3",
+      "image": {
+        "480": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-3-row-480.webp",
+        "768": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-3-row-768.webp",
+        "1280": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-3-row-1280.webp",
+        "base": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-3-row.webp"
+      },
+      "map_highlight": {
+        "x": 0.6926,
+        "y": 0.6699,
+        "box": [
+          0.626,
+          0.607,
+          0.774,
+          0.7332
+        ],
+        "approximate": false
+      },
+      "homes": [
+        {
+          "unit_key": "tee-3-1",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-3-1-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-3-1-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-3-1.webp"
+          },
+          "map_highlight": {
+            "x": 0.6491,
+            "y": 0.6342,
+            "box": [
+              0.626,
+              0.607,
+              0.674,
+              0.6526
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-3-2",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-3-2-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-3-2-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-3-2.webp"
+          },
+          "map_highlight": {
+            "x": 0.6876,
+            "y": 0.6661,
+            "box": [
+              0.667,
+              0.6384,
+              0.712,
+              0.684
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-3-3",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-3-3-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-3-3-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-3-3.webp"
+          },
+          "map_highlight": {
+            "x": 0.7225,
+            "y": 0.6965,
+            "box": [
+              0.704,
+              0.6698,
+              0.742,
+              0.7154
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-3-4",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-3-4-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-3-4-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-3-4.webp"
+          },
+          "map_highlight": {
+            "x": 0.7501,
+            "y": 0.7126,
+            "box": [
+              0.733,
+              0.694,
+              0.774,
+              0.7332
+            ],
+            "approximate": true
+          }
+        }
+      ]
+    },
+    {
+      "building": 5,
+      "pos": "tee-5",
+      "image": {
+        "480": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-5-row-480.webp",
+        "768": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-5-row-768.webp",
+        "1280": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-5-row-1280.webp",
+        "base": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-5-row.webp"
+      },
+      "map_highlight": {
+        "x": 0.5614,
+        "y": 0.517,
+        "box": [
+          0.473,
+          0.4836,
+          0.644,
+          0.5364
+        ],
+        "approximate": false
+      },
+      "homes": [
+        {
+          "unit_key": "tee-5-1",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-5-1-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-5-1-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-5-1.webp"
+          },
+          "map_highlight": {
+            "x": 0.4995,
+            "y": 0.5177,
+            "box": [
+              0.473,
+              0.495,
+              0.531,
+              0.5357
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-5-2",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-5-2-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-5-2-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-5-2.webp"
+          },
+          "map_highlight": {
+            "x": 0.5637,
+            "y": 0.5178,
+            "box": [
+              0.532,
+              0.4936,
+              0.591,
+              0.5364
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-5-3",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-5-3-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-5-3-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-5-3.webp"
+          },
+          "map_highlight": {
+            "x": 0.6204,
+            "y": 0.5155,
+            "box": [
+              0.592,
+              0.4836,
+              0.644,
+              0.5364
+            ],
+            "approximate": true
+          }
+        }
+      ]
+    },
+    {
+      "building": 7,
+      "pos": "tee-7",
+      "image": {
+        "480": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-7-row-480.webp",
+        "768": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-7-row-768.webp",
+        "1280": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-7-row-1280.webp",
+        "base": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-7-row.webp"
+      },
+      "map_highlight": {
+        "x": 0.437,
+        "y": 0.3516,
+        "box": [
+          0.348,
+          0.3174,
+          0.519,
+          0.3709
+        ],
+        "approximate": false
+      },
+      "homes": [
+        {
+          "unit_key": "tee-7-1",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-7-1-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-7-1-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-7-1.webp"
+          },
+          "map_highlight": {
+            "x": 0.3749,
+            "y": 0.3524,
+            "box": [
+              0.348,
+              0.3295,
+              0.406,
+              0.3702
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-7-2",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-7-2-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-7-2-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-7-2.webp"
+          },
+          "map_highlight": {
+            "x": 0.439,
+            "y": 0.3525,
+            "box": [
+              0.407,
+              0.3295,
+              0.467,
+              0.3709
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-7-3",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-7-3-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-7-3-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-7-3.webp"
+          },
+          "map_highlight": {
+            "x": 0.4959,
+            "y": 0.3499,
+            "box": [
+              0.467,
+              0.3174,
+              0.519,
+              0.3702
+            ],
+            "approximate": true
+          }
+        }
+      ]
+    },
+    {
+      "building": 9,
+      "pos": "tee-9",
+      "image": {
+        "480": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-9-row-480.webp",
+        "768": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-9-row-768.webp",
+        "1280": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-9-row-1280.webp",
+        "base": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-9-row.webp"
+      },
+      "map_highlight": {
+        "x": 0.3436,
+        "y": 0.2278,
+        "box": [
+          0.255,
+          0.194,
+          0.425,
+          0.2468
+        ],
+        "approximate": false
+      },
+      "homes": [
+        {
+          "unit_key": "tee-9-1",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-9-1-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-9-1-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-9-1.webp"
+          },
+          "map_highlight": {
+            "x": 0.2815,
+            "y": 0.2286,
+            "box": [
+              0.255,
+              0.2061,
+              0.313,
+              0.2468
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-9-2",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-9-2-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-9-2-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-9-2.webp"
+          },
+          "map_highlight": {
+            "x": 0.3456,
+            "y": 0.2287,
+            "box": [
+              0.314,
+              0.2047,
+              0.373,
+              0.2468
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-9-3",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-9-3-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-9-3-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-9-3.webp"
+          },
+          "map_highlight": {
+            "x": 0.4023,
+            "y": 0.2262,
+            "box": [
+              0.374,
+              0.194,
+              0.425,
+              0.2468
+            ],
+            "approximate": true
+          }
+        }
+      ]
+    },
+    {
+      "building": 11,
+      "pos": "tee-11",
+      "image": {
+        "480": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-11-row-480.webp",
+        "768": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-11-row-768.webp",
+        "1280": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-11-row-1280.webp",
+        "base": "assets/magnoolia/rowhouse-selection/rows/magnoolia-tee-11-row.webp"
+      },
+      "map_highlight": {
+        "x": 0.21,
+        "y": 0.1223,
+        "box": [
+          0.122,
+          0.0906,
+          0.291,
+          0.1441
+        ],
+        "approximate": false
+      },
+      "homes": [
+        {
+          "unit_key": "tee-11-1",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-11-1-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-11-1-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-11-1.webp"
+          },
+          "map_highlight": {
+            "x": 0.148,
+            "y": 0.1203,
+            "box": [
+              0.122,
+              0.0984,
+              0.18,
+              0.1384
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-11-2",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-11-2-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-11-2-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-11-2.webp"
+          },
+          "map_highlight": {
+            "x": 0.212,
+            "y": 0.1233,
+            "box": [
+              0.181,
+              0.102,
+              0.24,
+              0.1412
+            ],
+            "approximate": true
+          }
+        },
+        {
+          "unit_key": "tee-11-3",
+          "image": {
+            "480": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-11-3-480.webp",
+            "768": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-11-3-768.webp",
+            "base": "assets/magnoolia/rowhouse-selection/homes/magnoolia-tee-11-3.webp"
+          },
+          "map_highlight": {
+            "x": 0.2687,
+            "y": 0.1232,
+            "box": [
+              0.241,
+              0.0906,
+              0.291,
+              0.1441
+            ],
+            "approximate": true
+          }
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "rows": 6,
+    "homes": 19
+  },
+  "optimization": {
+    "source_bytes": 19218226,
+    "output_bytes": 9740188,
+    "source_mb": 18.3,
+    "output_mb": 9.3
+  }
+}

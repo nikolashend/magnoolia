@@ -6,7 +6,9 @@
         "build": "vite build",
         "dev": "vite",
         "magnoolia:optimize:images": "node scripts/magnoolia-optimize-images.mjs",
-        "magnoolia:visual:mobile": "node scripts/magnoolia-visual-mobile.mjs"
+        "magnoolia:visual:mobile": "node scripts/magnoolia-visual-mobile.mjs",
+        "magnoolia:generate:rowhouse": "node scripts/magnoolia-generate-rowhouse-assets.mjs",
+        "magnoolia:visual:phase29": "node scripts/magnoolia-visual-phase29.mjs"
     },
     "devDependencies": {
         "@playwright/test": "^1.60.0",

@@ -4257,3 +4257,68 @@ button.mg-faq-card__q[aria-expanded="true"] i {
     display: block;
   }
 }
+
+/* ============================================================
+   Phase 29 — Premium rowhouse selection (row → home → detail)
+   ============================================================ */
+.mg-rh { display: flex; flex-direction: column; gap: 28px; }
+.mg-rh__map { order: 2; }
+.mg-rh__panel { order: 1; }
+@media (min-width: 992px) {
+  .mg-rh { flex-direction: row; align-items: flex-start; gap: 36px; }
+  .mg-rh__map { order: 1; flex: 0 0 46%; max-width: 46%; position: sticky; top: 96px; }
+  .mg-rh__panel { order: 2; flex: 1 1 auto; min-width: 0; }
+}
+
+/* map markers */
+.mg-rh__marker { background: none; border: none; cursor: pointer; padding: 0; line-height: 0; }
+.mg-rh__marker-dot {
+  display: block; width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(29,36,48,.55); border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  transition: background .2s, transform .2s;
+}
+.mg-rh__marker-num {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  color: #fff; font-size: 13px; font-weight: 700; pointer-events: none;
+}
+.mg-rh__marker:hover .mg-rh__marker-dot,
+.mg-rh__marker.is-active .mg-rh__marker-dot { background: #c89443; transform: scale(1.12); }
+.mg-rh__marker.is-active .mg-rh__marker-dot { box-shadow: 0 0 0 6px rgba(200,148,67,.25), 0 2px 8px rgba(0,0,0,.25); }
+
+/* row cards */
+.mg-rh__rows { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 24px; }
+@media (max-width: 576px) { .mg-rh__rows { grid-template-columns: 1fr; } }
+.mg-rh-card {
+  text-align: left; background: #faf8f4; border: 1.5px solid rgba(29,36,48,.1); border-radius: 14px;
+  padding: 18px 18px 16px; cursor: pointer; transition: border-color .2s, box-shadow .2s, transform .15s;
+  display: flex; flex-direction: column; gap: 8px; min-height: 44px;
+}
+.mg-rh-card:hover { border-color: rgba(200,148,67,.6); box-shadow: 0 10px 28px rgba(29,36,48,.08); }
+.mg-rh-card.is-active { border-color: #c89443; background: #fff; box-shadow: 0 12px 32px rgba(200,148,67,.16); }
+.mg-rh-card__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.mg-rh-card__title { font-size: 17px; font-weight: 700; color: #1d2430; }
+.mg-rh-card__meta { font-size: 12.5px; color: #8a8479; }
+.mg-rh-card__avail { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; font-weight: 600; }
+.mg-rh-card__cta { font-size: 13px; font-weight: 700; color: #c89443; margin-top: 2px; }
+
+/* selected homes */
+.mg-rh-homes__title { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #9c8b7e; margin-bottom: 14px; }
+.mg-rh-homes__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+@media (max-width: 576px) { .mg-rh-homes__grid { grid-template-columns: 1fr; } }
+.mg-rh-home {
+  text-align: left; background: #fff; border: 1px solid rgba(29,36,48,.1); border-radius: 14px; overflow: hidden;
+  cursor: pointer; padding: 0; transition: border-color .2s, box-shadow .2s, transform .15s; display: flex; flex-direction: column;
+}
+.mg-rh-home:hover { border-color: rgba(200,148,67,.6); box-shadow: 0 10px 26px rgba(29,36,48,.1); transform: translateY(-2px); }
+.mg-rh-home__img { display: block; aspect-ratio: 4/3; background: #eee7db; overflow: hidden; }
+.mg-rh-home__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mg-rh-home__body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 4px; }
+.mg-rh-home__addr { font-size: 16px; font-weight: 700; color: #1d2430; }
+.mg-rh-home__spec { font-size: 13px; color: #6f6a61; }
+.mg-rh-home__yard { font-size: 13px; color: #8a8479; }
+.mg-rh-home__foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; }
+.mg-rh-home__cta { font-size: 13px; font-weight: 700; color: #c89443; }
+.mg-rh-chip {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--c, #888);
+}
+.mg-rh-chip::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c, #888); }

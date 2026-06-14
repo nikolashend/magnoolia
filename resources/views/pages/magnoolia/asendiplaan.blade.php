@@ -163,6 +163,9 @@
   </div>
 </section>
 
+{{-- ── Phase 29: premium row → home selection ─────────────── --}}
+@include('sections.magnoolia.rowhouse-selector')
+
 {{-- ── Unit list by building ─────────────────────────────── --}}
 <section class="mg-page-section mg-page-section--white">
   <div class="container">
@@ -420,5 +423,8 @@
 
 })();
 </script>
+
+{{-- ── Phase 29: home-detail modal ─────────────────────────── --}}
+@include('components.magnoolia.home-detail-modal')
 
 @endsection

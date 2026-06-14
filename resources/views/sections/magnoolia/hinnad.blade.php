@@ -4,10 +4,27 @@
     Source: config/magnoolia.php → units, stages arrays
     ══════════════════════════════════════════════════════════════ --}}
 @php
+    use App\Services\Magnoolia\RowhouseSelectionService;
     $units  = $mgPublic['units'] ?? [];
     $stages = $mgPublic['stages'] ?? [];
     $campaign = $mgPublic['campaign'] ?? [];
     $commercial = $mgPublic['commercial'] ?? [];
+
+    // Phase 29 — rowhouse home view-models (for the row filter, "Vaata kodu"
+    // modal triggers and the correct private-use land area), keyed by
+    // "building-section" so the existing table columns stay untouched.
+    $rhs = app(RowhouseSelectionService::class);
+    $rhRows = $rhs->rows();
+    $rhByBs = [];
+    foreach ($rhs->allHomes() as $rhHome) {
+        $rhByBs[$rhHome['building'] . '-' . $rhHome['section']] = $rhHome;
+    }
+    $rhLookup = function (array $unit) use ($rhByBs) {
+        $b = 0; $s = 0;
+        if (preg_match('/B(\d+)-S(\d+)/i', (string) ($unit['unit_key'] ?? $unit['id'] ?? ''), $m)) { $b = (int) $m[1]; $s = (int) $m[2]; }
+        elseif (preg_match('/(\d+)/', (string) ($unit['building'] ?? ''), $mb)) { $b = (int) $mb[1]; if (preg_match('#/\s*(\d+)#', (string) ($unit['section'] ?? ''), $ms)) $s = (int) $ms[1]; }
+        return $rhByBs[$b . '-' . $s] ?? null;
+    };
 
     // Group units by stage for grouped table headers
     $byStage = [];
@@ -67,6 +84,21 @@
                     style="padding:8px 20px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid;transition:all .2s;
                            {{ $loop->first ? 'background:#1d2430;color:#fff;border-color:#1d2430;' : 'background:transparent;color:#6f6a61;border-color:rgba(29,36,48,.25);' }}">
                 {{ $f['label'] }}
+            </button>
+            @endforeach
+        </div>
+
+        {{-- ── Row (address group) filter — Phase 29 ───────────────────── --}}
+        <div class="wow fadeInUp" data-wow-duration="800ms"
+             style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:28px;margin-top:-20px;">
+            <button type="button" data-filter="all" onclick="mgFilter('all')"
+                    style="padding:7px 16px;border-radius:100px;font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid rgba(29,36,48,.25);background:transparent;color:#6f6a61;">
+                {{ __('magnoolia.rowhouse.filter_all') }}
+            </button>
+            @foreach($rhRows as $row)
+            <button type="button" data-filter="tee-{{ $row['building'] }}" onclick="mgFilter('tee-{{ $row['building'] }}')"
+                    style="padding:7px 16px;border-radius:100px;font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid rgba(29,36,48,.25);background:transparent;color:#6f6a61;">
+                {{ $row['title'] }}
             </button>
             @endforeach
         </div>
@@ -137,17 +169,21 @@
                         $st  = $unit['status'] ?? 'tbc';
                         $cfg = $statusCfg[$st] ?? $statusCfg['tbc'];
                         $publicPrice = ($unit['price_public'] ?? false) ? ($unit['price'] ?? null) : null;
+                        $rh    = $rhLookup($unit);
+                        $rhKey = $rh['asset_key'] ?? ($unit['unit_key'] ?? $unit['id'] ?? '');
+                        $rhBld = $rh ? ('tee-' . $rh['building']) : '';
                     @endphp
                     <tr class="mg-unit-row"
                         data-event="unit_row_click"
                         data-unit-id="{{ $unit['address'] }}"
                         data-status="{{ $st }}"
                         data-stage="stage-{{ $stageNum }}"
+                        data-building="{{ $rhBld }}"
                         aria-label="Ava kodu detailid: {{ $unit['address'] }}"
                         tabindex="{{ $st === 'sold' ? '-1' : '0' }}"
                         style="background:{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }};border-bottom:1px solid rgba(29,36,48,.07);transition:all .18s;cursor:{{ $st === 'sold' ? 'default' : 'pointer' }};{{ $st === 'sold' ? 'opacity:.55;' : '' }}"
-                        onclick="{{ $st !== 'sold' ? "mgOpenUnit('".$unit['id']."')" : '' }}"
-                        onkeydown="{{ $st !== 'sold' ? "if(event.key==='Enter'||event.key===' '){event.preventDefault();mgOpenUnit('".$unit['id']."');}" : '' }}"
+                        onclick="{{ $st !== 'sold' ? "mgOpenHome('".$rhKey."')" : '' }}"
+                        onkeydown="{{ $st !== 'sold' ? "if(event.key==='Enter'||event.key===' '){event.preventDefault();mgOpenHome('".$rhKey."');}" : '' }}"
                         onmouseover="this.style.background='#f5f0e5'" onmouseout="this.style.background='{{ $i % 2 === 0 ? '#fff' : '#fbfaf7' }}'">
                         <td style="padding:15px 16px;">
                             <div style="font-weight:600;color:#1d2430;font-size:14px;">{{ $unit['address'] }}</div>
@@ -178,6 +214,12 @@
                             </span>
                         </td>
                         <td style="padding:15px 16px;text-align:center;white-space:nowrap;">
+                            <button type="button" class="mg-table-cta mg-table-cta--ghost"
+                                    data-mg-home-open="{{ $rhKey }}"
+                                    data-mg-analytics="magnoolia_home_detail_open"
+                                    onclick="event.stopPropagation();"
+                                    style="border:1px solid rgba(29,36,48,.2);background:#fff;color:#1d2430;cursor:pointer;margin-bottom:6px;">{{ __('magnoolia.rowhouse.view_home') }}</button>
+                            <br>
                             @if($st === 'sold')
                                 <a href="{{ lroute('home') }}#hinnad" class="mg-table-cta mg-table-cta--muted"
                                    data-event="unit_view" data-unit-id="{{ $unit['address'] }}">{{ __($cfg['cta_key']) }}</a>
@@ -201,11 +243,16 @@
                 $cfg = $statusCfg[$st] ?? $statusCfg['tbc'];
                 $sCfg = $stages[$unit['stage'] ?? 0] ?? null;
                 $publicPrice = ($unit['price_public'] ?? false) ? ($unit['price'] ?? null) : null;
+                $rh    = $rhLookup($unit);
+                $rhKey = $rh['asset_key'] ?? ($unit['unit_key'] ?? $unit['id'] ?? '');
+                $rhBld = $rh ? ('tee-' . $rh['building']) : '';
+                $rhYard = $rh ? RowhouseSelectionService::formatArea($rh['private_yard_area']) : null;
             @endphp
             <div class="mg-unit-card"
                  data-status="{{ $st }}"
                  data-stage="stage-{{ $unit['stage'] ?? 0 }}"
-                 onclick="mgOpenUnit('{{ $unit['id'] }}')"
+                 data-building="{{ $rhBld }}"
+                 onclick="mgOpenHome('{{ $rhKey }}')"
                  style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-top:3px solid #c89443;cursor:pointer;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
                     <div>
@@ -242,18 +289,29 @@
                     @if(!empty($unit['balcony_area']) && $unit['balcony_area'] > 0)
                         <span>{{ __('magnoolia.pricing.balcony_label') }} {{ number_format($unit['balcony_area'],1) }} m²</span>
                     @endif
+                    @if($rhYard)
+                        <span>{{ __('magnoolia.rowhouse.spec_yard') }} {{ $rhYard }} m²</span>
+                    @endif
                     <span>{{ $unit['parking'] ?? 2 }}× {{ __('magnoolia.pricing.parking_label') }}</span>
                 </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
                     <div style="font-weight:700;color:#1d2430;font-size:15px;">
                         {{ $publicPrice ? '€ '.number_format($publicPrice, 0, ',', ' ') : __('magnoolia.pricing.price_tbc') }}
                     </div>
-                    @if($st !== 'sold')
-                    <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm"
-                       style="background:#c89443;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
-                        {{ __($cfg['cta_key']) }}
-                    </a>
-                    @endif
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <button type="button" data-mg-home-open="{{ $rhKey }}" onclick="event.stopPropagation();"
+                                data-mg-analytics="magnoolia_home_detail_open"
+                                style="background:#fff;border:1px solid rgba(29,36,48,.2);color:#1d2430;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;min-height:40px;">
+                            {{ __('magnoolia.rowhouse.view_home') }}
+                        </button>
+                        @if($st !== 'sold')
+                        <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm"
+                           onclick="event.stopPropagation();"
+                           style="background:#c89443;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;min-height:40px;display:inline-flex;align-items:center;">
+                            {{ __($cfg['cta_key']) }}
+                        </a>
+                        @endif
+                    </div>
                 </div>
             </div>
             @endforeach
@@ -314,7 +372,7 @@
             btn.style.borderColor = active ? '#1d2430' : 'rgba(29,36,48,.25)';
         });
         document.querySelectorAll('.mg-unit-row').forEach(function (row) {
-            var show = key === 'all' || row.dataset.status === key || row.dataset.stage === key;
+            var show = key === 'all' || row.dataset.status === key || row.dataset.stage === key || row.dataset.building === key;
             row.style.display = show ? '' : 'none';
         });
         document.querySelectorAll('[data-stage-group]').forEach(function (header) {
@@ -326,7 +384,7 @@
             if (tbl) tbl.style.display = hide ? 'none' : '';
         });
         document.querySelectorAll('.mg-unit-card').forEach(function (card) {
-            var show = key === 'all' || card.dataset.status === key || card.dataset.stage === key;
+            var show = key === 'all' || card.dataset.status === key || card.dataset.stage === key || card.dataset.building === key;
             card.style.display = show ? '' : 'none';
         });
         /* Update count — never show 0 when total>0 and all-filter */
@@ -351,3 +409,6 @@
     window.mgFilter = mgFilter;
 })();
 </script>
+
+{{-- Phase 29 — home-detail modal (provides window.mgOpenHome for table/cards) --}}
+@include('components.magnoolia.home-detail-modal')
