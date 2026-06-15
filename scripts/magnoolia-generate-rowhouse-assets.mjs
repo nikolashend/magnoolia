@@ -39,12 +39,31 @@ const OUT = join(ROOT, 'public/assets/magnoolia/rowhouse-selection');
 const PUBLIC_BASE = 'assets/magnoolia/rowhouse-selection';
 
 const SOURCES = {
-  primary:   join(SRC, '1.jpg'),
+  primary:   join(SRC, '1.jpg'),  // perspective render (Phase 30 primary selector)
   secondary: join(SRC, '3.jpg'),
   asendiplaan: join(SRC, '5.jpg'),
+  perspectiveMask: join(SRC, '2a.png'), // internal-only, for hotspot calibration
 };
 
-const ORDER = [11, 9, 7, 5, 3, 1];      // diagonal top-left -> bottom-right
+// Floor plans by plan type (fallback). type-a = 4-room Plan A, type-b = 5-room Plan B.
+const FLOORPLANS = {
+  'type-a': { floor1: join(SRC, 'plan a_1korrus.png'), floor2: join(SRC, 'plan a_2korrus.png') },
+  'type-b': { floor1: join(SRC, 'plan b_1korrus.png'), floor2: join(SRC, 'plan b_2korrus.png') },
+};
+
+// Per-building floor plan sheets (Phase 30.1) — authoritative, complete for all 6
+// buildings. materials/plans/m{N}/M{N}_{floor}korrus_page-0001.jpg
+const PLANS_SRC = join(ROOT, '..', 'materials', 'plans');
+const BUILDING_PLANS = {};
+for (const n of [1, 3, 5, 7, 9, 11]) {
+  BUILDING_PLANS[n] = {
+    floor1: join(PLANS_SRC, `m${n}`, `M${n}_1korrus_page-0001.jpg`),
+    floor2: join(PLANS_SRC, `m${n}`, `M${n}_2korrus_page-0001.jpg`),
+  };
+}
+
+const ORDER = [11, 9, 7, 5, 3, 1];      // diagonal top-left -> bottom-right (asendiplaan)
+const TEE_LR = [1, 3, 5, 7, 9, 11];     // perspective render screen order: foreground/entrance -> background
 const COUNT = { 1: 3, 3: 4, 5: 3, 7: 3, 9: 3, 11: 3 };
 const Q = 82;
 
@@ -144,6 +163,45 @@ async function cropFor(box, padX, padY, asendiMeta) {
   };
 }
 
+// Detect 6 row hotspots on the perspective render via its segmentation mask.
+// Returns [{tee, marker:[x,y], hull:[[x,y]...]}] in normalised render coords.
+async function detectPerspectiveRows() {
+  const PROC_W = 1000;
+  const { data, info } = await sharp(SOURCES.perspectiveMask).resize(PROC_W, null).raw().toBuffer({ resolveWithObject: true });
+  const W = info.width, H = info.height, C = info.channels;
+  const at = (x, y) => { const i = (y * W + x) * C; return [data[i], data[i + 1], data[i + 2]]; };
+  const bg = at(2, 2);
+  const isBuilding = ([r, g, b]) => {
+    if (Math.abs(r - bg[0]) + Math.abs(g - bg[1]) + Math.abs(b - bg[2]) < 70) return false;
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+    if (mx < 70 || mx - mn < 60) return false;
+    if (g > 150 && r < 150 && b < 110) return false;          // field greens
+    if (r > 180 && g < 110 && b > 120 && b < 200) return false; // road/tree pink
+    return true;
+  };
+  const pts = [];
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (isBuilding(at(x, y))) pts.push([x / W, y / H]);
+
+  let cent = Array.from({ length: 6 }, (_, k) => [0.12 + 0.78 * k / 5, 0.55 - 0.30 * k / 5]);
+  const nearest = (x, y) => { let bi = 0, bd = 1e9; for (let k = 0; k < 6; k++) { const dx = x - cent[k][0], dy = y - cent[k][1], d = dx * dx + dy * dy; if (d < bd) { bd = d; bi = k; } } return bi; };
+  for (let it = 0; it < 60; it++) { const s = cent.map(() => [0, 0, 0]); for (const [x, y] of pts) { const k = nearest(x, y); s[k][0] += x; s[k][1] += y; s[k][2]++; } cent = s.map((v, k) => v[2] ? [v[0] / v[2], v[1] / v[2]] : cent[k]); }
+  const order = cent.map((_, k) => k).sort((a, b) => cent[a][0] - cent[b][0]);
+
+  const conv = (P) => {
+    const p = P.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]); if (p.length < 3) return p;
+    const cr = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+    const lo = [], up = [];
+    for (const pt of p) { while (lo.length >= 2 && cr(lo[lo.length - 2], lo[lo.length - 1], pt) <= 0) lo.pop(); lo.push(pt); }
+    for (let i = p.length - 1; i >= 0; i--) { const pt = p[i]; while (up.length >= 2 && cr(up[up.length - 2], up[up.length - 1], pt) <= 0) up.pop(); up.push(pt); }
+    lo.pop(); up.pop(); return lo.concat(up);
+  };
+  return order.map((ci, gi) => {
+    const cx = cent[ci][0], cy = cent[ci][1];
+    const gp = pts.filter(([x, y]) => nearest(x, y) === ci).map(([x, y]) => [cx + (x - cx) * 1.08, cy + (y - cy) * 1.08]);
+    return { tee: TEE_LR[gi], marker: [+cx.toFixed(4), +cy.toFixed(4)], hull: conv(gp).map(([x, y]) => [+x.toFixed(4), +y.toFixed(4)]) };
+  });
+}
+
 // Centre a crop on (cx,cy) covering the house box plus context, clamped to image.
 async function cropCentered(cx, cy, box, meta, { scale = 1.7, minHalf = 0.06 } = {}) {
   const W = meta.width, H = meta.height;
@@ -174,6 +232,32 @@ async function main() {
     hasSecondary = true;
   } catch (e) { console.warn('  secondary render skipped:', e.message); }
 
+  console.log('• floor plans (by plan type)');
+  const floorplans = {};
+  for (const [type, fp] of Object.entries(FLOORPLANS)) {
+    const tag = type === 'type-a' ? 'a' : 'b';
+    floorplans[type] = {
+      floor_1: await emit(fp.floor1, `floorplans/plan-${tag}-1korrus.webp`, [1200, 768]),
+      floor_2: await emit(fp.floor2, `floorplans/plan-${tag}-2korrus.webp`, [1200, 768]),
+    };
+  }
+
+  console.log('• per-building floor plans');
+  const floorplansByBuilding = {};
+  for (const [n, fp] of Object.entries(BUILDING_PLANS)) {
+    try {
+      floorplansByBuilding[n] = {
+        floor_1: await emit(fp.floor1, `floorplans/building-${n}-1korrus.webp`, [1600, 1024, 768]),
+        floor_2: await emit(fp.floor2, `floorplans/building-${n}-2korrus.webp`, [1600, 1024, 768]),
+      };
+    } catch (e) { console.warn(`  building ${n} plans skipped:`, e.message); }
+  }
+
+  console.log('• perspective row hotspots');
+  const persRows = await detectPerspectiveRows();
+  const persByTee = {};
+  for (const r of persRows) persByTee[r.tee] = { marker: r.marker, hull: r.hull };
+
   console.log('• detecting footprints + crops');
   const groups = await detect();
   const rows = [];
@@ -202,6 +286,7 @@ async function main() {
       pos: `tee-${g.tee}`,
       image: rowImg,
       map_highlight: { x: +g.cx.toFixed(4), y: +g.cy.toFixed(4), box: g.box.map(v => +v.toFixed(4)), approximate: false },
+      perspective: persByTee[g.tee] || null, // {marker:[x,y], hull:[[x,y]...]} on the render
       homes,
     });
   }
@@ -210,10 +295,15 @@ async function main() {
 
   const manifest = {
     meta: {
-      phase: 29,
+      phase: 30,
       generated_by: 'scripts/magnoolia-generate-rowhouse-assets.mjs',
-      note: 'Row markers derived from detected footprints; per-home markers are approximate (equal subdivision). Colour masks and the technical plan are internal-only and never published.',
+      note: 'Perspective render (1.jpg) is the primary selector; row hotspot hulls are approximate (mask-derived). 2D asendiplaan markers confirm exact location. Per-home markers approximate. Colour masks, technical plan and source renders are internal-only, never published.',
     },
+    // Phase 30 primary selector: the perspective render reuses the overview-primary
+    // WebP variants; per-row hotspots live on each rows[] entry under `perspective`.
+    perspective: { image: overviewPrimary },
+    floorplans, // by plan type (fallback): { 'type-a': {floor_1,floor_2}, 'type-b': {...} }
+    floorplans_by_building: floorplansByBuilding, // authoritative per-building sheets keyed by building number
     overview: { primary: overviewPrimary, secondary: overviewSecondary, has_secondary_view: hasSecondary },
     asendiplaan: { clean: asendiplaan, enlarge_pdf: 'assets/magnoolia/asendiplaan/VEEBI _ASENDIPLAAN.pdf' },
     rows,

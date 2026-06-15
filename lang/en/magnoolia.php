@@ -1269,6 +1269,17 @@ return [
         'materials_cta_view'   => 'View interior design',
         'materials_cta_ask'    => 'Ask for details',
         'materials_disclaimer' => 'The developer reserves the right to use equivalent products or solutions where necessary.',
+        // Phase 30 — interactive perspective masterplan
+        'mp_eyebrow'       => 'Site plan',
+        'mp_title'         => 'All 19 homes in one view',
+        'mp_subtitle'      => 'First choose a row, then a specific home. For each home you can see the area, private yard, floor plans and its location on the site plan.',
+        'mp_img_alt'       => 'Overview of Magnoolia row homes — choose a row and home',
+        'mp_render_note'   => 'Illustrative bird’s-eye view. The exact position is shown on the site plan.',
+        'aria_row'         => 'Choose row :row, :count homes',
+        'row_helper'       => 'Choose a specific home from this row.',
+        'trust_note'       => 'Diana confirms availability, the exact price and the layout before reservation.',
+        'open_bigger'      => 'Open larger plan',
+        'floor_caption'    => ':plan · :floor',
     ],
 
 ];

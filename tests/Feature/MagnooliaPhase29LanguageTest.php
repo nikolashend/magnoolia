@@ -22,20 +22,21 @@ class MagnooliaPhase29LanguageTest extends TestCase
 
     public function test_et_selection_title(): void
     {
+        // Phase 30: primary selector title on /asendiplaan
         $html = $this->get('/asendiplaan')->assertStatus(200)->getContent();
-        $this->assertStringContainsString('Vali Magnoolia kodu asukoht', $html);
+        $this->assertStringContainsString('Kõik 19 kodu ühel vaatel', $html);
     }
 
     public function test_ru_selection_title(): void
     {
         $html = $this->get('/ru/asendiplaan')->assertStatus(200)->getContent();
-        $this->assertStringContainsString('Выберите расположение дома Magnoolia', $html);
+        $this->assertStringContainsString('Все 19 домов на одном виде', $html);
     }
 
     public function test_en_selection_title(): void
     {
         $html = $this->get('/en/asendiplaan')->assertStatus(200)->getContent();
-        $this->assertStringContainsString('Choose your Magnoolia home location', $html);
+        $this->assertStringContainsString('All 19 homes in one view', $html);
     }
 
     public function test_no_unresolved_translation_keys(): void

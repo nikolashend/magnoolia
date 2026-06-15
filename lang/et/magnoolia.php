@@ -1318,6 +1318,17 @@ return [
         'materials_cta_view'   => 'Vaata siseviimistlust',
         'materials_cta_ask'    => 'Küsi täpsustust',
         'materials_disclaimer' => 'Arendajal on õigus vajadusel kasutada samaväärseid tooteid või lahendusi.',
+        // Phase 30 — interactive perspective masterplan
+        'mp_eyebrow'       => 'Asendiplaan',
+        'mp_title'         => 'Kõik 19 kodu ühel vaatel',
+        'mp_subtitle'      => 'Vali esmalt sobiv rida, seejärel konkreetne kodu. Iga kodu juures näed pindala, hooviala, korruseplaane ja asukohta asendiplaanil.',
+        'mp_img_alt'       => 'Magnoolia ridaelamukodude üldvaade — vali rida ja kodu',
+        'mp_render_note'   => 'Visualiseeriv asendivaade. Täpne paiknemine on näidatud asendiplaanil.',
+        'aria_row'         => 'Vali rida :row, :count kodu',
+        'row_helper'       => 'Vali sellest reast konkreetne kodu.',
+        'trust_note'       => 'Diana kinnitab saadavuse, täpse hinna ja plaanilahenduse enne broneerimist.',
+        'open_bigger'      => 'Ava suurem plaan',
+        'floor_caption'    => ':plan · :floor',
     ],
 
 ];

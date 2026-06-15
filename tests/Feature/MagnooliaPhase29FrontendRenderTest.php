@@ -23,20 +23,32 @@ class MagnooliaPhase29FrontendRenderTest extends TestCase
 
     public function test_asendiplaan_renders_row_selector_and_all_rows(): void
     {
+        // Phase 30: the primary selector is the perspective masterplan.
         $html = $this->get('/asendiplaan')->assertStatus(200)->getContent();
-        $this->assertStringContainsString('id="mg-rowhouse"', $html);
-        foreach ([1, 3, 5, 7, 9, 11] as $b) {
-            $this->assertStringContainsString('data-mg-row-marker="' . $b . '"', $html, "Missing row marker {$b}");
-            $this->assertStringContainsString('data-mg-row="' . $b . '"', $html, "Missing row card {$b}");
+        $this->assertStringContainsString('id="mg-masterplan"', $html);
+        foreach (['tee-1', 'tee-3', 'tee-5', 'tee-7', 'tee-9', 'tee-11'] as $pos) {
+            $this->assertStringContainsString('data-mp-row="' . $pos . '"', $html, "Missing row control {$pos}");
+            $this->assertStringContainsString('data-mp-zone="' . $pos . '"', $html, "Missing render hotspot {$pos}");
         }
     }
 
-    public function test_asendiplaan_has_home_detail_triggers(): void
+    public function test_asendiplaan_has_home_detail_section_and_homes(): void
     {
+        // Phase 30: home cards are rendered client-side from embedded JSON; the
+        // inline detail section + all 19 homes must be present in the payload.
         $html = $this->get('/asendiplaan')->assertStatus(200)->getContent();
-        $count = substr_count($html, 'data-mg-home-open=');
-        $this->assertGreaterThanOrEqual(19, $count, 'Expected at least 19 home-detail triggers');
-        $this->assertStringContainsString('id="mg-hd-overlay"', $html, 'Home-detail modal must be present');
+        $this->assertStringContainsString('id="mg-mp-detail"', $html, 'Inline home-detail section must exist');
+        foreach (['tee-1-1', 'tee-3-4', 'tee-11-3'] as $key) {
+            $this->assertStringContainsString('"key":"' . $key . '"', $html, "Home {$key} missing from masterplan data");
+        }
+    }
+
+    public function test_kodud_page_has_home_detail_modal(): void
+    {
+        $html = $this->get('/kodud-ja-hinnad')->assertStatus(200)->getContent();
+        $this->assertStringContainsString('id="mg-hd-overlay"', $html, 'Home-detail modal must be present on homes page');
+        // Rows/cards open the detail modal via mgOpenHome(...) (no separate button).
+        $this->assertGreaterThanOrEqual(19, substr_count($html, 'mgOpenHome('));
     }
 
     public function test_homes_page_renders_row_filter_and_all_homes(): void
@@ -45,8 +57,8 @@ class MagnooliaPhase29FrontendRenderTest extends TestCase
         foreach ([1, 3, 5, 7, 9, 11] as $b) {
             $this->assertStringContainsString('data-filter="tee-' . $b . '"', $html, "Missing tee filter {$b}");
         }
-        // 19 table triggers + 19 mobile-card triggers
-        $this->assertGreaterThanOrEqual(19, substr_count($html, 'data-mg-home-open='));
+        // Rows + mobile cards open the detail modal via mgOpenHome(...)
+        $this->assertGreaterThanOrEqual(19, substr_count($html, 'mgOpenHome('));
     }
 
     public function test_homes_page_shows_private_land_area_and_status(): void

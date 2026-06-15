@@ -29,7 +29,8 @@ class MagnooliaPhase29MobileUxTest extends TestCase
 
     public function test_modal_is_accessible_dialog(): void
     {
-        $html = $this->get('/asendiplaan')->assertStatus(200)->getContent();
+        // Modal lives on the homes page after Phase 30.
+        $html = $this->get('/kodud-ja-hinnad')->assertStatus(200)->getContent();
         $this->assertStringContainsString('role="dialog"', $html);
         $this->assertStringContainsString('aria-modal="true"', $html);
         $this->assertStringContainsString('id="mg-hd-close"', $html);

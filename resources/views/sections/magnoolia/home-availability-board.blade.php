@@ -5,16 +5,19 @@
     Full detailed table remains only on /kodud-ja-hinnad.
 --}}
 @php
-    $units    = $mgPublic['units'] ?? [];
-    $stages   = $mgPublic['stages'] ?? [];
+    // Phase 30.1: source canonical home facts (correct areas, Plaan A/B, rooms)
+    // from RowhouseSelectionService + live status, so the homepage list is correct
+    // in every environment. Status still reflects the live publication overlay.
+    $rhs      = app(\App\Services\Magnoolia\RowhouseSelectionService::class);
+    $homes    = collect($rhs->allHomes());
     $settings = $mgPublic['settings'] ?? [];
     $locale   = app()->getLocale();
 
-    $stage1Units = collect($units)->where('stage', 1)->values();
-    $stage2Units = collect($units)->where('stage', 2)->values();
+    $stage1Units = $homes->where('stage', 1)->values();
+    $stage2Units = $homes->where('stage', 2)->values();
 
-    $stage1Complete = $settings['stage_1_completion'] ?? 'kevad 2027';
-    $stage2Complete = $settings['stage_2_completion'] ?? 'kevad 2028';
+    $stage1Complete = $stage1Units->first()['completion'] ?? ($settings['stage_1_completion'] ?? 'kevad 2027');
+    $stage2Complete = $stage2Units->first()['completion'] ?? ($settings['stage_2_completion'] ?? 'kevad 2028');
 
     $localizeCompletion = function($val) use ($locale) {
         if ($locale === 'ru') return str_ireplace(['kevad','spring'],['весна','весна'], $val);
@@ -39,10 +42,10 @@
         'tbc'       => '#94a3b8',
     ];
 
-    $total     = count($units);
-    $available = collect($units)->where('status','available')->count();
-    $reserved  = collect($units)->where('status','reserved')->count();
-    $sold      = collect($units)->where('status','sold')->count();
+    $total     = $homes->count();
+    $available = $homes->where('status','available')->count();
+    $reserved  = $homes->where('status','reserved')->count();
+    $sold      = $homes->where('status','sold')->count();
 @endphp
 
 <section class="section-space" id="saadavus" aria-label="{{ $locale==='ru' ? 'Доступность домов' : ($locale==='en' ? 'Homes availability' : 'Kodude saadavus') }}"
@@ -103,8 +106,7 @@
                 @php
                     $st = $unit['status'] ?? 'tbc';
                     $color = $statusColor[$st] ?? '#94a3b8';
-                    $planType = strtoupper($unit['plan_type'] ?? 'a');
-                    $planType = str_replace('TYPE-','',$planType);
+                    $planType = $unit['plan_label'] ?? '—';
                 @endphp
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f3f4f6;">
                     <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
@@ -123,8 +125,12 @@
                             <button type="button"
                                     data-mg-inquiry-open
                                     data-source-component="availability_board_stage1"
-                                    data-unit-id="{{ $unit['id'] ?? '' }}"
+                                    data-unit-key="{{ $unit['unit_key'] ?? '' }}"
+                                    data-unit-slug="{{ $unit['slug'] ?? '' }}"
                                     data-unit-address="{{ $unit['address'] ?? '' }}"
+                                    data-unit-stage="{{ $unit['stage'] ?? '' }}"
+                                    data-unit-status="{{ $unit['status'] ?? '' }}"
+                                    data-unit-price-public="{{ ($unit['cta_context']['price_public'] ?? false) ? 'true' : 'false' }}"
                                     data-mg-analytics="magnoolia_home_availability_click"
                                     style="background:#c89443;color:#fff;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;letter-spacing:.02em;">
                                 {{ $locale==='ru' ? 'Запрос' : ($locale==='en' ? 'Enquire' : 'Küsi') }}
@@ -133,8 +139,12 @@
                             <button type="button"
                                     data-mg-inquiry-open
                                     data-source-component="availability_board_stage1_reserved"
-                                    data-unit-id="{{ $unit['id'] ?? '' }}"
+                                    data-unit-key="{{ $unit['unit_key'] ?? '' }}"
+                                    data-unit-slug="{{ $unit['slug'] ?? '' }}"
                                     data-unit-address="{{ $unit['address'] ?? '' }}"
+                                    data-unit-stage="{{ $unit['stage'] ?? '' }}"
+                                    data-unit-status="{{ $unit['status'] ?? '' }}"
+                                    data-unit-price-public="{{ ($unit['cta_context']['price_public'] ?? false) ? 'true' : 'false' }}"
                                     data-mg-analytics="magnoolia_home_availability_click"
                                     style="background:transparent;color:#c89443;border:1px solid #c89443;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">
                                 {{ $locale==='ru' ? 'Уточнить' : ($locale==='en' ? 'Check' : 'Uuri') }}
@@ -173,8 +183,7 @@
                 @php
                     $st = $unit['status'] ?? 'tbc';
                     $color = $statusColor[$st] ?? '#94a3b8';
-                    $planType = strtoupper($unit['plan_type'] ?? 'a');
-                    $planType = str_replace('TYPE-','',$planType);
+                    $planType = $unit['plan_label'] ?? '—';
                 @endphp
                 <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f3f4f6;">
                     <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
@@ -193,8 +202,12 @@
                             <button type="button"
                                     data-mg-inquiry-open
                                     data-source-component="availability_board_stage2"
-                                    data-unit-id="{{ $unit['id'] ?? '' }}"
+                                    data-unit-key="{{ $unit['unit_key'] ?? '' }}"
+                                    data-unit-slug="{{ $unit['slug'] ?? '' }}"
                                     data-unit-address="{{ $unit['address'] ?? '' }}"
+                                    data-unit-stage="{{ $unit['stage'] ?? '' }}"
+                                    data-unit-status="{{ $unit['status'] ?? '' }}"
+                                    data-unit-price-public="{{ ($unit['cta_context']['price_public'] ?? false) ? 'true' : 'false' }}"
                                     data-mg-analytics="magnoolia_home_availability_click"
                                     style="background:#c89443;color:#fff;border:none;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;letter-spacing:.02em;">
                                 {{ $locale==='ru' ? 'Запрос' : ($locale==='en' ? 'Enquire' : 'Küsi') }}
@@ -203,8 +216,12 @@
                             <button type="button"
                                     data-mg-inquiry-open
                                     data-source-component="availability_board_stage2_reserved"
-                                    data-unit-id="{{ $unit['id'] ?? '' }}"
+                                    data-unit-key="{{ $unit['unit_key'] ?? '' }}"
+                                    data-unit-slug="{{ $unit['slug'] ?? '' }}"
                                     data-unit-address="{{ $unit['address'] ?? '' }}"
+                                    data-unit-stage="{{ $unit['stage'] ?? '' }}"
+                                    data-unit-status="{{ $unit['status'] ?? '' }}"
+                                    data-unit-price-public="{{ ($unit['cta_context']['price_public'] ?? false) ? 'true' : 'false' }}"
                                     data-mg-analytics="magnoolia_home_availability_click"
                                     style="background:transparent;color:#c89443;border:1px solid #c89443;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">
                                 {{ $locale==='ru' ? 'Уточнить' : ($locale==='en' ? 'Check' : 'Uuri') }}

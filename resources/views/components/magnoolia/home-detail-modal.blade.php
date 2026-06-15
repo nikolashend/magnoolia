@@ -20,6 +20,7 @@
       $img   = $h['image']['768'] ?? $h['image']['base'] ?? null;
       $f1    = $h['floorplan_1_pdf'] ?? null;
       $f2    = $h['floorplan_2_pdf'] ?? null;
+      $fp    = $h['floorplans'] ?? null; // per-building floor-plan images (all 6 buildings)
       $hl    = $h['map_highlight'] ?? null;
       $cta   = $h['cta_context'] ?? [];
       return [
@@ -39,6 +40,8 @@
           'img'        => $img ? asset($img) : null,
           'floor1'     => ($f1 && file_exists(public_path($f1))) ? asset($f1) : null,
           'floor2'     => ($f2 && file_exists(public_path($f2))) ? asset($f2) : null,
+          'floor1_img' => ($fp['floor_1']['base'] ?? null) ? asset($fp['floor_1']['1024'] ?? $fp['floor_1']['base']) : null,
+          'floor2_img' => ($fp['floor_2']['base'] ?? null) ? asset($fp['floor_2']['1024'] ?? $fp['floor_2']['base']) : null,
           'mx'         => $hl['x'] ?? null,
           'my'         => $hl['y'] ?? null,
           'price_public' => $cta['price_public'] ?? false,
@@ -89,12 +92,16 @@
           </div>
           @endif
 
-          {{-- Floor plans --}}
+          {{-- Floor plans (per-building images for all rows) --}}
           <div id="mg-hd-floors" style="margin-top:14px;display:none;">
             <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9c8b7e;margin-bottom:8px;">{{ __('magnoolia.rowhouse.floorplans_title') }}</div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;">
-              <a id="mg-hd-floor1" target="_blank" rel="noopener" style="display:none;font-size:13px;font-weight:600;color:#1d2430;text-decoration:none;border:1px solid rgba(29,36,48,.15);border-radius:10px;padding:10px 14px;">{{ __('magnoolia.rowhouse.floor_1') }} · {{ __('magnoolia.rowhouse.open_pdf') }}</a>
-              <a id="mg-hd-floor2" target="_blank" rel="noopener" style="display:none;font-size:13px;font-weight:600;color:#1d2430;text-decoration:none;border:1px solid rgba(29,36,48,.15);border-radius:10px;padding:10px 14px;">{{ __('magnoolia.rowhouse.floor_2') }} · {{ __('magnoolia.rowhouse.open_pdf') }}</a>
+            <div style="display:flex;gap:8px;margin-bottom:10px;">
+              <button type="button" class="mg-hd-ftab is-active" data-hd-floor="1" style="padding:7px 14px;border-radius:100px;border:1px solid rgba(29,36,48,.2);background:#1d2430;color:#fff;font-size:12.5px;font-weight:600;cursor:pointer;">{{ __('magnoolia.rowhouse.floor_1') }}</button>
+              <button type="button" class="mg-hd-ftab" data-hd-floor="2" style="padding:7px 14px;border-radius:100px;border:1px solid rgba(29,36,48,.2);background:#fff;color:#6f6a61;font-size:12.5px;font-weight:600;cursor:pointer;">{{ __('magnoolia.rowhouse.floor_2') }}</button>
+            </div>
+            <div style="position:relative;border:1px solid rgba(29,36,48,.1);border-radius:12px;background:#fff;padding:10px;text-align:center;min-height:120px;">
+              <img id="mg-hd-floor-img" alt="" loading="lazy" decoding="async" style="max-width:100%;height:auto;display:inline-block;">
+              <a id="mg-hd-floor-pdf" target="_blank" rel="noopener" style="display:none;position:absolute;top:10px;right:10px;font-size:11px;font-weight:700;color:#c89443;text-decoration:none;background:rgba(255,255,255,.92);padding:5px 9px;border-radius:8px;">{{ __('magnoolia.rowhouse.open_pdf') }} ↗</a>
             </div>
           </div>
         </div>
@@ -138,7 +145,7 @@
             <a id="mg-hd-call" href="tel:{{ $phone }}" data-mg-analytics="magnoolia_phone_click"
                style="border:1.5px solid #c89443;color:#c89443;padding:12px 18px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:600;text-align:center;display:block;">{{ __('magnoolia.rowhouse.cta_call') }}</a>
 
-            <a href="{{ $mapUrl }}#mg-rowhouse"
+            <a id="mg-hd-map" href="{{ $mapUrl }}#mg-masterplan"
                style="color:#6f6a61;padding:6px;text-decoration:none;font-size:13px;font-weight:600;text-align:center;display:block;">{{ __('magnoolia.rowhouse.cta_view_map') }} →</a>
           </div>
         </div>
@@ -173,10 +180,12 @@
   };
   var COLORS = { available:'#4caf50', reserved:'#c89443', sold:'#9a948a', tbc:'#9c27b0' };
   var HOMES_URL = @json($homesUrl);
+  var MAP_URL = @json($mapUrl);
   var CONTACT_URL = @json(lroute('magnoolia.contact') . '#kontaktivorm');
 
   var set = function (id, txt) { var el = document.getElementById(id); if (el) el.textContent = (txt == null || txt === '') ? '—' : txt; };
   var lastFocus = null;
+  var hdActiveHome = null;
 
   window.mgOpenHome = function (key) {
     var h = byKey[key];
@@ -213,13 +222,14 @@
       marker.style.display = '';
     } else if (marker) { marker.style.display = 'none'; }
 
+    // "Vaata asendiplaani" deep-links into the masterplan with this home selected
+    var mapLink = document.getElementById('mg-hd-map');
+    if (mapLink) mapLink.href = MAP_URL + '?home=' + encodeURIComponent(h.key) + '#mg-masterplan';
+
     var floors = document.getElementById('mg-hd-floors');
-    var f1 = document.getElementById('mg-hd-floor1');
-    var f2 = document.getElementById('mg-hd-floor2');
-    var anyFloor = false;
-    if (h.floor1) { f1.href = h.floor1; f1.style.display = ''; anyFloor = true; } else { f1.style.display = 'none'; }
-    if (h.floor2) { f2.href = h.floor2; f2.style.display = ''; anyFloor = true; } else { f2.style.display = 'none'; }
-    floors.style.display = anyFloor ? '' : 'none';
+    floors.style.display = (h.floor1_img || h.floor2_img) ? '' : 'none';
+    hdActiveHome = h;
+    hdSetFloor('1');
 
     // Primary CTA — status aware
     var cta = document.getElementById('mg-hd-cta');
@@ -248,6 +258,24 @@
     }
   };
 
+  function hdSetFloor(f) {
+    var h = hdActiveHome; if (!h) return;
+    var img = document.getElementById('mg-hd-floor-img');
+    var pdf = document.getElementById('mg-hd-floor-pdf');
+    var src = f === '2' ? h.floor2_img : h.floor1_img;
+    var pdfSrc = f === '2' ? h.floor2 : h.floor1;
+    var label = f === '2' ? @json(__('magnoolia.rowhouse.floor_2')) : @json(__('magnoolia.rowhouse.floor_1'));
+    if (src) { img.src = src; img.alt = (h.display || '') + ' — ' + label; img.style.display = ''; }
+    else { img.removeAttribute('src'); img.style.display = 'none'; }
+    if (pdfSrc) { pdf.href = pdfSrc; pdf.style.display = ''; } else { pdf.style.display = 'none'; }
+    document.querySelectorAll('.mg-hd-ftab').forEach(function (t) {
+      var on = t.getAttribute('data-hd-floor') === f;
+      t.classList.toggle('is-active', on);
+      t.style.background = on ? '#1d2430' : '#fff';
+      t.style.color = on ? '#fff' : '#6f6a61';
+    });
+  }
+
   function close() {
     overlay.style.display = 'none';
     document.body.style.overflow = '';
@@ -256,6 +284,8 @@
 
   // Delegated triggers
   document.addEventListener('click', function (e) {
+    var ft = e.target.closest('.mg-hd-ftab');
+    if (ft && dialog.contains(ft)) { hdSetFloor(ft.getAttribute('data-hd-floor')); return; }
     var t = e.target.closest('[data-mg-home-open]');
     if (t) { e.preventDefault(); window.mgOpenHome(t.getAttribute('data-mg-home-open')); return; }
     if (e.target === overlay) close();

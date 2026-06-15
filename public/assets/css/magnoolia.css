@@ -4322,3 +4322,67 @@ button.mg-faq-card__q[aria-expanded="true"] i {
   display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--c, #888);
 }
 .mg-rh-chip::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c, #888); }
+
+/* ============================================================
+   Phase 30 — Interactive perspective masterplan (/asendiplaan)
+   ============================================================ */
+.mg-mp__stage { margin-bottom: 22px; }
+.mg-mp__imgwrap { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid rgba(29,36,48,.10); box-shadow: 0 18px 48px rgba(29,36,48,.14); background: #e9e4da; line-height: 0; }
+.mg-mp__img { width: 100%; height: auto; display: block; }
+.mg-mp__svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mg-mp__zone { fill: rgba(200,148,67,0); stroke: rgba(255,255,255,0); stroke-width: 0.6; transition: fill .2s, stroke .2s; pointer-events: auto; }
+.mg-mp__imgwrap:hover .mg-mp__zone { stroke: rgba(255,255,255,.35); }
+.mg-mp__zone:hover { fill: rgba(200,148,67,.30); stroke: rgba(255,255,255,.9); }
+.mg-mp__zone.is-active { fill: rgba(200,148,67,.42); stroke: #f3d9a8; stroke-width: 0.8; }
+.mg-mp__marker { position: absolute; transform: translate(-50%,-50%); display: inline-flex; align-items: center; gap: 7px; background: rgba(29,36,48,.78); border: 1.5px solid rgba(255,255,255,.85); color: #fff; border-radius: 100px; padding: 4px 12px 4px 5px; cursor: pointer; backdrop-filter: blur(2px); transition: background .2s, transform .15s; white-space: nowrap; }
+.mg-mp__marker:hover, .mg-mp__marker.is-active { background: #c89443; transform: translate(-50%,-50%) scale(1.05); }
+.mg-mp__marker-num { width: 22px; height: 22px; border-radius: 50%; background: #c89443; color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.mg-mp__marker.is-active .mg-mp__marker-num { background: #fff; color: #1d2430; }
+.mg-mp__marker-label { font-size: 12.5px; font-weight: 600; }
+@media (max-width: 575px) { .mg-mp__marker-label { display: none; } .mg-mp__marker { padding: 4px; } }
+.mg-mp__hint { font-size: 12px; color: #a8a196; margin-top: 10px; }
+
+.mg-mp__rows { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 8px; }
+@media (max-width: 768px) { .mg-mp__rows { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 430px) { .mg-mp__rows { grid-template-columns: 1fr; } }
+.mg-mp__rowbtn.is-active { border-color: #c89443; background: #fff; box-shadow: 0 12px 32px rgba(200,148,67,.16); }
+
+.mg-mp__panel { margin-top: 26px; padding-top: 24px; border-top: 1px solid rgba(29,36,48,.08); }
+.mg-mp__panel-title { font-size: 22px; font-weight: 700; color: #1d2430; margin: 0; }
+.mg-mp__panel-meta { font-size: 13px; color: #8a8479; margin-top: 4px; }
+.mg-mp__panel-help { font-size: 13px; color: #6f6a61; margin: 10px 0 16px; }
+
+.mg-mp__detail { margin-top: 26px; background: #faf8f4; border: 1px solid rgba(29,36,48,.08); border-radius: 18px; padding: 26px; }
+.mg-mp__detail-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 26px; }
+@media (max-width: 860px) { .mg-mp__detail-grid { grid-template-columns: 1fr; } }
+.mg-mp__detail-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #c89443; }
+.mg-mp__detail-title { font-size: 26px; font-weight: 700; color: #1d2430; margin: 4px 0 6px; }
+.mg-mp__detail-sub { font-size: 14px; color: #6f6a61; }
+.mg-mp__status { display: flex; align-items: center; gap: 8px; margin: 14px 0 18px; font-size: 14px; font-weight: 700; color: #1d2430; }
+.mg-mp__status-dot { width: 10px; height: 10px; border-radius: 50%; background: #4caf50; }
+.mg-mp__specs dl { margin: 0; }
+.mg-mp__spec { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid rgba(29,36,48,.07); }
+.mg-mp__spec dt { font-size: 13px; color: #888; margin: 0; }
+.mg-mp__spec dd { font-size: 13px; font-weight: 600; color: #1d2430; margin: 0; text-align: right; }
+.mg-mp__ctas { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.mg-btn { display: block; text-align: center; padding: 13px 18px; border-radius: 10px; font-size: 15px; font-weight: 700; text-decoration: none; cursor: pointer; min-height: 44px; }
+.mg-btn--gold { background: #c89443; color: #fff; border: none; }
+.mg-btn--gold:hover { background: #b8842f; color: #fff; }
+.mg-btn--ghost { background: #fff; color: #c89443; border: 1.5px solid #c89443; }
+.mg-mp__trust { font-size: 12.5px; color: #9a9490; margin-top: 14px; font-style: italic; }
+
+.mg-mp__map-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #9c8b7e; margin-bottom: 8px; }
+.mg-mp__map { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(29,36,48,.1); background: #f3efe7; }
+.mg-mp__map img { width: 100%; height: auto; display: block; }
+.mg-mp__map-pin { position: absolute; width: 28px; height: 28px; transform: translate(-50%,-50%); border-radius: 50%; border: 3px solid #c89443; background: rgba(200,148,67,.32); box-shadow: 0 0 0 6px rgba(200,148,67,.18); }
+.mg-mp__map-open { display: inline-block; margin-top: 10px; font-size: 13px; font-weight: 700; color: #c89443; text-decoration: none; }
+
+.mg-mp__floors { margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(29,36,48,.08); }
+.mg-mp__floors-title { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #9c8b7e; margin-bottom: 12px; }
+.mg-mp__floors-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+.mg-mp__ftab { padding: 8px 18px; border-radius: 100px; border: 1px solid rgba(29,36,48,.2); background: #fff; color: #6f6a61; font-size: 13px; font-weight: 600; cursor: pointer; min-height: 40px; }
+.mg-mp__ftab.is-active { background: #1d2430; color: #fff; border-color: #1d2430; }
+.mg-mp__floor-stage { position: relative; background: #fff; border: 1px solid rgba(29,36,48,.08); border-radius: 14px; padding: 16px; text-align: center; }
+.mg-mp__floor-stage img { max-width: 100%; height: auto; display: inline-block; }
+.mg-mp__floor-open { position: absolute; top: 12px; right: 12px; font-size: 12px; font-weight: 700; color: #c89443; text-decoration: none; background: rgba(255,255,255,.9); padding: 6px 10px; border-radius: 8px; }
+.mg-mp__floor-cap { font-size: 13px; color: #6f6a61; margin-top: 10px; }

@@ -75,6 +75,7 @@ class RowhouseSelectionService
                 'availability_counts' => $this->availabilityCounts($homes),
                 'row_image'           => $mRow['image'] ?? null,
                 'map_highlight'       => $mRow['map_highlight'] ?? null,
+                'perspective'         => $mRow['perspective'] ?? null, // {marker, hull} on the render
                 'homes'               => $homes,
             ];
         }
@@ -122,6 +123,27 @@ class RowhouseSelectionService
         return $this->manifest()['asendiplaan']['clean'] ?? null;
     }
 
+    /** Perspective render (primary selector) asset variants from the manifest. */
+    public function perspectiveImage(): ?array
+    {
+        return $this->manifest()['perspective']['image'] ?? ($this->manifest()['overview']['primary'] ?? null);
+    }
+
+    /** Floor-plan image variants for a plan type (fallback), or null. */
+    public function floorplansForType(?string $planType): ?array
+    {
+        if ($planType === null) {
+            return null;
+        }
+        return $this->manifest()['floorplans'][$planType] ?? null;
+    }
+
+    /** Authoritative per-building floor-plan sheets for a building number, or null. */
+    public function floorplansForBuilding(int $building): ?array
+    {
+        return $this->manifest()['floorplans_by_building'][(string) $building] ?? null;
+    }
+
     /** Overview render assets from the manifest. */
     public function overview(): array
     {
@@ -155,7 +177,10 @@ class RowhouseSelectionService
         $unitKey     = $liveRow['unit_key'] ?? ($canon['id'] ?? $assetKey);
         $slug        = $liveRow['slug'] ?? ($canon['id'] ?? $assetKey);
         $stage       = (int) ($canon['stage'] ?? 1);
-        $pricePublic = $liveRow['price_public'] ?? ($stage === 1);
+        // Price comes ONLY from the live publication (never the unconfirmed config
+        // price). If nothing is published, price stays hidden ("to be confirmed").
+        $pricePublic = (bool) ($liveRow['price_public'] ?? false);
+        $price       = $pricePublic ? ($liveRow['price'] ?? null) : null;
 
         $cta = $this->discovery->ctaContext([
             'unit_key'     => $unitKey,
@@ -181,10 +206,16 @@ class RowhouseSelectionService
             'plan_label'        => MagnooliaUnitDiscoveryService::planLabel($canon['plan_type'] ?? null),
             'rooms'             => $canon['rooms'] ?? null,
             'net_area'          => isset($canon['net_area']) ? (float) $canon['net_area'] : null,
+            'terrace_area'      => isset($canon['terrace_area']) ? (float) $canon['terrace_area'] : null,
+            'balcony_area'      => isset($canon['balcony_area']) ? (float) $canon['balcony_area'] : null,
             'private_yard_area' => isset($canon['private_yard_area']) ? (float) $canon['private_yard_area'] : null,
             'parking_spaces'    => $canon['parking_spaces'] ?? null,
+            'price'             => $price,
+            'price_public'      => $pricePublic,
             'floorplan_1_pdf'   => $canon['floorplan_1_pdf'] ?? null,
             'floorplan_2_pdf'   => $canon['floorplan_2_pdf'] ?? null,
+            // Prefer the authoritative per-building floor-plan sheet; fall back to the plan-type plan.
+            'floorplans'        => $this->floorplansForBuilding($building) ?? $this->floorplansForType($canon['plan_type'] ?? null),
             'image'             => $mh['image'] ?? null,
             'map_highlight'     => $mh['map_highlight'] ?? null,
             'cta_context'       => $cta,
@@ -216,6 +247,7 @@ class RowhouseSelectionService
                 'unit_key'     => $u['unit_key'] ?? null,
                 'slug'         => $u['slug'] ?? null,
                 'price_public' => $u['price_public'] ?? null,
+                'price'        => $u['price'] ?? null,
             ];
         }
         return $index;

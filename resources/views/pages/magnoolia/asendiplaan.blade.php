@@ -74,6 +74,9 @@
   </div>
 </div>
 
+{{-- ── Phase 30: PRIMARY interactive perspective masterplan ─── --}}
+@include('sections.magnoolia.interactive-masterplan')
+
 {{-- ── Masterplan visual + stage overview ─────────────────── --}}
 <section class="mg-page-section mg-page-section--cream" id="kodud-kaardil">
   <div class="container">
@@ -163,8 +166,7 @@
   </div>
 </section>
 
-{{-- ── Phase 29: premium row → home selection ─────────────── --}}
-@include('sections.magnoolia.rowhouse-selector')
+{{-- Phase 30: row→home selection moved to the primary perspective masterplan above. --}}
 
 {{-- ── Unit list by building ─────────────────────────────── --}}
 <section class="mg-page-section mg-page-section--white">
@@ -424,7 +426,7 @@
 })();
 </script>
 
-{{-- ── Phase 29: home-detail modal ─────────────────────────── --}}
-@include('components.magnoolia.home-detail-modal')
+{{-- Phase 30: home detail is an inline section inside the masterplan above
+     (the modal remains in use on /kodud-ja-hinnad via the pricing table). --}}
 
 @endsection

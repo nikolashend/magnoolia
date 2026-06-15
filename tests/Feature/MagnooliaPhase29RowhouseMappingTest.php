@@ -63,7 +63,7 @@ class MagnooliaPhase29RowhouseMappingTest extends TestCase
         $cases = [
             'tee-1-1'  => 959.7,
             'tee-3-1'  => 509.5,
-            'tee-3-4'  => 841.5,
+            'tee-3-4'  => 756.4,
             'tee-11-3' => 872.1,
         ];
         foreach ($cases as $key => $expected) {

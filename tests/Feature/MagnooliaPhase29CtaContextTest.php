@@ -23,9 +23,18 @@ class MagnooliaPhase29CtaContextTest extends TestCase
 
     public function test_modal_cta_reuses_inquiry_drawer_with_context(): void
     {
-        $html = $this->get('/asendiplaan')->assertStatus(200)->getContent();
+        // Modal now lives on the homes page (Phase 30 moved selection to the masterplan).
+        $html = $this->get('/kodud-ja-hinnad')->assertStatus(200)->getContent();
         $this->assertStringContainsString('data-source-component="home_detail_modal"', $html);
         $this->assertStringContainsString('id="mg-hd-cta"', $html);
+        $this->assertStringContainsString('data-mg-inquiry-open', $html);
+    }
+
+    public function test_asendiplaan_inline_cta_reuses_inquiry_drawer(): void
+    {
+        $html = $this->get('/asendiplaan')->assertStatus(200)->getContent();
+        $this->assertStringContainsString('data-source-component="asendiplaan_home_detail"', $html);
+        $this->assertStringContainsString('id="mg-d-cta"', $html);
         $this->assertStringContainsString('data-mg-inquiry-open', $html);
     }
 

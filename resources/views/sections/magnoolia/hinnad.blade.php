@@ -5,26 +5,22 @@
     ══════════════════════════════════════════════════════════════ --}}
 @php
     use App\Services\Magnoolia\RowhouseSelectionService;
-    $units  = $mgPublic['units'] ?? [];
+    // Phase 30.1: source canonical home facts from RowhouseSelectionService so the
+    // table ALWAYS lists all 19 homes (never "0 kodu") with correct areas/plan/rooms.
+    // Status + price come from the live publication overlay; if nothing is published,
+    // status falls back to the canonical value and price stays "to be confirmed".
+    $rhs = app(RowhouseSelectionService::class);
+    $rhRows = $rhs->rows();
+    $units = collect($rhs->allHomes())->map(fn (array $h) => $h + [
+        'id'      => $h['asset_key'],        // table click / modal key
+        'parking' => $h['parking_spaces'],   // table column alias
+    ])->all();
     $stages = $mgPublic['stages'] ?? [];
     $campaign = $mgPublic['campaign'] ?? [];
     $commercial = $mgPublic['commercial'] ?? [];
 
-    // Phase 29 — rowhouse home view-models (for the row filter, "Vaata kodu"
-    // modal triggers and the correct private-use land area), keyed by
-    // "building-section" so the existing table columns stay untouched.
-    $rhs = app(RowhouseSelectionService::class);
-    $rhRows = $rhs->rows();
-    $rhByBs = [];
-    foreach ($rhs->allHomes() as $rhHome) {
-        $rhByBs[$rhHome['building'] . '-' . $rhHome['section']] = $rhHome;
-    }
-    $rhLookup = function (array $unit) use ($rhByBs) {
-        $b = 0; $s = 0;
-        if (preg_match('/B(\d+)-S(\d+)/i', (string) ($unit['unit_key'] ?? $unit['id'] ?? ''), $m)) { $b = (int) $m[1]; $s = (int) $m[2]; }
-        elseif (preg_match('/(\d+)/', (string) ($unit['building'] ?? ''), $mb)) { $b = (int) $mb[1]; if (preg_match('#/\s*(\d+)#', (string) ($unit['section'] ?? ''), $ms)) $s = (int) $ms[1]; }
-        return $rhByBs[$b . '-' . $s] ?? null;
-    };
+    // Each $unit IS already a rowhouse home view-model.
+    $rhLookup = fn (array $unit) => $unit;
 
     // Group units by stage for grouped table headers
     $byStage = [];
@@ -146,7 +142,7 @@
               <span style="background:#c89443;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em;">{{ $sCfg['label'] }}</span>
               <span style="color:rgba(255,255,255,.75);font-size:14px;">{{ implode(' · ', $sCfg['buildings']) }}</span>
               <span style="margin-left:auto;color:rgba(200,148,67,.9);font-size:13px;font-weight:600;">{{ __('magnoolia.pricing.completing') }} {{ $sCfg['completion'] }}</span>
-              <span style="color:rgba(255,255,255,.4);font-size:13px;">{{ $sCfg['homes'] }} {{ __('magnoolia.pricing.homes_label') }}</span>
+              <span style="color:rgba(255,255,255,.4);font-size:13px;">{{ count($stageUnits) }} {{ __('magnoolia.pricing.homes_label') }}</span>
           </div>
           @endif
           <table data-stage-table="{{ $stageNum }}" style="width:100%;border-collapse:collapse;margin-bottom:0;">
@@ -214,12 +210,6 @@
                             </span>
                         </td>
                         <td style="padding:15px 16px;text-align:center;white-space:nowrap;">
-                            <button type="button" class="mg-table-cta mg-table-cta--ghost"
-                                    data-mg-home-open="{{ $rhKey }}"
-                                    data-mg-analytics="magnoolia_home_detail_open"
-                                    onclick="event.stopPropagation();"
-                                    style="border:1px solid rgba(29,36,48,.2);background:#fff;color:#1d2430;cursor:pointer;margin-bottom:6px;">{{ __('magnoolia.rowhouse.view_home') }}</button>
-                            <br>
                             @if($st === 'sold')
                                 <a href="{{ lroute('home') }}#hinnad" class="mg-table-cta mg-table-cta--muted"
                                    data-event="unit_view" data-unit-id="{{ $unit['address'] }}">{{ __($cfg['cta_key']) }}</a>
@@ -298,20 +288,13 @@
                     <div style="font-weight:700;color:#1d2430;font-size:15px;">
                         {{ $publicPrice ? '€ '.number_format($publicPrice, 0, ',', ' ') : __('magnoolia.pricing.price_tbc') }}
                     </div>
-                    <div style="display:flex;gap:8px;align-items:center;">
-                        <button type="button" data-mg-home-open="{{ $rhKey }}" onclick="event.stopPropagation();"
-                                data-mg-analytics="magnoolia_home_detail_open"
-                                style="background:#fff;border:1px solid rgba(29,36,48,.2);color:#1d2430;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;min-height:40px;">
-                            {{ __('magnoolia.rowhouse.view_home') }}
-                        </button>
-                        @if($st !== 'sold')
-                        <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm"
-                           onclick="event.stopPropagation();"
-                           style="background:#c89443;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;min-height:40px;display:inline-flex;align-items:center;">
-                            {{ __($cfg['cta_key']) }}
-                        </a>
-                        @endif
-                    </div>
+                    @if($st !== 'sold')
+                    <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm"
+                       onclick="event.stopPropagation();"
+                       style="background:#c89443;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;min-height:40px;display:inline-flex;align-items:center;">
+                        {{ __($cfg['cta_key']) }}
+                    </a>
+                    @endif
                 </div>
             </div>
             @endforeach
