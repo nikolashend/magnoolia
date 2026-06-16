@@ -34,6 +34,32 @@
   })->values()->all();
   $viewsEnc = json_encode($viewsJs, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
+  // Per-view hotspots: primary uses the row perspective (config/manifest); alternate
+  // views (secondary/dusk) use config('magnoolia_hotspots.perspective_views.{key}').
+  $hotViewsCfg = (array) config('magnoolia_hotspots.perspective_views', []);
+  $viewHotspots = [];
+  foreach ($viewsJs as $v) {
+    $set = [];
+    if (($v['hotspots'] ?? false)) {
+      foreach ($rows as $r) {
+        $p = $r['perspective'] ?? null;
+        if ($p && !empty($p['marker'])) {
+          $set[] = ['pos' => $r['pos'], 'building' => $r['building'], 'title' => $r['title'], 'marker' => $p['marker'], 'hull' => $p['hull'] ?? null];
+        }
+      }
+    } else {
+      $cfg = $hotViewsCfg[$v['key']] ?? [];
+      foreach ($rows as $r) {
+        $h = $cfg[$r['pos']] ?? null;
+        if ($h && !empty($h['marker'])) {
+          $set[] = ['pos' => $r['pos'], 'building' => $r['building'], 'title' => $r['title'], 'marker' => $h['marker'], 'hull' => $h['polygon'] ?? null];
+        }
+      }
+    }
+    $viewHotspots[] = $set;
+  }
+  $viewHotspotsEnc = json_encode($viewHotspots, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
   $statusLabels = ['available'=>__('magnoolia.statuses.available'),'reserved'=>__('magnoolia.statuses.reserved'),'sold'=>__('magnoolia.statuses.sold'),'tbc'=>__('magnoolia.pricing.status_tbc')];
   $statusColors = ['available'=>'#4caf50','reserved'=>'#c89443','sold'=>'#9a948a','tbc'=>'#9c27b0'];
 
@@ -117,6 +143,23 @@
           @endif
         @endforeach
         </div>
+        {{-- Coordinate picker for hand-setting hotspots: /asendiplaan?mp_grid=1 --}}
+        @if(request()->boolean('mp_grid') || request()->boolean('my_grid'))
+        <svg class="mg-mp__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
+             style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;">
+          @for($i = 1; $i < 10; $i++)
+            <line x1="{{ $i*10 }}" y1="0" x2="{{ $i*10 }}" y2="100" stroke="#ffd24a" stroke-opacity=".55" stroke-width=".15"/>
+            <line x1="0" y1="{{ $i*10 }}" x2="100" y2="{{ $i*10 }}" stroke="#ffd24a" stroke-opacity=".55" stroke-width=".15"/>
+            <text x="{{ $i*10 + 0.4 }}" y="2.8" fill="#ffd24a" font-size="2.4">.{{ $i }}</text>
+            <text x="0.4" y="{{ $i*10 - 0.6 }}" fill="#ffd24a" font-size="2.4">.{{ $i }}</text>
+          @endfor
+        </svg>
+        {{-- transparent click-capture layer (sits above markers in picker mode) --}}
+        <div id="mg-mp-pick" style="position:absolute;inset:0;z-index:5;cursor:crosshair;"></div>
+        <svg id="mg-mp-pickpts" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
+             style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:6;"></svg>
+        @endif
+
         {{-- View switcher arrows (desktop) --}}
         @if(count($views) > 1)
         <button type="button" class="mg-mp__arrow mg-mp__arrow--prev" data-mp-view-prev aria-label="{{ __('magnoolia.rowhouse.view_prev') }}">&#x2039;</button>
@@ -135,6 +178,48 @@
 
       <p class="mg-mp__hint">{{ __('magnoolia.rowhouse.mp_render_note') }}</p>
     </div>
+
+    @if(request()->boolean('mp_grid') || request()->boolean('my_grid'))
+    {{-- Coordinate picker readout (dev/admin helper, only with ?mp_grid=1) --}}
+    <div class="mg-mp__picker" id="mg-mp-picker">
+      <div class="mg-mp__picker-row">
+        <strong>Koordinaadipicker</strong> — kliki pildil, et saada punkti [x, y]. Viimane punkt:
+        <span id="mg-mp-pick-last" class="mg-mp__picker-last">—</span>
+      </div>
+      <textarea id="mg-mp-pick-out" class="mg-mp__picker-out" rows="2" readonly placeholder="polygon => [ ... ]  (kliki nurki)"></textarea>
+      <div class="mg-mp__picker-btns">
+        <button type="button" id="mg-mp-pick-copy" class="mg-btn mg-btn--ghost">Kopeeri polygon</button>
+        <button type="button" id="mg-mp-pick-undo" class="mg-btn mg-btn--ghost">Võta tagasi</button>
+        <button type="button" id="mg-mp-pick-clear" class="mg-btn mg-btn--ghost">Tühjenda</button>
+      </div>
+    </div>
+    <script>
+    (function () {
+      var pick = document.getElementById('mg-mp-pick'); if (!pick) return;
+      var ptsSvg = document.getElementById('mg-mp-pickpts');
+      var lastEl = document.getElementById('mg-mp-pick-last');
+      var outEl  = document.getElementById('mg-mp-pick-out');
+      var pts = [];
+      function render() {
+        outEl.value = 'polygon => [' + pts.map(function (p) { return '[' + p[0] + ', ' + p[1] + ']'; }).join(', ') + ']';
+        ptsSvg.innerHTML = pts.map(function (p) { return '<circle cx="' + (p[0]*100) + '" cy="' + (p[1]*100) + '" r="0.8" fill="#ffd24a" stroke="#1d2430" stroke-width="0.2"/>'; }).join('') +
+          (pts.length > 1 ? '<polygon points="' + pts.map(function (p) { return (p[0]*100) + ',' + (p[1]*100); }).join(' ') + '" fill="#ffd24a" fill-opacity="0.18" stroke="#ffd24a" stroke-width="0.3"/>' : '');
+      }
+      pick.addEventListener('click', function (e) {
+        var r = pick.getBoundingClientRect();
+        var x = +(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width))).toFixed(3);
+        var y = +(Math.min(1, Math.max(0, (e.clientY - r.top) / r.height))).toFixed(3);
+        pts.push([x, y]); lastEl.textContent = '[' + x + ', ' + y + ']'; render();
+      });
+      document.getElementById('mg-mp-pick-undo').addEventListener('click', function () { pts.pop(); render(); });
+      document.getElementById('mg-mp-pick-clear').addEventListener('click', function () { pts = []; lastEl.textContent = '—'; render(); });
+      document.getElementById('mg-mp-pick-copy').addEventListener('click', function () {
+        outEl.select(); try { navigator.clipboard.writeText(outEl.value); } catch (e) { document.execCommand('copy'); }
+        this.textContent = '✓ Kopeeritud';
+      });
+    })();
+    </script>
+    @endif
 
     {{-- Row cards (reliable selector, primary on mobile) --}}
     <div class="mg-mp__rows" role="tablist" aria-label="{{ __('magnoolia.rowhouse.row_select_label') }}">
@@ -222,9 +307,9 @@
         <div class="mg-mp__floor-stage">
           <button type="button" id="mg-d-floor-zoom" class="mg-mp__floor-zoombtn" aria-label="{{ __('magnoolia.rowhouse.open_larger') }}">
             <img id="mg-d-floor-img" alt="" loading="lazy" decoding="async">
+            <span class="mg-mp__floor-zoomhint">{{ __('magnoolia.rowhouse.open_larger') }} ⤢</span>
           </button>
           <p id="mg-d-floor-empty" class="mg-mp__floor-empty" hidden>{{ __('magnoolia.rowhouse.floor_placeholder') }}</p>
-          <a id="mg-d-floor-open" target="_blank" rel="noopener" class="mg-mp__floor-open" hidden>{{ __('magnoolia.rowhouse.open_pdf') }} ↗</a>
         </div>
         <p class="mg-mp__floor-cap" id="mg-d-floor-cap"></p>
       </div>
@@ -288,7 +373,34 @@
   var panel = document.getElementById('mg-mp-panel');
   var homesWrap = document.getElementById('mg-mp-homes');
   var detail = document.getElementById('mg-mp-detail');
+  var VIEW_HOTSPOTS = {!! $viewHotspotsEnc !!};
   var state = { row: null, home: null, floor: '1', view: 0 };
+
+  // (Re)build the SVG zones + markers for a given view from its hotspot set.
+  function renderHotspots(idx) {
+    var set = VIEW_HOTSPOTS[idx] || [];
+    var svg = document.getElementById('mg-mp-svg');
+    var markers = document.getElementById('mg-mp-markers');
+    var wrap = document.querySelector('.mg-mp__imgwrap');
+    var has = set.length > 0;
+    if (svg) {
+      svg.style.display = has ? '' : 'none';
+      svg.innerHTML = set.map(function (h) {
+        if (!h.hull) return '';
+        var pts = h.hull.map(function (p) { return (p[0] * 100).toFixed(2) + ',' + (p[1] * 100).toFixed(2); }).join(' ');
+        return '<polygon class="mg-mp__zone" data-mp-zone="' + h.pos + '" points="' + pts + '"></polygon>';
+      }).join('');
+    }
+    if (markers) {
+      markers.style.display = has ? '' : 'none';
+      markers.innerHTML = set.map(function (h) {
+        if (!h.marker) return '';
+        return '<button type="button" class="mg-mp__marker" data-mp-row="' + h.pos + '" style="left:' + (h.marker[0] * 100) + '%;top:' + (h.marker[1] * 100) + '%;" aria-label="' + h.title + '"><span class="mg-mp__marker-num">' + h.building + '</span><span class="mg-mp__marker-label">' + h.title + '</span></button>';
+      }).join('');
+    }
+    if (wrap) wrap.setAttribute('data-mp-has-hotspots', has ? '1' : '0');
+    if (state.row) setActiveRow(state.row);
+  }
 
   function switchView(idx) {
     if (!VIEWS.length) return;
@@ -297,16 +409,17 @@
     state.view = idx;
     var img = document.getElementById('mg-mp-img');
     if (img) { img.src = v.src; if (v.srcset) img.setAttribute('srcset', v.srcset); img.alt = v.label; }
-    // hotspot overlay (zones + markers) only on the calibrated view
-    var svg = document.getElementById('mg-mp-svg'); var markers = document.getElementById('mg-mp-markers');
-    var wrap = document.querySelector('.mg-mp__imgwrap');
-    if (svg) svg.style.display = v.hotspots ? '' : 'none';
-    if (markers) markers.style.display = v.hotspots ? '' : 'none';
-    if (wrap) wrap.setAttribute('data-mp-has-hotspots', v.hotspots ? '1' : '0');
+    renderHotspots(idx); // per-view zones + markers (alternate views via config)
     document.querySelectorAll('[data-mp-view]').forEach(function (p) {
       var on = +p.getAttribute('data-mp-view') === idx;
       p.classList.toggle('is-active', on); p.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
+  }
+
+  // Hover sync: hovering a marker highlights its polygon (and vice-versa).
+  function setHover(pos, on) {
+    document.querySelectorAll('.mg-mp__zone[data-mp-zone="' + pos + '"], .mg-mp__marker[data-mp-row="' + pos + '"]')
+      .forEach(function (el) { el.classList.toggle('is-hover', on); });
   }
 
   function setActiveRow(pos) {
@@ -404,17 +517,16 @@
   function showFloor(h, f) {
     var zoom = document.getElementById('mg-d-floor-zoom');
     var img = document.getElementById('mg-d-floor-img');
-    var open = document.getElementById('mg-d-floor-open');
     var empty = document.getElementById('mg-d-floor-empty');
     var cap = document.getElementById('mg-d-floor-cap');
     var src = f === '2' ? h.floor2 : h.floor1;
     var floorLabel = f === '2' ? @json(__('magnoolia.rowhouse.floor_2')) : @json(__('magnoolia.rowhouse.floor_1'));
     if (src) {
       img.src = src; img.alt = h.display + ' — ' + floorLabel;
-      zoom.style.display = ''; open.href = src; open.hidden = false; empty.hidden = true;
+      zoom.style.display = ''; empty.hidden = true;
       zoom.setAttribute('data-floor-src', src);
     } else {
-      img.removeAttribute('src'); zoom.style.display = 'none'; open.hidden = true; empty.hidden = false;
+      img.removeAttribute('src'); zoom.style.display = 'none'; empty.hidden = false;
     }
     cap.textContent = L.planCap.replace(':plan', (L.plan + ' ' + (h.plan || ''))).replace(':floor', floorLabel);
   }
@@ -462,11 +574,19 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') { var lb = document.getElementById('mg-mp-lightbox'); if (lb && !lb.hidden) closeLightbox(); }
   });
-  // SVG zones are not <a>/<button>; make them activatable
-  document.querySelectorAll('[data-mp-zone]').forEach(function (z) { z.style.cursor = 'pointer'; });
+  // Marker ↔ polygon hover sync (only the map markers/zones, not the row cards)
+  section.addEventListener('mouseover', function (e) {
+    var el = e.target.closest('.mg-mp__marker[data-mp-row], .mg-mp__zone[data-mp-zone]');
+    if (el) setHover(el.getAttribute('data-mp-row') || el.getAttribute('data-mp-zone'), true);
+  });
+  section.addEventListener('mouseout', function (e) {
+    var el = e.target.closest('.mg-mp__marker[data-mp-row], .mg-mp__zone[data-mp-zone]');
+    if (el) setHover(el.getAttribute('data-mp-row') || el.getAttribute('data-mp-zone'), false);
+  });
 
   // deep-link init
   (function init() {
+    renderHotspots(0); // JS-manage hotspots from the start (enables per-view + hover)
     var p = new URLSearchParams(window.location.search);
     var row = p.get('row'), home = p.get('home');
     if (home && byHome[home]) { renderRow(h_rowPos(byHome[home]), { silent: true }); renderHome(home, { silent: true }); }

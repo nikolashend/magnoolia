@@ -65,6 +65,18 @@ class RowhouseSelectionService
             $homes = array_map(fn (array $u) => $this->homeViewModel($u, $mHomes, $live), $canon);
             $first = $canon[0];
 
+            // Perspective hotspot: hand-editable config/magnoolia_hotspots.php wins
+            // over the auto-detected manifest hull (straight, hand-set polygons).
+            $perspective = $mRow['perspective'] ?? null;
+            $hotCfg = (array) config('magnoolia_hotspots.perspective', []);
+            if ((bool) config('magnoolia_hotspots.enabled', false) && isset($hotCfg['tee-' . $building])) {
+                $h = $hotCfg['tee-' . $building];
+                $perspective = [
+                    'marker' => $h['marker'] ?? ($perspective['marker'] ?? null),
+                    'hull'   => $h['polygon'] ?? ($perspective['hull'] ?? null),
+                ];
+            }
+
             $rows[] = [
                 'building'            => $building,
                 'pos'                 => $mRow['pos'] ?? ('tee-' . $building),
@@ -75,7 +87,7 @@ class RowhouseSelectionService
                 'availability_counts' => $this->availabilityCounts($homes),
                 'row_image'           => $mRow['image'] ?? null,
                 'map_highlight'       => $mRow['map_highlight'] ?? null,
-                'perspective'         => $mRow['perspective'] ?? null, // {marker, hull} on the render
+                'perspective'         => $perspective, // {marker, hull} on the render (config-overridable)
                 'homes'               => $homes,
             ];
         }

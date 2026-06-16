@@ -214,9 +214,18 @@ async function detectPerspectiveRows() {
     lo.pop(); up.pop(); return lo.concat(up);
   };
   return order.map((ci, gi) => {
-    const cx = cent[ci][0], cy = cent[ci][1];
-    const gp = pts.filter(([x, y]) => nearest(x, y) === ci).map(([x, y]) => [cx + (x - cx) * 1.08, cy + (y - cy) * 1.08]);
-    return { tee: TEE_LR[gi], marker: [+cx.toFixed(4), +cy.toFixed(4)], hull: conv(gp).map(([x, y]) => [+x.toFixed(4), +y.toFixed(4)]) };
+    const gp = pts.filter(([x, y]) => nearest(x, y) === ci);
+    // centroid of the cluster
+    let cx = 0, cy = 0; for (const [x, y] of gp) { cx += x; cy += y; } cx /= gp.length; cy /= gp.length;
+    // trim distance outliers (mis-segmented stray pixels make the convex hull sprawl
+    // over empty fields) — keep only the dense building core (~78th percentile)
+    const dist = gp.map(([x, y]) => Math.hypot(x - cx, y - cy)).sort((a, b) => a - b);
+    const cut = dist[Math.floor(dist.length * 0.78)] * 1.06;
+    const core = gp.filter(([x, y]) => Math.hypot(x - cx, y - cy) <= cut);
+    // re-centre marker on the trimmed core
+    let mx = 0, my = 0; for (const [x, y] of core) { mx += x; my += y; } mx /= core.length; my /= core.length;
+    const padded = core.map(([x, y]) => [mx + (x - mx) * 1.05, my + (y - my) * 1.05]);
+    return { tee: TEE_LR[gi], marker: [+mx.toFixed(4), +my.toFixed(4)], hull: conv(padded).map(([x, y]) => [+x.toFixed(4), +y.toFixed(4)]) };
   });
 }
 

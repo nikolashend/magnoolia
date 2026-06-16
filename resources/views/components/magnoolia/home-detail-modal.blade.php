@@ -100,9 +100,8 @@
               <button type="button" class="mg-hd-ftab is-active" data-hd-floor="1" style="padding:7px 14px;border-radius:100px;border:1px solid rgba(29,36,48,.2);background:#1d2430;color:#fff;font-size:12.5px;font-weight:600;cursor:pointer;">{{ __('magnoolia.rowhouse.floor_1') }}</button>
               <button type="button" class="mg-hd-ftab" data-hd-floor="2" style="padding:7px 14px;border-radius:100px;border:1px solid rgba(29,36,48,.2);background:#fff;color:#6f6a61;font-size:12.5px;font-weight:600;cursor:pointer;">{{ __('magnoolia.rowhouse.floor_2') }}</button>
             </div>
-            <div style="position:relative;border:1px solid rgba(29,36,48,.1);border-radius:12px;background:#fff;padding:10px;text-align:center;min-height:120px;">
-              <img id="mg-hd-floor-img" alt="" loading="lazy" decoding="async" style="max-width:100%;height:auto;display:inline-block;">
-              <a id="mg-hd-floor-pdf" target="_blank" rel="noopener" style="display:none;position:absolute;top:10px;right:10px;font-size:11px;font-weight:700;color:#c89443;text-decoration:none;background:rgba(255,255,255,.92);padding:5px 9px;border-radius:8px;">{{ __('magnoolia.rowhouse.open_pdf') }} ↗</a>
+            <div style="border:1px solid rgba(29,36,48,.1);border-radius:12px;background:#fff;padding:10px;text-align:center;min-height:120px;">
+              <img id="mg-hd-floor-img" alt="" loading="lazy" decoding="async" style="max-width:440px;width:100%;height:auto;display:inline-block;">
             </div>
           </div>
         </div>
@@ -262,13 +261,10 @@
   function hdSetFloor(f) {
     var h = hdActiveHome; if (!h) return;
     var img = document.getElementById('mg-hd-floor-img');
-    var pdf = document.getElementById('mg-hd-floor-pdf');
     var src = f === '2' ? h.floor2_img : h.floor1_img;
-    var pdfSrc = f === '2' ? h.floor2 : h.floor1;
     var label = f === '2' ? @json(__('magnoolia.rowhouse.floor_2')) : @json(__('magnoolia.rowhouse.floor_1'));
     if (src) { img.src = src; img.alt = (h.display || '') + ' — ' + label; img.style.display = ''; }
     else { img.removeAttribute('src'); img.style.display = 'none'; }
-    if (pdfSrc) { pdf.href = pdfSrc; pdf.style.display = ''; } else { pdf.style.display = 'none'; }
     document.querySelectorAll('.mg-hd-ftab').forEach(function (t) {
       var on = t.getAttribute('data-hd-floor') === f;
       t.classList.toggle('is-active', on);

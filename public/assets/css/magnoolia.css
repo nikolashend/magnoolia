@@ -4334,8 +4334,8 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 .mg-mp__imgwrap:hover .mg-mp__zone { stroke: rgba(255,255,255,.35); }
 .mg-mp__zone:hover { fill: rgba(200,148,67,.30); stroke: rgba(255,255,255,.9); }
 .mg-mp__zone.is-active { fill: rgba(200,148,67,.42); stroke: #f3d9a8; stroke-width: 0.8; }
-.mg-mp__marker { position: absolute; transform: translate(-50%,-50%); display: inline-flex; align-items: center; gap: 7px; background: rgba(29,36,48,.78); border: 1.5px solid rgba(255,255,255,.85); color: #fff; border-radius: 100px; padding: 4px 12px 4px 5px; cursor: pointer; backdrop-filter: blur(2px); transition: background .2s, transform .15s; white-space: nowrap; }
-.mg-mp__marker:hover, .mg-mp__marker.is-active { background: #c89443; transform: translate(-50%,-50%) scale(1.05); }
+.mg-mp__marker { position: absolute; transform: translate(-50%,-50%); display: inline-flex; align-items: center; gap: 7px; background: rgba(29,36,48,.40); border: 1px solid rgba(255,255,255,.55); color: #fff; border-radius: 100px; padding: 4px 12px 4px 5px; cursor: pointer; backdrop-filter: blur(2px); transition: background .2s, transform .15s, opacity .2s; white-space: nowrap; opacity: .8; }
+.mg-mp__marker:hover, .mg-mp__marker.is-active, .mg-mp__marker.is-hover { background: #c89443; opacity: 1; transform: translate(-50%,-50%) scale(1.05); }
 .mg-mp__marker-num { width: 22px; height: 22px; border-radius: 50%; background: #c89443; color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .mg-mp__marker.is-active .mg-mp__marker-num { background: #fff; color: #1d2430; }
 .mg-mp__marker-label { font-size: 12.5px; font-weight: 600; }
@@ -4428,8 +4428,10 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 .mg-mp__map-pin-label::after { content: ""; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); border: 4px solid transparent; border-top-color: #1d2430; }
 .mg-mp__map-note { font-size: 11.5px; color: #a8a196; margin-top: 10px; line-height: 1.5; }
 
-.mg-mp__floor-zoombtn { display: inline-block; border: none; background: none; padding: 0; cursor: zoom-in; max-width: 100%; }
+.mg-mp__floor-zoombtn { position: relative; display: inline-block; border: none; background: none; padding: 0; cursor: zoom-in; max-width: 460px; width: 100%; }
 .mg-mp__floor-zoombtn img { max-width: 100%; height: auto; display: inline-block; }
+.mg-mp__floor-zoomhint { position: absolute; bottom: 8px; right: 8px; background: rgba(20,25,33,.78); color: #fff; font-size: 11px; font-weight: 600; padding: 4px 9px; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.mg-mp__floor-zoombtn:hover .mg-mp__floor-zoomhint { opacity: 1; }
 .mg-mp__floor-empty { font-size: 13px; color: #8a8479; line-height: 1.6; padding: 24px 16px; margin: 0; }
 
 .mg-mp__lightbox {
@@ -4445,7 +4447,7 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 .mg-mp__lightbox-close:hover { background: #c89443; }
 
 /* dim non-selected render zones when a row is active */
-.mg-mp__svg:has(.mg-mp__zone.is-active) .mg-mp__zone:not(.is-active) { fill: rgba(20,25,33,.14); }
+.mg-mp__svg:has(.mg-mp__zone.is-active) .mg-mp__zone:not(.is-active):not(.is-hover) { fill: rgba(20,25,33,.14); }
 
 /* ============================================================
    Phase 31 — Interior finish & equipment standard (/ehitusinfo)
@@ -4504,3 +4506,18 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 
 .mg-if__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
 .mg-if__ctas .mg-btn { display: inline-flex; align-items: center; }
+
+/* Phase 30.2 — coordinate picker helper (only with ?mp_grid=1) */
+.mg-mp__picker { background: #1d2430; color: #fff; border-radius: 12px; padding: 16px 18px; margin: 14px 0 0; }
+.mg-mp__picker-row { font-size: 13px; margin-bottom: 10px; line-height: 1.5; }
+.mg-mp__picker-last { color: #ffd24a; font-weight: 700; }
+.mg-mp__picker-out { width: 100%; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; background: #11161f; color: #ffd24a; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; padding: 8px; resize: vertical; }
+.mg-mp__picker-btns { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.mg-mp__picker-btns .mg-btn { padding: 8px 14px; font-size: 12.5px; min-height: 0; }
+
+/* Phase 30.2 — marker ↔ polygon hover sync */
+.mg-mp__zone.is-hover { fill: rgba(200,148,67,.36); stroke: rgba(255,255,255,.95); stroke-width: .8; }
+/* hovering the already-active zone intensifies it (stronger than active alone) */
+.mg-mp__zone.is-active.is-hover { fill: rgba(200,148,67,.58); stroke: #f3d9a8; stroke-width: 1; }
+.mg-mp__marker.is-hover { background: #c89443; transform: translate(-50%,-50%) scale(1.06); }
+.mg-mp__marker.is-hover .mg-mp__marker-num { background: #fff; color: #1d2430; }
