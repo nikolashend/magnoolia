@@ -4375,7 +4375,9 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 .mg-mp__map { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(29,36,48,.1); background: #f3efe7; }
 .mg-mp__map img { width: 100%; height: auto; display: block; }
 .mg-mp__map-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: visible; }
-.mg-mp__map-zone { fill: rgba(200,148,67,.5); stroke: #b9802b; stroke-width: 2px; stroke-linejoin: round; vector-effect: non-scaling-stroke; filter: drop-shadow(0 1px 4px rgba(185,128,43,.55)); }
+.mg-mp__map-zone { fill: rgba(200,148,67,.12); stroke: rgba(185,128,43,.6); stroke-width: 1.5px; stroke-linejoin: round; vector-effect: non-scaling-stroke; pointer-events: auto; cursor: pointer; outline: none; transition: fill .15s ease, stroke-width .15s ease; }
+.mg-mp__map-zone:hover, .mg-mp__map-zone:focus-visible { fill: rgba(200,148,67,.42); stroke: #b9802b; stroke-width: 2px; }
+.mg-mp__map-zone.is-active { fill: rgba(200,148,67,.55); stroke: #b9802b; stroke-width: 2.5px; filter: drop-shadow(0 1px 4px rgba(185,128,43,.55)); }
 .mg-mp__map-picker { margin: 0 0 28px; }
 .mg-mp__map-picker-stage { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(29,36,48,.12); background: #f3efe7; }
 .mg-mp__map-picker-stage img { width: 100%; height: auto; display: block; }

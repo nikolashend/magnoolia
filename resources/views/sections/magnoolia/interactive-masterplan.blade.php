@@ -391,8 +391,29 @@
 <script>
 (function () {
   var ROWS = {!! $rowsEnc !!};
-  var byRow = {}, byHome = {};
-  ROWS.forEach(function (r) { byRow[r.pos] = r; r.homes.forEach(function (h) { byHome[h.key] = h; byHome[h.unit_key] = h; byHome[h.slug] = h; }); });
+  var byRow = {}, byHome = {}, POLY_HOMES = [];
+  ROWS.forEach(function (r) {
+    byRow[r.pos] = r;
+    r.homes.forEach(function (h) {
+      byHome[h.key] = h; byHome[h.unit_key] = h; byHome[h.slug] = h;
+      if (h.mappoly && h.mappoly.length > 2) POLY_HOMES.push(h);
+    });
+  });
+
+  // Draw every home plot as a clickable/hoverable zone on the clean asendiplaan
+  // support map; `activeKey` gets the emphasised style. Clicks bubble to the
+  // existing [data-mp-home] delegation, so selecting a plot switches homes.
+  function renderMapZones(activeKey) {
+    var mapSvg = document.getElementById('mg-d-map-svg');
+    if (!mapSvg) return;
+    if (!POLY_HOMES.length) { mapSvg.innerHTML = ''; mapSvg.setAttribute('hidden', ''); return; }
+    mapSvg.innerHTML = POLY_HOMES.map(function (h) {
+      var pts = h.mappoly.map(function (p) { return (p[0] * 100).toFixed(2) + ',' + (p[1] * 100).toFixed(2); }).join(' ');
+      var cls = 'mg-mp__map-zone' + (h.key === activeKey ? ' is-active' : '');
+      return '<polygon class="' + cls + '" data-mp-home="' + h.key + '" tabindex="0" role="button" aria-label="' + h.display + '" points="' + pts + '"></polygon>';
+    }).join('');
+    mapSvg.removeAttribute('hidden'); // SVG ignores .hidden=false; remove the attribute
+  }
 
   var L = {
     available: @json($statusLabels['available']), reserved: @json($statusLabels['reserved']),
@@ -563,18 +584,13 @@
       cta3.setAttribute('href', HOMES_URL);
     }
 
-    // map plot polygon (hand-set in config/magnoolia_hotspots.php → asendiplaan)
+    // map plot polygons — ALL homes are drawn as clickable zones on the clean
+    // asendiplaan (hand-set in config/magnoolia_hotspots.php → asendiplaan);
+    // the selected home is emphasised. Clicks reuse the [data-mp-home] handler.
     var hasPoly = h.mappoly && h.mappoly.length > 2;
-    var mapSvg = document.getElementById('mg-d-map-svg');
-    if (mapSvg) {
-      if (hasPoly) {
-        var mp = h.mappoly.map(function (p) { return (p[0] * 100).toFixed(2) + ',' + (p[1] * 100).toFixed(2); }).join(' ');
-        mapSvg.innerHTML = '<polygon class="mg-mp__map-zone" points="' + mp + '"></polygon>';
-        mapSvg.removeAttribute('hidden'); // SVG ignores .hidden=false; the attribute must be removed
-      } else { mapSvg.innerHTML = ''; mapSvg.setAttribute('hidden', ''); }
-    }
+    renderMapZones(h.key);
 
-    // map pin — only as a FALLBACK when no plot polygon is set (polygon wins).
+    // map pin — only as a FALLBACK when the selected home has NO plot polygon.
     var pin = document.getElementById('mg-d-pin');
     if (pin) {
       if (!hasPoly && h.mapx != null && h.mapy != null) { pin.style.left = (h.mapx * 100) + '%'; pin.style.top = (h.mapy * 100) + '%'; pin.hidden = false; }
