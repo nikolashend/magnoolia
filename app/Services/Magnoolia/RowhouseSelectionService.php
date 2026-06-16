@@ -233,6 +233,31 @@ class RowhouseSelectionService
             'price_public' => $pricePublic,
         ], 'home_detail_modal');
 
+        // Per-home plot polygon on the clean asendiplaan: hand-editable
+        // config/magnoolia_hotspots.php → 'asendiplaan' wins over the
+        // auto-generated single map point. Falls back to the manifest pin.
+        $mapHighlight = $mh['map_highlight'] ?? null;
+        $mapPolygon   = null;
+        if ((bool) config('magnoolia_hotspots.enabled', false)) {
+            $aCfg = (array) config('magnoolia_hotspots.asendiplaan', []);
+            $a    = $aCfg[$assetKey] ?? null;
+            if (!empty($a['polygon'])) {
+                $mapPolygon = $a['polygon'];
+            }
+            if (!empty($a['marker'])) {
+                $mapHighlight = ['x' => $a['marker'][0], 'y' => $a['marker'][1]];
+            } elseif ($mapPolygon) {
+                $sx = 0.0;
+                $sy = 0.0;
+                foreach ($mapPolygon as $p) {
+                    $sx += $p[0];
+                    $sy += $p[1];
+                }
+                $n = count($mapPolygon);
+                $mapHighlight = ['x' => round($sx / $n, 4), 'y' => round($sy / $n, 4)];
+            }
+        }
+
         return [
             'unit_key'          => $unitKey,                 // payload key (CTA-consistent)
             'asset_key'         => $assetKey,                // "tee-3-1"
@@ -261,7 +286,8 @@ class RowhouseSelectionService
                                     ?: ($this->floorplansForBuilding($building)
                                     ?? $this->floorplansForType($canon['plan_type'] ?? null)),
             'image'             => $mh['image'] ?? null,
-            'map_highlight'     => $mh['map_highlight'] ?? null,
+            'map_highlight'     => $mapHighlight,
+            'map_polygon'       => $mapPolygon,
             'cta_context'       => $cta,
         ];
     }

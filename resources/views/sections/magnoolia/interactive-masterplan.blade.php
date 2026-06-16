@@ -95,6 +95,7 @@
           'img'        => $img ? asset($img).$av : null,
           'mapx'       => $h['map_highlight']['x'] ?? null,
           'mapy'       => $h['map_highlight']['y'] ?? null,
+          'mappoly'    => $h['map_polygon'] ?? null,
           'floor1'     => ($fp['floor_1']['base'] ?? null) ? asset($fp['floor_1']['1024'] ?? $fp['floor_1']['base']).$av : null,
           'floor2'     => ($fp['floor_2']['base'] ?? null) ? asset($fp['floor_2']['1024'] ?? $fp['floor_2']['base']).$av : null,
           'price_public' => $h['cta_context']['price_public'] ?? false,
@@ -143,8 +144,8 @@
           @endif
         @endforeach
         </div>
-        {{-- Coordinate picker for hand-setting hotspots: /asendiplaan?mp_grid=1 --}}
-        @if(request()->boolean('mp_grid') || request()->boolean('my_grid'))
+        {{-- Coordinate picker for hand-setting perspective hotspots: /asendiplaan?mp_grid=1 --}}
+        @if(request()->boolean('mp_grid'))
         <svg class="mg-mp__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
              style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;">
           @for($i = 1; $i < 10; $i++)
@@ -179,7 +180,7 @@
       <p class="mg-mp__hint">{{ __('magnoolia.rowhouse.mp_render_note') }}</p>
     </div>
 
-    @if(request()->boolean('mp_grid') || request()->boolean('my_grid'))
+    @if(request()->boolean('mp_grid'))
     {{-- Coordinate picker readout (dev/admin helper, only with ?mp_grid=1) --}}
     <div class="mg-mp__picker" id="mg-mp-picker">
       <div class="mg-mp__picker-row">
@@ -214,6 +215,67 @@
       document.getElementById('mg-mp-pick-undo').addEventListener('click', function () { pts.pop(); render(); });
       document.getElementById('mg-mp-pick-clear').addEventListener('click', function () { pts = []; lastEl.textContent = '—'; render(); });
       document.getElementById('mg-mp-pick-copy').addEventListener('click', function () {
+        outEl.select(); try { navigator.clipboard.writeText(outEl.value); } catch (e) { document.execCommand('copy'); }
+        this.textContent = '✓ Kopeeritud';
+      });
+    })();
+    </script>
+    @endif
+
+    @if(request()->boolean('my_grid') && $cleanSrc)
+    {{-- Per-home plot picker over the CLEAN asendiplaan: /asendiplaan?my_grid=1
+         Click the plot corners, copy the polygon, paste into
+         config/magnoolia_hotspots.php → 'asendiplaan' => ['tee-3-4' => [...]]. --}}
+    <div class="mg-mp__map-picker">
+      <div class="mg-mp__map-picker-stage" id="mg-my-stage">
+        <img src="{{ $cleanSrc }}" alt="" decoding="async">
+        <svg class="mg-mp__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
+             style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;">
+          @for($i = 1; $i < 10; $i++)
+            <line x1="{{ $i*10 }}" y1="0" x2="{{ $i*10 }}" y2="100" stroke="#ffd24a" stroke-opacity=".55" stroke-width=".15"/>
+            <line x1="0" y1="{{ $i*10 }}" x2="100" y2="{{ $i*10 }}" stroke="#ffd24a" stroke-opacity=".55" stroke-width=".15"/>
+            <text x="{{ $i*10 + 0.4 }}" y="2.8" fill="#ffd24a" font-size="2.4">.{{ $i }}</text>
+            <text x="0.4" y="{{ $i*10 - 0.6 }}" fill="#ffd24a" font-size="2.4">.{{ $i }}</text>
+          @endfor
+        </svg>
+        <div id="mg-my-pick" style="position:absolute;inset:0;z-index:5;cursor:crosshair;"></div>
+        <svg id="mg-my-pickpts" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
+             style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:6;"></svg>
+      </div>
+      <div class="mg-mp__picker" id="mg-my-picker">
+        <div class="mg-mp__picker-row">
+          <strong>Asendiplaani picker</strong> — kliki maja krundi nurki (nt Magnoolia tee 3-4). Viimane punkt:
+          <span id="mg-my-pick-last" class="mg-mp__picker-last">—</span>
+        </div>
+        <textarea id="mg-my-pick-out" class="mg-mp__picker-out" rows="2" readonly placeholder="'polygon' => [ ... ]  (kliki nurki)"></textarea>
+        <div class="mg-mp__picker-btns">
+          <button type="button" id="mg-my-pick-copy" class="mg-btn mg-btn--ghost">Kopeeri polygon</button>
+          <button type="button" id="mg-my-pick-undo" class="mg-btn mg-btn--ghost">Võta tagasi</button>
+          <button type="button" id="mg-my-pick-clear" class="mg-btn mg-btn--ghost">Tühjenda</button>
+        </div>
+      </div>
+    </div>
+    <script>
+    (function () {
+      var pick = document.getElementById('mg-my-pick'); if (!pick) return;
+      var ptsSvg = document.getElementById('mg-my-pickpts');
+      var lastEl = document.getElementById('mg-my-pick-last');
+      var outEl  = document.getElementById('mg-my-pick-out');
+      var pts = [];
+      function render() {
+        outEl.value = "'polygon' => [" + pts.map(function (p) { return '[' + p[0] + ', ' + p[1] + ']'; }).join(', ') + ']';
+        ptsSvg.innerHTML = pts.map(function (p) { return '<circle cx="' + (p[0]*100) + '" cy="' + (p[1]*100) + '" r="0.8" fill="#ffd24a" stroke="#1d2430" stroke-width="0.2"/>'; }).join('') +
+          (pts.length > 1 ? '<polygon points="' + pts.map(function (p) { return (p[0]*100) + ',' + (p[1]*100); }).join(' ') + '" fill="#ffd24a" fill-opacity="0.18" stroke="#ffd24a" stroke-width="0.3"/>' : '');
+      }
+      pick.addEventListener('click', function (e) {
+        var r = pick.getBoundingClientRect();
+        var x = +(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width))).toFixed(3);
+        var y = +(Math.min(1, Math.max(0, (e.clientY - r.top) / r.height))).toFixed(3);
+        pts.push([x, y]); lastEl.textContent = '[' + x + ', ' + y + ']'; render();
+      });
+      document.getElementById('mg-my-pick-undo').addEventListener('click', function () { pts.pop(); render(); });
+      document.getElementById('mg-my-pick-clear').addEventListener('click', function () { pts = []; lastEl.textContent = '—'; render(); });
+      document.getElementById('mg-my-pick-copy').addEventListener('click', function () {
         outEl.select(); try { navigator.clipboard.writeText(outEl.value); } catch (e) { document.execCommand('copy'); }
         this.textContent = '✓ Kopeeritud';
       });
@@ -287,6 +349,8 @@
           <div class="mg-mp__map-label">{{ __('magnoolia.rowhouse.map_location') }}</div>
           <div class="mg-mp__map" id="mg-d-map">
             <img src="{{ $cleanSrc }}" alt="{{ __('magnoolia.rowhouse.alt_map') }}" loading="lazy" decoding="async">
+            <svg class="mg-mp__map-svg" id="mg-d-map-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" hidden
+                 style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;"></svg>
             <span class="mg-mp__map-pin" id="mg-d-pin" hidden><span class="mg-mp__map-pin-label">{{ __('magnoolia.rowhouse.sinu_valik') }}</span></span>
           </div>
           @if($enlarge)
@@ -499,10 +563,23 @@
       cta3.setAttribute('href', HOMES_URL);
     }
 
-    // map pin
+    // map plot polygon (hand-set in config/magnoolia_hotspots.php → asendiplaan)
+    var hasPoly = h.mappoly && h.mappoly.length > 2;
+    var mapSvg = document.getElementById('mg-d-map-svg');
+    if (mapSvg) {
+      if (hasPoly) {
+        var mp = h.mappoly.map(function (p) { return (p[0] * 100).toFixed(2) + ',' + (p[1] * 100).toFixed(2); }).join(' ');
+        mapSvg.innerHTML = '<polygon class="mg-mp__map-zone" points="' + mp + '"></polygon>';
+        mapSvg.removeAttribute('hidden'); // SVG ignores .hidden=false; the attribute must be removed
+      } else { mapSvg.innerHTML = ''; mapSvg.setAttribute('hidden', ''); }
+    }
+
+    // map pin — only as a FALLBACK when no plot polygon is set (polygon wins).
     var pin = document.getElementById('mg-d-pin');
-    if (pin && h.mapx != null && h.mapy != null) { pin.style.left = (h.mapx * 100) + '%'; pin.style.top = (h.mapy * 100) + '%'; pin.hidden = false; }
-    else if (pin) pin.hidden = true;
+    if (pin) {
+      if (!hasPoly && h.mapx != null && h.mapy != null) { pin.style.left = (h.mapx * 100) + '%'; pin.style.top = (h.mapy * 100) + '%'; pin.hidden = false; }
+      else pin.hidden = true;
+    }
 
     // floor plans
     state.floor = '1';

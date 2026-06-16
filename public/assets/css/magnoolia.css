@@ -4374,7 +4374,12 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 .mg-mp__map-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #9c8b7e; margin-bottom: 8px; }
 .mg-mp__map { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(29,36,48,.1); background: #f3efe7; }
 .mg-mp__map img { width: 100%; height: auto; display: block; }
-.mg-mp__map-pin { position: absolute; width: 28px; height: 28px; transform: translate(-50%,-50%); border-radius: 50%; border: 3px solid #c89443; background: rgba(200,148,67,.32); box-shadow: 0 0 0 6px rgba(200,148,67,.18); }
+.mg-mp__map-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: visible; }
+.mg-mp__map-zone { fill: rgba(200,148,67,.5); stroke: #b9802b; stroke-width: 2px; stroke-linejoin: round; vector-effect: non-scaling-stroke; filter: drop-shadow(0 1px 4px rgba(185,128,43,.55)); }
+.mg-mp__map-picker { margin: 0 0 28px; }
+.mg-mp__map-picker-stage { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid rgba(29,36,48,.12); background: #f3efe7; }
+.mg-mp__map-picker-stage img { width: 100%; height: auto; display: block; }
+.mg-mp__map-pin { position: absolute; width: 28px; height: 28px; transform: translate(-50%,-50%); border-radius: 50%; border: 3px solid #c89443; background: rgba(200,148,67,.32); box-shadow: 0 0 0 6px rgba(200,148,67,.18); z-index: 3; }
 .mg-mp__map-open { display: inline-block; margin-top: 10px; font-size: 13px; font-weight: 700; color: #c89443; text-decoration: none; }
 
 .mg-mp__floors { margin-top: 24px; padding-top: 22px; border-top: 1px solid rgba(29,36,48,.08); }
