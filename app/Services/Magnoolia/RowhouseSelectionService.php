@@ -129,6 +129,23 @@ class RowhouseSelectionService
         return $this->manifest()['perspective']['image'] ?? ($this->manifest()['overview']['primary'] ?? null);
     }
 
+    /**
+     * Ordered perspective view set for the switcher. Each entry:
+     * ['key', 'label', 'image' => variants, 'hotspots' => bool].
+     * Only the primary view is hotspot-calibrated.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function perspectiveViews(): array
+    {
+        $views = $this->manifest()['perspective']['views'] ?? [];
+        if (!empty($views)) {
+            return $views;
+        }
+        $img = $this->perspectiveImage();
+        return $img ? [['key' => 'primary', 'label' => 'view_primary', 'image' => $img, 'hotspots' => true]] : [];
+    }
+
     /** Floor-plan image variants for a plan type (fallback), or null. */
     public function floorplansForType(?string $planType): ?array
     {
@@ -154,6 +171,19 @@ class RowhouseSelectionService
     public function enlargePdf(): ?string
     {
         return config('magnoolia_rowhouses.enlarge_pdf');
+    }
+
+    /**
+     * Cache-busting token for generated rowhouse assets (the manifest's mtime).
+     * Appended as ?v=… so regenerated images (stable filenames) refresh in browsers.
+     */
+    public function assetVersion(): string
+    {
+        return (string) Cache::remember('magnoolia.rowhouse.assetver', 60, function () {
+            $rel = (string) config('magnoolia_rowhouses.manifest', 'assets/magnoolia/rowhouse-selection/manifest.json');
+            $path = public_path($rel);
+            return is_file($path) ? (string) filemtime($path) : '0';
+        });
     }
 
     // ---------------------------------------------------------------------
@@ -214,8 +244,10 @@ class RowhouseSelectionService
             'price_public'      => $pricePublic,
             'floorplan_1_pdf'   => $canon['floorplan_1_pdf'] ?? null,
             'floorplan_2_pdf'   => $canon['floorplan_2_pdf'] ?? null,
-            // Prefer the authoritative per-building floor-plan sheet; fall back to the plan-type plan.
-            'floorplans'        => $this->floorplansForBuilding($building) ?? $this->floorplansForType($canon['plan_type'] ?? null),
+            // Floor plans: per-UNIT (authoritative) → per-building sheet → plan-type.
+            'floorplans'        => ($mh['floorplans'] ?? null)
+                                    ?: ($this->floorplansForBuilding($building)
+                                    ?? $this->floorplansForType($canon['plan_type'] ?? null)),
             'image'             => $mh['image'] ?? null,
             'map_highlight'     => $mh['map_highlight'] ?? null,
             'cta_context'       => $cta,

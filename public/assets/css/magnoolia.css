@@ -4386,3 +4386,63 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 .mg-mp__floor-stage img { max-width: 100%; height: auto; display: inline-block; }
 .mg-mp__floor-open { position: absolute; top: 12px; right: 12px; font-size: 12px; font-weight: 700; color: #c89443; text-decoration: none; background: rgba(255,255,255,.9); padding: 6px 10px; border-radius: 8px; }
 .mg-mp__floor-cap { font-size: 13px; color: #6f6a61; margin-top: 10px; }
+
+/* ============================================================
+   Phase 30.1 — masterplan polish (view switcher, icons, lightbox)
+   ============================================================ */
+.mg-mp__imgwrap { position: relative; }
+.mg-mp__arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 4;
+  width: 44px; height: 44px; border-radius: 50%; border: none; cursor: pointer;
+  background: rgba(29,36,48,.62); color: #fff; font-size: 26px; line-height: 1;
+  display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px);
+  transition: background .2s; box-shadow: 0 4px 16px rgba(0,0,0,.2);
+}
+.mg-mp__arrow:hover { background: #c89443; }
+.mg-mp__arrow--prev { left: 14px; }
+.mg-mp__arrow--next { right: 14px; }
+@media (max-width: 575px) { .mg-mp__arrow { width: 36px; height: 36px; font-size: 20px; } .mg-mp__arrow--prev{left:8px;} .mg-mp__arrow--next{right:8px;} }
+
+.mg-mp__views { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 14px 0 6px; }
+.mg-mp__viewpill {
+  padding: 8px 18px; border-radius: 100px; border: 1px solid rgba(29,36,48,.2);
+  background: #fff; color: #6f6a61; font-size: 13px; font-weight: 600; cursor: pointer;
+  min-height: 40px; transition: all .15s;
+}
+.mg-mp__viewpill:hover { border-color: rgba(200,148,67,.6); }
+.mg-mp__viewpill.is-active { background: #1d2430; color: #fff; border-color: #1d2430; }
+
+.mg-mp__detail-desc { font-size: 14px; color: #6f6a61; line-height: 1.6; margin: 0 0 18px; }
+.mg-mp__spec dt { display: flex; align-items: center; gap: 9px; }
+.mg-mp__spec-ic { display: inline-flex; color: #c89443; flex-shrink: 0; }
+.mg-mp__spec-ic svg { width: 16px; height: 16px; }
+.mg-mp__cta-link { display: block; text-align: center; font-size: 13px; font-weight: 600; color: #6f6a61; text-decoration: none; padding: 6px; }
+.mg-mp__cta-link:hover { color: #c89443; }
+
+.mg-mp__map-pin { display: flex; align-items: flex-start; justify-content: center; }
+.mg-mp__map-pin-label {
+  position: absolute; top: -26px; left: 50%; transform: translateX(-50%);
+  background: #1d2430; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .04em;
+  padding: 3px 8px; border-radius: 6px; white-space: nowrap;
+}
+.mg-mp__map-pin-label::after { content: ""; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); border: 4px solid transparent; border-top-color: #1d2430; }
+.mg-mp__map-note { font-size: 11.5px; color: #a8a196; margin-top: 10px; line-height: 1.5; }
+
+.mg-mp__floor-zoombtn { display: inline-block; border: none; background: none; padding: 0; cursor: zoom-in; max-width: 100%; }
+.mg-mp__floor-zoombtn img { max-width: 100%; height: auto; display: inline-block; }
+.mg-mp__floor-empty { font-size: 13px; color: #8a8479; line-height: 1.6; padding: 24px 16px; margin: 0; }
+
+.mg-mp__lightbox {
+  position: fixed; inset: 0; z-index: 9400; background: rgba(20,25,33,.88);
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+}
+.mg-mp__lightbox[hidden] { display: none; }
+.mg-mp__lightbox img { max-width: 96vw; max-height: 92vh; border-radius: 10px; background: #fff; }
+.mg-mp__lightbox-close {
+  position: absolute; top: 18px; right: 18px; width: 44px; height: 44px; border-radius: 50%;
+  border: none; background: rgba(255,255,255,.14); color: #fff; font-size: 20px; cursor: pointer;
+}
+.mg-mp__lightbox-close:hover { background: #c89443; }
+
+/* dim non-selected render zones when a row is active */
+.mg-mp__svg:has(.mg-mp__zone.is-active) .mg-mp__zone:not(.is-active) { fill: rgba(20,25,33,.14); }

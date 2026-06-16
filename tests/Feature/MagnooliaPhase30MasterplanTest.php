@@ -52,12 +52,16 @@ class MagnooliaPhase30MasterplanTest extends TestCase
         $this->assertNotEmpty($s->floorplansForType('type-a')['floor_1']['base'] ?? null);
         $this->assertNotEmpty($s->floorplansForType('type-b')['floor_2']['base'] ?? null);
 
-        // homes use the authoritative per-building floor-plan sheet
+        // homes use per-UNIT floor plans (per-building remains a fallback method)
         $this->assertNotEmpty($s->floorplansForBuilding(3)['floor_1']['base'] ?? null);
-        $h1 = $s->findHome('tee-1-2');  // building 1
-        $h3 = $s->findHome('tee-3-1');  // building 3
-        $this->assertStringContainsString('building-1-', $h1['floorplans']['floor_1']['base']);
-        $this->assertStringContainsString('building-3-', $h3['floorplans']['floor_1']['base']);
+        $h1 = $s->findHome('tee-1-2');
+        $h3 = $s->findHome('tee-3-4');
+        $this->assertStringContainsString('unit-tee-1-2-', $h1['floorplans']['floor_1']['base']);
+        $this->assertStringContainsString('unit-tee-3-4-', $h3['floorplans']['floor_1']['base']);
+        // every home has its own per-unit floor plan
+        foreach ($s->allHomes() as $home) {
+            $this->assertStringContainsString('unit-', $home['floorplans']['floor_1']['base'] ?? '', "{$home['asset_key']} missing per-unit floor plan");
+        }
     }
 
     public function test_asendiplaan_renders_primary_perspective_masterplan(): void
@@ -113,6 +117,29 @@ class MagnooliaPhase30MasterplanTest extends TestCase
         $this->assertStringContainsString('data-mg-inquiry-open', $html, 'Board CTAs must open the inquiry drawer');
         $this->assertStringContainsString('Magnoolia tee 11/3', $html, 'All homes must be listed');
         $this->assertStringNotContainsString('price_cents', $html);
+    }
+
+    public function test_view_switcher_and_polish_present(): void
+    {
+        // Phase 30.1: 3-view switcher, perspective note, "your choice" map label.
+        $html = $this->get('/asendiplaan')->assertStatus(200)->getContent();
+        $this->assertStringContainsString('data-mp-view="0"', $html);
+        $this->assertStringContainsString('data-mp-view="1"', $html);
+        $this->assertStringContainsString('data-mp-view="2"', $html, 'Expected 3 perspective views');
+        $this->assertStringContainsString('data-mp-view-prev', $html, 'View arrows must exist');
+        $this->assertStringContainsString('id="mg-mp-lightbox"', $html, 'Floor-plan lightbox must exist');
+        $this->assertStringContainsString('Üldvaade', $html);
+        $this->assertStringContainsString('Sinu valik', $html);
+    }
+
+    public function test_perspective_views_in_manifest_only_primary_calibrated(): void
+    {
+        $views = app(RowhouseSelectionService::class)->perspectiveViews();
+        $this->assertGreaterThanOrEqual(2, count($views));
+        $this->assertTrue($views[0]['hotspots'] ?? false, 'Primary view must be hotspot-calibrated');
+        foreach (array_slice($views, 1) as $v) {
+            $this->assertFalse($v['hotspots'] ?? true, 'Alternate views must not claim calibrated hotspots');
+        }
     }
 
     public function test_no_source_or_mask_leak_on_masterplan(): void

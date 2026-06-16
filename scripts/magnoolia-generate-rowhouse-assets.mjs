@@ -39,8 +39,9 @@ const OUT = join(ROOT, 'public/assets/magnoolia/rowhouse-selection');
 const PUBLIC_BASE = 'assets/magnoolia/rowhouse-selection';
 
 const SOURCES = {
-  primary:   join(SRC, '1.jpg'),  // perspective render (Phase 30 primary selector)
-  secondary: join(SRC, '3.jpg'),
+  primary:   join(SRC, '1.jpg'),  // perspective render (Phase 30 primary selector, calibrated hotspots)
+  secondary: join(SRC, '3.jpg'),  // alternate-angle daylight view
+  dusk:      join(SRC, '0.png'),  // dusk/evening view (Phase 30.1)
   asendiplaan: join(SRC, '5.jpg'),
   perspectiveMask: join(SRC, '2a.png'), // internal-only, for hotspot calibration
 };
@@ -57,9 +58,26 @@ const PLANS_SRC = join(ROOT, '..', 'materials', 'plans');
 const BUILDING_PLANS = {};
 for (const n of [1, 3, 5, 7, 9, 11]) {
   BUILDING_PLANS[n] = {
-    floor1: join(PLANS_SRC, `m${n}`, `M${n}_1korrus_page-0001.jpg`),
-    floor2: join(PLANS_SRC, `m${n}`, `M${n}_2korrus_page-0001.jpg`),
+    floor1: join(PLANS_SRC, `M${n}_1korrus_page-0001.jpg`),
+    floor2: join(PLANS_SRC, `M${n}_2korrus_page-0001.jpg`),
   };
+}
+
+// Per-UNIT floor plan source for (building, section, floor). Naming (Phase 30.1):
+//  - tee 3 (4 units):  M3_{floor}korrus_{section}.png
+//  - 3-unit, 1st floor: section 1 -> _1, 2 -> _1_2, 3 -> _1_3
+//  - 3-unit, 2nd floor: M{n}_2korrus_{section}.png
+function unitPlanFile(building, section, floor) {
+  let name;
+  if (building === 3) {
+    name = `M3_${floor}korrus_${section}.png`;
+  } else if (floor === 1) {
+    const suffix = section === 1 ? '1' : `1_${section}`;
+    name = `M${building}_1korrus_${suffix}.png`;
+  } else {
+    name = `M${building}_2korrus_${section}.png`;
+  }
+  return join(PLANS_SRC, name);
 }
 
 const ORDER = [11, 9, 7, 5, 3, 1];      // diagonal top-left -> bottom-right (asendiplaan)
@@ -232,6 +250,11 @@ async function main() {
     hasSecondary = true;
   } catch (e) { console.warn('  secondary render skipped:', e.message); }
 
+  let overviewDusk = null;
+  try {
+    overviewDusk = await emit(SOURCES.dusk, 'overview/development-dusk.webp', [1280, 768]);
+  } catch (e) { console.warn('  dusk render skipped:', e.message); }
+
   console.log('• floor plans (by plan type)');
   const floorplans = {};
   for (const [type, fp] of Object.entries(FLOORPLANS)) {
@@ -274,9 +297,17 @@ async function main() {
       const homeCrop = await cropCentered(h.cx, h.cy, h.box, asendiMeta);
       const homeRel = `homes/magnoolia-tee-${g.tee}-${h.unit}.webp`;
       const homeImg = await emit(SOURCES.asendiplaan, homeRel, [768, 480], { crop: homeCrop });
+
+      // Per-unit floor plans (authoritative; fall back to per-building in the app).
+      const mkPlan = async (src, rel) => { try { return await emit(src, rel, [1024, 768]); } catch { return null; } };
+      const uf1 = await mkPlan(unitPlanFile(g.tee, h.unit, 1), `floorplans/unit-tee-${g.tee}-${h.unit}-1korrus.webp`);
+      const uf2 = await mkPlan(unitPlanFile(g.tee, h.unit, 2), `floorplans/unit-tee-${g.tee}-${h.unit}-2korrus.webp`);
+      const unitFloorplans = (uf1 || uf2) ? { floor_1: uf1, floor_2: uf2 } : null;
+
       homes.push({
         unit_key: unitKey,
         image: homeImg,
+        floorplans: unitFloorplans,
         map_highlight: { x: +h.cx.toFixed(4), y: +h.cy.toFixed(4), box: h.box.map(v => +v.toFixed(4)), approximate: true },
       });
     }
@@ -301,7 +332,17 @@ async function main() {
     },
     // Phase 30 primary selector: the perspective render reuses the overview-primary
     // WebP variants; per-row hotspots live on each rows[] entry under `perspective`.
-    perspective: { image: overviewPrimary },
+    // Phase 30.1: `views` is the ordered switcher set. Only the primary view is
+    // hotspot-calibrated (matches the mask); alternate views are premium visuals
+    // and rely on the row cards for selection (no faked polygons).
+    perspective: {
+      image: overviewPrimary,
+      views: [
+        { key: 'primary',   label: 'view_primary',   image: overviewPrimary,   hotspots: true },
+        ...(hasSecondary ? [{ key: 'secondary', label: 'view_secondary', image: overviewSecondary, hotspots: false }] : []),
+        ...(overviewDusk ? [{ key: 'dusk', label: 'view_dusk', image: overviewDusk, hotspots: false }] : []),
+      ],
+    },
     floorplans, // by plan type (fallback): { 'type-a': {floor_1,floor_2}, 'type-b': {...} }
     floorplans_by_building: floorplansByBuilding, // authoritative per-building sheets keyed by building number
     overview: { primary: overviewPrimary, secondary: overviewSecondary, has_secondary_view: hasSecondary },

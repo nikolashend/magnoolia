@@ -14,9 +14,10 @@
   $rhs    = app(RowhouseSelectionService::class);
   $locale = app()->getLocale();
   $clean  = $rhs->asendiplaanImage();
-  $cleanUrl = $clean ? asset($clean['1024'] ?? $clean['base']) : null;
+  $av     = '?v=' . $rhs->assetVersion(); // cache-bust for regenerated assets
+  $cleanUrl = $clean ? asset($clean['1024'] ?? $clean['base']).$av : null;
 
-  $homesJs = collect($rhs->allHomes())->map(function ($h) {
+  $homesJs = collect($rhs->allHomes())->map(function ($h) use ($av) {
       $img   = $h['image']['768'] ?? $h['image']['base'] ?? null;
       $f1    = $h['floorplan_1_pdf'] ?? null;
       $f2    = $h['floorplan_2_pdf'] ?? null;
@@ -37,11 +38,11 @@
           'stage'      => $h['stage'],
           'completion' => $h['completion'],
           'status'     => $h['status'],
-          'img'        => $img ? asset($img) : null,
+          'img'        => $img ? asset($img).$av : null,
           'floor1'     => ($f1 && file_exists(public_path($f1))) ? asset($f1) : null,
           'floor2'     => ($f2 && file_exists(public_path($f2))) ? asset($f2) : null,
-          'floor1_img' => ($fp['floor_1']['base'] ?? null) ? asset($fp['floor_1']['1024'] ?? $fp['floor_1']['base']) : null,
-          'floor2_img' => ($fp['floor_2']['base'] ?? null) ? asset($fp['floor_2']['1024'] ?? $fp['floor_2']['base']) : null,
+          'floor1_img' => ($fp['floor_1']['base'] ?? null) ? asset($fp['floor_1']['1024'] ?? $fp['floor_1']['base']).$av : null,
+          'floor2_img' => ($fp['floor_2']['base'] ?? null) ? asset($fp['floor_2']['1024'] ?? $fp['floor_2']['base']).$av : null,
           'mx'         => $hl['x'] ?? null,
           'my'         => $hl['y'] ?? null,
           'price_public' => $cta['price_public'] ?? false,
