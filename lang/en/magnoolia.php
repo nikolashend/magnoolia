@@ -1295,5 +1295,36 @@ return [
         'perspective_note'  => 'The perspective view helps understand the home positions. Exact location and plot boundaries are confirmed on the site plan.',
     ],
 
+    // Phase 31 — interior finish & equipment standard (/ehitusinfo)
+    'interior' => [
+        'section_eyebrow'  => 'Finishes',
+        'section_title'    => 'Interior finish and equipment standard',
+        'section_subtitle' => 'The interior finish of Magnoolia homes is planned with a calm, modern and timeless line. The materials and equipment below give an overview of the planned standard and the optional upgrades.',
+        'disclaimer'       => 'The developer reserves the right to replace the products shown on the website with equivalent alternatives if needed. The exact finish package, product availability and paid upgrade options are confirmed before signing the agreement.',
+        'editorial_title'  => 'Calm and timeless interior finish',
+        'editorial_points' => ['Light, natural wood', 'Neutral wall tones', 'Quality sanitary products', 'Modern switches, sockets and lighting', 'Optional special solutions for an extra fee'],
+        'editorial_cta'    => 'Ask for the exact finish package',
+        'alt_day'          => 'Magnoolia home interior finish — living room and kitchen in daylight',
+        'alt_evening'      => 'Magnoolia home interior finish — living room in evening light',
+        'standard_label'   => 'Standard',
+        'paid_label'       => 'Paid upgrade',
+        'view_details'     => 'View details',
+        'open_larger'      => 'Open larger',
+        'detail_eyebrow'   => 'Materials',
+        'detail_title'     => 'Materials and products overview',
+        'cta_package'      => 'Ask for the exact finish package',
+        'cta_offer'        => 'Request offer',
+        'proof_alt'        => ':category — materials and products reference sheet',
+        'ai_q'             => 'What interior finish is planned for Magnoolia homes?',
+        'ai_a'             => 'Magnoolia homes are planned with a calm modern finish: natural wood flooring, neutral wall tones, quality interior doors, Jung LS 990 switches and sockets, Damixa and Balteco sanitary equipment and recessed lighting. The exact final package is confirmed before signing the agreement.',
+        'cat' => [
+            'electrical' => ['title' => 'Electrical & smart devices', 'description' => 'Modern, neutral-looking electrical and control solutions: floor-heating control, quality switches and sockets, an intercom and recessed spotlights in living and sanitary rooms.'],
+            'sanitary'   => ['title' => 'Sanitary equipment', 'description' => 'Focus on clean form, easy maintenance and quality everyday solutions: a rimless WC, a tiled shower drain, a glass solution, Damixa mixers and a Balteco vanity unit.'],
+            'tiles'      => ['title' => 'Tiles & bathroom finish', 'description' => 'The tile selection is kept calm and timeless — greyish, beige and natural tones that suit Magnoolia’s architecture. Larger-format or textured tiles are available for an extra fee.'],
+            'finish'     => ['title' => 'Interior finish', 'description' => 'For a neutral, long-lasting result: light wood tones, calm wall colours, quality interior doors, minimalist handles and painted skirting.'],
+            'paid'       => ['title' => 'Optional upgrades (extra fee)', 'description' => 'For an extra fee the home finish can be made more personal — for example a special mirror, herringbone parquet, cooling equipment or a different vanity unit.'],
+        ],
+    ],
+
 ];
 

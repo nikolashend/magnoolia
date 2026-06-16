@@ -1344,5 +1344,36 @@ return [
         'perspective_note'  => 'Perspektiivvaade aitab aru saada kodude paiknemisest. Täpne asukoht ja krundi piirid on kinnitatud asendiplaanil.',
     ],
 
+    // Phase 31 — interior finish & equipment standard (/ehitusinfo)
+    'interior' => [
+        'section_eyebrow'  => 'Viimistlus',
+        'section_title'    => 'Siseviimistlus ja varustuse standard',
+        'section_subtitle' => 'Magnoolia kodude siseviimistlus on planeeritud rahuliku, kaasaegse ja ajatu joonega. Allolevad materjalid ja seadmed annavad ülevaate kavandatavast standardist ning võimalikest lisavalikutest.',
+        'disclaimer'       => 'Arendajal on õigus vajadusel asendada veebilehel näidatud tooted samaväärsete toodetega. Täpne viimistluspakett, toodete saadavus ja lisatasu valikud kinnitatakse enne lepingu sõlmimist.',
+        'editorial_title'  => 'Rahulik ja ajatu siseviimistlus',
+        'editorial_points' => ['Hele, naturaalne puit', 'Neutraalsed seinatoonid', 'Kvaliteetsed sanitaartooted', 'Kaasaegsed lülitid, pistikud ja valgustus', 'Võimalus valida lisatasu eest erilahendusi'],
+        'editorial_cta'    => 'Küsi täpset viimistluspaketti',
+        'alt_day'          => 'Magnoolia kodu siseviimistlus — elutuba ja köök päevavalguses',
+        'alt_evening'      => 'Magnoolia kodu siseviimistlus — elutuba õhtuvalguses',
+        'standard_label'   => 'Standard',
+        'paid_label'       => 'Lisatasu eest',
+        'view_details'     => 'Vaata detaile',
+        'open_larger'      => 'Ava suuremalt',
+        'detail_eyebrow'   => 'Materjalid',
+        'detail_title'     => 'Materjalide ja toodete ülevaade',
+        'cta_package'      => 'Küsi täpset viimistluspaketti',
+        'cta_offer'        => 'Küsi pakkumist',
+        'proof_alt'        => ':category — materjalide ja toodete näidisleht',
+        'ai_q'             => 'Milline siseviimistlus on Magnoolia kodudes planeeritud?',
+        'ai_a'             => 'Magnoolia kodudes on kavandatud rahulik ja kaasaegne siseviimistlus: naturaalsed puitpõrandad, neutraalsed seinatoonid, kvaliteetsed siseuksed, Jung LS 990 lülitid ja pistikud, Damixa ja Balteco sanitaartooted ning süvistatavad valgustid. Täpne lõplik valik kinnitatakse enne lepingu sõlmimist.',
+        'cat' => [
+            'electrical' => ['title' => 'Elektri- ja nutiseadmed', 'description' => 'Kaasaegsed ja neutraalse välimusega elektri- ning juhtimislahendused: põrandakütte juhtimine, kvaliteetsed lülitid ja pistikud, fonotelefon ning süvistatavad kohtvalgustid eluruumides ja sanitaarruumides.'],
+            'sanitary'   => ['title' => 'Sanitaartehnika', 'description' => 'Rõhk puhtal vormil, lihtsal hooldusel ja kvaliteetsetel igapäevalahendustel: rimless WC, plaaditud duširenn, klaaslahendus, Damixa segistid ning Balteco valamukapp.'],
+            'tiles'      => ['title' => 'Plaadid ja vannitoa viimistlus', 'description' => 'Plaadivalik on hoitud rahulik ja ajatu — hallikad, beežikad ja naturaalsed toonid sobivad Magnoolia arhitektuuriga. Lisatasu eest saab kaaluda suurema formaadiga või struktuurseid plaate.'],
+            'finish'     => ['title' => 'Siseviimistlus', 'description' => 'Neutraalse ja pikaajaliselt kestva tulemuse jaoks: heledad puidutoonid, rahulikud seinavärvid, kvaliteetsed siseuksed, minimalistlikud ukselingid ja värvitud puitliistud.'],
+            'paid'       => ['title' => 'Lisavalikud lisatasu eest', 'description' => 'Lisatasu eest saab kodu viimistlust personaalsemaks muuta — näiteks erilahendusega peegel, kalasabaparkett, jahutusseadmed või teine valamukapi lahendus.'],
+        ],
+    ],
+
 ];
 

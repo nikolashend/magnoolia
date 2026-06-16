@@ -275,48 +275,8 @@
   </div>
 </section>
 
-{{-- ── Phase 29: interior finish & material examples (Prestige PPTX) ── --}}
-@php
-  $mpDir   = 'assets/magnoolia/sisedisain/pptx/Magnoolia__kodud_Prestige_Sisedisain/webp';
-  $mpBase  = public_path($mpDir);
-  $mpPick  = ['image1.webp','image2.webp','image3.webp','image4.webp','image5.webp','image6.webp','image9.webp','image14.webp'];
-  $mpImages = [];
-  if (is_dir($mpBase)) {
-    foreach ($mpPick as $f) {
-      if (file_exists($mpBase . '/' . $f) && filesize($mpBase . '/' . $f) > 8000) {
-        $mpImages[] = asset($mpDir . '/' . $f);
-      }
-      if (count($mpImages) >= 6) break;
-    }
-  }
-@endphp
-@if(count($mpImages) > 0)
-<section class="mg-page-section mg-page-section--white" id="viimistluse-naited">
-  <div class="container">
-    <div class="mg-section-heading" style="margin-bottom:32px;">
-      <div class="mg-section-heading__eyebrow">{{ __('magnoolia.rowhouse.materials_eyebrow') }}</div>
-      <h2 class="mg-section-heading__title">{{ __('magnoolia.rowhouse.materials_title') }}</h2>
-      <p class="mg-section-heading__subtitle">{{ __('magnoolia.rowhouse.materials_intro') }}</p>
-    </div>
-    <div class="mg-material-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
-      @foreach($mpImages as $src)
-      <div style="border-radius:14px;overflow:hidden;border:1px solid rgba(29,36,48,.08);background:#f3efe7;aspect-ratio:4/3;">
-        <img src="{{ $src }}" alt="{{ __('magnoolia.rowhouse.materials_title') }}"
-             width="480" height="360" loading="lazy" decoding="async"
-             style="width:100%;height:100%;object-fit:cover;display:block;">
-      </div>
-      @endforeach
-    </div>
-    <p style="font-size:12.5px;color:#9a9490;font-style:italic;margin-top:18px;">{{ __('magnoolia.rowhouse.materials_disclaimer') }}</p>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;">
-      <a href="{{ lroute('magnoolia.sisedisain') }}" class="zoomvilla-btn">{{ __('magnoolia.rowhouse.materials_cta_view') }} <i class="icon-angle-small-right"></i></a>
-      <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="zoomvilla-btn zoomvilla-btn--border"
-         data-mg-analytics="magnoolia_materials_inquiry">{{ __('magnoolia.rowhouse.materials_cta_ask') }} <i class="icon-angle-small-right"></i></a>
-    </div>
-  </div>
-</section>
-<style>@media (max-width:768px){#viimistluse-naited .mg-material-grid{grid-template-columns:repeat(2,1fr);}}@media (max-width:480px){#viimistluse-naited .mg-material-grid{grid-template-columns:1fr;}}</style>
-@endif
+{{-- ── Phase 31: premium interior-finish & equipment standard ──────── --}}
+@include('partials.magnoolia.interior-finish-section')
 
 {{-- ── Stages ────────────────────────────────────────────────── --}}
 <section class="mg-page-section mg-page-section--white">

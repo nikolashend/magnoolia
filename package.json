@@ -9,7 +9,8 @@
         "magnoolia:visual:mobile": "node scripts/magnoolia-visual-mobile.mjs",
         "magnoolia:generate:rowhouse": "node scripts/magnoolia-generate-rowhouse-assets.mjs",
         "magnoolia:visual:phase29": "node scripts/magnoolia-visual-phase29.mjs",
-        "magnoolia:visual:phase30": "node scripts/magnoolia-visual-phase30.mjs"
+        "magnoolia:visual:phase30": "node scripts/magnoolia-visual-phase30.mjs",
+        "magnoolia:generate:interior": "node scripts/magnoolia-generate-interior-assets.mjs"
     },
     "devDependencies": {
         "@playwright/test": "^1.60.0",
