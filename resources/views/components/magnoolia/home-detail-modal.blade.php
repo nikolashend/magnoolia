@@ -45,6 +45,7 @@
           'floor2_img' => ($fp['floor_2']['base'] ?? null) ? asset($fp['floor_2']['1024'] ?? $fp['floor_2']['base']).$av : null,
           'mx'         => $hl['x'] ?? null,
           'my'         => $hl['y'] ?? null,
+          'mappoly'    => $h['map_polygon'] ?? null,
           'price_public' => $cta['price_public'] ?? false,
       ];
   })->values()->all();
@@ -86,8 +87,10 @@
             <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9c8b7e;margin-bottom:8px;">{{ __('magnoolia.rowhouse.map_location') }}</div>
             <div style="position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(29,36,48,.1);">
               <img src="{{ $cleanUrl }}" alt="{{ __('magnoolia.rowhouse.alt_map') }}" width="1024" height="1436" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;">
+              <svg id="mg-hd-map-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" hidden
+                   style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;"></svg>
               <span id="mg-hd-marker" aria-hidden="true"
-                    style="position:absolute;width:26px;height:26px;border-radius:50%;border:3px solid #c89443;background:rgba(200,148,67,.32);box-shadow:0 0 0 6px rgba(200,148,67,.18);transform:translate(-50%,-50%);display:none;"></span>
+                    style="position:absolute;width:26px;height:26px;border-radius:50%;border:3px solid #c89443;background:rgba(200,148,67,.32);box-shadow:0 0 0 6px rgba(200,148,67,.18);transform:translate(-50%,-50%);display:none;z-index:3;"></span>
             </div>
             <div style="font-size:11px;color:#a8a196;margin-top:6px;">{{ __('magnoolia.rowhouse.marker_note') }}</div>
           </div>
@@ -158,7 +161,25 @@
 <script>
 (function () {
   var HOMES = {!! $homesEnc !!};
-  var byKey = {}; HOMES.forEach(function (h) { byKey[h.key] = h; byKey[h.unit_key] = h; byKey[h.slug] = h; });
+  var byKey = {}, POLY_HOMES = [];
+  HOMES.forEach(function (h) {
+    byKey[h.key] = h; byKey[h.unit_key] = h; byKey[h.slug] = h;
+    if (h.mappoly && h.mappoly.length > 2) POLY_HOMES.push(h);
+  });
+
+  // Draw every home plot as a clickable/hoverable zone on the mini asendiplaan;
+  // the open home is emphasised. Clicks reuse the [data-mg-home-open] delegation.
+  function renderHdMapZones(activeKey) {
+    var svg = document.getElementById('mg-hd-map-svg');
+    if (!svg) return;
+    if (!POLY_HOMES.length) { svg.innerHTML = ''; svg.setAttribute('hidden', ''); return; }
+    svg.innerHTML = POLY_HOMES.map(function (h) {
+      var pts = h.mappoly.map(function (p) { return (p[0] * 100).toFixed(2) + ',' + (p[1] * 100).toFixed(2); }).join(' ');
+      var cls = 'mg-hd-map-zone' + (h.key === activeKey ? ' is-active' : '');
+      return '<polygon class="' + cls + '" data-mg-home-open="' + h.key + '" tabindex="0" role="button" aria-label="' + h.display + '" points="' + pts + '"></polygon>';
+    }).join('');
+    svg.removeAttribute('hidden'); // SVG ignores .hidden=false; remove the attribute
+  }
 
   var overlay = document.getElementById('mg-hd-overlay');
   var dialog  = document.getElementById('mg-hd-dialog');
@@ -215,8 +236,11 @@
     var img = document.getElementById('mg-hd-img');
     if (h.img) { img.src = h.img; img.alt = h.display; img.style.display = ''; } else { img.removeAttribute('src'); }
 
+    // plot zones (all homes) + pin fallback when the open home has no polygon
+    var hasPoly = h.mappoly && h.mappoly.length > 2;
+    renderHdMapZones(h.key);
     var marker = document.getElementById('mg-hd-marker');
-    if (marker && h.mx != null && h.my != null) {
+    if (marker && !hasPoly && h.mx != null && h.my != null) {
       marker.style.left = (h.mx * 100) + '%';
       marker.style.top  = (h.my * 100) + '%';
       marker.style.display = '';
@@ -293,6 +317,10 @@
   document.addEventListener('keydown', function (e) {
     if (overlay.style.display === 'none') return;
     if (e.key === 'Escape') { close(); return; }
+    if (e.key === 'Enter' || e.key === ' ') {
+      var z = e.target.closest && e.target.closest('.mg-hd-map-zone[data-mg-home-open]');
+      if (z) { e.preventDefault(); window.mgOpenHome(z.getAttribute('data-mg-home-open')); return; }
+    }
     if (e.key === 'Tab') {
       var f = dialog.querySelectorAll('a[href],button,[tabindex]:not([tabindex="-1"])');
       f = Array.prototype.filter.call(f, function (el) { return el.offsetParent !== null; });
@@ -308,5 +336,8 @@
 @media (max-width: 720px) {
   #mg-hd-dialog .mg-hd-grid { grid-template-columns: 1fr !important; }
 }
+.mg-hd-map-zone { fill: rgba(200,148,67,.12); stroke: rgba(185,128,43,.6); stroke-width: 1.5px; stroke-linejoin: round; vector-effect: non-scaling-stroke; pointer-events: auto; cursor: pointer; outline: none; transition: fill .15s ease, stroke-width .15s ease; }
+.mg-hd-map-zone:hover, .mg-hd-map-zone:focus-visible { fill: rgba(200,148,67,.42); stroke: #b9802b; stroke-width: 2px; }
+.mg-hd-map-zone.is-active { fill: rgba(200,148,67,.55); stroke: #b9802b; stroke-width: 2.5px; filter: drop-shadow(0 1px 4px rgba(185,128,43,.55)); }
 </style>
 @endpush
