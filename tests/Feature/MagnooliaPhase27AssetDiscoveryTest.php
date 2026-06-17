@@ -95,6 +95,10 @@ class MagnooliaPhase27AssetDiscoveryTest extends TestCase
     {
         $manifest = config('magnoolia_assets', []);
 
+        // Always assert the config resolves to an array so the test is never
+        // "risky" (no-assertion) when the manifest happens to be empty.
+        $this->assertIsArray($manifest, 'magnoolia_assets config must resolve to an array');
+
         foreach ($manifest as $key => $entry) {
             if (is_array($entry) && isset($entry['path'])) {
                 $path = $entry['path'];

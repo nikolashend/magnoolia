@@ -22,11 +22,10 @@ class MagnooliaPublicDataRepository
                     return $active->public_payload;
                 }
             } catch (\Throwable $e) {
-                $filePayload = $this->readCurrentSnapshotFile();
-                if ($filePayload !== null) {
-                    Log::warning('Magnoolia public data served from last published file snapshot because DB was unavailable.');
-                    return $filePayload;
-                }
+                // DB unavailable: fall through to the canonical-config-first fallback
+                // below so the public site still serves the approved 19 homes with
+                // correct statuses (the on-disk snapshot is a deeper fallback inside).
+                Log::warning('Magnoolia public data: DB unavailable, using canonical fallback. ' . $e->getMessage());
             }
 
             return $this->getFallbackPayload();
@@ -63,12 +62,23 @@ class MagnooliaPublicDataRepository
 
     private function getFallbackPayload(): array
     {
+        // Before the first real admin publication the canonical source of truth is
+        // config/magnoolia_units.php (19 homes with the approved statuses + areas).
+        // This guarantees 19 homes are always shown and that reserved/sold statuses
+        // stay consistent across every public surface. A real active publication
+        // (checked in getPublicPayload) overrides this; the on-disk snapshot is only
+        // a disaster-recovery fallback for when the DB is unavailable.
+        $configPayload = $this->fromCanonicalConfig();
+        if ($configPayload !== null) {
+            return $configPayload;
+        }
+
         $filePayload = $this->readCurrentSnapshotFile();
         if ($filePayload !== null) {
             return $filePayload;
         }
 
-        // Safety fallback before first publication: derive sanitized payload from draft DB
+        // Last-resort fallback: derive sanitized payload from draft DB
         $units = MagnooliaUnit::query()->orderBy('sort_order')->get()->map(function (MagnooliaUnit $unit) {
             $priceCents = $unit->price_public ? $unit->price_cents : null;
             $status = $unit->status === 'coming_soon' ? 'tbc' : $unit->status;
@@ -105,6 +115,77 @@ class MagnooliaPublicDataRepository
         return [
             'meta' => [
                 'version' => 0,
+                'generated_at' => now()->toIso8601String(),
+            ],
+            'units' => $units,
+            'settings' => [],
+        ];
+    }
+
+    /**
+     * Canonical pre-publication payload derived from config/magnoolia_units.php.
+     *
+     * Returns null only if the config is empty (so the caller can fall back).
+     * Prices are intentionally withheld here (price_public=false, price_cents=null):
+     * exact prices are unconfirmed for public display and surface as
+     * "Hind täpsustamisel" until a real publication confirms them.
+     */
+    private function fromCanonicalConfig(): ?array
+    {
+        $config = (array) config('magnoolia_units', []);
+        if (empty($config)) {
+            return null;
+        }
+
+        $units = [];
+        foreach ($config as $u) {
+            $building = 0;
+            $section = 0;
+            if (preg_match('/tee-(\d+)-(\d+)/', (string) ($u['id'] ?? ''), $m)) {
+                $building = (int) $m[1];
+                $section = (int) $m[2];
+            } elseif (preg_match('#(\d+)\s*/\s*(\d+)#', (string) ($u['section'] ?? ''), $m)) {
+                $building = (int) $m[1];
+                $section = (int) $m[2];
+            }
+
+            $unitKey = 'B' . $building . '-S' . $section;
+            $status = ($u['status'] ?? 'available') === 'coming_soon' ? 'tbc' : ($u['status'] ?? 'available');
+
+            $units[] = [
+                'id' => $unitKey,
+                'unit_key' => $unitKey,
+                'slug' => strtolower($unitKey),
+                'address' => $u['address'] ?? null,
+                'building' => $u['building'] ?? ('Magnoolia tee ' . $building),
+                'section' => $u['section'] ?? ($building . '/' . $section),
+                'stage' => $u['stage'] ?? null,
+                'completion' => $u['completion'] ?? null,
+                'rooms' => $u['rooms'] ?? null,
+                'net_area' => isset($u['net_area']) ? (float) $u['net_area'] : null,
+                'terrace_area' => isset($u['terrace_area']) ? (float) $u['terrace_area'] : null,
+                'balcony_area' => isset($u['balcony_area']) ? (float) $u['balcony_area'] : null,
+                'storage_area' => isset($u['storage_area']) ? (float) $u['storage_area'] : null,
+                'private_yard_area' => isset($u['private_yard_area']) ? (float) $u['private_yard_area'] : null,
+                'parking_spaces' => $u['parking_spaces'] ?? ($u['parking'] ?? null),
+                'status' => $status,
+                'is_visible' => true,
+                // Prices withheld until confirmed by a real publication (no price_cents leak).
+                'price_public' => false,
+                'price_cents' => null,
+                'price' => null,
+                'floorplan_1_pdf' => $u['floorplan_1_pdf'] ?? null,
+                'floorplan_2_pdf' => $u['floorplan_2_pdf'] ?? null,
+                'masterplan_key' => $u['masterplan_key'] ?? null,
+                'plan_type' => $u['plan_type'] ?? null,
+                'public_page_visible' => true,
+            ];
+        }
+
+        return [
+            'meta' => [
+                'version' => 0,
+                'source' => 'canonical_config',
                 'generated_at' => now()->toIso8601String(),
             ],
             'units' => $units,

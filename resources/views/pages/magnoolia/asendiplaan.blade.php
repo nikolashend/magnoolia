@@ -299,8 +299,8 @@
      aria-label="Valitud kodu info"
      style="position:fixed;top:0;right:0;width:360px;max-width:100vw;height:100vh;background:#fff;box-shadow:-4px 0 32px rgba(29,36,48,.18);z-index:9999;transform:translateX(100%);transition:transform .3s ease;overflow-y:auto;display:flex;flex-direction:column;">
   <div style="padding:20px 20px 12px;border-bottom:1px solid rgba(29,36,48,.08);display:flex;align-items:center;justify-content:space-between;">
-    <div style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#c89443;">Valitud kodu</div>
-    <button onclick="mgClosePanel()" aria-label="Sulge"
+    <div style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#c89443;">{{ __('magnoolia.rowhouse.sinu_valik') }}</div>
+    <button onclick="mgClosePanel()" aria-label="{{ __('magnoolia.rowhouse.modal_close') }}"
             style="background:none;border:none;cursor:pointer;color:#888;font-size:22px;line-height:1;padding:0;">×</button>
   </div>
   <div id="mg-unit-panel-body" style="padding:20px;flex:1;">
@@ -325,6 +325,19 @@
     'available': '#4caf50', 'reserved': '#c89443', 'sold': '#888', 'tbc': '#9c27b0'
   };
   var priceTbcLabel = '{{ __("magnoolia.pricing.price_tbc_inline") }}';
+  // i18n labels for the JS-rendered panel (ET/RU/EN — no hardcoded ET text)
+  var L = {
+    stage1:     @json(__('magnoolia.rowhouse.etapp_1')),
+    stage2:     @json(__('magnoolia.rowhouse.etapp_2')),
+    rooms:      @json(__('magnoolia.rowhouse.spec_rooms')),
+    roomsUnit:  @json(__('magnoolia.rowhouse.rooms_unit')),
+    area:       @json(__('magnoolia.rowhouse.spec_net')),
+    completion: @json(__('magnoolia.rowhouse.spec_completion')),
+    price:      @json(__('magnoolia.pricing.price')),
+    viewHome:   @json(__('magnoolia.rowhouse.view_home')),
+    askOffer:   @json(__('magnoolia.rowhouse.cta_offer')),
+    compareAdd: @json(__('magnoolia.rowhouse.compare_add')),
+  };
 
   function findUnit(key) {
     return UNITS.find(function(u) { return u.key === key || u.slug === key; }) || null;
@@ -351,7 +364,7 @@
     body.innerHTML = [
       '<div style="margin-bottom:16px;">',
         '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">',
-          '<span style="background:' + (unit.stage===1?'#c89443':'#5b8dd9') + ';color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">' + (unit.stage===1?'{{ __("magnoolia.section.asendiplaan_stage1_label") ?? "I etapp" }}':'{{ __("magnoolia.section.asendiplaan_stage2_label") ?? "II etapp" }}') + '</span>',
+          '<span style="background:' + (unit.stage===1?'#c89443':'#5b8dd9') + ';color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;">' + (unit.stage===1?L.stage1:L.stage2) + '</span>',
           planLabel ? '<span style="background:#f5f0e8;color:#8a7760;font-size:11px;font-weight:600;padding:3px 8px;border-radius:12px;">' + planLabel + '</span>' : '',
         '</div>',
         '<div style="font-size:22px;font-weight:700;color:#1d2430;margin-bottom:6px;">' + unit.address + '</div>',
@@ -361,16 +374,16 @@
       '</div>',
 
       '<div style="display:flex;flex-direction:column;gap:0;margin-bottom:20px;">',
-        unit.rooms ? '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(29,36,48,.06);"><span style="font-size:13px;color:#888;">Toad</span><span style="font-size:13px;font-weight:600;color:#1d2430;">' + unit.rooms + ' tuba</span></div>' : '',
-        unit.net_area ? '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(29,36,48,.06);"><span style="font-size:13px;color:#888;">Pind</span><span style="font-size:13px;font-weight:600;color:#1d2430;">' + unit.net_area + ' m²</span></div>' : '',
-        unit.completion ? '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(29,36,48,.06);"><span style="font-size:13px;color:#888;">Valmimine</span><span style="font-size:13px;font-weight:600;color:#1d2430;">' + unit.completion + '</span></div>' : '',
-        priceStr ? '<div style="display:flex;justify-content:space-between;padding:10px 0;"><span style="font-size:13px;color:#888;">Hind</span><span style="font-size:' + (unit.price ? '16px' : '13px') + ';font-weight:' + (unit.price ? '700' : '500') + ';color:' + (unit.price ? '#c89443' : '#aaa') + ';font-style:' + (unit.price ? 'normal' : 'italic') + ';">' + priceStr + '</span></div>' : '',
+        unit.rooms ? '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(29,36,48,.06);"><span style="font-size:13px;color:#888;">' + L.rooms + '</span><span style="font-size:13px;font-weight:600;color:#1d2430;">' + unit.rooms + ' ' + L.roomsUnit + '</span></div>' : '',
+        unit.net_area ? '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(29,36,48,.06);"><span style="font-size:13px;color:#888;">' + L.area + '</span><span style="font-size:13px;font-weight:600;color:#1d2430;">' + unit.net_area + ' m²</span></div>' : '',
+        unit.completion ? '<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(29,36,48,.06);"><span style="font-size:13px;color:#888;">' + L.completion + '</span><span style="font-size:13px;font-weight:600;color:#1d2430;">' + unit.completion + '</span></div>' : '',
+        priceStr ? '<div style="display:flex;justify-content:space-between;padding:10px 0;"><span style="font-size:13px;color:#888;">' + L.price + '</span><span style="font-size:' + (unit.price ? '16px' : '13px') + ';font-weight:' + (unit.price ? '700' : '500') + ';color:' + (unit.price ? '#c89443' : '#aaa') + ';font-style:' + (unit.price ? 'normal' : 'italic') + ';">' + priceStr + '</span></div>' : '',
       '</div>',
 
       '<div style="display:flex;flex-direction:column;gap:10px;">',
-        unit.status !== 'sold' ? '<a href="' + unit.page_url + '" style="background:#c89443;color:#fff;padding:11px 16px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:600;text-align:center;display:block;" data-event="unit_map_panel_open" data-unit="' + unit.key + '">Vaata kodu <span style="margin-left:4px;">→</span></a>' : '',
-        unit.status !== 'sold' ? '<a href="{{ lroute('magnoolia.contact') }}?unit=' + encodeURIComponent(unit.address) + '&source_component=asendiplaan_side_panel#kontaktivorm" style="border:1px solid #c89443;color:#c89443;padding:11px 16px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:600;text-align:center;display:block;" data-event="unit_detail_cta" data-unit="' + unit.key + '" data-source="asendiplaan_side_panel">Küsi selle kodu kohta</a>' : '',
-        '<button onclick="mgCompareAdd(\'' + unit.key + '\',\'' + unit.address.replace(/'/g,"\\'") + '\',\'' + unit.slug + '\'); return false;" style="border:1px solid rgba(29,36,48,.15);background:#faf9f7;color:#1d2430;padding:11px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;width:100%;">Lisa võrdlusesse</button>',
+        unit.status !== 'sold' ? '<a href="' + unit.page_url + '" style="background:#c89443;color:#fff;padding:11px 16px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:600;text-align:center;display:block;" data-event="unit_map_panel_open" data-unit="' + unit.key + '">' + L.viewHome + ' <span style="margin-left:4px;">→</span></a>' : '',
+        unit.status !== 'sold' ? '<a href="{{ lroute('magnoolia.contact') }}?unit=' + encodeURIComponent(unit.address) + '&source_component=asendiplaan_side_panel#kontaktivorm" style="border:1px solid #c89443;color:#c89443;padding:11px 16px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:600;text-align:center;display:block;" data-event="unit_detail_cta" data-unit="' + unit.key + '" data-source="asendiplaan_side_panel">' + L.askOffer + '</a>' : '',
+        '<button onclick="mgCompareAdd(\'' + unit.key + '\',\'' + unit.address.replace(/'/g,"\\'") + '\',\'' + unit.slug + '\'); return false;" style="border:1px solid rgba(29,36,48,.15);background:#faf9f7;color:#1d2430;padding:11px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;width:100%;">' + L.compareAdd + '</button>',
       '</div>',
     ].join('');
 

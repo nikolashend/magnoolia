@@ -3,6 +3,19 @@
 @section('title', 'Magnoolia Admin Dashboard')
 
 @section('admin_content')
+    @if(!empty($usingCanonicalFallback))
+    <div class="card" style="margin-bottom:14px;border-left:4px solid #c89443;background:#fbf6ec;">
+        <strong style="color:#9a6b1f;">⚠ Admin editing is not yet client-ready (Phase 33).</strong>
+        <p style="margin:6px 0 0;font-size:13px;color:#5b5446;">
+            The public website currently serves its <strong>{{ $canonicalConfigCount }} canonical homes</strong>
+            from the fallback config (<code>config/magnoolia_units.php</code>), with the approved
+            reserved/sold statuses and prices withheld until confirmed.
+            The counters below reflect <strong>DB-managed units</strong> only —
+            <strong>0 DB units / no active publication</strong> is expected at this stage and does
+            <em>not</em> mean the public site is empty. DB-backed editing &amp; publishing arrive in Phase 33.
+        </p>
+    </div>
+    @endif
     <div class="card" style="margin-bottom:14px;">
         <h2 style="margin:0 0 10px;">Operational truth</h2>
         <div class="grid grid-4">

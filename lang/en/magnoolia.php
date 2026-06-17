@@ -5,6 +5,7 @@ return [
     /* Navigation */
     'nav' => [
         'home'       => 'Home',
+        'about'      => 'Magnoolia',
         'homes'      => 'Homes & Prices',
         'masterplan' => 'Site Plan',
         'location'   => 'Location',
@@ -1230,6 +1231,7 @@ return [
         'row_cta'          => 'View homes',
         'home_cta'         => 'View home',
         'view_home'        => 'View home',
+        'compare_add'      => 'Add to compare',
         'back_to_rows'     => 'Choose another group',
         'view_toggle_1'    => 'View 1',
         'view_toggle_2'    => 'View 2',

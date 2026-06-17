@@ -1279,6 +1279,7 @@ return [
         'row_cta'          => 'Vaata kodusid',
         'home_cta'         => 'Vaata kodu',
         'view_home'        => 'Vaata kodu',
+        'compare_add'      => 'Lisa võrdlusesse',
         'back_to_rows'     => 'Vali teine aadressirühm',
         'view_toggle_1'    => 'Vaade 1',
         'view_toggle_2'    => 'Vaade 2',

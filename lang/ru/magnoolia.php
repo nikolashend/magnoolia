@@ -5,6 +5,7 @@ return [
     /* Navigation */
     'nav' => [
         'home'       => 'Главная',
+        'about'      => 'Magnoolia',
         'homes'      => 'Дома и цены',
         'masterplan' => 'Генплан',
         'location'   => 'Расположение',
@@ -1230,6 +1231,7 @@ return [
         'row_cta'          => 'Смотреть дома',
         'home_cta'         => 'Смотреть дом',
         'view_home'        => 'Смотреть дом',
+        'compare_add'      => 'Добавить к сравнению',
         'back_to_rows'     => 'Выбрать другую группу',
         'view_toggle_1'    => 'Вид 1',
         'view_toggle_2'    => 'Вид 2',

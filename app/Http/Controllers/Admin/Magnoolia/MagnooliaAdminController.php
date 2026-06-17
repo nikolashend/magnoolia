@@ -35,6 +35,13 @@ class MagnooliaAdminController extends Controller
         $units = MagnooliaUnit::query()->get();
         $validation = $this->validationService->validateDraft();
 
+        // Phase 32 honesty banner: the public site currently sources its 19 homes
+        // from the canonical config fallback (config/magnoolia_units.php), NOT the
+        // DB-managed units below. Surface that so "0 units" is never misread as a
+        // broken public site. The DB-backed admin editing arrives in Phase 33.
+        $canonicalConfigCount = count((array) config('magnoolia_units', []));
+        $usingCanonicalFallback = $units->count() === 0 && !$active;
+
         $stats = [
             'published_version' => $active?->version,
             'published_at' => $active?->published_at,
@@ -50,7 +57,7 @@ class MagnooliaAdminController extends Controller
             'hidden_prices' => $units->where('price_public', false)->count(),
         ];
 
-        return view('admin.magnoolia.dashboard', compact('stats', 'validation', 'active'));
+        return view('admin.magnoolia.dashboard', compact('stats', 'validation', 'active', 'canonicalConfigCount', 'usingCanonicalFallback'));
     }
 
     public function units(Request $request)

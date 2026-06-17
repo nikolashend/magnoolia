@@ -41,9 +41,11 @@ class MagnooliaPhase30NoZeroHomesTest extends TestCase
     {
         // With no publication, statuses come from the canonical config (4 reserved,
         // 1 sold, rest available) so localhost mirrors the approved status list.
+        // Assert ACTUAL home rows carry the statuses (data-status), not merely that
+        // the filter-chip labels appear in the markup.
         $html = $this->get('/kodud-ja-hinnad')->assertStatus(200)->getContent();
-        $this->assertStringContainsString('Broneeritud', $html, 'Reserved homes must show');
-        $this->assertStringContainsString('Müüdud', $html, 'Sold home must show');
-        $this->assertStringContainsString('Vaba', $html, 'Available homes must show');
+        $this->assertStringContainsString('data-status="available"', $html, 'Available home rows must render');
+        $this->assertStringContainsString('data-status="reserved"', $html, 'Reserved home rows must render');
+        $this->assertStringContainsString('data-status="sold"', $html, 'Sold home row must render');
     }
 }
