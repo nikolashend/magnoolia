@@ -3649,6 +3649,15 @@ body {
   display: block;
 }
 .mg-feature-row__img--tall { min-height: 480px; }
+/* On mobile the single-column image is width-bound, so its natural height is
+   shorter than the desktop min-height — drop min-height so the container hugs
+   the image (no grey background below it). Placed AFTER the base rules so it
+   wins on source order. */
+@media (max-width: 991px) {
+  .mg-feature-row__img,
+  .mg-feature-row__img--tall { min-height: 0; }
+  .mg-feature-row__img img { height: auto; }
+}
 .mg-feature-row__content {}
 .mg-feature-row__kicker {
   font-size: 11px;
