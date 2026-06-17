@@ -195,17 +195,21 @@
         </div>
       </div>
       <div style="flex-shrink:0;">
-        @if(file_exists(public_path('assets/magnoolia/logos/aet-piel.png')))
-        <img src="{{ asset('assets/magnoolia/logos/aet-piel.png') }}"
-             alt="Aet Piel — sisekujundus"
-             width="120" height="60"
-             loading="lazy" decoding="async"
-             style="max-width:120px;height:auto;">
-        @else
-        <div style="padding:12px 20px;border:2px solid #c89443;border-radius:8px;font-size:16px;font-weight:700;color:#c89443;letter-spacing:.06em;white-space:nowrap;">
-          AET PIEL
-        </div>
-        @endif
+        <a href="https://www.aetpiel.com" target="_blank" rel="noopener noreferrer"
+           aria-label="Aet Piel — www.aetpiel.com" data-mg-analytics="magnoolia_aetpiel_click"
+           style="text-decoration:none;display:inline-block;">
+          @if(file_exists(public_path('assets/magnoolia/logos/aet-piel.png')))
+          <img src="{{ asset('assets/magnoolia/logos/aet-piel.png') }}"
+               alt="Aet Piel — sisekujundus"
+               width="120" height="60"
+               loading="lazy" decoding="async"
+               style="max-width:120px;height:auto;">
+          @else
+          <span style="display:inline-block;padding:12px 20px;border:2px solid #c89443;border-radius:8px;font-size:16px;font-weight:700;color:#c89443;letter-spacing:.06em;white-space:nowrap;">
+            AET PIEL →
+          </span>
+          @endif
+        </a>
       </div>
     </div>
   </div>

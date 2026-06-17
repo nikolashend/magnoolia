@@ -198,11 +198,11 @@
                 ['loc_et' => 'Esik, WC, leiliruumid, eesr., vannituba', 'loc_ru' => 'Прихожая, WC, сауна, предбанник', 'loc_en' => 'Hallway, WC, sauna rooms, anteroom', 'type' => '60×60 cm', 'area' => '~104 m²'],
               ] as $row)
               <tr style="border-bottom:1px solid #f3f4f6;">
-                <td style="padding:10px 4px;color:#444;line-height:1.4;">
+                <td style="padding:10px 4px;color:#444;line-height:1.4;vertical-align:top;">
                   {{ app()->getLocale()==='ru' ? $row['loc_ru'] : (app()->getLocale()==='en' ? $row['loc_en'] : $row['loc_et']) }}
                 </td>
-                <td style="padding:10px 4px;font-weight:600;color:#1d2430;white-space:nowrap;">{{ $row['type'] }}</td>
-                <td style="padding:10px 4px;text-align:right;color:#c89443;font-weight:600;">{{ $row['area'] }}</td>
+                <td style="padding:10px 4px;font-weight:600;color:#1d2430;white-space:nowrap;vertical-align:top;">{{ $row['type'] }}</td>
+                <td style="padding:10px 4px;text-align:right;color:#c89443;font-weight:600;vertical-align:top;white-space:nowrap;">{{ $row['area'] }}</td>
               </tr>
               @endforeach
             </tbody>

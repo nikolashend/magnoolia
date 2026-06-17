@@ -70,9 +70,12 @@
   <div class="container">
     <div class="mg-editorial-row">
       <div class="mg-editorial-row__img">
-        <img src="{{ asset('assets/images/magnoolia/Cam001.0000.jpg') }}"
+        @php $edBase = 'assets/images/magnoolia/Cam001.0000'; @endphp
+        <img src="{{ asset($edBase.'-768w.webp') }}"
+             srcset="{{ asset($edBase.'-480w.webp') }} 480w, {{ asset($edBase.'-768w.webp') }} 768w, {{ asset($edBase.'-1200w.webp') }} 1200w"
+             sizes="(min-width:768px) 580px, 100vw"
              alt="Magnoolia ridaelamukodude välisvaade"
-             width="580" height="420" loading="eager">
+             width="580" height="420" loading="lazy" decoding="async">
       </div>
       <div class="mg-editorial-row__content">
       <div class="mg-editorial-row__kicker">{{ __('magnoolia.page.arhitektuur.ed_kicker') }}</div>
@@ -95,9 +98,18 @@
     @foreach(__('magnoolia.page.arhitektuur.features') as $row)
     <div class="mg-feature-row {{ $row['reverse'] ? 'mg-feature-row--reverse' : '' }}" style="margin-bottom:60px;">
       <div class="mg-feature-row__img">
+        @php $fb = 'assets/images/magnoolia/' . preg_replace('/\.jpe?g$/i', '', $row['img']); @endphp
+        @if(file_exists(public_path($fb.'-768w.webp')))
+        <img src="{{ asset($fb.'-768w.webp') }}"
+             srcset="{{ asset($fb.'-480w.webp') }} 480w, {{ asset($fb.'-768w.webp') }} 768w, {{ asset($fb.'-1200w.webp') }} 1200w"
+             sizes="(min-width:992px) 560px, 100vw"
+             alt="{{ $row['alt'] ?? $row['title'] ?? 'Magnoolia' }}"
+             loading="lazy" decoding="async" width="560" height="400">
+        @else
         <img src="{{ asset('assets/images/magnoolia/' . $row['img']) }}"
              alt="{{ $row['alt'] ?? $row['title'] ?? 'Magnoolia' }}"
              loading="lazy" width="560" height="400">
+        @endif
       </div>
       <div class="mg-feature-row__content">
         <div class="mg-feature-row__kicker">{{ $row['kicker'] }}</div>

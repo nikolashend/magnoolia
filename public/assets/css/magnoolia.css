@@ -3291,6 +3291,15 @@ body {
   gap: 56px;
   align-items: center;
 }
+/* Let grid cells shrink below their content's intrinsic size so a fixed-width
+   image (width="580") can never force the row wider than the viewport. */
+.mg-editorial-row > * { min-width: 0; }
+.mg-editorial-row__img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+}
 .mg-editorial-row--reverse { direction: rtl; }
 .mg-editorial-row--reverse > * { direction: ltr; }
 @media (max-width: 767px) {

@@ -91,7 +91,7 @@
             <span class="mg-if-card__title">{{ $title }}</span>
             <span class="mg-if-card__desc">{{ $desc }}</span>
           </span>
-          <span class="mg-if-card__toggle">{{ __('magnoolia.interior.view_details') }}<i aria-hidden="true">+</i></span>
+          <span class="mg-if-card__toggle"><span>{{ __('magnoolia.interior.view_details') }}</span><i aria-hidden="true">+</i></span>
         </summary>
 
         <div class="mg-if-card__body">
