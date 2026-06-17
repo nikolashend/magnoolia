@@ -80,11 +80,14 @@
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:28px;flex-wrap:wrap;">
         <div style="flex:1;min-width:280px;">
           <div style="font-size:11px;color:#c89443;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;">{{ __('magnoolia.page.finantseerimine.bigbank_eyebrow') }}</div>
-          {{-- Bigbank logo / name --}}
-          @if(file_exists(public_path('assets/magnoolia/logos/bigbank.svg')))
-          <img src="{{ asset('assets/magnoolia/logos/bigbank.svg') }}"
+          {{-- Bigbank logo (real mark) → falls back to styled wordmark text --}}
+          @php
+            $bbExt = collect(['svg','webp','png'])->first(fn ($e) => file_exists(public_path('assets/magnoolia/logos/bigbank.'.$e)));
+          @endphp
+          @if($bbExt)
+          <img src="{{ asset('assets/magnoolia/logos/bigbank.'.$bbExt) }}"
                alt="Bigbank"
-               width="140" height="40"
+               width="135" height="40"
                loading="lazy"
                decoding="async"
                style="height:40px;width:auto;margin-bottom:16px;display:block;">

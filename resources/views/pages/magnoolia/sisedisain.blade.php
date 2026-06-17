@@ -198,12 +198,15 @@
         <a href="https://www.aetpiel.com" target="_blank" rel="noopener noreferrer"
            aria-label="Aet Piel — www.aetpiel.com" data-mg-analytics="magnoolia_aetpiel_click"
            style="text-decoration:none;display:inline-block;">
-          @if(file_exists(public_path('assets/magnoolia/logos/aet-piel.png')))
-          <img src="{{ asset('assets/magnoolia/logos/aet-piel.png') }}"
+          @php
+            $apExt = collect(['webp','png'])->first(fn ($e) => file_exists(public_path('assets/magnoolia/logos/aet-piel.'.$e)));
+          @endphp
+          @if($apExt)
+          <img src="{{ asset('assets/magnoolia/logos/aet-piel.'.$apExt) }}"
                alt="Aet Piel — sisekujundus"
-               width="120" height="60"
+               width="140" height="38"
                loading="lazy" decoding="async"
-               style="max-width:120px;height:auto;">
+               style="max-width:140px;height:auto;">
           @else
           <span style="display:inline-block;padding:12px 20px;border:2px solid #c89443;border-radius:8px;font-size:16px;font-weight:700;color:#c89443;letter-spacing:.06em;white-space:nowrap;">
             AET PIEL →
