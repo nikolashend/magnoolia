@@ -87,7 +87,7 @@
           @if($bbExt)
           <img src="{{ asset('assets/magnoolia/logos/bigbank.'.$bbExt) }}"
                alt="Bigbank"
-               width="135" height="40"
+               width="138" height="40"
                loading="lazy"
                decoding="async"
                style="height:40px;width:auto;margin-bottom:16px;display:block;">
