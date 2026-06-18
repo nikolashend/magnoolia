@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Magnoolia;
 
 use App\Http\Controllers\Controller;
+use App\Models\MagnooliaAuditLog;
 use App\Models\MagnooliaPublication;
 use App\Models\MagnooliaSetting;
 use App\Models\MagnooliaUnit;
@@ -42,6 +43,13 @@ class MagnooliaAdminController extends Controller
         $canonicalConfigCount = count((array) config('magnoolia_units', []));
         $usingCanonicalFallback = $units->count() === 0 && !$active;
 
+        // Explicit "what is live right now" indicator for the client.
+        $liveSource = $active
+            ? 'Active DB publication v' . $active->version
+            : ($units->count() > 0 ? 'Canonical config fallback (no active publication yet — Publish to go live)' : 'Canonical config fallback');
+        $lastEditedUnit = MagnooliaUnit::query()->orderByDesc('updated_at')->first();
+        $recentAudit = MagnooliaAuditLog::query()->with('admin')->orderByDesc('id')->limit(10)->get();
+
         $stats = [
             'published_version' => $active?->version,
             'published_at' => $active?->published_at,
@@ -57,7 +65,7 @@ class MagnooliaAdminController extends Controller
             'hidden_prices' => $units->where('price_public', false)->count(),
         ];
 
-        return view('admin.magnoolia.dashboard', compact('stats', 'validation', 'active', 'canonicalConfigCount', 'usingCanonicalFallback'));
+        return view('admin.magnoolia.dashboard', compact('stats', 'validation', 'active', 'canonicalConfigCount', 'usingCanonicalFallback', 'liveSource', 'lastEditedUnit', 'recentAudit'));
     }
 
     public function units(Request $request)
@@ -144,6 +152,50 @@ class MagnooliaAdminController extends Controller
 
         return redirect()->route('admin.magnoolia.units.edit', ['unit' => $unit->unit_key])
             ->with('status', 'Draft saved. Changed fields: ' . implode(', ', array_keys($changedFields)));
+    }
+
+    /**
+     * Inline quick edit from the units list — status and/or public-price visibility.
+     * Comfortable daily-workflow action: marks a home Vaba/Broneeritud/Müüdud or
+     * toggles price visibility without opening the full form. Still audited; still
+     * draft-only (does not affect the public site until the next Publish).
+     */
+    public function quickUpdate(Request $request, string $unitKey)
+    {
+        $unit = MagnooliaUnit::query()->where('unit_key', $unitKey)->firstOrFail();
+
+        $validated = $request->validate([
+            'field' => 'required|in:status,price_public',
+            'status' => 'required_if:field,status|in:available,reserved,sold,coming_soon',
+            'price_public' => 'required_if:field,price_public|in:0,1',
+            'change_reason' => 'nullable|string|max:500',
+        ]);
+
+        $before = $unit->toArray();
+        $reason = ($validated['change_reason'] ?? null) ?: 'Quick edit (' . $validated['field'] . ')';
+
+        $incoming = $unit->toArray();
+        if ($validated['field'] === 'status') {
+            $incoming['status'] = $validated['status'];
+        } else {
+            $incoming['price_public'] = (bool) $validated['price_public'];
+        }
+
+        $updated = $this->draftService->applyUnitDraft($unit, $incoming, (int) $request->user()->id);
+
+        $this->auditService->log(
+            'unit_updated',
+            (int) $request->user()->id,
+            'unit',
+            $unit->unit_key,
+            $before,
+            $updated->toArray(),
+            $reason,
+            $request->ip(),
+            $request->userAgent(),
+        );
+
+        return back()->with('status', "Draft updated for {$unit->address} ({$validated['field']}). Publish to make it live.");
     }
 
     public function validateDraft()

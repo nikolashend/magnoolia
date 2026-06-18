@@ -62,10 +62,13 @@ class MagnooliaValidationService
 
             foreach (['floorplan_floor_1', 'floorplan_floor_2'] as $assetField) {
                 $path = (string) $unit->{$assetField};
+                // Missing floor plan is a WARNING (the public site shows an honest
+                // placeholder / per-building fallback) — not a publish blocker (Phase 33).
                 if ($path === '') {
-                    $errors['blockers'][] = "Missing {$assetField} for {$unit->unit_key}.";
+                    $errors['warnings'][] = "Missing {$assetField} for {$unit->unit_key} (public shows placeholder).";
                     continue;
                 }
+                // Path-safety issues remain hard BLOCKERS (security).
                 if (str_contains($path, '..')) {
                     $errors['blockers'][] = "Unsafe {$assetField} path for {$unit->unit_key}.";
                     continue;
@@ -77,7 +80,7 @@ class MagnooliaValidationService
                 }
                 $fullPath = public_path($normalized);
                 if (!is_file($fullPath)) {
-                    $errors['blockers'][] = "Missing asset file {$assetField} for {$unit->unit_key}.";
+                    $errors['warnings'][] = "Asset file for {$assetField} not found for {$unit->unit_key} (public shows placeholder).";
                 }
             }
         }

@@ -16,6 +16,24 @@
         </p>
     </div>
     @endif
+    <div class="card" style="margin-bottom:14px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;border-left:4px solid {{ !empty($active) ? '#1f7a44' : '#c89443' }};">
+        <div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9a8b6f;">Live public source</div>
+            <div style="font-size:18px;font-weight:700;color:#1d2430;">{{ $liveSource ?? '—' }}</div>
+            <div style="font-size:12.5px;color:#5b5446;margin-top:2px;">
+                19 canonical homes · {{ $stats['available'] }} Vaba · {{ $stats['reserved'] }} Broneeritud · {{ $stats['sold'] }} Müüdud
+                @if(!empty($active)) · published {{ optional($active->published_at)->format('Y-m-d H:i') }} @endif
+                @if(!empty($lastEditedUnit)) · last draft edit {{ optional($lastEditedUnit->updated_at)->format('Y-m-d H:i') }} @endif
+            </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <a href="{{ route('admin.magnoolia.units.index') }}"><button type="button">Manage homes</button></a>
+            <a href="{{ route('admin.magnoolia.validate') }}"><button type="button">Validate</button></a>
+            <a href="{{ route('admin.magnoolia.preview') }}"><button type="button">Preview draft</button></a>
+            <a href="{{ route('admin.magnoolia.publish.form') }}"><button type="button">Publish</button></a>
+            <a href="{{ url('/') }}" target="_blank"><button type="button">View site ↗</button></a>
+        </div>
+    </div>
     <div class="card" style="margin-bottom:14px;">
         <h2 style="margin:0 0 10px;">Operational truth</h2>
         <div class="grid grid-4">
@@ -51,5 +69,19 @@
                 <div class="status status-ok">No warnings</div>
             @endforelse
         </div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+        <h3 style="margin:0 0 10px;">Recent changes <a href="{{ route('admin.magnoolia.audit') }}" style="font-size:12px;font-weight:400;">(full audit log →)</a></h3>
+        @forelse(($recentAudit ?? []) as $log)
+            <div style="display:flex;gap:12px;align-items:baseline;padding:6px 0;border-bottom:1px solid #f0ede8;font-size:13px;">
+                <span style="color:#999;min-width:120px;">{{ optional($log->created_at)->format('Y-m-d H:i') }}</span>
+                <span style="font-weight:600;min-width:160px;">{{ $log->action }}</span>
+                <span style="color:#666;flex:1;">{{ $log->entity_type }} {{ $log->entity_id }} @if($log->reason)— {{ \Illuminate\Support\Str::limit($log->reason, 60) }}@endif</span>
+                <span style="color:#999;">{{ optional($log->admin)->email ?? 'system' }}</span>
+            </div>
+        @empty
+            <div class="status status-ok">No changes logged yet</div>
+        @endforelse
     </div>
 @endsection

@@ -14,28 +14,58 @@
         </form>
     </div>
 
+    @php
+        $badge = [
+            'available' => ['Vaba', '#1f7a44', '#e6f4ec'],
+            'reserved'  => ['Broneeritud', '#9a6b1f', '#fbf1dd'],
+            'sold'      => ['Müüdud', '#8a2b2b', '#f6e3e3'],
+            'coming_soon' => ['Varjatud / Draft', '#555', '#ececec'],
+        ];
+    @endphp
     <div class="card">
+        <div style="font-size:13px;color:#666;margin-bottom:8px;">
+            {{ $units->total() }} kodu · quick-edit below changes the <strong>draft</strong> only — Publish to make it live.
+        </div>
         <table>
             <thead>
             <tr>
-                <th>Address</th><th>Stage</th><th>Status</th><th>Rooms</th><th>Net area</th><th>Private yard</th><th>Price</th><th>Price public</th><th>Last updated</th><th>Updated by</th><th>Validation</th><th></th>
+                <th>Address</th><th>Stage</th><th>Status (quick)</th><th>Rooms</th><th>Net m²</th><th>Yard m²</th><th>Price (internal)</th><th>Public price</th><th>Updated</th><th></th>
             </tr>
             </thead>
             <tbody>
             @foreach($units as $unit)
+                @php $b = $badge[$unit->status] ?? $badge['coming_soon']; @endphp
                 <tr>
-                    <td>{{ $unit->address }}</td>
-                    <td>{{ $unit->stage }}</td>
-                    <td>{{ $unit->status }}</td>
+                    <td><strong>{{ $unit->address }}</strong></td>
+                    <td>{{ $unit->stage === 1 ? 'I' : 'II' }}</td>
+                    <td>
+                        <span style="display:inline-block;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:700;color:{{ $b[1] }};background:{{ $b[2] }};">{{ $b[0] }}</span>
+                        <form method="POST" action="{{ route('admin.magnoolia.units.quick', ['unit' => $unit->unit_key]) }}" style="display:inline-flex;gap:4px;margin-left:6px;">
+                            @csrf @method('PATCH')
+                            <input type="hidden" name="field" value="status">
+                            <select name="status" onchange="this.form.submit()" style="font-size:11px;padding:2px;">
+                                @foreach(['available'=>'Vaba','reserved'=>'Broneeritud','sold'=>'Müüdud','coming_soon'=>'Peida'] as $sv=>$sl)
+                                    <option value="{{ $sv }}" @selected($unit->status===$sv)>{{ $sl }}</option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </td>
                     <td>{{ $unit->rooms }}</td>
                     <td>{{ $unit->net_area }}</td>
                     <td>{{ $unit->private_yard_area }}</td>
-                    <td>{{ $unit->price_cents ? number_format($unit->price_cents/100,2,'.',' ') : '—' }}</td>
-                    <td>{{ $unit->price_public ? 'Yes' : 'No' }}</td>
-                    <td>{{ $unit->updated_at }}</td>
-                    <td>{{ $unit->updated_by }}</td>
-                    <td><span class="status status-ok">OK</span></td>
-                    <td><a href="{{ route('admin.magnoolia.units.edit', ['unit' => $unit->unit_key]) }}">Edit</a></td>
+                    <td>{{ $unit->price_cents ? number_format($unit->price_cents/100,0,'.',' ').' €' : '—' }}</td>
+                    <td>
+                        <form method="POST" action="{{ route('admin.magnoolia.units.quick', ['unit' => $unit->unit_key]) }}" style="display:inline;">
+                            @csrf @method('PATCH')
+                            <input type="hidden" name="field" value="price_public">
+                            <input type="hidden" name="price_public" value="{{ $unit->price_public ? '0' : '1' }}">
+                            <button type="submit" style="font-size:11px;padding:2px 8px;border-radius:100px;border:1px solid #ccc;background:{{ $unit->price_public ? '#e6f4ec' : '#f3f3f3' }};cursor:pointer;">
+                                {{ $unit->price_public ? 'Avalik ✓' : 'Peidetud' }}
+                            </button>
+                        </form>
+                    </td>
+                    <td style="font-size:11px;color:#888;">{{ optional($unit->updated_at)->format('Y-m-d H:i') }}</td>
+                    <td><a href="{{ route('admin.magnoolia.units.edit', ['unit' => $unit->unit_key]) }}">Edit →</a></td>
                 </tr>
             @endforeach
             </tbody>

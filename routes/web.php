@@ -162,6 +162,7 @@ Route::prefix('admin/magnoolia')
         Route::get('/units', [MagnooliaAdminController::class, 'units'])->name('units.index');
         Route::get('/units/{unit}/edit', [MagnooliaAdminController::class, 'editUnit'])->name('units.edit');
         Route::put('/units/{unit}', [MagnooliaAdminController::class, 'updateUnit'])->name('units.update');
+        Route::patch('/units/{unit}/quick', [MagnooliaAdminController::class, 'quickUpdate'])->name('units.quick');
 
         Route::get('/validate', [MagnooliaAdminController::class, 'validateDraft'])->name('validate');
         Route::get('/preview', [MagnooliaAdminController::class, 'preview'])->name('preview');
