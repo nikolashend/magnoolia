@@ -367,11 +367,11 @@
 
 {{-- Lightbox --}}
 <div id="mg-lightbox"
-     onclick="this.style.display='none'"
+     onclick="mgLightboxClose()"
      role="dialog" aria-modal="true" aria-label="Pilt suurendatult"
      style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);align-items:center;justify-content:center;cursor:zoom-out;">
   <button type="button"
-          onclick="event.stopPropagation();document.getElementById('mg-lightbox').style.display='none'"
+          onclick="event.stopPropagation();mgLightboxClose()"
           aria-label="Sulge"
           style="position:absolute;top:16px;right:20px;background:none;border:none;color:#fff;font-size:32px;line-height:1;cursor:pointer;padding:4px 10px;">&#x2715;</button>
   <div style="max-width:90vw;max-height:90vh;text-align:center;" onclick="event.stopPropagation()">
@@ -393,11 +393,13 @@ function mgLightboxOpen(src, alt) {
   lb.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
+function mgLightboxClose() {
+  var lb = document.getElementById('mg-lightbox');
+  if (lb) { lb.style.display = 'none'; }
+  document.body.style.overflow = '';
+}
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    var lb = document.getElementById('mg-lightbox');
-    if (lb) { lb.style.display = 'none'; document.body.style.overflow = ''; }
-  }
+  if (e.key === 'Escape') { mgLightboxClose(); }
 });
 </script>
 @endpush
