@@ -46,6 +46,29 @@
   if ($managedGallery->isNotEmpty()) {
     $images = $managedGallery;
   }
+
+  // Pick optimized responsive WebP variants ({stem}-480w/-768w/-1200w.webp) for
+  // fast loading; fall back to the original when no variant exists. Returns the
+  // grid thumb + srcset (small) and a larger image for the lightbox.
+  $pick = function (string $src): array {
+    $rel  = ltrim(str_replace(asset(''), '', $src), '/');
+    $dir  = trim(dirname($rel), '.');
+    $stem = pathinfo($rel, PATHINFO_FILENAME);
+    $vars = [];
+    foreach ([480, 768, 1200] as $w) {
+      $vrel = ($dir ? $dir . '/' : '') . $stem . '-' . $w . 'w.webp';
+      if (is_file(public_path($vrel))) { $vars[$w] = asset($vrel); }
+    }
+    if ($vars) {
+      $srcset = implode(', ', array_map(fn ($w) => $vars[$w] . ' ' . $w . 'w', array_keys($vars)));
+      return [
+        'thumb'  => $vars[768] ?? end($vars),
+        'srcset' => $srcset,
+        'full'   => $vars[1200] ?? end($vars),
+      ];
+    }
+    return ['thumb' => $src, 'srcset' => '', 'full' => $src];
+  };
 @endphp
 
 <script type="application/ld+json">
@@ -112,24 +135,24 @@
     {{-- Grid --}}
     <div class="mg-gallery-grid" id="gallery-grid" aria-live="polite" aria-label="{{ __('magnoolia.page.galerii.grid_aria') }}">
       @foreach($images as $i => $img)
-      @php $imgIdx = is_int($i) ? $i : $loop->index; @endphp
-      <div class="mg-gallery-item {{ $imgIdx < 2 ? 'mg-gallery-item--wide' : '' }}"
+      @php $imgIdx = $loop->index; $v = $pick($img['src']); @endphp
+      <div class="mg-gallery-item"
            data-category="{{ $img['cat'] }}"
            tabindex="0"
            role="button"
            aria-label="{{ __('magnoolia.page.galerii.lightbox_open') }}: {{ $img['alt'] }}"
-           data-lightbox-src="{{ $img['src'] }}"
+           data-lightbox-src="{{ $v['full'] }}"
            data-lightbox-alt="{{ $img['alt'] }}"
-           onclick="mgLightboxOpen('{{ $img['src'] }}', '{{ addslashes($img['alt']) }}')"
-           onkeydown="if(event.key==='Enter'||event.key===' ')mgLightboxOpen('{{ $img['src'] }}', '{{ addslashes($img['alt']) }}')"
+           onclick="mgLightboxOpenEl(this)"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();mgLightboxOpenEl(this);}"
            style="cursor:pointer;">
-        <img src="{{ $img['src'] }}"
+        <img src="{{ $v['thumb'] }}"
+             @if($v['srcset']) srcset="{{ $v['srcset'] }}" sizes="(max-width:576px) 100vw, (max-width:1024px) 50vw, 360px" @endif
              alt="{{ $img['alt'] }}"
-             loading="{{ $imgIdx < 4 ? 'eager' : 'lazy' }}"
+             loading="{{ $imgIdx < 6 ? 'eager' : 'lazy' }}"
              decoding="async"
-             width="500" height="380"
-             style="width:100%;height:100%;object-fit:cover;">
-        <div class="mg-gallery-item__caption" aria-hidden="true">{{ $img['label'] }}</div>
+             width="500" height="375">
+        <div class="mg-gallery-item__overlay" aria-hidden="true"><i class="fas fa-search-plus"></i></div>
       </div>
       @endforeach
     </div>
@@ -165,8 +188,11 @@
 ])
 
 {{-- Lightbox --}}
-<div id="mg-lightbox" onclick="this.style.display='none'" style="display:none;">
-  <div class="mg-lightbox__inner">
+<div id="mg-lightbox" onclick="mgLightboxClose()" role="dialog" aria-modal="true" aria-label="{{ __('magnoolia.page.galerii.grid_aria') }}" style="display:none;">
+  <button type="button" id="mg-lightbox-close" aria-label="{{ __('magnoolia.rowhouse.modal_close') }}" onclick="event.stopPropagation();mgLightboxClose()">&#x2715;</button>
+  <button type="button" class="mg-lightbox-nav mg-lightbox-nav--prev" aria-label="{{ __('magnoolia.rowhouse.view_prev') }}" onclick="event.stopPropagation();mgLightboxStep(-1)">&#x2039;</button>
+  <button type="button" class="mg-lightbox-nav mg-lightbox-nav--next" aria-label="{{ __('magnoolia.rowhouse.view_next') }}" onclick="event.stopPropagation();mgLightboxStep(1)">&#x203A;</button>
+  <div class="mg-lightbox__inner" onclick="event.stopPropagation()">
     <img id="mg-lightbox-img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="" aria-hidden="true">
     <div id="mg-lightbox-cap"></div>
   </div>
@@ -193,16 +219,58 @@ document.querySelectorAll('.mg-gallery-filter__btn').forEach(function(btn) {
   });
 });
 
-// Lightbox
-function mgLightboxOpen(src, alt) {
-  var lb = document.getElementById('mg-lightbox');
-  document.getElementById('mg-lightbox-img').src = src;
-  document.getElementById('mg-lightbox-img').alt = alt;
-  document.getElementById('mg-lightbox-cap').textContent = alt;
-  lb.style.display = 'flex';
+// Lightbox with prev/next navigation
+var mgLbItems = [];   // currently-open list of {src, alt}
+var mgLbIndex = 0;
+
+function mgLightboxVisible() {
+  // Only the items currently shown by the active filter, in DOM order.
+  return Array.prototype.filter.call(
+    document.querySelectorAll('#gallery-grid .mg-gallery-item'),
+    function (el) { return el.style.display !== 'none'; }
+  ).map(function (el) {
+    return { src: el.getAttribute('data-lightbox-src'), alt: el.getAttribute('data-lightbox-alt') };
+  });
 }
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') { var lb = document.getElementById('mg-lightbox'); if(lb) lb.style.display='none'; }
+
+function mgLightboxRender() {
+  var item = mgLbItems[mgLbIndex];
+  if (!item) return;
+  document.getElementById('mg-lightbox-img').src = item.src;
+  document.getElementById('mg-lightbox-img').alt = item.alt;
+  document.getElementById('mg-lightbox-cap').textContent =
+    item.alt + '  ·  ' + (mgLbIndex + 1) + ' / ' + mgLbItems.length;
+}
+
+function mgLightboxOpenEl(el) {
+  mgLbItems = mgLightboxVisible();
+  var src = el.getAttribute('data-lightbox-src');
+  mgLbIndex = Math.max(0, mgLbItems.findIndex(function (i) { return i.src === src; }));
+  var nav = document.querySelectorAll('.mg-lightbox-nav');
+  for (var k = 0; k < nav.length; k++) { nav[k].style.display = mgLbItems.length > 1 ? '' : 'none'; }
+  mgLightboxRender();
+  document.getElementById('mg-lightbox').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function mgLightboxStep(d) {
+  if (!mgLbItems.length) return;
+  mgLbIndex = (mgLbIndex + d + mgLbItems.length) % mgLbItems.length;
+  mgLightboxRender();
+}
+
+function mgLightboxClose() {
+  var lb = document.getElementById('mg-lightbox');
+  if (lb) lb.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function (e) {
+  var lb = document.getElementById('mg-lightbox');
+  if (!lb || lb.style.display === 'none') return;
+  if (e.key === 'Escape') mgLightboxClose();
+  else if (e.key === 'ArrowRight') mgLightboxStep(1);
+  else if (e.key === 'ArrowLeft') mgLightboxStep(-1);
 });
 </script>
 @endpush
