@@ -36,6 +36,16 @@
   $images = collect($allImages)->filter(fn($img) => file_exists(public_path(
     str_replace(asset(''), '', $img['src'])
   )));
+
+  // Phase 33.1: if a published gallery exists in the active publication, use it
+  // (managed in the admin Media Library). Otherwise keep the built-in list above
+  // (safe fallback — zero regression).
+  $managedGallery = collect(mg_gallery())->filter(fn($img) => file_exists(public_path(
+    str_replace(asset(''), '', $img['src'])
+  )));
+  if ($managedGallery->isNotEmpty()) {
+    $images = $managedGallery;
+  }
 @endphp
 
 <script type="application/ld+json">

@@ -6,6 +6,7 @@ use App\Filament\Resources\NavItemResource\Pages;
 use App\Models\NavItem;
 use Filament\Forms;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 use Filament\Resources\Resource;
 use Filament\Actions;
 use Filament\Tables;
@@ -22,17 +23,17 @@ class NavItemResource extends Resource
     public static function form(Schema $form): Schema
     {
         return $form->schema([
-            Forms\Components\Section::make('Labels (per language)')->schema([
+            Section::make('Labels (per language)')->schema([
                 Forms\Components\TextInput::make('label.et')
-                    ->label('Label (ET â€” Estonian)')
+                    ->label('Label (ET / Estonian)')
                     ->required(),
                 Forms\Components\TextInput::make('label.ru')
-                    ->label('Label (RU â€” Russian)'),
+                    ->label('Label (RU / Russian)'),
                 Forms\Components\TextInput::make('label.en')
-                    ->label('Label (EN â€” English)'),
+                    ->label('Label (EN / English)'),
             ])->columns(3),
 
-            Forms\Components\Section::make('Link')->schema([
+            Section::make('Link')->schema([
                 Forms\Components\TextInput::make('route_name')
                     ->label('Route name')
                     ->helperText('e.g. home, magnoolia.homes, magnoolia.contact')
@@ -44,7 +45,7 @@ class NavItemResource extends Resource
                     ->placeholder('https://...'),
             ])->columns(2),
 
-            Forms\Components\Section::make('Visibility & Order')->schema([
+            Section::make('Visibility & Order')->schema([
                 Forms\Components\TextInput::make('sort_order')
                     ->label('Sort order')
                     ->numeric()

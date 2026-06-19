@@ -87,14 +87,21 @@ class MagnooliaValidationService
 
         if ($settings) {
             if ($settings->campaign_active) {
+                if (blank($settings->campaign_note_et)) {
+                    $errors['blockers'][] = 'Active campaign needs public text (Estonian).';
+                }
                 if (!$settings->campaign_deadline) {
                     $errors['blockers'][] = 'Campaign deadline is required when campaign is active.';
                 }
-                if (($settings->campaign_discount_cents ?? 0) <= 0) {
-                    $errors['blockers'][] = 'Campaign discount must be > 0 when campaign is active.';
+                // A positive discount is required only for a "fixed amount" campaign.
+                if (($settings->campaign_discount_type ?? 'text') === 'fixed' && ($settings->campaign_discount_cents ?? 0) <= 0) {
+                    $errors['blockers'][] = 'Fixed-amount campaign must have a discount greater than 0 €.';
                 }
                 if ($settings->campaign_deadline && $settings->campaign_deadline->isPast()) {
                     $errors['blockers'][] = 'Campaign deadline is in the past.';
+                }
+                if (blank($settings->campaign_cta_label)) {
+                    $errors['warnings'][] = 'Active campaign has no CTA label.';
                 }
             }
         } else {
@@ -103,6 +110,21 @@ class MagnooliaValidationService
 
         if ($units->where('stage', 2)->where('price_public', true)->isNotEmpty()) {
             $errors['warnings'][] = 'Stage II units have public prices enabled.';
+        }
+
+        // Page-Texts CMS: active blocks must have ET (required); RU/EN missing = warning.
+        if (\Illuminate\Support\Facades\Schema::hasTable('magnoolia_content_blocks')) {
+            foreach (\App\Models\MagnooliaContentBlock::query()->where('is_active', true)->get() as $cb) {
+                if (blank($cb->et)) {
+                    $errors['blockers'][] = "Page text \"{$cb->label}\" has no Estonian (ET) value.";
+                }
+                if (blank($cb->ru)) {
+                    $errors['warnings'][] = "Page text \"{$cb->label}\" is missing Russian (RU).";
+                }
+                if (blank($cb->en)) {
+                    $errors['warnings'][] = "Page text \"{$cb->label}\" is missing English (EN).";
+                }
+            }
         }
 
         return $errors;

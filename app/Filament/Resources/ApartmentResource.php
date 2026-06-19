@@ -15,7 +15,14 @@ class ApartmentResource extends Resource
 {
     protected static ?string $model = Apartment::class;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-building-office';
-    protected static string|\UnitEnum|null $navigationGroup = 'Content';
+    protected static string|\UnitEnum|null $navigationGroup = 'Legacy (developer)';
+
+    // Phase 33.1: legacy template resource, not used by the Magnoolia public site.
+    // Hidden from client admin navigation to avoid empty/confusing screens.
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 
     public static function form(Schema $form): Schema
     {

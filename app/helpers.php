@@ -96,3 +96,56 @@ if (! function_exists('magnoolia_url')) {
         return $base . ($path === '/' ? '' : $path);
     }
 }
+
+if (! function_exists('mg_text')) {
+    /**
+     * Page-Texts CMS read helper (Phase 33.1).
+     *
+     * Returns a PUBLISHED content override for the given magnoolia key (without
+     * the "magnoolia." prefix) in the current locale, falling back to the existing
+     * lang-file value. Draft edits never appear here — only what the active
+     * publication snapshot carries — so this is safe to use directly in Blade.
+     */
+    function mg_text(string $key, ?string $default = null): string
+    {
+        $locale = app()->getLocale();
+        try {
+            $payload = app(\App\Services\Magnoolia\MagnooliaPublicDataRepository::class)->getPublicPayload();
+            $override = $payload['content'][$locale][$key] ?? null;
+            if (is_string($override) && $override !== '') {
+                return $override;
+            }
+        } catch (\Throwable $e) {
+            // fall through to lang value
+        }
+
+        return $default ?? (string) __('magnoolia.' . $key);
+    }
+}
+
+if (! function_exists('mg_gallery')) {
+    /**
+     * Published gallery items (Phase 33.1) for the public /galerii page, resolved
+     * to the current locale. Returns [] when nothing is published → the page uses
+     * its built-in image list (safe fallback, no regression).
+     *
+     * @return array<int, array{src:string, alt:string, cat:string, label:string}>
+     */
+    function mg_gallery(): array
+    {
+        try {
+            $items = app(\App\Services\Magnoolia\MagnooliaPublicDataRepository::class)->getPublicPayload()['gallery'] ?? [];
+            $loc = app()->getLocale();
+            return array_values(array_map(function ($i) use ($loc) {
+                return [
+                    'src' => asset($i['src'] ?? ''),
+                    'alt' => $i['alt_' . $loc] ?? $i['alt_et'] ?? ($i['title'] ?? ''),
+                    'cat' => $i['cat'] ?? 'valised',
+                    'label' => '',
+                ];
+            }, $items));
+        } catch (\Throwable $e) {
+            return [];
+        }
+    }
+}

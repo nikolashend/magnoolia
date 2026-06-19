@@ -18,6 +18,14 @@ class ApartmentResource extends Resource
 {
     protected static ?string $model = Apartment::class;
 
+    // Phase 33.1: legacy template resource, not used by the Magnoolia public site.
+    // Hidden from the client admin navigation (Magnoolia homes are managed in the
+    // Magnoolia Control Center, not here).
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     protected static ?string $recordTitleAttribute = 'title';

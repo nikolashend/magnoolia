@@ -163,6 +163,17 @@ Route::prefix('admin/magnoolia')
         Route::get('/units/{unit}/edit', [MagnooliaAdminController::class, 'editUnit'])->name('units.edit');
         Route::put('/units/{unit}', [MagnooliaAdminController::class, 'updateUnit'])->name('units.update');
         Route::patch('/units/{unit}/quick', [MagnooliaAdminController::class, 'quickUpdate'])->name('units.quick');
+        Route::post('/units/bulk', [MagnooliaAdminController::class, 'bulkUpdate'])->name('units.bulk');
+
+        // Page-Texts CMS (Phase 33.1)
+        Route::get('/content', [MagnooliaAdminController::class, 'content'])->name('content.index');
+        Route::patch('/content/{block}', [MagnooliaAdminController::class, 'contentUpdate'])->name('content.update');
+
+        // Media Library (Phase 33.1)
+        Route::get('/media', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaMediaController::class, 'index'])->name('media.index');
+        Route::post('/media', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaMediaController::class, 'store'])->name('media.store');
+        Route::patch('/media/{item}', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaMediaController::class, 'update'])->name('media.update');
+        Route::delete('/media/{item}', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaMediaController::class, 'destroy'])->name('media.destroy');
 
         Route::get('/validate', [MagnooliaAdminController::class, 'validateDraft'])->name('validate');
         Route::get('/preview', [MagnooliaAdminController::class, 'preview'])->name('preview');
@@ -170,6 +181,15 @@ Route::prefix('admin/magnoolia')
         Route::get('/export/csv', [MagnooliaAdminController::class, 'exportCsv'])->name('export.csv');
         Route::post('/import/csv/preview', [MagnooliaAdminController::class, 'importCsvPreview'])->name('import.csv.preview');
         Route::post('/import/csv/apply', [MagnooliaAdminController::class, 'importCsvApply'])->name('import.csv.apply');
+
+        Route::get('/help', [MagnooliaAdminController::class, 'help'])->name('help');
+
+        // Leads / Inquiries (Phase 33.1)
+        Route::get('/leads', [MagnooliaAdminController::class, 'leads'])->name('leads.index');
+        Route::get('/leads/export', [MagnooliaAdminController::class, 'leadsExport'])->name('leads.export');
+        Route::patch('/leads/{lead}/status', [MagnooliaAdminController::class, 'leadStatus'])->name('leads.status');
+
+        Route::get('/changes', [MagnooliaAdminController::class, 'changes'])->name('changes');
 
         Route::get('/publications', [MagnooliaAdminController::class, 'publications'])->name('publications.index');
 

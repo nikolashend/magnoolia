@@ -49,9 +49,9 @@
       ['label' => __('magnoolia.nav.homes')],
     ]])
     <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.kodudjahinnad.eyebrow') }}</div>
-    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.kodudjahinnad.page_h1') }}</h1>
-    <p class="mg-page-hero__lead">{!! __('magnoolia.page.kodudjahinnad.lead') !!}</p>
-    <p class="mg-page-hero__note">{{ __('magnoolia.page.kodudjahinnad.note') }}</p>
+    <h1 class="mg-page-hero__title">{{ mg_text('page.kodudjahinnad.page_h1') }}</h1>
+    <p class="mg-page-hero__lead">{!! mg_text('page.kodudjahinnad.lead') !!}</p>
+    <p class="mg-page-hero__note">{{ mg_text('page.kodudjahinnad.note') }}</p>
     <div class="mg-page-hero__ctas">
       <a href="#hinnatabel" class="zoomvilla-btn">{{ __('magnoolia.page.kodudjahinnad.cta_table') }} <i class="icon-angle-small-right"></i></a>
       <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border">{{ __('magnoolia.page.kodudjahinnad.cta_inquiry') }} <i class="icon-angle-small-right"></i></a>

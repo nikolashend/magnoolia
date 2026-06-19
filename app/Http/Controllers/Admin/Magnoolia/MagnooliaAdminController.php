@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Magnoolia;
 
 use App\Http\Controllers\Controller;
 use App\Models\MagnooliaAuditLog;
+use App\Models\MagnooliaContentBlock;
 use App\Models\MagnooliaPublication;
 use App\Models\MagnooliaSetting;
 use App\Models\MagnooliaUnit;
@@ -198,6 +199,72 @@ class MagnooliaAdminController extends Controller
         return back()->with('status', "Draft updated for {$unit->address} ({$validated['field']}). Publish to make it live.");
     }
 
+    // ── Page-Texts CMS (Phase 33.1) ──────────────────────────────────────────
+    public function content()
+    {
+        $blocks = MagnooliaContentBlock::query()->orderBy('page')->orderBy('sort_order')->get()->groupBy('page');
+        $pages = MagnooliaContentBlock::PAGES;
+        return view('admin.magnoolia.content-index', compact('blocks', 'pages'));
+    }
+
+    public function contentUpdate(Request $request, MagnooliaContentBlock $block)
+    {
+        $validated = $request->validate([
+            'et' => 'nullable|string',
+            'ru' => 'nullable|string',
+            'en' => 'nullable|string',
+            'is_active' => 'nullable|boolean',
+        ]);
+
+        $before = $block->toArray();
+        $block->fill([
+            'et' => $validated['et'] ?? null,
+            'ru' => $validated['ru'] ?? null,
+            'en' => $validated['en'] ?? null,
+            'is_active' => (bool) ($validated['is_active'] ?? false),
+            'updated_by' => (int) $request->user()->id,
+        ])->save();
+
+        $this->auditService->log('content_updated', (int) $request->user()->id, 'content', $block->key,
+            $before, $block->toArray(), 'Page text edited (draft)', $request->ip(), $request->userAgent());
+
+        return back()->with('status', "Saved \"{$block->label}\" — draft only; Publish to make it live.");
+    }
+
+    /**
+     * Bulk action on selected homes (draft-only, audited, no destructive delete).
+     */
+    public function bulkUpdate(Request $request)
+    {
+        $validated = $request->validate([
+            'units' => 'required|array|min:1',
+            'units.*' => 'string',
+            'bulk_action' => 'required|in:status_available,status_reserved,status_sold,hide,show,price_public,price_hidden',
+        ]);
+
+        $apply = match ($validated['bulk_action']) {
+            'status_available' => ['status' => 'available'],
+            'status_reserved' => ['status' => 'reserved'],
+            'status_sold' => ['status' => 'sold'],
+            'hide' => ['is_visible' => false],
+            'show' => ['is_visible' => true],
+            'price_public' => ['price_public' => true],
+            'price_hidden' => ['price_public' => false],
+        };
+
+        $count = 0;
+        foreach (MagnooliaUnit::query()->whereIn('unit_key', $validated['units'])->get() as $unit) {
+            $before = $unit->toArray();
+            $incoming = array_merge($unit->toArray(), $apply);
+            $updated = $this->draftService->applyUnitDraft($unit, $incoming, (int) $request->user()->id);
+            $this->auditService->log('unit_updated', (int) $request->user()->id, 'unit', $unit->unit_key,
+                $before, $updated->toArray(), 'Bulk: ' . $validated['bulk_action'], $request->ip(), $request->userAgent());
+            $count++;
+        }
+
+        return back()->with('status', "Bulk action applied to {$count} home(s) (draft). Publish to make it live.");
+    }
+
     public function validateDraft()
     {
         $validation = $this->validationService->validateDraft();
@@ -216,13 +283,64 @@ class MagnooliaAdminController extends Controller
         ]);
     }
 
+    // ── Leads / Inquiries (Phase 33.1) ───────────────────────────────────────
+    public function leads(Request $request)
+    {
+        $query = \App\Models\MagnooliaLead::query()->latest('created_at');
+        if ($status = $request->query('lead_status')) {
+            $query->where('lead_status', $status);
+        }
+        if ($search = trim((string) $request->query('q'))) {
+            $query->where(fn ($q) => $q->where('name', 'like', "%$search%")->orWhere('email', 'like', "%$search%")->orWhere('unit_address', 'like', "%$search%"));
+        }
+        $leads = $query->paginate(50)->withQueryString();
+        $counts = \App\Models\MagnooliaLead::query()->selectRaw('lead_status, count(*) c')->groupBy('lead_status')->pluck('c', 'lead_status')->all();
+        return view('admin.magnoolia.leads-index', compact('leads', 'counts'));
+    }
+
+    public function leadStatus(Request $request, \App\Models\MagnooliaLead $lead)
+    {
+        $validated = $request->validate(['lead_status' => 'required|in:new,contacted,archived']);
+        $lead->update(['lead_status' => $validated['lead_status']]);
+        $this->auditService->log('lead_status_changed', (int) $request->user()->id, 'lead', (string) $lead->id, null,
+            ['lead_status' => $validated['lead_status']], null, $request->ip(), $request->userAgent());
+        return back()->with('status', "Lead #{$lead->id} marked {$validated['lead_status']}.");
+    }
+
+    public function leadsExport()
+    {
+        $rows = \App\Models\MagnooliaLead::query()->latest('created_at')->get();
+        $headers = ['id', 'created_at', 'name', 'email', 'phone', 'unit_address', 'locale', 'source_page', 'lead_status'];
+        $csv = implode(',', $headers) . "\n";
+        foreach ($rows as $l) {
+            $csv .= implode(',', array_map(fn ($v) => '"' . str_replace('"', '""', (string) $v) . '"', [
+                $l->id, $l->created_at, $l->name, $l->email, $l->phone, $l->unit_address, $l->locale, $l->source_page, $l->lead_status,
+            ])) . "\n";
+        }
+        return response($csv, 200, ['Content-Type' => 'text/csv', 'Content-Disposition' => 'attachment; filename="magnoolia-leads.csv"']);
+    }
+
+    /** Admin help / onboarding. */
+    public function help()
+    {
+        return view('admin.magnoolia.help');
+    }
+
+    /** "Changes since last publish" — full draft↔live diff. */
+    public function changes()
+    {
+        $diff = app(\App\Services\Magnoolia\MagnooliaDiffService::class)->diff();
+        return view('admin.magnoolia.changes', compact('diff'));
+    }
+
     public function publishForm()
     {
         $validation = $this->validationService->validateDraft();
         $active = MagnooliaPublication::query()->where('status', 'active')->orderByDesc('version')->first();
         $units = MagnooliaUnit::query()->orderBy('sort_order')->get();
+        $diff = app(\App\Services\Magnoolia\MagnooliaDiffService::class)->diff();
 
-        return view('admin.magnoolia.publish', compact('validation', 'active', 'units'));
+        return view('admin.magnoolia.publish', compact('validation', 'active', 'units', 'diff'));
     }
 
     public function publish(Request $request)
@@ -230,6 +348,9 @@ class MagnooliaAdminController extends Controller
         $validated = $request->validate([
             'publication_note' => 'required|string|max:500',
             'confirm_warnings' => 'nullable|boolean',
+            'confirm_publish' => 'accepted',
+        ], [
+            'confirm_publish.accepted' => 'Please confirm that these changes will update the public website.',
         ]);
 
         $validation = $this->validationService->validateDraft();
@@ -242,7 +363,9 @@ class MagnooliaAdminController extends Controller
             return back()->withErrors(['publish' => $result['message'] ?? 'Publish failed.'])->withInput();
         }
 
-        return redirect()->route('admin.magnoolia.publications.index')->with('status', 'Published successfully.');
+        return redirect()->route('admin.magnoolia.publications.index')
+            ->with('status', 'Published successfully.')
+            ->with('published_version', $result['publication']->version ?? null);
     }
 
     public function publications()
@@ -287,20 +410,40 @@ class MagnooliaAdminController extends Controller
     {
         $validated = $request->validate([
             'campaign_active' => 'nullable|boolean',
-            'campaign_discount_cents' => 'nullable|integer|min:0',
+            'campaign_discount_eur' => 'nullable|numeric|min:0',   // human euros (stored as cents)
+            'campaign_discount_type' => 'required|in:text,fixed,none',
             'campaign_deadline' => 'nullable|date',
             'campaign_note_et' => 'nullable|string',
             'campaign_note_ru' => 'nullable|string',
             'campaign_note_en' => 'nullable|string',
             'campaign_legal_note' => 'nullable|string|max:500',
+            'campaign_cta_label' => 'nullable|string|max:120',
+            'campaign_cta_target' => 'nullable|string|max:255',
         ]);
 
         $settings = MagnooliaSetting::query()->latest('id')->first();
         $before = $settings?->toArray();
 
+        $payload = [
+            'campaign_active' => (bool) ($validated['campaign_active'] ?? false),
+            // Euros in the UI → cents in storage (only when a fixed amount is used).
+            'campaign_discount_cents' => $validated['campaign_discount_type'] === 'fixed'
+                ? (int) round(((float) ($validated['campaign_discount_eur'] ?? 0)) * 100)
+                : null,
+            'campaign_discount_type' => $validated['campaign_discount_type'],
+            'campaign_deadline' => $validated['campaign_deadline'] ?? null,
+            'campaign_note_et' => $validated['campaign_note_et'] ?? null,
+            'campaign_note_ru' => $validated['campaign_note_ru'] ?? null,
+            'campaign_note_en' => $validated['campaign_note_en'] ?? null,
+            'campaign_legal_note' => $validated['campaign_legal_note'] ?? null,
+            'campaign_cta_label' => $validated['campaign_cta_label'] ?? null,
+            'campaign_cta_target' => $validated['campaign_cta_target'] ?? null,
+            'updated_by' => (int) $request->user()->id,
+        ];
+
         $settings = MagnooliaSetting::query()->updateOrCreate(
             ['id' => $settings?->id ?? 1],
-            array_merge($validated, ['updated_by' => (int) $request->user()->id])
+            $payload
         );
 
         $this->auditService->log(

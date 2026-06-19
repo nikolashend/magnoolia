@@ -31,6 +31,7 @@ class MagnooliaLead extends Model
         'ip_address',
         'user_agent',
         'mail_status',
+        'lead_status',
     ];
 
     protected $casts = [

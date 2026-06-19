@@ -15,8 +15,17 @@ class GalleryImageResource extends Resource
 {
     protected static ?string $model = GalleryImage::class;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-photo';
-    protected static string|\UnitEnum|null $navigationGroup = 'Content';
-    protected static ?string $navigationLabel = 'Gallery';
+    protected static string|\UnitEnum|null $navigationGroup = 'Legacy (developer)';
+    protected static ?string $navigationLabel = 'Gallery (legacy)';
+
+    // Phase 33.1: generic Gallery resource is empty and not wired to the Magnoolia
+    // public /galerii (which renders from optimized assets). Hidden to avoid the
+    // "No gallery images" contradiction; a Magnoolia media/gallery manager is the
+    // documented follow-on. Route stays reachable but off the client sidebar.
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 
     public static function form(Schema $form): Schema
     {

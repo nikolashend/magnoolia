@@ -55,8 +55,8 @@
       ['label' => __('magnoolia.nav.contact')],
     ]])
     <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.kontakt.eyebrow') }}</div>
-    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.kontakt.page_h1') }}</h1>
-    <p class="mg-page-hero__lead">{!! __('magnoolia.page.kontakt.lead') !!}</p>
+    <h1 class="mg-page-hero__title">{{ mg_text('page.kontakt.page_h1') }}</h1>
+    <p class="mg-page-hero__lead">{!! mg_text('page.kontakt.lead') !!}</p>
     <div class="mg-page-hero__ctas">
       <a href="#kontaktivorm" class="zoomvilla-btn">{{ __('magnoolia.page.kontakt.cta_form') }} <i class="icon-angle-small-right"></i></a>
       <a href="tel:{{ $phone }}" class="zoomvilla-btn zoomvilla-btn--border">
@@ -156,7 +156,7 @@
           <div style="font-size:14px;color:#444;line-height:1.7;">{!! __('magnoolia.page.kontakt.direct_address') !!}</div>
         </div>
         <div class="col-lg-3 col-md-6" style="display:flex;align-items:flex-end;">
-          <div style="font-size:12px;color:#aaa;line-height:1.7;">{{ __('magnoolia.page.kontakt.direct_note') }}</div>
+          <div style="font-size:12px;color:#aaa;line-height:1.7;">{{ mg_text('page.kontakt.direct_note') }}</div>
         </div>
       </div>
     </div>

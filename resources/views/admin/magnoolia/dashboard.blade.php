@@ -28,11 +28,16 @@
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <a href="{{ route('admin.magnoolia.units.index') }}"><button type="button">Manage homes</button></a>
-            <a href="{{ route('admin.magnoolia.validate') }}"><button type="button">Validate</button></a>
-            <a href="{{ route('admin.magnoolia.preview') }}"><button type="button">Preview draft</button></a>
+            <a href="{{ route('admin.magnoolia.changes') }}"><button type="button">Review changes</button></a>
             <a href="{{ route('admin.magnoolia.publish.form') }}"><button type="button">Publish</button></a>
+            <a href="{{ route('admin.magnoolia.leads.index') }}"><button type="button">Leads</button></a>
+            <a href="{{ route('admin.magnoolia.help') }}"><button type="button">Help</button></a>
             <a href="{{ url('/') }}" target="_blank"><button type="button">View site ↗</button></a>
         </div>
+    </div>
+    <div class="card" style="margin-bottom:14px;background:#fbf8f3;border-left:4px solid #c89443;">
+        <strong style="font-size:13px;">How publishing works:</strong>
+        <span style="font-size:13px;color:#5b5446;">Edit (draft) → <a href="{{ route('admin.magnoolia.changes') }}">Review changes</a> → <a href="{{ route('admin.magnoolia.preview') }}">Preview</a> → <a href="{{ route('admin.magnoolia.validate') }}">Validate</a> → <a href="{{ route('admin.magnoolia.publish.form') }}">Publish</a>. Nothing is public until you publish; you can <a href="{{ route('admin.magnoolia.publications.index') }}">roll back</a> anytime. <a href="{{ route('admin.magnoolia.help') }}">Full help →</a></span>
     </div>
     <div class="card" style="margin-bottom:14px;">
         <h2 style="margin:0 0 10px;">Operational truth</h2>

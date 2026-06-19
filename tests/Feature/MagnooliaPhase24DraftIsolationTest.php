@@ -74,7 +74,7 @@ class MagnooliaPhase24DraftIsolationTest extends TestCase
     public function admin_can_publish_via_http()
     {
         $before = MagnooliaPublication::count();
-        $response = $this->actingAs($this->admin)->post('/admin/magnoolia/publish', ['publication_note' => 'Admin HTTP publish', 'confirm_warnings' => '1']);
+        $response = $this->actingAs($this->admin)->post('/admin/magnoolia/publish', ['publication_note' => 'Admin HTTP publish', 'confirm_warnings' => '1', 'confirm_publish' => '1']);
         $this->assertContains($response->getStatusCode(), [200, 302, 422]);
         $this->assertGreaterThan($before, MagnooliaPublication::count());
     }

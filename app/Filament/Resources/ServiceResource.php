@@ -15,7 +15,13 @@ class ServiceResource extends Resource
 {
     protected static ?string $model = Service::class;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-wrench-screwdriver';
-    protected static string|\UnitEnum|null $navigationGroup = 'Content';
+    protected static string|\UnitEnum|null $navigationGroup = 'Legacy (developer)';
+
+    // Phase 33.1: legacy template resource, not used by the Magnoolia public site.
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false;
+    }
 
     public static function form(Schema $form): Schema
     {

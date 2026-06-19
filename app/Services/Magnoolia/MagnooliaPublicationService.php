@@ -2,6 +2,7 @@
 
 namespace App\Services\Magnoolia;
 
+use App\Models\MagnooliaContentBlock;
 use App\Models\MagnooliaPublication;
 use App\Models\MagnooliaSetting;
 use App\Models\MagnooliaUnit;
@@ -28,11 +29,24 @@ class MagnooliaPublicationService
 
             $units = MagnooliaUnit::query()->orderBy('sort_order')->get();
             $settings = MagnooliaSetting::query()->latest('id')->first();
+            $contentBlocks = MagnooliaContentBlock::query()->orderBy('page')->orderBy('sort_order')->get();
 
             $privateSnapshot = [
                 'units' => $units->map(fn (MagnooliaUnit $u) => $u->toArray())->values()->all(),
                 'settings' => $settings?->toArray(),
+                'content_blocks' => $contentBlocks->map(fn (MagnooliaContentBlock $c) => $c->toArray())->values()->all(),
             ];
+
+            // Page-Texts CMS overrides, grouped by locale → key (only active blocks
+            // with a value). Public read via mg_text() prefers these over lang files.
+            $publicContent = ['et' => [], 'ru' => [], 'en' => []];
+            foreach ($contentBlocks->where('is_active', true) as $cb) {
+                foreach (['et', 'ru', 'en'] as $loc) {
+                    if (filled($cb->{$loc})) {
+                        $publicContent[$loc][$cb->key] = $cb->{$loc};
+                    }
+                }
+            }
 
             $publicUnits = $units
                 ->where('is_visible', true)
@@ -73,12 +87,15 @@ class MagnooliaPublicationService
             $publicSettings = [
                 'campaign' => $settings && $settings->campaign_active ? [
                     'active' => true,
+                    'discount_type' => $settings->campaign_discount_type ?? 'text',
                     'discount_cents' => $settings->campaign_discount_cents,
                     'deadline' => optional($settings->campaign_deadline)->toDateString(),
                     'note_et' => $settings->campaign_note_et,
                     'note_ru' => $settings->campaign_note_ru,
                     'note_en' => $settings->campaign_note_en,
                     'legal_note' => $settings->campaign_legal_note,
+                    'cta_label' => $settings->campaign_cta_label,
+                    'cta_target' => $settings->campaign_cta_target,
                 ] : ['active' => false],
                 'stage_1_completion' => $settings?->stage_1_completion,
                 'stage_2_completion' => $settings?->stage_2_completion,
@@ -88,12 +105,29 @@ class MagnooliaPublicationService
                 'commercial' => config('magnoolia.commercial', []),
             ];
 
+            // Published gallery (managed media, category=gallery). Public /galerii
+            // prefers this and falls back to its built-in list when empty.
+            $gallery = \App\Models\MagnooliaMediaItem::query()->where('category', 'gallery')->orderBy('id')->get()
+                ->map(function (\App\Models\MagnooliaMediaItem $m) {
+                    $cat = 'valised';
+                    if (preg_match('#/gallery/(exterior|interior|environment)/#', (string) $m->public_path, $mm)) {
+                        $cat = ['exterior' => 'valised', 'interior' => 'interjer', 'environment' => 'keskkond'][$mm[1]];
+                    }
+                    return [
+                        'src' => $m->public_path,
+                        'alt_et' => $m->alt_et, 'alt_ru' => $m->alt_ru, 'alt_en' => $m->alt_en,
+                        'title' => $m->title, 'cat' => $cat,
+                    ];
+                })->values()->all();
+
             $publicPayload = [
                 'meta' => [
                     'generated_at' => now()->toIso8601String(),
                 ],
                 'units' => $publicUnits,
                 'settings' => $publicSettings,
+                'content' => $publicContent,
+                'gallery' => $gallery,
             ];
 
             $checksum = hash('sha256', json_encode($privateSnapshot, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
@@ -174,6 +208,16 @@ class MagnooliaPublicationService
                     ['id' => $snapshot['settings']['id'] ?? 1],
                     $snapshot['settings']
                 );
+            }
+
+            // Restore Page-Texts content blocks so rollback returns prior copy too.
+            foreach (($snapshot['content_blocks'] ?? []) as $cb) {
+                if (!empty($cb['key'])) {
+                    MagnooliaContentBlock::query()->updateOrCreate(
+                        ['key' => $cb['key']],
+                        collect($cb)->only(['page', 'label', 'group', 'et', 'ru', 'en', 'is_active', 'sort_order', 'updated_by'])->all()
+                    );
+                }
             }
 
             $publishResult = $this->publish($adminUserId, 'Rollback: ' . $reason);

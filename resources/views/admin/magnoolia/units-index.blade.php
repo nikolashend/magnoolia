@@ -24,11 +24,32 @@
     @endphp
     <div class="card">
         <div style="font-size:13px;color:#666;margin-bottom:8px;">
-            {{ $units->total() }} kodu · quick-edit below changes the <strong>draft</strong> only — Publish to make it live.
+            {{ $units->total() }} kodu · quick-edit and bulk actions change the <strong>draft</strong> only — Publish to make it live.
         </div>
+
+        {{-- Bulk action bar (no destructive delete). Checkboxes below are collected by JS. --}}
+        <form id="bulkForm" method="POST" action="{{ route('admin.magnoolia.units.bulk') }}"
+              style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#faf8f4;border:1px solid #ece6db;border-radius:8px;padding:8px 12px;margin-bottom:10px;">
+            @csrf
+            <strong style="font-size:12px;"><span id="bulkCount">0</span> selected</strong>
+            <select name="bulk_action" style="width:auto;font-size:13px;">
+                <option value="">Bulk action…</option>
+                <option value="status_available">Set status → Vaba</option>
+                <option value="status_reserved">Set status → Broneeritud</option>
+                <option value="status_sold">Set status → Müüdud</option>
+                <option value="hide">Hide from public</option>
+                <option value="show">Show on public</option>
+                <option value="price_public">Public price → visible</option>
+                <option value="price_hidden">Public price → hidden</option>
+            </select>
+            <button type="submit" style="font-size:13px;">Apply to selected</button>
+            <span style="font-size:11px;color:#9a948a;">Draft only · audited · Publish to go live</span>
+        </form>
+
         <table>
             <thead>
             <tr>
+                <th style="width:28px;"><input type="checkbox" id="bulkAll" style="width:auto;"></th>
                 <th>Address</th><th>Stage</th><th>Status (quick)</th><th>Rooms</th><th>Net m²</th><th>Yard m²</th><th>Price (internal)</th><th>Public price</th><th>Updated</th><th></th>
             </tr>
             </thead>
@@ -36,6 +57,7 @@
             @foreach($units as $unit)
                 @php $b = $badge[$unit->status] ?? $badge['coming_soon']; @endphp
                 <tr>
+                    <td><input type="checkbox" class="bulk-cb" value="{{ $unit->unit_key }}" style="width:auto;"></td>
                     <td><strong>{{ $unit->address }}</strong></td>
                     <td>{{ $unit->stage === 1 ? 'I' : 'II' }}</td>
                     <td>
@@ -81,4 +103,28 @@
             <button type="submit">Upload CSV</button>
         </form>
     </div>
+
+    <script>
+    (function () {
+        var all = document.getElementById('bulkAll');
+        var form = document.getElementById('bulkForm');
+        var countEl = document.getElementById('bulkCount');
+        function cbs() { return Array.prototype.slice.call(document.querySelectorAll('.bulk-cb')); }
+        function refresh() { countEl.textContent = cbs().filter(function (c) { return c.checked; }).length; }
+        if (all) all.addEventListener('change', function () { cbs().forEach(function (c) { c.checked = all.checked; }); refresh(); });
+        document.addEventListener('change', function (e) { if (e.target.classList && e.target.classList.contains('bulk-cb')) refresh(); });
+        if (form) form.addEventListener('submit', function (e) {
+            var checked = cbs().filter(function (c) { return c.checked; });
+            var action = form.querySelector('[name=bulk_action]').value;
+            if (!checked.length) { e.preventDefault(); alert('Select at least one home first.'); return; }
+            if (!action) { e.preventDefault(); alert('Choose a bulk action first.'); return; }
+            if (!confirm('Apply "' + action + '" to ' + checked.length + ' home(s)? This changes the draft only (Publish to go live).')) { e.preventDefault(); return; }
+            form.querySelectorAll('input[name="units[]"]').forEach(function (n) { n.remove(); });
+            checked.forEach(function (c) {
+                var i = document.createElement('input'); i.type = 'hidden'; i.name = 'units[]'; i.value = c.value; form.appendChild(i);
+            });
+        });
+        refresh();
+    })();
+    </script>
 @endsection
