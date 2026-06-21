@@ -23,8 +23,15 @@ class MagnooliaContentBlock extends Model
         'home' => 'Avaleht (Homepage)',
         'kodud' => 'Kodud ja hinnad',
         'asendiplaan' => 'Asendiplaan',
+        'asukoht' => 'Asukoht',
         'ehitusinfo' => 'Ehitusinfo',
+        'sisedisain' => 'Siseviimistlus (Sisedisain)',
+        'galerii' => 'Galerii',
+        'ostuprotsess' => 'Ostuprotsess',
+        'finantseerimine' => 'Finantseerimine',
+        'kkk' => 'KKK (korduma kippuvad küsimused)',
         'kontakt' => 'Kontakt',
+        'footer' => 'Jalus (Footer)',
     ];
 
     public function getRuMissingAttribute(): bool

@@ -46,9 +46,9 @@
       ['label' => __('magnoolia.nav.financing')],
     ]])
     <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.finantseerimine.eyebrow') }}</div>
-    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.finantseerimine.page_h1') }}</h1>
-    <p class="mg-page-hero__lead">{{ __('magnoolia.page.finantseerimine.lead') }}</p>
-    <p class="mg-page-hero__note">{{ __('magnoolia.page.finantseerimine.note') }}</p>
+    <h1 class="mg-page-hero__title">{{ mg_text('page.finantseerimine.page_h1') }}</h1>
+    <p class="mg-page-hero__lead">{{ mg_text('page.finantseerimine.lead') }}</p>
+    <p class="mg-page-hero__note">{{ mg_text('page.finantseerimine.note') }}</p>
     <div class="mg-page-hero__ctas">
       <a href="#finants-info" class="zoomvilla-btn">{{ __('magnoolia.page.finantseerimine.cta_read') }} <i class="icon-angle-small-right"></i></a>
       <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border">{{ __('magnoolia.page.finantseerimine.cta_inquiry') }}</a>

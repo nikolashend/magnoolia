@@ -12,7 +12,6 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use App\Filament\Widgets\MagnooliaAdminLinkWidget;
 use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -29,6 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('Magnoolia Admin')
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -41,7 +41,6 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 MagnooliaAdminLinkWidget::class,
                 AccountWidget::class,
-                FilamentInfoWidget::class,
             ])
             ->middleware([
                 'magnoolia.login-throttle',

@@ -20,8 +20,13 @@ class TranslationManager extends Page
     public string $locale  = 'et';
     public string $section = 'nav';
 
-    /** Flat key => value pairs currently displayed */
-    public array $values = [];
+    /**
+     * Indexed list of editable rows: [['key' => 'nav.home', 'value' => 'Avaleht'], ...].
+     * Indexed (not keyed by the dotted lang key) so Livewire's wire:model paths
+     * like "entries.0.value" resolve correctly — dotted keys (e.g.
+     * "values.nav.home") would be misread by Livewire as a nested path.
+     */
+    public array $entries = [];
 
     /** Snapshot being previewed (null = live) */
     public ?int $previewSnapshotId = null;
@@ -49,11 +54,11 @@ class TranslationManager extends Page
             ? \Illuminate\Support\Arr::dot($nested)
             : LangFileService::loadFlat($this->locale);
 
-        $prefix       = $this->section . '.';
-        $this->values = [];
+        $prefix        = $this->section . '.';
+        $this->entries = [];
         foreach ($flat as $key => $value) {
             if (str_starts_with($key, $prefix) && is_string($value)) {
-                $this->values[$key] = $value;
+                $this->entries[] = ['key' => $key, 'value' => $value];
             }
         }
     }
@@ -71,8 +76,14 @@ class TranslationManager extends Page
         TranslationSnapshot::prune($this->locale, 'magnoolia', 20);
 
         // 2. Merge edited values back
+        $edited = [];
+        foreach ($this->entries as $row) {
+            if (isset($row['key']) && is_string($row['key'])) {
+                $edited[$row['key']] = (string) ($row['value'] ?? '');
+            }
+        }
         $flat    = LangFileService::loadFlat($this->locale);
-        $updated = array_merge($flat, $this->values);
+        $updated = array_merge($flat, $edited);
         $scalar  = array_filter($updated, fn($v) => is_string($v));
 
         if (LangFileService::saveFlat($scalar, $this->locale)) {
@@ -138,6 +149,24 @@ class TranslationManager extends Page
             ->get(['id', 'label', 'created_at']);
     }
 
+    /** Friendly labels for the most common top-level lang sections. */
+    public const SECTION_LABELS = [
+        'nav' => 'Navigation menu',
+        'hero' => 'Homepage — hero',
+        'section' => 'Homepage — sections',
+        'facts' => 'Homepage — facts bar',
+        'benefits' => 'Homepage — benefits',
+        'pricing' => 'Homes & prices',
+        'page' => 'Pages (headings & leads)',
+        'statuses' => 'Status labels',
+        'stages' => 'Stage labels',
+        'contact' => 'Contact',
+        'forms' => 'Forms',
+        'footer' => 'Footer',
+        'faq' => 'FAQ',
+        'floorplan' => 'Floor plans',
+    ];
+
     public function getSections(): array
     {
         $flat = LangFileService::loadFlat($this->locale);
@@ -145,10 +174,11 @@ class TranslationManager extends Page
         foreach (array_keys($flat) as $key) {
             $parts = explode('.', $key);
             if (count($parts) > 1) {
-                $sections[$parts[0]] = $parts[0];
+                $top = $parts[0];
+                $sections[$top] = self::SECTION_LABELS[$top] ?? ucfirst($top);
             }
         }
-        ksort($sections);
+        asort($sections);
         return $sections;
     }
 

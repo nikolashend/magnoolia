@@ -53,12 +53,12 @@
       ['label' => __('magnoolia.nav.building')],
     ]])
     <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.ehitusinfo.eyebrow') }}</div>
-    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.ehitusinfo.page_h1') }}</h1>
+    <h1 class="mg-page-hero__title">{{ mg_text('page.ehitusinfo.page_h1') }}</h1>
     <p class="mg-page-hero__lead">
-      {{ __('magnoolia.page.ehitusinfo.lead') }}
+      {{ mg_text('page.ehitusinfo.lead') }}
     </p>
     <p class="mg-page-hero__note">
-      {{ __('magnoolia.page.ehitusinfo.note') }}
+      {{ mg_text('page.ehitusinfo.note') }}
     </p>
     <div class="mg-page-hero__ctas">
       <a href="#tehnika" class="zoomvilla-btn">{{ __('magnoolia.page.ehitusinfo.cta_view') }} <i class="icon-angle-small-right"></i></a>

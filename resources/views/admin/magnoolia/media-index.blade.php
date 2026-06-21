@@ -5,10 +5,15 @@
 @section('admin_content')
     <div class="card" style="margin-bottom:14px;">
         <h2 style="margin:0 0 6px;">Images &amp; Media</h2>
-        <p style="margin:0 0 14px;color:#6f6a61;font-size:13px;">
-            Upload and manage images for the website. Add <strong>alt text (ET/RU/EN)</strong> for accessibility/SEO, set a category, and assign a floor-plan image to a home.
-            Changes that affect a home are <strong>draft-only</strong> — they go live after you <a href="{{ route('admin.magnoolia.publish.form') }}">Publish</a>.
+        <p style="margin:0 0 10px;color:#6f6a61;font-size:13px;">
+            Upload and manage images for the website. Add <strong>alt text (ET/RU/EN)</strong> for accessibility/SEO and set a category.
+            Changes are <strong>draft-only</strong> — they go live after you <a href="{{ route('admin.magnoolia.publish.form') }}">Publish</a>.
         </p>
+        <ul style="margin:0 0 14px;padding-left:18px;color:#6f6a61;font-size:12.5px;line-height:1.7;">
+            <li><strong>Gallery images</strong> (category “Gallery”) appear on the public <a href="/galerii" target="_blank" rel="noopener">/galerii</a> page after Publish. ✓ live-wired</li>
+            <li><strong>Home floor plans</strong> assigned below appear on that home’s detail after Publish. ✓ live-wired</li>
+            <li><strong>Page hero images</strong> are <em>recorded for reference only</em> — replacing a page hero is currently handled by the developer. (Selecting one here does not change the live hero yet.)</li>
+        </ul>
         <form method="POST" action="{{ route('admin.magnoolia.media.store') }}" enctype="multipart/form-data"
               style="display:grid;grid-template-columns:2fr 2fr 1.5fr auto;gap:10px;align-items:end;">
             @csrf
@@ -67,8 +72,8 @@
                                 <option value="unit:{{ $u->unit_key }}:floor2" @selected($item->assignment_target==='unit:'.$u->unit_key.':floor2')>{{ $u->address }} · 2nd floor</option>
                             @endforeach
                         </optgroup>
-                        <optgroup label="Page (recorded — wired with Page Texts)">
-                            @foreach(['page:home:hero'=>'Homepage hero','page:asendiplaan:hero'=>'Asendiplaan hero','gallery'=>'Gallery','page:asukoht:hero'=>'Location hero'] as $tk=>$tl)
+                        <optgroup label="Page hero (recorded for reference only — not yet live)">
+                            @foreach(['page:home:hero'=>'Homepage hero','page:asendiplaan:hero'=>'Asendiplaan hero','page:asukoht:hero'=>'Location hero'] as $tk=>$tl)
                                 <option value="{{ $tk }}" @selected($item->assignment_target===$tk)>{{ $tl }}</option>
                             @endforeach
                         </optgroup>

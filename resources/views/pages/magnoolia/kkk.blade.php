@@ -47,9 +47,9 @@
       ['label' => __('magnoolia.nav.faq')],
     ]])
     <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.kkk.eyebrow') }}</div>
-    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.kkk.page_h1') }}</h1>
+    <h1 class="mg-page-hero__title">{{ mg_text('page.kkk.page_h1') }}</h1>
     <p class="mg-page-hero__lead">
-      {{ __('magnoolia.page.kkk.lead') }}
+      {{ mg_text('page.kkk.lead') }}
     </p>
     <div class="mg-page-hero__ctas">
       <a href="#kkk-sisu" class="zoomvilla-btn">{{ __('magnoolia.page.kkk.cta_view') }} <i class="icon-angle-small-right"></i></a>

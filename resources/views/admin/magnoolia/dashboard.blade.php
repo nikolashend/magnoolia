@@ -35,6 +35,22 @@
             <a href="{{ url('/') }}" target="_blank"><button type="button">View site ↗</button></a>
         </div>
     </div>
+    @if(!empty($active) && empty($statusMatchesBaseline))
+    <div class="card" style="margin-bottom:14px;border-left:4px solid #c89443;background:#fbf6ec;">
+        <strong style="color:#9a6b1f;">⚠ Live availability differs from the approved baseline.</strong>
+        <p style="margin:6px 0 8px;font-size:13px;color:#5b5446;">
+            The approved baseline is <strong>{{ $statusBaseline['available'] }} Vaba · {{ $statusBaseline['reserved'] }} Broneeritud · {{ $statusBaseline['sold'] }} Müüdud</strong>
+            (reserved: Magnoolia tee 1/3, 3/2, 7/2, 9/2 · sold: 5/1).
+            Currently published (v{{ $active->version }}):
+            <strong>{{ $liveStatusDist['available'] }} Vaba · {{ $liveStatusDist['reserved'] }} Broneeritud · {{ $liveStatusDist['sold'] }} Müüdud</strong>.
+            This is expected if you intentionally changed and published a status; otherwise review the change and re-publish or roll back.
+        </p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <a href="{{ route('admin.magnoolia.audit') }}"><button type="button">View audit log</button></a>
+            <a href="{{ route('admin.magnoolia.publications.index') }}"><button type="button">Roll back a publication</button></a>
+        </div>
+    </div>
+    @endif
     <div class="card" style="margin-bottom:14px;background:#fbf8f3;border-left:4px solid #c89443;">
         <strong style="font-size:13px;">How publishing works:</strong>
         <span style="font-size:13px;color:#5b5446;">Edit (draft) → <a href="{{ route('admin.magnoolia.changes') }}">Review changes</a> → <a href="{{ route('admin.magnoolia.preview') }}">Preview</a> → <a href="{{ route('admin.magnoolia.validate') }}">Validate</a> → <a href="{{ route('admin.magnoolia.publish.form') }}">Publish</a>. Nothing is public until you publish; you can <a href="{{ route('admin.magnoolia.publications.index') }}">roll back</a> anytime. <a href="{{ route('admin.magnoolia.help') }}">Full help →</a></span>

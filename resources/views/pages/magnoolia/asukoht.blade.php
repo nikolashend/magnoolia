@@ -66,9 +66,9 @@
       ['label' => __('magnoolia.nav.location')],
     ]])
     <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.asukoht.eyebrow') }}</div>
-    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.asukoht.page_h1') }}</h1>
+    <h1 class="mg-page-hero__title">{{ mg_text('page.asukoht.page_h1') }}</h1>
     <p class="mg-page-hero__lead">
-      {{ __('magnoolia.page.asukoht.lead') }}
+      {{ mg_text('page.asukoht.lead') }}
     </p>
     <div class="mg-page-hero__ctas">
       <a href="https://maps.google.com/?q=Magnoolia+tee,Vaela,Kiili+vald" target="_blank" rel="noopener"

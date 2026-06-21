@@ -9,9 +9,10 @@
             @csrf
             @method('PUT')
 
-            <div><label>Status</label><select name="status" required>@foreach(['available','reserved','sold','coming_soon'] as $s)<option value="{{ $s }}" @selected($unit->status===$s)>{{ $s }}</option>@endforeach</select></div>
+            @php $statusLabels = ['available' => 'Vaba (available)', 'reserved' => 'Broneeritud (reserved)', 'sold' => 'Müüdud (sold)', 'coming_soon' => 'Tulekul (coming soon)']; @endphp
+            <div><label>Status</label><select name="status" required>@foreach($statusLabels as $s => $sLabel)<option value="{{ $s }}" @selected($unit->status===$s)>{{ $sLabel }}</option>@endforeach</select></div>
             <div><label>Visible publicly</label><select name="is_visible"><option value="1" @selected($unit->is_visible)>Yes</option><option value="0" @selected(!$unit->is_visible)>No</option></select></div>
-            <div><label>Price cents</label><input type="number" name="price_cents" value="{{ $unit->price_cents }}"></div>
+            <div><label>Internal price (in cents — never shown publicly)</label><input type="number" name="price_cents" value="{{ $unit->price_cents }}"><small style="color:#9a948a;">e.g. 31900000 = 319 000 €. Use “Show price publicly” to control visibility.</small></div>
             <div><label>Show price publicly</label><select name="price_public"><option value="1" @selected($unit->price_public)>Yes</option><option value="0" @selected(!$unit->price_public)>No</option></select></div>
 
             <div><label>Rooms</label><input type="number" name="rooms" value="{{ $unit->rooms }}" required></div>

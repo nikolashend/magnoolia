@@ -51,6 +51,23 @@ class MagnooliaAdminController extends Controller
         $lastEditedUnit = MagnooliaUnit::query()->orderByDesc('updated_at')->first();
         $recentAudit = MagnooliaAuditLog::query()->with('admin')->orderByDesc('id')->limit(10)->get();
 
+        // Phase 33.2 — flag when the LIVE publication's status distribution differs
+        // from the approved seed baseline (reserved: 1/3, 3/2, 7/2, 9/2; sold: 5/1
+        // → 14 available / 4 reserved / 1 sold). Lets the client see at a glance
+        // whether the public site still matches the agreed availability.
+        $statusBaseline = ['available' => 14, 'reserved' => 4, 'sold' => 1];
+        $liveStatusDist = ['available' => 0, 'reserved' => 0, 'sold' => 0];
+        if ($active) {
+            $payload = json_decode((string) $active->public_payload_json, true) ?: [];
+            foreach (($payload['units'] ?? []) as $pu) {
+                $s = $pu['status'] ?? 'available';
+                if (isset($liveStatusDist[$s])) {
+                    $liveStatusDist[$s]++;
+                }
+            }
+        }
+        $statusMatchesBaseline = !$active || $liveStatusDist === $statusBaseline;
+
         $stats = [
             'published_version' => $active?->version,
             'published_at' => $active?->published_at,
@@ -66,7 +83,7 @@ class MagnooliaAdminController extends Controller
             'hidden_prices' => $units->where('price_public', false)->count(),
         ];
 
-        return view('admin.magnoolia.dashboard', compact('stats', 'validation', 'active', 'canonicalConfigCount', 'usingCanonicalFallback', 'liveSource', 'lastEditedUnit', 'recentAudit'));
+        return view('admin.magnoolia.dashboard', compact('stats', 'validation', 'active', 'canonicalConfigCount', 'usingCanonicalFallback', 'liveSource', 'lastEditedUnit', 'recentAudit', 'statusBaseline', 'liveStatusDist', 'statusMatchesBaseline'));
     }
 
     public function units(Request $request)

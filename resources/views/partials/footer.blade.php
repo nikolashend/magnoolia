@@ -18,10 +18,10 @@
                     @else
                         <span class="mg-footer__brand">Magnoolia</span>
                     @endif
-                    <span class="mg-footer__tagline">{{ __('magnoolia.footer.tagline') }}</span>
+                    <span class="mg-footer__tagline">{{ mg_text('footer.tagline') }}</span>
                 </a>
                 <p class="mg-footer__desc">
-                    {{ __('magnoolia.footer.desc') }}
+                    {{ mg_text('footer.desc') }}
                 </p>
                 <div class="mg-footer__langs">
                     @foreach(['et' => 'EE', 'ru' => 'RU', 'en' => 'EN'] as $locale => $label)

@@ -66,9 +66,9 @@
       ['label' => __('magnoolia.nav.process')],
     ]])
     <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.ostuprotsess.eyebrow') }}</div>
-    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.ostuprotsess.page_h1') }}</h1>
-    <p class="mg-page-hero__lead">{{ __('magnoolia.page.ostuprotsess.lead') }}</p>
-    <p class="mg-page-hero__note">{{ __('magnoolia.page.ostuprotsess.note') }}</p>
+    <h1 class="mg-page-hero__title">{{ mg_text('page.ostuprotsess.page_h1') }}</h1>
+    <p class="mg-page-hero__lead">{{ mg_text('page.ostuprotsess.lead') }}</p>
+    <p class="mg-page-hero__note">{{ mg_text('page.ostuprotsess.note') }}</p>
     <div class="mg-page-hero__ctas">
       <a href="#sammud" class="zoomvilla-btn">{{ __('magnoolia.page.ostuprotsess.cta_steps') }} <i class="icon-angle-small-right"></i></a>
       <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border">{{ __('magnoolia.page.ostuprotsess.cta_inquiry') }}</a>

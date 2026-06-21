@@ -94,12 +94,12 @@
       ['label' => __('magnoolia.nav.gallery')],
     ]])
     <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.galerii.eyebrow') }}</div>
-    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.galerii.page_h1') }}</h1>
+    <h1 class="mg-page-hero__title">{{ mg_text('page.galerii.page_h1') }}</h1>
     <p class="mg-page-hero__lead">
-      {{ __('magnoolia.page.galerii.lead') }}
+      {{ mg_text('page.galerii.lead') }}
     </p>
     <p class="mg-page-hero__note">
-      {{ __('magnoolia.page.galerii.note') }}
+      {{ mg_text('page.galerii.note') }}
     </p>
   </div>
 </div>

@@ -40,13 +40,17 @@
                 </div>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                <a href="/admin/magnoolia/units"
+                <a href="/admin/magnoolia"
                    style="background:#c89443;color:#fff;padding:8px 18px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;">
-                    Open Magnoolia Admin
+                    Open Control Center
                 </a>
                 <a href="/admin/magnoolia/publish"
                    style="border:1px solid #c89443;color:#c89443;padding:8px 18px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;">
                     Publish
+                </a>
+                <a href="/" target="_blank" rel="noopener"
+                   style="border:1px solid #d6d3cd;color:#374151;padding:8px 18px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap;">
+                    View public site ↗
                 </a>
             </div>
         </div>

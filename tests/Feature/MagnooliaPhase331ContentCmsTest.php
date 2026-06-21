@@ -32,8 +32,13 @@ class MagnooliaPhase331ContentCmsTest extends TestCase
     public function test_seed_content_creates_blocks(): void
     {
         $this->artisan('magnoolia:seed-content')->assertSuccessful();
-        $this->assertSame(6, MagnooliaContentBlock::count());
+        // Phase 33.2: comprehensive coverage across all public pages (12 pages).
+        $this->assertSame(34, MagnooliaContentBlock::count());
         $this->assertNotNull(MagnooliaContentBlock::where('key', 'page.kodudjahinnad.note')->value('et'));
+        // Every required page is represented.
+        foreach (['home', 'kodud', 'asendiplaan', 'asukoht', 'ehitusinfo', 'sisedisain', 'galerii', 'ostuprotsess', 'finantseerimine', 'kkk', 'kontakt', 'footer'] as $page) {
+            $this->assertGreaterThan(0, MagnooliaContentBlock::where('page', $page)->count(), "page {$page} must have at least one block");
+        }
     }
 
     public function test_content_index_reachable_for_admin(): void

@@ -56,12 +56,12 @@
       ['label' => __('magnoolia.nav.interior')],
     ]])
     <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.sisedisain.eyebrow') }}</div>
-    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.sisedisain.page_h1') }}</h1>
+    <h1 class="mg-page-hero__title">{{ mg_text('page.sisedisain.page_h1') }}</h1>
     <p class="mg-page-hero__lead">
-      {{ __('magnoolia.page.sisedisain.lead') }}
+      {{ mg_text('page.sisedisain.lead') }}
     </p>
     <p class="mg-page-hero__note">
-      {{ __('magnoolia.page.sisedisain.note') }}
+      {{ mg_text('page.sisedisain.note') }}
     </p>
     <div class="mg-page-hero__ctas">
       <a href="#sisepildid" class="zoomvilla-btn">{{ __('magnoolia.page.sisedisain.cta_view') }} <i class="icon-angle-small-right"></i></a>
@@ -80,7 +80,7 @@
           <div>
             <div style="font-weight:700;color:#1d2430;margin-bottom:6px;">{{ __('magnoolia.page.sisedisain.disclaimer_title') }}</div>
             <p style="font-size:14px;color:#6f6a61;margin:0;line-height:1.6;">
-              {{ __('magnoolia.page.sisedisain.disclaimer_body') }}
+              {{ mg_text('page.sisedisain.disclaimer_body') }}
             </p>
           </div>
         </div>

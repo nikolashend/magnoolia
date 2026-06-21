@@ -60,12 +60,12 @@
       ['label' => __('magnoolia.nav.masterplan')],
     ]])
     <div class="mg-page-hero__eyebrow">{{ __('magnoolia.page.asendiplaan.eyebrow') }}</div>
-    <h1 class="mg-page-hero__title">{{ __('magnoolia.page.asendiplaan.page_h1') }}</h1>
+    <h1 class="mg-page-hero__title">{{ mg_text('page.asendiplaan.page_h1') }}</h1>
     <p class="mg-page-hero__lead">
-      {{ __('magnoolia.page.asendiplaan.lead') }}
+      {{ mg_text('page.asendiplaan.lead') }}
     </p>
     <p class="mg-page-hero__note">
-      {{ __('magnoolia.page.asendiplaan.note') }}
+      {{ mg_text('page.asendiplaan.note') }}
     </p>
     <div class="mg-page-hero__ctas">
       <a href="#kodud-kaardil" class="zoomvilla-btn">{{ __('magnoolia.page.asendiplaan.cta_view') }} <i class="icon-angle-small-right"></i></a>

@@ -1,6 +1,15 @@
 <x-filament-panels::page>
     <div class="space-y-4">
 
+        {{-- Guidance: when to use Page Texts vs Translations --}}
+        <div style="border-left:4px solid #c89443;background:rgba(200,148,67,0.12);border-radius:8px;padding:12px 16px;font-size:13px;line-height:1.6;">
+            <strong style="color:#c89443;">Tip:</strong>
+            For the main website copy (headlines, leads, notices) use
+            <a href="/admin/magnoolia/content" style="text-decoration:underline;font-weight:600;">Page Texts</a> —
+            it is simpler and edits ET / RU / EN side by side, with draft &amp; publish.
+            Use this Translations screen only for advanced labels and navigation (menu items, buttons, status labels).
+        </div>
+
         {{-- Preview banner --}}
         @if($previewSnapshotId)
             <div class="flex items-center gap-3 rounded-lg bg-amber-50 border border-amber-300 dark:bg-amber-900/20 dark:border-amber-700 px-4 py-3 text-sm">
@@ -33,7 +42,7 @@
 
         {{-- Translation table --}}
         <div class="fi-ta-content overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
-            @if(count($values) === 0)
+            @if(count($entries) === 0)
                 <p class="p-6 text-sm text-gray-500">No string translations found for section "{{ $section }}" in "{{ $locale }}".</p>
             @else
                 <table class="w-full text-sm">
@@ -44,22 +53,23 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                        @foreach($values as $key => $value)
+                        @php $inputStyle = 'width:100%;border:1px solid #9aa0a6;border-radius:6px;background:#ffffff;color:#1d2430;padding:6px 9px;font-size:13px;'; @endphp
+                        @foreach($entries as $i => $entry)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                                <td class="px-4 py-2 font-mono text-xs text-gray-500 select-all">{{ $key }}</td>
+                                <td class="px-4 py-2 font-mono text-xs text-gray-500 select-all">{{ $entry['key'] }}</td>
                                 <td class="px-4 py-2">
-                                    @if(mb_strlen($value) > 80)
+                                    @if(mb_strlen($entry['value']) > 80)
                                         <textarea
-                                            wire:model="values.{{ $key }}"
+                                            wire:model="entries.{{ $i }}.value"
                                             rows="2"
-                                            class="w-full rounded border border-gray-200 dark:border-gray-600 bg-transparent px-2 py-1 text-sm focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
-                                        >{{ $value }}</textarea>
+                                            style="{{ $inputStyle }}"
+                                        >{{ $entry['value'] }}</textarea>
                                     @else
                                         <input
                                             type="text"
-                                            wire:model="values.{{ $key }}"
-                                            value="{{ $value }}"
-                                            class="w-full rounded border border-gray-200 dark:border-gray-600 bg-transparent px-2 py-1 text-sm focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
+                                            wire:model="entries.{{ $i }}.value"
+                                            value="{{ $entry['value'] }}"
+                                            style="{{ $inputStyle }}"
                                         />
                                     @endif
                                 </td>

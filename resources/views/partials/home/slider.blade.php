@@ -31,16 +31,16 @@
                             </h5>
 
                             <h1 class="main-slider-two__title">
-                                {!! __('magnoolia.hero.h1') !!}
+                                {!! mg_text('hero.h1') !!}
                             </h1>
 
                             <p class="main-slider-two__text">
-                                {{ __('magnoolia.hero.subheadline') }}
+                                {{ mg_text('hero.subheadline') }}
                             </p>
 
                             <div class="main-slider-two__btn">
                                 <a href="#hinnad" class="zoomvilla-btn">
-                                    {{ __('magnoolia.hero.cta_primary') }} <i class="icon-angle-small-right"></i>
+                                    {{ mg_text('hero.cta_primary') }} <i class="icon-angle-small-right"></i>
                                 </a>
                                 <a href="#kontakt" class="zoomvilla-btn zoomvilla-btn--border" style="margin-left:16px;">
                                     {{ __('magnoolia.hero.cta_secondary') }} <i class="icon-angle-small-right"></i>

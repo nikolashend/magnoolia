@@ -13,7 +13,7 @@
     </div>
 
     @if($blocks->isEmpty())
-        <div class="card"><div class="status status-warn">No content blocks yet — run <code>php artisan magnoolia:seed-content</code>.</div></div>
+        <div class="card"><div class="status status-warn">Content blocks are not initialized yet. Please contact your administrator to finish setup.</div></div>
     @endif
 
     @foreach($blocks as $page => $pageBlocks)
