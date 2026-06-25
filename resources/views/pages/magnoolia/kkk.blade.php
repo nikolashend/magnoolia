@@ -28,8 +28,8 @@
         @foreach($group['faqs'] as $fi => $faq)
         {
           "@@type": "Question",
-          "name": "{{ addslashes($faq['q']) }}",
-          "acceptedAnswer": { "@@type": "Answer", "text": "{{ addslashes($faq['a']) }}" }
+          "name": {!! json_encode((string) $faq['q'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!},
+          "acceptedAnswer": { "@@type": "Answer", "text": {!! json_encode((string) $faq['a'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!} }
         }{{ ($gi < count($groups) - 1 || $fi < count($group['faqs']) - 1) ? ',' : '' }}
         @endforeach
         @endforeach

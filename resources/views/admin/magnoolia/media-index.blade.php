@@ -17,14 +17,14 @@
         <form method="POST" action="{{ route('admin.magnoolia.media.store') }}" enctype="multipart/form-data"
               style="display:grid;grid-template-columns:2fr 2fr 1.5fr auto;gap:10px;align-items:end;">
             @csrf
-            <div><label>Image / file</label><input type="file" name="file" required accept=".jpg,.jpeg,.png,.webp,.svg,.pdf"></div>
+            <div><label>Image / file</label><input type="file" name="file" required accept=".jpg,.jpeg,.png,.webp,.pdf"></div>
             <div><label>Title</label><input type="text" name="title" placeholder="e.g. Hero — front view"></div>
             <div><label>Category</label>
                 <select name="category">@foreach($categories as $k=>$v)<option value="{{ $k }}">{{ $v }}</option>@endforeach</select>
             </div>
             <div><button type="submit">Upload</button></div>
         </form>
-        <p style="margin:8px 0 0;color:#9a948a;font-size:11.5px;">Allowed: JPG, PNG, WebP, SVG, PDF · max 12&nbsp;MB · raster images are auto-converted to optimized WebP + thumbnail.</p>
+        <p style="margin:8px 0 0;color:#9a948a;font-size:11.5px;">Allowed: JPG, PNG, WebP, PDF · max 12&nbsp;MB · raster images are auto-converted to optimized WebP + thumbnail.</p>
     </div>
 
     <div class="card" style="margin-bottom:14px;">

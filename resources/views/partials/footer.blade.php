@@ -106,8 +106,8 @@
         <div class="mg-footer__bottom">
             <p class="mg-footer__copy">&copy; {{ date('Y') }} Magnoolia / Estlanda OÜ. {{ __('magnoolia.footer.copy') }}</p>
             <ul class="mg-footer__bottom-links">
-                <li><span>{{ __('magnoolia.footer.privacy') }}</span></li>
-                <li><span>{{ __('magnoolia.footer.terms') }}</span></li>
+                <li><a href="{{ lroute('magnoolia.privacy') }}">{{ __('magnoolia.footer.privacy') }}</a></li>
+                <li><a href="{{ lroute('magnoolia.terms') }}">{{ __('magnoolia.footer.terms') }}</a></li>
                 <li><a href="{{ lroute('magnoolia.contact') }}">{{ __('magnoolia.footer.nav_contact') }}</a></li>
             </ul>
         </div>

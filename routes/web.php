@@ -44,6 +44,8 @@ Route::get('/ostuprotsess',     [MagnooliaController::class, 'purchase'])      -
 Route::get('/finantseerimine',  [MagnooliaController::class, 'financing'])     ->name('magnoolia.finantseerimine');
 Route::get('/kkk',              [MagnooliaController::class, 'faq'])           ->name('magnoolia.kkk');
 Route::get('/aitah',            [MagnooliaController::class, 'thankyou'])      ->name('magnoolia.thankyou');
+Route::get('/privaatsus',       [MagnooliaController::class, 'privacy'])       ->name('magnoolia.privacy');
+Route::get('/tingimused',       [MagnooliaController::class, 'terms'])         ->name('magnoolia.terms');
 
 // ── Locale prefix groups: /ru/... and /en/... ────────────────────────────────
 foreach (['ru', 'en'] as $_loc) {
@@ -83,6 +85,10 @@ foreach (['ru', 'en'] as $_loc) {
                 ->name($_loc . '.magnoolia.kkk');
             Route::get('/aitah',            [MagnooliaController::class, 'thankyou'])
                 ->name($_loc . '.magnoolia.thankyou');
+            Route::get('/privaatsus',       [MagnooliaController::class, 'privacy'])
+                ->name($_loc . '.magnoolia.privacy');
+            Route::get('/tingimused',       [MagnooliaController::class, 'terms'])
+                ->name($_loc . '.magnoolia.terms');
         });
 }
 
@@ -92,7 +98,7 @@ Route::get('/robots.txt', function () {
 
     $content = $noindex
         ? "User-agent: *\nDisallow: /\n\nSitemap: https://magnoolia.ee/sitemap.xml\n"
-        : "User-agent: *\nAllow: /\n\nSitemap: https://magnoolia.ee/sitemap.xml\n";
+        : "User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /admin/\n\nSitemap: https://magnoolia.ee/sitemap.xml\n";
 
     return response($content, 200)->header('Content-Type', 'text/plain; charset=UTF-8');
 })->name('robots');

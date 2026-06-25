@@ -39,7 +39,9 @@ class MagnooliaMediaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'file' => 'required|file|max:12288|mimes:jpg,jpeg,png,webp,svg,pdf', // 12 MB
+            // Phase 34 security: SVG removed — unsanitised SVG can carry inline
+            // scripts (stored-XSS). Raster + PDF only; logos/icons are dev-managed.
+            'file' => 'required|file|max:12288|mimes:jpg,jpeg,png,webp,pdf', // 12 MB
             'title' => 'nullable|string|max:190',
             'category' => 'required|string|in:' . implode(',', array_keys(MagnooliaMediaItem::CATEGORIES)),
             'alt_et' => 'nullable|string|max:255',

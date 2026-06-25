@@ -257,6 +257,18 @@ class MagnooliaController extends Controller
         return view('pages.magnoolia.aitah', compact('name'));
     }
 
+    /** Phase 34 — privacy notice (GDPR). Locale via SetLocale from URL prefix. */
+    public function privacy()
+    {
+        return view('pages.magnoolia.legal', ['doc' => 'privacy']);
+    }
+
+    /** Phase 34 — terms / usage notice. */
+    public function terms()
+    {
+        return view('pages.magnoolia.legal', ['doc' => 'terms']);
+    }
+
     /**
      * GET /kodud/{slug}  (ET)
      * GET /ru/kodud/{slug}  (RU)

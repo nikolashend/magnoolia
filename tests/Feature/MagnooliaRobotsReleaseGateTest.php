@@ -51,7 +51,10 @@ class MagnooliaRobotsReleaseGateTest extends TestCase
         $this->assertSame(200, $response->getStatusCode());
         $this->assertStringContainsString('User-agent: *', $response->getContent());
         $this->assertStringContainsString('Allow: /', $response->getContent());
-        $this->assertStringNotContainsString('Disallow: /', $response->getContent());
+        // The whole site must NOT be blocked (no standalone "Disallow: /" line)…
+        $this->assertDoesNotMatchRegularExpression('/^Disallow: \/$/m', $response->getContent());
+        // …but the admin area is explicitly excluded (Phase 34 hardening).
+        $this->assertStringContainsString('Disallow: /admin', $response->getContent());
     }
 
     public function test_sitemap_accessible_and_not_empty(): void
