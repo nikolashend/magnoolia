@@ -28,27 +28,38 @@ class MagnooliaVerifyReadinessCommand extends Command
         $active = MagnooliaPublication::where('status', 'active')->orderByDesc('version')->first();
         $dist = MagnooliaUnit::selectRaw('status, count(*) c')->groupBy('status')->pluck('c', 'status')->all();
 
+        // Core readiness — these determine READY / NOT READY (data must be populated).
         $checks = [
             ['Units = 19', $units === 19, $units],
             ['Media >= 20 (not empty)', $media >= 20, $media],
             ['Gallery media >= 29', $gallery >= 29, $gallery],
             ['Content blocks >= 34', $content >= 34, $content],
             ['Active publication exists', (bool) $active, $active ? ('v' . $active->version) : 'NONE'],
-            ['Status 14/4/1 (approved)', ($dist['available'] ?? 0) === 14 && ($dist['reserved'] ?? 0) === 4 && ($dist['sold'] ?? 0) === 1,
-                ($dist['available'] ?? 0) . '/' . ($dist['reserved'] ?? 0) . '/' . ($dist['sold'] ?? 0)],
         ];
+
+        // Status distribution is a business decision, NOT a readiness blocker: the
+        // approved baseline is 14/4/1, but the client may have intentionally changed
+        // availability. So it is reported as informational (warning if it differs).
+        $distStr = ($dist['available'] ?? 0) . '/' . ($dist['reserved'] ?? 0) . '/' . ($dist['sold'] ?? 0);
+        $statusMatchesBaseline = ($dist['available'] ?? 0) === 14 && ($dist['reserved'] ?? 0) === 4 && ($dist['sold'] ?? 0) === 1;
 
         $this->line('');
         $this->line('Magnoolia production readiness:');
         $ok = true;
         foreach ($checks as [$label, $pass, $value]) {
-            $this->line(sprintf('  [%s] %-30s %s', $pass ? 'OK' : 'XX', $label, $value));
+            $this->line(sprintf('  [%s] %-32s %s', $pass ? 'OK' : 'XX', $label, $value));
             $ok = $ok && $pass;
         }
+        $this->line(sprintf('  [%s] %-32s %s', $statusMatchesBaseline ? 'OK' : '~~', 'Status (approved 14/4/1)', $distStr
+            . ($statusMatchesBaseline ? '' : '  (differs — OK if the client changed availability on purpose)')));
         $this->line('');
 
         if ($ok) {
-            $this->info('READY — admin and public data are populated. (Publish if status/active is missing.)');
+            $this->info('READY — admin and public data are populated.');
+            if (!$statusMatchesBaseline) {
+                $this->warn('Note: home availability differs from the approved 14/4/1 baseline. Confirm this is an intentional client change; otherwise correct it before publishing.');
+            }
+            $this->line('If the active publication predates your latest seed, run: php artisan magnoolia:publish --note="..."');
             return self::SUCCESS;
         }
         $this->error('NOT READY — run the seed commands and/or publish. See magnoolia:seed-* and magnoolia:publish.');
