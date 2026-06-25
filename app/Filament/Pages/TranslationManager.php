@@ -17,6 +17,12 @@ class TranslationManager extends Page
 
     public function getView(): string { return 'filament.pages.translation-manager'; }
 
+    /** Phase 33.3 — advanced section: full system admin (ADME) only. */
+    public static function canAccess(): bool
+    {
+        return optional(auth()->user())->role === 'magnoolia_admin';
+    }
+
     public string $locale  = 'et';
     public string $section = 'nav';
 

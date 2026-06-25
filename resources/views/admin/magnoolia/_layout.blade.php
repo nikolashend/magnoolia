@@ -45,11 +45,13 @@
         <div class="brand">MAGN<span>OO</span>LIA · Control Center</div>
         <a href="{{ url('/') }}" target="_blank" style="color:#c89443;text-decoration:none;font-size:13px;">View public site ↗</a>
     </div>
+    @php $isFullAdmin = optional(auth()->user())->role === 'magnoolia_admin'; @endphp
     <div class="navgroups">
         <div class="navgroup">
             <h4>Daily work</h4>
             <div class="links">
                 <a href="{{ route('admin.magnoolia.dashboard') }}" class="{{ $rn==='admin.magnoolia.dashboard'?'active':'' }}">Dashboard</a>
+                <a href="{{ route('admin.magnoolia.sitemap') }}" class="{{ $rn==='admin.magnoolia.sitemap'?'active':'' }}">Veebilehe kaart</a>
                 <a href="{{ route('admin.magnoolia.units.index') }}" class="{{ str_contains((string)$rn,'units')?'active':'' }}">Homes &amp; Prices</a>
                 <a href="{{ route('admin.magnoolia.leads.index') }}" class="{{ str_contains((string)$rn,'leads')?'active':'' }}">Leads</a>
                 <a href="{{ route('admin.magnoolia.campaign') }}" class="{{ $rn==='admin.magnoolia.campaign'?'active':'' }}">Campaign</a>
@@ -73,14 +75,29 @@
             </div>
         </div>
         <div class="navgroup">
-            <h4>System</h4>
+            <h4>Help</h4>
             <div class="links">
-                <a href="{{ route('admin.magnoolia.audit') }}" class="{{ $rn==='admin.magnoolia.audit'?'active':'' }}">Change History</a>
-                <a href="{{ route('admin.magnoolia.export.csv') }}">Export CSV</a>
                 <a href="{{ route('admin.magnoolia.help') }}" class="{{ $rn==='admin.magnoolia.help'?'active':'' }}">Help</a>
+                <a href="{{ route('admin.magnoolia.export.csv') }}">Export CSV</a>
             </div>
         </div>
+        @if($isFullAdmin)
+        <div class="navgroup" style="border-left:2px solid #e0d5c0;padding-left:12px;">
+            <h4 style="color:#b08646;">Advanced — ADME only</h4>
+            <div class="links">
+                <a href="{{ route('admin.magnoolia.audit') }}" class="{{ $rn==='admin.magnoolia.audit'?'active':'' }}">Audit log</a>
+                <a href="/admin/translation-manager">Translations</a>
+                <a href="/admin/language-settings">Languages</a>
+                <a href="/admin/nav-items">Navigation Menu</a>
+            </div>
+        </div>
+        @endif
     </div>
+    @if($isFullAdmin)
+    <div style="margin:-6px 0 14px;font-size:11.5px;color:#9a8b6f;">
+        ⚙ <strong>Advanced</strong> sections (Translations, Languages, Navigation, Audit) are usually managed by ADME — use only if you know exactly what you are changing. For normal website copy use <a href="{{ route('admin.magnoolia.content.index') }}" style="color:#9a6b1f;">Page Texts</a>.
+    </div>
+    @endif
 
     @if(session('status'))
         <div class="flash flash-ok">{{ session('status') }}</div>

@@ -3,6 +3,29 @@
 @section('title', 'Magnoolia Admin Dashboard')
 
 @section('admin_content')
+    {{-- Phase 33.3 — "What do you want to change?" client-first action cards --}}
+    <div class="card" style="margin-bottom:14px;">
+        <h2 style="margin:0 0 4px;">Mida soovid muuta?</h2>
+        <p style="margin:0 0 14px;color:#6f6a61;font-size:13px;">Vali, mida soovid veebilehel muuta. Kõik muudatused on <strong>mustand</strong> — avalik leht muutub alles siis, kui vajutad <em>Avalda</em>.</p>
+        <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr));">
+            @foreach($actionCards as $c)
+                <a href="{{ $c['url'] }}" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;border:1px solid #e7e9ee;border-radius:12px;padding:16px;background:#fff;transition:border-color .15s;" onmouseover="this.style.borderColor='#c89443'" onmouseout="this.style.borderColor='#e7e9ee'">
+                    <div style="font-size:15.5px;font-weight:700;color:#1d2430;margin-bottom:5px;">{{ $c['title'] }}</div>
+                    <div style="font-size:12.5px;color:#5b5446;line-height:1.55;flex:1;">{{ $c['desc'] }}</div>
+                    <div style="margin-top:10px;font-size:11.5px;color:#9a8b6f;">{{ $c['meta'] }}</div>
+                    <div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+                        @if($c['draft'])<span class="status status-warn">Mustand → vajab avaldamist</span>@else<span class="status status-ok">Otsene</span>@endif
+                        @if(!empty($c['last']))<span style="font-size:11px;color:#9a948a;">muudetud {{ $c['last'] }}</span>@endif
+                    </div>
+                    <div style="margin-top:12px;"><span style="display:inline-block;background:#1d2430;color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;">{{ $c['cta'] }} →</span></div>
+                </a>
+            @endforeach
+        </div>
+        <p style="margin:12px 0 0;font-size:12px;color:#9a948a;">
+            Ei tea, kust alustada? Ava <a href="{{ route('admin.magnoolia.sitemap') }}">Veebilehe kaart</a> — vali leht, mida muuta, ja liigu otse õigesse kohta. Abi saad <a href="{{ route('admin.magnoolia.help') }}">Abi</a> lehelt.
+        </p>
+    </div>
+
     @if(!empty($usingCanonicalFallback))
     <div class="card" style="margin-bottom:14px;border-left:4px solid #c89443;background:#fbf6ec;">
         <strong style="color:#9a6b1f;">⚠ Admin editing is not yet client-ready (Phase 33).</strong>

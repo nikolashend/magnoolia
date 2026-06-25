@@ -3,6 +3,20 @@
 @section('title', 'Magnoolia Units Draft')
 
 @section('admin_content')
+    <div class="card" style="margin-bottom:14px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;">
+        <div style="display:flex;gap:18px;flex-wrap:wrap;font-size:13px;align-items:baseline;">
+            <span><strong style="font-size:17px;">{{ $summary['total'] }}</strong> kodu</span>
+            <span style="color:#1f7a44;"><strong>{{ $summary['available'] }}</strong> Vaba</span>
+            <span style="color:#9a6b1f;"><strong>{{ $summary['reserved'] }}</strong> Broneeritud</span>
+            <span style="color:#8a2b2b;"><strong>{{ $summary['sold'] }}</strong> Müüdud</span>
+            <span style="color:#666;"><strong>{{ $summary['public_prices'] }}</strong> avalikku hinda</span>
+            @if($summary['version'])<span style="color:#666;">live v{{ $summary['version'] }}</span>@endif
+        </div>
+    </div>
+    <div class="card" style="margin-bottom:14px;background:#fbf8f3;border-left:4px solid #c89443;font-size:12.5px;color:#5b5446;line-height:1.6;">
+        <strong>Kuidas muuta kodu:</strong> muuda staatust (Vaba / Broneeritud / Müüdud) otse tabelis → seejärel <a href="{{ route('admin.magnoolia.preview') }}">Eelvaade</a> → <a href="{{ route('admin.magnoolia.publish.form') }}">Avalda</a>.
+        Sisemine hind ei ole avalik enne, kui lülitad sisse <em>Avalik hind</em>. Kõik muudatused on <strong>mustand</strong>, kuni vajutad Avalda.
+    </div>
     <div class="card" style="margin-bottom:14px;">
         <form method="GET" style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr auto;gap:8px;align-items:end;">
             <div><label>Search</label><input type="text" name="q" value="{{ request('q') }}" placeholder="Address"></div>
@@ -46,7 +60,8 @@
             <span style="font-size:11px;color:#9a948a;">Draft only · audited · Publish to go live</span>
         </form>
 
-        <table>
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+        <table style="min-width:760px;">
             <thead>
             <tr>
                 <th style="width:28px;"><input type="checkbox" id="bulkAll" style="width:auto;"></th>
@@ -92,6 +107,7 @@
             @endforeach
             </tbody>
         </table>
+        </div>
         <div style="margin-top:12px;">{{ $units->links() }}</div>
     </div>
 

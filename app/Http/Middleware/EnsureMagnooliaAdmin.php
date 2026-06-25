@@ -11,7 +11,8 @@ class EnsureMagnooliaAdmin
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
-        if (!$user || !in_array($user->role, ['magnoolia_admin', 'magnoolia_editor'], true)) {
+        // Control-center daily access: full admin, editor, and the client admin role.
+        if (!$user || !in_array($user->role, ['magnoolia_admin', 'magnoolia_editor', 'magnoolia_client_admin'], true)) {
             abort(403);
         }
 

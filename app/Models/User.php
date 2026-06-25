@@ -64,4 +64,14 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->role === 'magnoolia_editor';
     }
+
+    /**
+     * Phase 33.3 — the client admin role: full daily editing + publishing in the
+     * Magnoolia control center, but no access to the Filament panel or advanced
+     * (Translations / Languages / Navigation / Audit) sections.
+     */
+    public function isMagnooliaClientAdmin(): bool
+    {
+        return $this->role === 'magnoolia_client_admin';
+    }
 }

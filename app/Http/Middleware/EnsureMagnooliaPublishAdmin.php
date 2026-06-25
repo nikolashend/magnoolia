@@ -11,7 +11,8 @@ class EnsureMagnooliaPublishAdmin
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
-        if (!$user || $user->role !== 'magnoolia_admin') {
+        // Publish / campaign / rollback: full admin and the client admin role.
+        if (!$user || !in_array($user->role, ['magnoolia_admin', 'magnoolia_client_admin'], true)) {
             abort(403);
         }
 

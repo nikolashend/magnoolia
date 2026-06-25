@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'magnoolia.admin' => \App\Http\Middleware\EnsureMagnooliaAdmin::class,
             'magnoolia.publish-admin' => \App\Http\Middleware\EnsureMagnooliaPublishAdmin::class,
+            'magnoolia.system-admin' => \App\Http\Middleware\EnsureMagnooliaSystemAdmin::class,
             'magnoolia.login-throttle' => \App\Http\Middleware\MagnooliaLoginThrottle::class,
         ]);
 

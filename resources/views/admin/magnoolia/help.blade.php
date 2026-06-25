@@ -6,6 +6,41 @@
     <div class="card" style="margin-bottom:14px;">
         <h2 style="margin:0 0 6px;">How the Magnoolia Control Center works</h2>
         <p style="margin:0;color:#6f6a61;font-size:13px;">Everything you change is a <strong>draft</strong>. Nothing reaches the public website until you <strong>Publish</strong>. You can always roll back.</p>
+        <p style="margin:8px 0 0;font-size:13px;">Not sure where to click? Start from the <a href="{{ route('admin.magnoolia.sitemap') }}">Veebilehe kaart (page map)</a> — pick the page you want to change and it takes you to the right editor.</p>
+    </div>
+
+    <div class="grid" style="grid-template-columns:1fr 1fr 1fr;margin-bottom:14px;">
+        <div class="card" style="border-left:4px solid #1f7a44;">
+            <h3 style="margin:0 0 8px;">Important rules</h3>
+            <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.75;color:#5b5446;">
+                <li>Editing does <strong>not</strong> change the public site until you <strong>Publish</strong>.</li>
+                <li>Prices are <strong>hidden</strong> unless you explicitly enable “Public price”.</li>
+                <li>Use <a href="{{ route('admin.magnoolia.content.index') }}">Page Texts</a> for normal page copy.</li>
+                <li>Use <a href="{{ route('admin.magnoolia.media.index') }}">Images &amp; Media</a> for gallery and floor plans.</li>
+                <li>Do <strong>not</strong> use Translation Manager for normal page text.</li>
+                <li>For layout/design changes, contact ADME.</li>
+            </ul>
+        </div>
+        <div class="card" style="border-left:4px solid #c89443;">
+            <h3 style="margin:0 0 8px;">What not to touch</h3>
+            <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.75;color:#5b5446;">
+                <li><strong>Navigation Menu</strong> — unless agreed with ADME.</li>
+                <li><strong>Advanced translations</strong> — only if truly necessary.</li>
+                <li><strong>Languages</strong> — disabling a language affects public routing.</li>
+                <li>Technical / system settings.</li>
+            </ul>
+            <p style="margin:8px 0 0;font-size:12px;color:#9a8b6f;">These are marked “Advanced — ADME only” in the menu.</p>
+        </div>
+        <div class="card" style="border-left:4px solid #1d2430;">
+            <h3 style="margin:0 0 8px;">Before publishing — checklist</h3>
+            <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.75;color:#5b5446;">
+                <li>No <strong>blockers</strong> in <a href="{{ route('admin.magnoolia.validate') }}">Validate</a>.</li>
+                <li>Home statuses are correct.</li>
+                <li>Texts checked in ET (RU/EN if used).</li>
+                <li>Images have alt text.</li>
+                <li>You opened <a href="{{ route('admin.magnoolia.preview') }}">Preview</a>.</li>
+            </ul>
+        </div>
     </div>
 
     <div class="card" style="margin-bottom:14px;">

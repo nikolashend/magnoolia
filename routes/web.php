@@ -159,6 +159,9 @@ Route::prefix('admin/magnoolia')
     ->group(function () {
         Route::get('/', [MagnooliaAdminController::class, 'dashboard'])->name('dashboard');
 
+        // Phase 33.3 — "Edit Website" page map: start from a page, jump to the editor.
+        Route::get('/site-map', [MagnooliaAdminController::class, 'siteMap'])->name('sitemap');
+
         Route::get('/units', [MagnooliaAdminController::class, 'units'])->name('units.index');
         Route::get('/units/{unit}/edit', [MagnooliaAdminController::class, 'editUnit'])->name('units.edit');
         Route::put('/units/{unit}', [MagnooliaAdminController::class, 'updateUnit'])->name('units.update');
@@ -193,8 +196,12 @@ Route::prefix('admin/magnoolia')
 
         Route::get('/publications', [MagnooliaAdminController::class, 'publications'])->name('publications.index');
 
-        Route::middleware(['magnoolia.publish-admin'])->group(function () {
+        // Advanced — full system admin (ADME) only.
+        Route::middleware(['magnoolia.system-admin'])->group(function () {
             Route::get('/audit', [MagnooliaAdminController::class, 'audit'])->name('audit');
+        });
+
+        Route::middleware(['magnoolia.publish-admin'])->group(function () {
             Route::get('/campaign', [MagnooliaAdminController::class, 'campaign'])->name('campaign');
             Route::post('/campaign', [MagnooliaAdminController::class, 'updateCampaign'])->name('campaign.update');
 

@@ -17,7 +17,7 @@
     @endif
 
     @foreach($blocks as $page => $pageBlocks)
-        <div class="card" style="margin-bottom:14px;">
+        <div class="card" id="page-{{ $page }}" style="margin-bottom:14px;scroll-margin-top:16px;">
             <h3 style="margin:0 0 12px;border-bottom:1px solid #edf0f4;padding-bottom:8px;">{{ $pages[$page] ?? ucfirst($page) }}</h3>
             @foreach($pageBlocks as $block)
                 <form method="POST" action="{{ route('admin.magnoolia.content.update', $block) }}" style="margin-bottom:18px;">

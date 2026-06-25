@@ -16,6 +16,12 @@ class LanguageSettings extends Page
 
     public function getView(): string { return 'filament.pages.language-settings'; }
 
+    /** Phase 33.3 — advanced section: full system admin (ADME) only. */
+    public static function canAccess(): bool
+    {
+        return optional(auth()->user())->role === 'magnoolia_admin';
+    }
+
     public bool $lang_et = true;
     public bool $lang_ru = true;
     public bool $lang_en = true;

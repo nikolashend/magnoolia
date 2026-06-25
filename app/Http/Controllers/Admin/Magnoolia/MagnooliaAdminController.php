@@ -83,7 +83,72 @@ class MagnooliaAdminController extends Controller
             'hidden_prices' => $units->where('price_public', false)->count(),
         ];
 
-        return view('admin.magnoolia.dashboard', compact('stats', 'validation', 'active', 'canonicalConfigCount', 'usingCanonicalFallback', 'liveSource', 'lastEditedUnit', 'recentAudit', 'statusBaseline', 'liveStatusDist', 'statusMatchesBaseline'));
+        // Phase 33.3 — "What do you want to change?" client-facing action cards.
+        $contentCount = MagnooliaContentBlock::query()->count();
+        $mediaCount = \App\Models\MagnooliaMediaItem::query()->count();
+        $galleryCount = \App\Models\MagnooliaMediaItem::query()->where('category', 'gallery')->count();
+        $leadsTotal = \App\Models\MagnooliaLead::query()->count();
+        $newLeads = \App\Models\MagnooliaLead::query()->where('lead_status', 'new')->count();
+        $fmt = fn ($d) => $d ? $d->format('d.m.Y H:i') : null;
+
+        $actionCards = [
+            [
+                'title' => 'Kodude staatused ja hinnad',
+                'desc' => 'Muuda Vaba / Broneeritud / Müüdud, näita või peida avalik hind, paranda kodu andmeid.',
+                'meta' => $units->count() . ' kodu · ' . $stats['available'] . ' Vaba · ' . $stats['reserved'] . ' Broneeritud · ' . $stats['sold'] . ' Müüdud',
+                'last' => $fmt($lastEditedUnit?->updated_at),
+                'draft' => true,
+                'cta' => 'Muuda kodusid',
+                'url' => route('admin.magnoolia.units.index'),
+            ],
+            [
+                'title' => 'Veebilehe tekstid',
+                'desc' => 'Muuda pealkirju, sissejuhatusi ja CTA-tekste. ET / RU / EN. Tühi väli kasutab vaikimisi teksti.',
+                'meta' => $contentCount . ' tekstiplokki · 12 lehte',
+                'last' => $fmt(MagnooliaContentBlock::query()->max('updated_at') ? \Illuminate\Support\Carbon::parse(MagnooliaContentBlock::query()->max('updated_at')) : null),
+                'draft' => true,
+                'cta' => 'Muuda tekste',
+                'url' => route('admin.magnoolia.content.index'),
+            ],
+            [
+                'title' => 'Pildid ja galerii',
+                'desc' => 'Lae üles pilte, halda galeriid, lisa alt-tekste ja määra kodude korruseplaane.',
+                'meta' => $mediaCount . ' faili · ' . $galleryCount . ' galerii pilti',
+                'last' => null,
+                'draft' => true,
+                'cta' => 'Halda pilte',
+                'url' => route('admin.magnoolia.media.index'),
+            ],
+            [
+                'title' => 'Kampaania',
+                'desc' => 'Ajutine kampaania, soodustus või CTA. Kehtib kõigile sobivatele kodudele korraga.',
+                'meta' => 'Globaalne kampaania',
+                'last' => null,
+                'draft' => true,
+                'cta' => 'Muuda kampaaniat',
+                'url' => route('admin.magnoolia.campaign'),
+            ],
+            [
+                'title' => 'Päringud',
+                'desc' => 'Vaata avalike vormide päringuid ning märgi need kontakteeritud või arhiveeritud.',
+                'meta' => $leadsTotal . ' päringut' . ($newLeads ? ' · ' . $newLeads . ' uut' : ''),
+                'last' => null,
+                'draft' => false,
+                'cta' => 'Vaata päringuid',
+                'url' => route('admin.magnoolia.leads.index'),
+            ],
+            [
+                'title' => 'Avaldamine',
+                'desc' => 'Vaata muudatusi, eelvaata, kontrolli ja avalda. Saad alati tagasi pöörduda (rollback).',
+                'meta' => $stats['unpublished_changes'] . ' avaldamata muudatust' . ($active ? ' · live v' . $active->version : ''),
+                'last' => $fmt($active?->published_at),
+                'draft' => false,
+                'cta' => 'Avalda muudatused',
+                'url' => route('admin.magnoolia.publish.form'),
+            ],
+        ];
+
+        return view('admin.magnoolia.dashboard', compact('stats', 'validation', 'active', 'canonicalConfigCount', 'usingCanonicalFallback', 'liveSource', 'lastEditedUnit', 'recentAudit', 'statusBaseline', 'liveStatusDist', 'statusMatchesBaseline', 'actionCards'));
     }
 
     public function units(Request $request)
@@ -108,7 +173,19 @@ class MagnooliaAdminController extends Controller
 
         $units = $query->orderBy('sort_order')->paginate(50)->withQueryString();
 
-        return view('admin.magnoolia.units-index', compact('units'));
+        // Phase 33.3 — top summary so the daily work screen reads at a glance.
+        $all = MagnooliaUnit::query();
+        $active = MagnooliaPublication::query()->where('status', 'active')->orderByDesc('version')->first();
+        $summary = [
+            'total' => (clone $all)->count(),
+            'available' => (clone $all)->where('status', 'available')->count(),
+            'reserved' => (clone $all)->where('status', 'reserved')->count(),
+            'sold' => (clone $all)->where('status', 'sold')->count(),
+            'public_prices' => (clone $all)->where('price_public', true)->count(),
+            'version' => $active?->version,
+        ];
+
+        return view('admin.magnoolia.units-index', compact('units', 'summary'));
     }
 
     public function editUnit(string $unitKey)
@@ -341,6 +418,73 @@ class MagnooliaAdminController extends Controller
     public function help()
     {
         return view('admin.magnoolia.help');
+    }
+
+    /**
+     * Phase 33.3 — "Edit Website" page map. Lists every public page as a card so a
+     * non-technical client starts from "I want to change THIS page" and is routed to
+     * the correct editor (Page Texts / Images), instead of guessing between editors.
+     */
+    public function siteMap()
+    {
+        // [content-block page slug, public route name, ET label, has-gallery]
+        $defs = [
+            ['home', 'home', 'Avaleht', false],
+            ['kodud', 'magnoolia.homes', 'Kodud ja hinnad', false],
+            ['asendiplaan', 'magnoolia.site-plan', 'Asendiplaan', false],
+            ['asukoht', 'magnoolia.location', 'Asukoht', false],
+            ['ehitusinfo', 'magnoolia.construction', 'Ehitusinfo', false],
+            ['sisedisain', 'magnoolia.sisedisain', 'Siseviimistlus', false],
+            ['galerii', 'magnoolia.galerii', 'Galerii', true],
+            ['ostuprotsess', 'magnoolia.ostuprotsess', 'Ostuprotsess', false],
+            ['finantseerimine', 'magnoolia.finantseerimine', 'Finantseerimine', false],
+            ['kkk', 'magnoolia.kkk', 'KKK', false],
+            ['kontakt', 'magnoolia.contact', 'Kontakt', false],
+        ];
+
+        $blockCounts = MagnooliaContentBlock::query()
+            ->selectRaw('page, count(*) as c, sum(case when is_active = 1 and (ru is null or ru = "" or en is null or en = "") then 1 else 0 end) as missing')
+            ->groupBy('page')->get()->keyBy('page');
+
+        $galleryCount = \App\Models\MagnooliaMediaItem::query()->where('category', 'gallery')->count();
+        $altMissing = \App\Models\MagnooliaMediaItem::query()->where('category', 'gallery')
+            ->where(function ($q) {
+                $q->whereNull('alt_et')->orWhere('alt_et', '');
+            })->count();
+
+        $pages = [];
+        foreach ($defs as [$slug, $routeName, $label, $hasGallery]) {
+            $url = \Illuminate\Support\Facades\Route::has($routeName) ? route($routeName) : null;
+            $bc = $blockCounts->get($slug);
+            $textCount = (int) ($bc->c ?? 0);
+            $missingTr = (int) ($bc->missing ?? 0);
+            $imgCount = $hasGallery ? $galleryCount : null;
+
+            $statuses = [];
+            if ($missingTr > 0) {
+                $statuses[] = ['label' => $missingTr . ' tõlge puudu (RU/EN)', 'kind' => 'warn'];
+            }
+            if ($hasGallery && $altMissing > 0) {
+                $statuses[] = ['label' => $altMissing . ' pildil puudub alt-tekst', 'kind' => 'warn'];
+            }
+            if (!$statuses) {
+                $statuses[] = ['label' => 'Korras', 'kind' => 'ok'];
+            }
+
+            $pages[] = [
+                'label' => $label,
+                'url' => $url,
+                'text_count' => $textCount,
+                'img_count' => $imgCount,
+                'statuses' => $statuses,
+                'content_anchor' => route('admin.magnoolia.content.index') . '#page-' . $slug,
+                'media_url' => $hasGallery
+                    ? route('admin.magnoolia.media.index') . '?category=gallery'
+                    : route('admin.magnoolia.media.index'),
+            ];
+        }
+
+        return view('admin.magnoolia.site-map', compact('pages'));
     }
 
     /** "Changes since last publish" — full draft↔live diff. */
