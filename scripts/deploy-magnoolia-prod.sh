@@ -22,9 +22,12 @@ echo "==> Running migrations"
 php artisan migrate --force
 
 echo "==> Seeding canonical data (idempotent)"
-php artisan magnoolia:seed-units                 # 19 homes, approved 14/4/1 baseline
+php artisan magnoolia:seed-units                 # 19 homes (new rows only; does not touch existing)
 php artisan magnoolia:seed-content --force       # 34 Page-Texts blocks across 12 pages (ET/RU/EN)
 php artisan magnoolia:seed-gallery               # import public gallery renders into Media Library
+
+echo "==> Syncing sale prices from config (price fields only, no status change)"
+php artisan magnoolia:sync-prices                # config price + price_public -> DB (existing rows too)
 
 echo "==> Verifying readiness"
 php artisan magnoolia:verify-readiness || {

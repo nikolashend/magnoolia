@@ -17,9 +17,8 @@ use Illuminate\Support\Str;
  * hinnatabel facts + statuses). Running this twice does NOT duplicate homes and
  * does NOT overwrite admin-edited values unless --force is given.
  *
- * Safety: prices are seeded as INTERNAL price_cents but price_public is forced to
- * FALSE so no price is exposed publicly until the client explicitly confirms it
- * per-unit in the admin. This preserves the Phase-32 "Hind täpsustamisel" behaviour.
+ * Phase 35: per-unit `price_public` is taken from config/magnoolia_units.php
+ * (the client confirmed the sale prices), defaulting to false when not set.
  */
 class MagnooliaSeedUnitsCommand extends Command
 {
@@ -90,7 +89,7 @@ class MagnooliaSeedUnitsCommand extends Command
                 'public_page_visible' => true,
                 // INTERNAL price retained; NEVER public until the client confirms per-unit.
                 'price_cents' => isset($u['price']) && $u['price'] !== null ? (int) round(((float) $u['price']) * 100) : null,
-                'price_public' => false,
+                'price_public' => (bool) ($u['price_public'] ?? false),
                 'rooms' => (int) ($u['rooms'] ?? 0),
                 'net_area' => (float) ($u['net_area'] ?? 0),
                 'terrace_area' => isset($u['terrace_area']) ? (float) $u['terrace_area'] : null,
