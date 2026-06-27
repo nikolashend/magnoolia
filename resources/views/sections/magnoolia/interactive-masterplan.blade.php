@@ -347,8 +347,9 @@
       ]))->values()->all();
       $boxMainKey = collect($views)->first()['key'] ?? 'secondary'; // current main view key
     @endphp
-    <div class="mg-mp__map-picker" style="margin-top:20px;">
-      <div class="mg-mp__map-picker-stage" id="mg-box-stage" style="position:relative;">
+    {{-- Wide breakout so the 3D render is as large as possible for precise tracing. --}}
+    <div class="mg-mp__map-picker" style="margin-top:20px;width:min(96vw,1700px);position:relative;left:50%;transform:translateX(-50%);">
+      <div class="mg-mp__map-picker-stage" id="mg-box-stage" style="position:relative;width:100%;">
         <img src="{{ $persSrc }}" @if($persSrcset) srcset="{{ $persSrcset }}" @endif alt="" decoding="async" style="width:100%;display:block;">
         <svg class="mg-mp__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
              style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;">
@@ -401,20 +402,21 @@
         var x = 0, y = 0; pts.forEach(function (p) { x += p[0]; y += p[1]; });
         return [ +(x / pts.length).toFixed(3), +(y / pts.length).toFixed(3) ];
       }
+      // vector-effect keeps strokes/dots crisp & thin regardless of the stretched viewBox
       function poly(pts, cls, fill) {
         return '<polygon points="' + pts.map(function (p) { return (p[0]*100) + ',' + (p[1]*100); }).join(' ') +
-               '" fill="' + fill + '" stroke="#ffd24a" stroke-width="0.3"/>';
+               '" fill="' + fill + '" stroke="#e0b052" stroke-width="1.2" vector-effect="non-scaling-stroke"/>';
       }
       function dots(pts, color) {
-        return pts.map(function (p) { return '<circle cx="' + (p[0]*100) + '" cy="' + (p[1]*100) + '" r="0.7" fill="' + color + '" stroke="#1d2430" stroke-width="0.15"/>'; }).join('');
+        return pts.map(function (p) { return '<circle cx="' + (p[0]*100) + '" cy="' + (p[1]*100) + '" r="0.22" fill="' + color + '" stroke="#1d2430" stroke-width="0.6" vector-effect="non-scaling-stroke"/>'; }).join('');
       }
       function redraw() {
         var html = '';
         Object.keys(boxes).forEach(function (k) {
           var pts = boxes[k];
-          html += poly(pts, 'saved', 'rgba(76,175,80,0.18)');
+          html += poly(pts, 'saved', 'rgba(76,175,80,0.16)');
           var c = centroid(pts);
-          html += '<text x="' + (c[0]*100) + '" y="' + (c[1]*100) + '" fill="#1d2430" font-size="2.2" text-anchor="middle" stroke="#fff" stroke-width="0.4" paint-order="stroke">' + k.replace('tee-', '') + '</text>';
+          html += '<text x="' + (c[0]*100) + '" y="' + (c[1]*100) + '" fill="#1d2430" font-size="1.3" text-anchor="middle" stroke="#fff" stroke-width="0.3" paint-order="stroke">' + k.replace('tee-', '') + '</text>';
         });
         if (cur.length) { html += (cur.length > 1 ? poly(cur, 'cur', 'rgba(200,148,67,0.28)') : '') + dots(cur, '#ffd24a'); }
         svg.innerHTML = html;
