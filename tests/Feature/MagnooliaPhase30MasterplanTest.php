@@ -70,13 +70,22 @@ class MagnooliaPhase30MasterplanTest extends TestCase
         $this->assertStringContainsString('id="mg-masterplan"', $html);
         $this->assertStringContainsString('mg-mp__img', $html, 'Perspective render image must be the primary visual');
         $this->assertStringContainsString('id="mg-mp-detail"', $html);
-        $this->assertStringContainsString('mg-mp__ftab', $html, 'Floor plan tabs must exist');
+        // Phase 35: both floor plans are shown together (no tab toggle).
+        $this->assertStringContainsString('id="mg-d-floor1-fig"', $html, 'Floor 1 plan figure must exist');
+        $this->assertStringContainsString('id="mg-d-floor2-fig"', $html, 'Floor 2 plan figure must exist');
+        // Row cards (no-JS / mobile fallback) remain for every row.
         foreach (['tee-1', 'tee-3', 'tee-5', 'tee-7', 'tee-9', 'tee-11'] as $pos) {
-            $this->assertStringContainsString('data-mp-zone="' . $pos . '"', $html);
             $this->assertStringContainsString('data-mp-row="' . $pos . '"', $html);
         }
-        // all 19 homes embedded for client-side rendering (masterplan home objects)
-        $this->assertSame(19, substr_count($html, '"key":"tee-'));
+        // Phase 35: the main view is sliced into per-HOME boxes (boxes-only). Map
+        // zones/markers are rendered client-side from the embedded box hotspots.
+        $this->assertStringContainsString('"mode":"home"', $html, 'Main view must use per-home box hotspots');
+        foreach (['tee-1-1', 'tee-3-4', 'tee-11-3'] as $homeKey) {
+            $this->assertStringContainsString('"key":"' . $homeKey . '"', $html);
+        }
+        // all 19 homes embedded for client-side rendering (each appears in the rows
+        // payload AND the per-home box hotspots → 38 occurrences of "key":"tee-").
+        $this->assertSame(38, substr_count($html, '"key":"tee-'));
     }
 
     public function test_deeplink_row_and_home_render(): void
@@ -136,10 +145,15 @@ class MagnooliaPhase30MasterplanTest extends TestCase
     {
         $views = app(RowhouseSelectionService::class)->perspectiveViews();
         $this->assertGreaterThanOrEqual(2, count($views));
-        $this->assertTrue($views[0]['hotspots'] ?? false, 'Primary view must be hotspot-calibrated');
-        foreach (array_slice($views, 1) as $v) {
-            $this->assertFalse($v['hotspots'] ?? true, 'Alternate views must not claim calibrated hotspots');
-        }
+        // Phase 35: the daylight secondary render (3.jpg) is the main/default view
+        // ("Üldvaade", config-driven hotspots); the mask-calibrated 1.jpg render is
+        // the second view ("Teine vaade"). Exactly the 'primary'-key view is the
+        // mask-calibrated one.
+        $this->assertSame('secondary', $views[0]['key'] ?? null, 'Main view must be the secondary daylight render');
+        $this->assertSame('view_primary', $views[0]['label'] ?? null, 'Main view must be labelled Üldvaade');
+        $calibrated = array_values(array_filter($views, fn ($v) => ($v['hotspots'] ?? false)));
+        $this->assertCount(1, $calibrated, 'Exactly one view is mask-calibrated');
+        $this->assertSame('primary', $calibrated[0]['key'] ?? null);
     }
 
     public function test_no_source_or_mask_leak_on_masterplan(): void

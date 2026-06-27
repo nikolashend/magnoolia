@@ -21,8 +21,13 @@ return [
     'manifest' => 'assets/magnoolia/rowhouse-selection/manifest.json',
 
     // Buyer-facing full asendiplaan PDF used by the "Suurenda asendiplaani" link.
-    'enlarge_pdf' => 'assets/magnoolia/asendiplaan/VEEBI _ASENDIPLAAN.pdf',
+    'enlarge_pdf' => 'assets/magnoolia/asendiplaan/asendiplaan.pdf',
 
     // Canonical display order of the address groups.
     'row_order' => [1, 3, 5, 7, 9, 11],
+
+    // Phase 35: show the 2D "Asukoht arenduse plaanil" locator map (the top-down
+    // asendiplaan with a pin) in the home detail + /kodud-ja-hinnad modal.
+    // Removed by request — set to true to RESTORE it (no code changes needed).
+    'show_location_map' => true,
 ];

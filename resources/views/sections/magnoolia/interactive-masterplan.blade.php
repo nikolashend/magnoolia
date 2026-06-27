@@ -34,31 +34,49 @@
   })->values()->all();
   $viewsEnc = json_encode($viewsJs, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
-  // Per-view hotspots: primary uses the row perspective (config/manifest); alternate
-  // views (secondary/dusk) use config('magnoolia_hotspots.perspective_views.{key}').
-  $hotViewsCfg = (array) config('magnoolia_hotspots.perspective_views', []);
+  // Per-view hotspots. Phase 35: a view with per-HOME boxes
+  // (config perspective_boxes.{key}) renders clickable per-home zones (boxes-only,
+  // click → home detail). Otherwise it falls back to per-ROW hotspots (manifest
+  // hulls for the calibrated view, or config perspective_views.{key}).
+  $hotViewsCfg  = (array) config('magnoolia_hotspots.perspective_views', []);
+  $persBoxesCfg = (array) config('magnoolia_hotspots.perspective_boxes', []);
   $viewHotspots = [];
   foreach ($viewsJs as $v) {
-    $set = [];
-    if (($v['hotspots'] ?? false)) {
+    $boxesCfg = $persBoxesCfg[$v['key']] ?? [];
+    if (!empty($boxesCfg)) {
+      $items = [];
+      foreach ($rows as $r) {
+        foreach ($r['homes'] as $h) {
+          $b = $boxesCfg[$h['asset_key']] ?? null;
+          if ($b && !empty($b['polygon'])) {
+            $items[] = ['key' => $h['asset_key'], 'label' => $h['display_address'], 'status' => $h['status'], 'marker' => $b['marker'] ?? null, 'hull' => $b['polygon']];
+          }
+        }
+      }
+      $viewHotspots[] = ['mode' => 'home', 'items' => $items];
+    } elseif (($v['hotspots'] ?? false)) {
+      $set = [];
       foreach ($rows as $r) {
         $p = $r['perspective'] ?? null;
         if ($p && !empty($p['marker'])) {
           $set[] = ['pos' => $r['pos'], 'building' => $r['building'], 'title' => $r['title'], 'marker' => $p['marker'], 'hull' => $p['hull'] ?? null];
         }
       }
+      $viewHotspots[] = ['mode' => 'row', 'items' => $set];
     } else {
       $cfg = $hotViewsCfg[$v['key']] ?? [];
+      $set = [];
       foreach ($rows as $r) {
         $h = $cfg[$r['pos']] ?? null;
         if ($h && !empty($h['marker'])) {
           $set[] = ['pos' => $r['pos'], 'building' => $r['building'], 'title' => $r['title'], 'marker' => $h['marker'], 'hull' => $h['polygon'] ?? null];
         }
       }
+      $viewHotspots[] = ['mode' => 'row', 'items' => $set];
     }
-    $viewHotspots[] = $set;
   }
   $viewHotspotsEnc = json_encode($viewHotspots, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+  $statusColorsEnc = json_encode(['available'=>'#4caf50','reserved'=>'#c89443','sold'=>'#9a948a','tbc'=>'#9c27b0']);
 
   $statusLabels = ['available'=>__('magnoolia.statuses.available'),'reserved'=>__('magnoolia.statuses.reserved'),'sold'=>__('magnoolia.statuses.sold'),'tbc'=>__('magnoolia.pricing.status_tbc')];
   $statusColors = ['available'=>'#4caf50','reserved'=>'#c89443','sold'=>'#9a948a','tbc'=>'#9c27b0'];
@@ -121,29 +139,12 @@
       <div class="mg-mp__imgwrap" data-mp-has-hotspots="1">
         <img id="mg-mp-img" class="mg-mp__img" src="{{ $persSrc }}" @if($persSrcset) srcset="{{ $persSrcset }}" sizes="(min-width:992px) 70vw, 100vw" @endif
              width="1280" height="640" alt="{{ __('magnoolia.rowhouse.mp_img_alt') }}" fetchpriority="high" decoding="async">
-        <svg class="mg-mp__svg" id="mg-mp-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          @foreach($rows as $r)
-            @php $hull = $r['perspective']['hull'] ?? null; @endphp
-            @if($hull)
-              @php $pts = collect($hull)->map(fn($p)=>round($p[0]*100,2).','.round($p[1]*100,2))->implode(' '); @endphp
-              <polygon class="mg-mp__zone" data-mp-zone="{{ $r['pos'] }}" points="{{ $pts }}"></polygon>
-            @endif
-          @endforeach
-        </svg>
-        {{-- Row markers (buttons, keyboard-accessible) --}}
-        <div id="mg-mp-markers">
-        @foreach($rows as $r)
-          @php $mk = $r['perspective']['marker'] ?? null; @endphp
-          @if($mk)
-          <button type="button" class="mg-mp__marker" data-mp-row="{{ $r['pos'] }}"
-                  style="left:{{ $mk[0]*100 }}%;top:{{ $mk[1]*100 }}%;"
-                  aria-label="{{ __('magnoolia.rowhouse.aria_row', ['row'=>$r['title'], 'count'=>$r['home_count']]) }}">
-            <span class="mg-mp__marker-num">{{ $r['building'] }}</span>
-            <span class="mg-mp__marker-label">{{ $r['title'] }}</span>
-          </button>
-          @endif
-        @endforeach
-        </div>
+        {{-- Zones + markers are populated by JS (renderHotspots) for the active view
+             — per-home boxes on the main view, per-row on the calibrated alternate
+             view. Empty server-side so no markers flash in the wrong position; the
+             row cards below are the no-JS / mobile fallback. --}}
+        <svg class="mg-mp__svg" id="mg-mp-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div id="mg-mp-markers"></div>
         {{-- Coordinate picker for hand-setting perspective hotspots: /asendiplaan?mp_grid=1 --}}
         @if(request()->boolean('mp_grid'))
         <svg class="mg-mp__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
@@ -223,62 +224,247 @@
     @endif
 
     @if(request()->boolean('my_grid') && $cleanSrc)
-    {{-- Per-home plot picker over the CLEAN asendiplaan: /asendiplaan?my_grid=1
-         Click the plot corners, copy the polygon, paste into
-         config/magnoolia_hotspots.php → 'asendiplaan' => ['tee-3-4' => [...]]. --}}
-    <div class="mg-mp__map-picker">
-      <div class="mg-mp__map-picker-stage" id="mg-my-stage">
-        <img src="{{ $cleanSrc }}" alt="" decoding="async">
+    {{-- Phase 35 PER-HOME plot editor over the CLEAN 2D asendiplaan:
+         /asendiplaan?my_grid=1 — pick a home, click its plot corners, Save, repeat,
+         then Copy and paste into config/magnoolia_hotspots.php → 'asendiplaan' => [ … ]. --}}
+    @php
+      $myHomes = collect($rows)->flatMap(fn($r)=>collect($r['homes'])->map(fn($h)=>[
+        'key'=>$h['asset_key'], 'label'=>$h['display_address'],
+      ]))->values()->all();
+    @endphp
+    {{-- Wide breakout so the 2D plan is as large as possible for precise tracing. --}}
+    <div class="mg-mp__map-picker" style="margin-top:20px;width:min(96vw,1500px);position:relative;left:50%;transform:translateX(-50%);">
+      <div class="mg-mp__map-picker-stage" id="mg-my-stage" style="position:relative;width:100%;">
+        <img src="{{ $cleanSrc }}" alt="" decoding="async" style="width:100%;display:block;">
         <svg class="mg-mp__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
              style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;">
-          @for($i = 1; $i < 10; $i++)
-            <line x1="{{ $i*10 }}" y1="0" x2="{{ $i*10 }}" y2="100" stroke="#ffd24a" stroke-opacity=".55" stroke-width=".15"/>
-            <line x1="0" y1="{{ $i*10 }}" x2="100" y2="{{ $i*10 }}" stroke="#ffd24a" stroke-opacity=".55" stroke-width=".15"/>
-            <text x="{{ $i*10 + 0.4 }}" y="2.8" fill="#ffd24a" font-size="2.4">.{{ $i }}</text>
-            <text x="0.4" y="{{ $i*10 - 0.6 }}" fill="#ffd24a" font-size="2.4">.{{ $i }}</text>
+          @for($i = 1; $i < 20; $i++)
+            <line x1="{{ $i*5 }}" y1="0" x2="{{ $i*5 }}" y2="100" stroke="#ffd24a" stroke-opacity=".35" stroke-width=".08"/>
+            <line x1="0" y1="{{ $i*5 }}" x2="100" y2="{{ $i*5 }}" stroke="#ffd24a" stroke-opacity=".35" stroke-width=".08"/>
           @endfor
         </svg>
         <div id="mg-my-pick" style="position:absolute;inset:0;z-index:5;cursor:crosshair;"></div>
-        <svg id="mg-my-pickpts" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
-             style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:6;"></svg>
+        <svg id="mg-my-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
+             style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:6;overflow:visible;"></svg>
       </div>
-      <div class="mg-mp__picker" id="mg-my-picker">
-        <div class="mg-mp__picker-row">
-          <strong>Asendiplaani picker</strong> — kliki maja krundi nurki (nt Magnoolia tee 3-4). Viimane punkt:
-          <span id="mg-my-pick-last" class="mg-mp__picker-last">—</span>
+      <div class="mg-mp__picker" id="mg-my-panel" style="margin-top:12px;">
+        <div class="mg-mp__picker-row" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <strong>Asendiplaani plaani-redaktor</strong>
+          <label>Kodu:
+            <select id="mg-my-home" style="padding:6px 8px;border-radius:8px;">
+              @foreach($myHomes as $mh)
+                <option value="{{ $mh['key'] }}">{{ $mh['label'] }}</option>
+              @endforeach
+            </select>
+          </label>
+          <span id="mg-my-progress" style="font-weight:600;color:#9a6b1f;">0/{{ count($myHomes) }}</span>
+          <span style="color:#6f6a61;">— vali kodu, klõpsa krundi nurki (4+), siis “Salvesta krunt”.</span>
         </div>
-        <textarea id="mg-my-pick-out" class="mg-mp__picker-out" rows="2" readonly placeholder="'polygon' => [ ... ]  (kliki nurki)"></textarea>
-        <div class="mg-mp__picker-btns">
-          <button type="button" id="mg-my-pick-copy" class="mg-btn mg-btn--ghost">Kopeeri polygon</button>
-          <button type="button" id="mg-my-pick-undo" class="mg-btn mg-btn--ghost">Võta tagasi</button>
-          <button type="button" id="mg-my-pick-clear" class="mg-btn mg-btn--ghost">Tühjenda</button>
+        <textarea id="mg-my-out" class="mg-mp__picker-out" rows="6" readonly
+                  placeholder="'asendiplaan' => [ ... ]  — täida ja kopeeri config/magnoolia_hotspots.php-i"></textarea>
+        <div class="mg-mp__picker-btns" style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" id="mg-my-save" class="mg-btn mg-btn--gold">Salvesta krunt</button>
+          <button type="button" id="mg-my-undo" class="mg-btn mg-btn--ghost">Võta punkt tagasi</button>
+          <button type="button" id="mg-my-clear" class="mg-btn mg-btn--ghost">Tühjenda praegune</button>
+          <button type="button" id="mg-my-copy" class="mg-btn mg-btn--ghost">Kopeeri config</button>
+          <button type="button" id="mg-my-reset" class="mg-btn mg-btn--ghost" style="color:#b71c1c;">Lähtesta kõik</button>
         </div>
       </div>
     </div>
     <script>
     (function () {
       var pick = document.getElementById('mg-my-pick'); if (!pick) return;
-      var ptsSvg = document.getElementById('mg-my-pickpts');
-      var lastEl = document.getElementById('mg-my-pick-last');
-      var outEl  = document.getElementById('mg-my-pick-out');
-      var pts = [];
-      function render() {
-        outEl.value = "'polygon' => [" + pts.map(function (p) { return '[' + p[0] + ', ' + p[1] + ']'; }).join(', ') + ']';
-        ptsSvg.innerHTML = pts.map(function (p) { return '<circle cx="' + (p[0]*100) + '" cy="' + (p[1]*100) + '" r="0.8" fill="#ffd24a" stroke="#1d2430" stroke-width="0.2"/>'; }).join('') +
-          (pts.length > 1 ? '<polygon points="' + pts.map(function (p) { return (p[0]*100) + ',' + (p[1]*100); }).join(' ') + '" fill="#ffd24a" fill-opacity="0.18" stroke="#ffd24a" stroke-width="0.3"/>' : '');
+      var svg = document.getElementById('mg-my-svg');
+      var sel = document.getElementById('mg-my-home');
+      var out = document.getElementById('mg-my-out');
+      var prog = document.getElementById('mg-my-progress');
+      var TOTAL = {{ count($myHomes) }};
+      var plots = {};   // key -> [[x,y], ...]
+      var cur = [];     // current points
+
+      function centroid(pts) { var x=0,y=0; pts.forEach(function(p){x+=p[0];y+=p[1];}); return [+(x/pts.length).toFixed(3), +(y/pts.length).toFixed(3)]; }
+      // vector-effect keeps strokes/dots crisp & tiny regardless of the stretched viewBox
+      function poly(pts, fill) { return '<polygon points="' + pts.map(function (p) { return (p[0]*100) + ',' + (p[1]*100); }).join(' ') + '" fill="' + fill + '" stroke="#e0b052" stroke-width="1.2" vector-effect="non-scaling-stroke"/>'; }
+      function dots(pts) { return pts.map(function (p) { return '<circle cx="' + (p[0]*100) + '" cy="' + (p[1]*100) + '" r="0.22" fill="#ffd24a" stroke="#1d2430" stroke-width="0.6" vector-effect="non-scaling-stroke"/>'; }).join(''); }
+      function redraw() {
+        var html = '';
+        Object.keys(plots).forEach(function (k) {
+          var pts = plots[k]; html += poly(pts, 'rgba(76,175,80,0.16)');
+          var c = centroid(pts);
+          html += '<text x="' + (c[0]*100) + '" y="' + (c[1]*100) + '" fill="#1d2430" font-size="1.3" text-anchor="middle" stroke="#fff" stroke-width="0.3" paint-order="stroke">' + k.replace('tee-', '') + '</text>';
+        });
+        if (cur.length) html += (cur.length > 1 ? poly(cur, 'rgba(200,148,67,0.28)') : '') + dots(cur);
+        svg.innerHTML = html;
+        prog.textContent = Object.keys(plots).length + '/' + TOTAL;
+        [].forEach.call(sel.options, function (o) { o.textContent = o.textContent.replace(/ ✓$/, '') + (plots[o.value] ? ' ✓' : ''); });
+        buildOut();
+      }
+      function buildOut() {
+        var keys = Object.keys(plots);
+        if (!keys.length) { out.value = ''; return; }
+        var lines = keys.map(function (k) {
+          var poly = plots[k].map(function (p) { return '[' + p[0] + ', ' + p[1] + ']'; }).join(', ');
+          return "        '" + k + "' => ['polygon' => [" + poly + "]],";
+        });
+        out.value = "'asendiplaan' => [\n" + lines.join('\n') + "\n    ],";
       }
       pick.addEventListener('click', function (e) {
         var r = pick.getBoundingClientRect();
         var x = +(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width))).toFixed(3);
         var y = +(Math.min(1, Math.max(0, (e.clientY - r.top) / r.height))).toFixed(3);
-        pts.push([x, y]); lastEl.textContent = '[' + x + ', ' + y + ']'; render();
+        cur.push([x, y]); redraw();
       });
-      document.getElementById('mg-my-pick-undo').addEventListener('click', function () { pts.pop(); render(); });
-      document.getElementById('mg-my-pick-clear').addEventListener('click', function () { pts = []; lastEl.textContent = '—'; render(); });
-      document.getElementById('mg-my-pick-copy').addEventListener('click', function () {
-        outEl.select(); try { navigator.clipboard.writeText(outEl.value); } catch (e) { document.execCommand('copy'); }
+      document.getElementById('mg-my-save').addEventListener('click', function () {
+        if (cur.length < 3) { alert('Klõpsa vähemalt 3 nurka.'); return; }
+        plots[sel.value] = cur.slice(); cur = [];
+        var next = [].slice.call(sel.options).find(function (o) { return !plots[o.value]; });
+        if (next) sel.value = next.value;
+        redraw();
+      });
+      document.getElementById('mg-my-undo').addEventListener('click', function () { cur.pop(); redraw(); });
+      document.getElementById('mg-my-clear').addEventListener('click', function () { cur = []; redraw(); });
+      document.getElementById('mg-my-reset').addEventListener('click', function () { if (confirm('Kustuta kõik krundid?')) { plots = {}; cur = []; redraw(); } });
+      document.getElementById('mg-my-copy').addEventListener('click', function () {
+        out.select(); try { navigator.clipboard.writeText(out.value); } catch (e) { document.execCommand('copy'); }
         this.textContent = '✓ Kopeeritud';
       });
+      // preload existing plots from config so you can refine instead of restart
+      var EXISTING = @json(config('magnoolia_hotspots.asendiplaan', []));
+      Object.keys(EXISTING || {}).forEach(function (k) { if (EXISTING[k] && EXISTING[k].polygon) plots[k] = EXISTING[k].polygon; });
+      redraw();
+    })();
+    </script>
+    @endif
+
+    @if(request()->boolean('box_grid'))
+    {{-- Phase 35 PER-HOME BOX editor over the MAIN perspective view (3.jpg):
+         /asendiplaan?box_grid=1 — pick a home, click its box corners, Save, repeat
+         for all 19, then Copy and paste into
+         config/magnoolia_hotspots.php → 'perspective_boxes' => ['secondary' => [ … ]]. --}}
+    @php
+      $boxHomes = collect($rows)->flatMap(fn($r)=>collect($r['homes'])->map(fn($h)=>[
+        'key'=>$h['asset_key'], 'label'=>$h['display_address'],
+      ]))->values()->all();
+      $boxMainKey = collect($views)->first()['key'] ?? 'secondary'; // current main view key
+    @endphp
+    <div class="mg-mp__map-picker" style="margin-top:20px;">
+      <div class="mg-mp__map-picker-stage" id="mg-box-stage" style="position:relative;">
+        <img src="{{ $persSrc }}" @if($persSrcset) srcset="{{ $persSrcset }}" @endif alt="" decoding="async" style="width:100%;display:block;">
+        <svg class="mg-mp__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
+             style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;">
+          @for($i = 1; $i < 20; $i++)
+            <line x1="{{ $i*5 }}" y1="0" x2="{{ $i*5 }}" y2="100" stroke="#ffd24a" stroke-opacity=".35" stroke-width=".08"/>
+            <line x1="0" y1="{{ $i*5 }}" x2="100" y2="{{ $i*5 }}" stroke="#ffd24a" stroke-opacity=".35" stroke-width=".08"/>
+          @endfor
+        </svg>
+        <div id="mg-box-pick" style="position:absolute;inset:0;z-index:5;cursor:crosshair;"></div>
+        <svg id="mg-box-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
+             style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:6;overflow:visible;"></svg>
+      </div>
+      <div class="mg-mp__picker" id="mg-box-panel" style="margin-top:12px;">
+        <div class="mg-mp__picker-row" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <strong>Boksi-redaktor</strong>
+          <label>Kodu:
+            <select id="mg-box-home" style="padding:6px 8px;border-radius:8px;">
+              @foreach($boxHomes as $bh)
+                <option value="{{ $bh['key'] }}">{{ $bh['label'] }}</option>
+              @endforeach
+            </select>
+          </label>
+          <span id="mg-box-progress" style="font-weight:600;color:#9a6b1f;">0/{{ count($boxHomes) }}</span>
+          <span style="color:#6f6a61;">— vali kodu, klõpsa boksi nurki (4+), siis “Salvesta boks”.</span>
+        </div>
+        <textarea id="mg-box-out" class="mg-mp__picker-out" rows="6" readonly
+                  placeholder="'perspective_boxes' => ['{{ $boxMainKey }}' => [ ... ]]  — täida ja kopeeri config/magnoolia_hotspots.php-i"></textarea>
+        <div class="mg-mp__picker-btns" style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" id="mg-box-save" class="mg-btn mg-btn--gold">Salvesta boks</button>
+          <button type="button" id="mg-box-undo" class="mg-btn mg-btn--ghost">Võta punkt tagasi</button>
+          <button type="button" id="mg-box-clear" class="mg-btn mg-btn--ghost">Tühjenda praegune</button>
+          <button type="button" id="mg-box-copy" class="mg-btn mg-btn--ghost">Kopeeri config</button>
+          <button type="button" id="mg-box-reset" class="mg-btn mg-btn--ghost" style="color:#b71c1c;">Lähtesta kõik</button>
+        </div>
+      </div>
+    </div>
+    <script>
+    (function () {
+      var pick = document.getElementById('mg-box-pick'); if (!pick) return;
+      var svg = document.getElementById('mg-box-svg');
+      var sel = document.getElementById('mg-box-home');
+      var out = document.getElementById('mg-box-out');
+      var prog = document.getElementById('mg-box-progress');
+      var MAIN_KEY = @json($boxMainKey);
+      var TOTAL = {{ count($boxHomes) }};
+      var boxes = {};   // key -> [[x,y], ...]
+      var cur = [];     // current points
+
+      function centroid(pts) {
+        var x = 0, y = 0; pts.forEach(function (p) { x += p[0]; y += p[1]; });
+        return [ +(x / pts.length).toFixed(3), +(y / pts.length).toFixed(3) ];
+      }
+      function poly(pts, cls, fill) {
+        return '<polygon points="' + pts.map(function (p) { return (p[0]*100) + ',' + (p[1]*100); }).join(' ') +
+               '" fill="' + fill + '" stroke="#ffd24a" stroke-width="0.3"/>';
+      }
+      function dots(pts, color) {
+        return pts.map(function (p) { return '<circle cx="' + (p[0]*100) + '" cy="' + (p[1]*100) + '" r="0.7" fill="' + color + '" stroke="#1d2430" stroke-width="0.15"/>'; }).join('');
+      }
+      function redraw() {
+        var html = '';
+        Object.keys(boxes).forEach(function (k) {
+          var pts = boxes[k];
+          html += poly(pts, 'saved', 'rgba(76,175,80,0.18)');
+          var c = centroid(pts);
+          html += '<text x="' + (c[0]*100) + '" y="' + (c[1]*100) + '" fill="#1d2430" font-size="2.2" text-anchor="middle" stroke="#fff" stroke-width="0.4" paint-order="stroke">' + k.replace('tee-', '') + '</text>';
+        });
+        if (cur.length) { html += (cur.length > 1 ? poly(cur, 'cur', 'rgba(200,148,67,0.28)') : '') + dots(cur, '#ffd24a'); }
+        svg.innerHTML = html;
+        var done = Object.keys(boxes).length;
+        prog.textContent = done + '/' + TOTAL;
+        // mark done homes in the select
+        [].forEach.call(sel.options, function (o) {
+          o.textContent = o.textContent.replace(/ ✓$/, '') + (boxes[o.value] ? ' ✓' : '');
+        });
+        buildOut();
+      }
+      function buildOut() {
+        var keys = Object.keys(boxes);
+        if (!keys.length) { out.value = ''; return; }
+        var lines = keys.map(function (k) {
+          var pts = boxes[k];
+          var c = centroid(pts);
+          var poly = pts.map(function (p) { return '[' + p[0] + ', ' + p[1] + ']'; }).join(', ');
+          return "            '" + k + "' => ['marker' => [" + c[0] + ', ' + c[1] + "], 'polygon' => [" + poly + "]],";
+        });
+        out.value = "'perspective_boxes' => [\n        '" + MAIN_KEY + "' => [\n" + lines.join('\n') + "\n        ],\n    ],";
+      }
+      pick.addEventListener('click', function (e) {
+        var r = pick.getBoundingClientRect();
+        var x = +(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width))).toFixed(3);
+        var y = +(Math.min(1, Math.max(0, (e.clientY - r.top) / r.height))).toFixed(3);
+        cur.push([x, y]); redraw();
+      });
+      document.getElementById('mg-box-save').addEventListener('click', function () {
+        if (cur.length < 3) { alert('Klõpsa vähemalt 3 nurka.'); return; }
+        boxes[sel.value] = cur.slice(); cur = [];
+        // auto-advance to next undone home
+        var opts = [].slice.call(sel.options);
+        var next = opts.find(function (o) { return !boxes[o.value]; });
+        if (next) sel.value = next.value;
+        redraw();
+      });
+      document.getElementById('mg-box-undo').addEventListener('click', function () { cur.pop(); redraw(); });
+      document.getElementById('mg-box-clear').addEventListener('click', function () { cur = []; redraw(); });
+      document.getElementById('mg-box-reset').addEventListener('click', function () {
+        if (confirm('Kustuta kõik boksid?')) { boxes = {}; cur = []; redraw(); }
+      });
+      document.getElementById('mg-box-copy').addEventListener('click', function () {
+        out.select(); try { navigator.clipboard.writeText(out.value); } catch (e) { document.execCommand('copy'); }
+        this.textContent = '✓ Kopeeritud';
+      });
+      // load existing boxes from config (so you can refine instead of restart)
+      var EXISTING = @json(config('magnoolia_hotspots.perspective_boxes.'.$boxMainKey, []));
+      Object.keys(EXISTING || {}).forEach(function (k) { if (EXISTING[k] && EXISTING[k].polygon) boxes[k] = EXISTING[k].polygon; });
+      redraw();
     })();
     </script>
     @endif
@@ -318,8 +504,9 @@
     </div>
 
     {{-- Selected home detail (JS-populated) --}}
+    @php $showLocator = (bool) config('magnoolia_rowhouses.show_location_map'); @endphp
     <div id="mg-mp-detail" class="mg-mp__detail" hidden>
-      <div class="mg-mp__detail-grid">
+      <div class="mg-mp__detail-grid {{ $showLocator ? '' : 'mg-mp__detail-grid--nomap' }}">
         {{-- Left: identity + specs + CTA --}}
         <div class="mg-mp__detail-main">
           <div class="mg-mp__detail-eyebrow">{{ __('magnoolia.rowhouse.detail_eyebrow') }}</div>
@@ -343,8 +530,9 @@
           <p class="mg-mp__trust">{{ __('magnoolia.rowhouse.trust_note') }}</p>
         </div>
 
-        {{-- Right: synchronized 2D asendiplaan support map --}}
-        @if($cleanSrc)
+        {{-- Right: synchronized 2D asendiplaan support map — Phase 35: hidden by
+             default (config magnoolia_rowhouses.show_location_map → true to restore). --}}
+        @if($cleanSrc && $showLocator)
         <div class="mg-mp__detail-map">
           <div class="mg-mp__map-label">{{ __('magnoolia.rowhouse.map_location') }}</div>
           <div class="mg-mp__map" id="mg-d-map">
@@ -361,21 +549,26 @@
         @endif
       </div>
 
-      {{-- Floor plans --}}
+      {{-- Floor plans — Phase 35: both floors shown together (no tab toggle) --}}
       <div class="mg-mp__floors" id="mg-d-floors">
         <div class="mg-mp__floors-title">{{ __('magnoolia.rowhouse.floorplans_title') }}</div>
-        <div class="mg-mp__floors-tabs">
-          <button type="button" class="mg-mp__ftab is-active" data-floor="1">{{ __('magnoolia.rowhouse.floor_1') }}</button>
-          <button type="button" class="mg-mp__ftab" data-floor="2">{{ __('magnoolia.rowhouse.floor_2') }}</button>
+        <div class="mg-mp__floors-both">
+          <figure class="mg-mp__floor-fig" id="mg-d-floor1-fig">
+            <button type="button" class="mg-mp__floor-zoombtn" data-floor-open="1" aria-label="{{ __('magnoolia.rowhouse.open_larger') }}">
+              <img id="mg-d-floor1-img" alt="" loading="lazy" decoding="async">
+              <span class="mg-mp__floor-zoomhint">{{ __('magnoolia.rowhouse.open_larger') }} ⤢</span>
+            </button>
+            <figcaption>{{ __('magnoolia.rowhouse.floor_1') }}</figcaption>
+          </figure>
+          <figure class="mg-mp__floor-fig" id="mg-d-floor2-fig">
+            <button type="button" class="mg-mp__floor-zoombtn" data-floor-open="2" aria-label="{{ __('magnoolia.rowhouse.open_larger') }}">
+              <img id="mg-d-floor2-img" alt="" loading="lazy" decoding="async">
+              <span class="mg-mp__floor-zoomhint">{{ __('magnoolia.rowhouse.open_larger') }} ⤢</span>
+            </button>
+            <figcaption>{{ __('magnoolia.rowhouse.floor_2') }}</figcaption>
+          </figure>
         </div>
-        <div class="mg-mp__floor-stage">
-          <button type="button" id="mg-d-floor-zoom" class="mg-mp__floor-zoombtn" aria-label="{{ __('magnoolia.rowhouse.open_larger') }}">
-            <img id="mg-d-floor-img" alt="" loading="lazy" decoding="async">
-            <span class="mg-mp__floor-zoomhint">{{ __('magnoolia.rowhouse.open_larger') }} ⤢</span>
-          </button>
-          <p id="mg-d-floor-empty" class="mg-mp__floor-empty" hidden>{{ __('magnoolia.rowhouse.floor_placeholder') }}</p>
-        </div>
-        <p class="mg-mp__floor-cap" id="mg-d-floor-cap"></p>
+        <p id="mg-d-floor-empty" class="mg-mp__floor-empty" hidden>{{ __('magnoolia.rowhouse.floor_placeholder') }}</p>
       </div>
     </div>
   </div>
@@ -462,8 +655,12 @@
   var state = { row: null, home: null, floor: '1', view: 0 };
 
   // (Re)build the SVG zones + markers for a given view from its hotspot set.
+  // mode 'home' → per-box zones/markers (click opens the home detail directly);
+  // mode 'row'  → per-row zones/markers (click opens the row panel).
   function renderHotspots(idx) {
-    var set = VIEW_HOTSPOTS[idx] || [];
+    var entry = VIEW_HOTSPOTS[idx] || { mode: 'row', items: [] };
+    var set = entry.items || [];
+    var isHome = entry.mode === 'home';
     var svg = document.getElementById('mg-mp-svg');
     var markers = document.getElementById('mg-mp-markers');
     var wrap = document.querySelector('.mg-mp__imgwrap');
@@ -473,6 +670,7 @@
       svg.innerHTML = set.map(function (h) {
         if (!h.hull) return '';
         var pts = h.hull.map(function (p) { return (p[0] * 100).toFixed(2) + ',' + (p[1] * 100).toFixed(2); }).join(' ');
+        if (isHome) return '<polygon class="mg-mp__zone mg-mp__zone--home" data-mp-home="' + h.key + '" points="' + pts + '"></polygon>';
         return '<polygon class="mg-mp__zone" data-mp-zone="' + h.pos + '" points="' + pts + '"></polygon>';
       }).join('');
     }
@@ -480,11 +678,22 @@
       markers.style.display = has ? '' : 'none';
       markers.innerHTML = set.map(function (h) {
         if (!h.marker) return '';
+        if (isHome) {
+          var col = COLORS[h.status] || '#888';
+          var num = (h.key || '').replace('tee-', '');
+          return '<button type="button" class="mg-mp__marker mg-mp__marker--home" data-mp-home="' + h.key + '" style="left:' + (h.marker[0] * 100) + '%;top:' + (h.marker[1] * 100) + '%;" aria-label="' + h.label + '"><span class="mg-mp__marker-num" style="background:' + col + '">' + num + '</span></button>';
+        }
         return '<button type="button" class="mg-mp__marker" data-mp-row="' + h.pos + '" style="left:' + (h.marker[0] * 100) + '%;top:' + (h.marker[1] * 100) + '%;" aria-label="' + h.title + '"><span class="mg-mp__marker-num">' + h.building + '</span><span class="mg-mp__marker-label">' + h.title + '</span></button>';
       }).join('');
     }
     if (wrap) wrap.setAttribute('data-mp-has-hotspots', has ? '1' : '0');
-    if (state.row) setActiveRow(state.row);
+    if (isHome && state.home) setActiveHomeZones(state.home);
+    else if (state.row) setActiveRow(state.row);
+  }
+  function setActiveHomeZones(key) {
+    document.querySelectorAll('[data-mp-home]').forEach(function (el) {
+      el.classList.toggle('is-active', el.getAttribute('data-mp-home') === key);
+    });
   }
 
   function switchView(idx) {
@@ -502,8 +711,8 @@
   }
 
   // Hover sync: hovering a marker highlights its polygon (and vice-versa).
-  function setHover(pos, on) {
-    document.querySelectorAll('.mg-mp__zone[data-mp-zone="' + pos + '"], .mg-mp__marker[data-mp-row="' + pos + '"]')
+  function setHover(id, on) {
+    document.querySelectorAll('.mg-mp__zone[data-mp-zone="' + id + '"], .mg-mp__marker[data-mp-row="' + id + '"], .mg-mp__zone--home[data-mp-home="' + id + '"], .mg-mp__marker--home[data-mp-home="' + id + '"]')
       .forEach(function (el) { el.classList.toggle('is-hover', on); });
   }
 
@@ -597,31 +806,33 @@
       else pin.hidden = true;
     }
 
-    // floor plans
-    state.floor = '1';
-    document.querySelectorAll('.mg-mp__ftab').forEach(function (t) { t.classList.toggle('is-active', t.getAttribute('data-floor') === '1'); });
-    showFloor(h, '1');
+    // floor plans — both floors shown together
+    showFloors(h);
 
     detail.hidden = false;
     if (!opts || !opts.silent) updateUrl();
     if (opts && opts.scroll) detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function showFloor(h, f) {
-    var zoom = document.getElementById('mg-d-floor-zoom');
-    var img = document.getElementById('mg-d-floor-img');
+  // Phase 35: render both floors at once; hide a figure with no image, show the
+  // placeholder only when neither floor has an image.
+  function showFloors(h) {
+    var L1 = @json(__('magnoolia.rowhouse.floor_1'));
+    var L2 = @json(__('magnoolia.rowhouse.floor_2'));
     var empty = document.getElementById('mg-d-floor-empty');
-    var cap = document.getElementById('mg-d-floor-cap');
-    var src = f === '2' ? h.floor2 : h.floor1;
-    var floorLabel = f === '2' ? @json(__('magnoolia.rowhouse.floor_2')) : @json(__('magnoolia.rowhouse.floor_1'));
-    if (src) {
-      img.src = src; img.alt = h.display + ' — ' + floorLabel;
-      zoom.style.display = ''; empty.hidden = true;
-      zoom.setAttribute('data-floor-src', src);
-    } else {
-      img.removeAttribute('src'); zoom.style.display = 'none'; empty.hidden = false;
-    }
-    cap.textContent = L.planCap.replace(':plan', (L.plan + ' ' + (h.plan || ''))).replace(':floor', floorLabel);
+    var any = false;
+    [['1', h.floor1, L1], ['2', h.floor2, L2]].forEach(function (f) {
+      var fig = document.getElementById('mg-d-floor' + f[0] + '-fig');
+      var btn = fig.querySelector('.mg-mp__floor-zoombtn');
+      var img = document.getElementById('mg-d-floor' + f[0] + '-img');
+      if (f[1]) {
+        img.src = f[1]; img.alt = h.display + ' — ' + f[2];
+        btn.setAttribute('data-floor-src', f[1]); fig.style.display = ''; any = true;
+      } else {
+        img.removeAttribute('src'); fig.style.display = 'none';
+      }
+    });
+    empty.hidden = any;
   }
 
   function h_rowPos(h) { return 'tee-' + (h.key.split('-')[1]); }
@@ -641,15 +852,13 @@
     if (homeEl) { e.preventDefault(); renderHome(homeEl.getAttribute('data-mp-home'), { scroll: true }); return; }
     var zone = e.target.closest('[data-mp-zone]');
     if (zone) { e.preventDefault(); state.home = null; detail.hidden = true; renderRow(zone.getAttribute('data-mp-zone'), { scroll: true }); return; }
-    var ftab = e.target.closest('.mg-mp__ftab');
-    if (ftab) { document.querySelectorAll('.mg-mp__ftab').forEach(function (t) { t.classList.remove('is-active'); }); ftab.classList.add('is-active'); state.floor = ftab.getAttribute('data-floor'); var h = byHome[state.home]; if (h) showFloor(h, state.floor); return; }
     // view switcher
     var pill = e.target.closest('[data-mp-view]');
     if (pill) { switchView(+pill.getAttribute('data-mp-view')); return; }
     if (e.target.closest('[data-mp-view-prev]')) { switchView(state.view - 1); return; }
     if (e.target.closest('[data-mp-view-next]')) { switchView(state.view + 1); return; }
-    // floor-plan lightbox
-    var zoom = e.target.closest('#mg-d-floor-zoom');
+    // floor-plan lightbox (either floor)
+    var zoom = e.target.closest('[data-floor-open]');
     if (zoom) { var s = zoom.getAttribute('data-floor-src'); if (s) openLightbox(s); return; }
     var lb = document.getElementById('mg-mp-lightbox');
     if (e.target === lb || e.target.closest('#mg-mp-lightbox-close')) { closeLightbox(); return; }
@@ -669,12 +878,12 @@
   });
   // Marker ↔ polygon hover sync (only the map markers/zones, not the row cards)
   section.addEventListener('mouseover', function (e) {
-    var el = e.target.closest('.mg-mp__marker[data-mp-row], .mg-mp__zone[data-mp-zone]');
-    if (el) setHover(el.getAttribute('data-mp-row') || el.getAttribute('data-mp-zone'), true);
+    var el = e.target.closest('.mg-mp__marker[data-mp-row], .mg-mp__zone[data-mp-zone], .mg-mp__marker--home[data-mp-home], .mg-mp__zone--home[data-mp-home]');
+    if (el) setHover(el.getAttribute('data-mp-row') || el.getAttribute('data-mp-zone') || el.getAttribute('data-mp-home'), true);
   });
   section.addEventListener('mouseout', function (e) {
-    var el = e.target.closest('.mg-mp__marker[data-mp-row], .mg-mp__zone[data-mp-zone]');
-    if (el) setHover(el.getAttribute('data-mp-row') || el.getAttribute('data-mp-zone'), false);
+    var el = e.target.closest('.mg-mp__marker[data-mp-row], .mg-mp__zone[data-mp-zone], .mg-mp__marker--home[data-mp-home], .mg-mp__zone--home[data-mp-home]');
+    if (el) setHover(el.getAttribute('data-mp-row') || el.getAttribute('data-mp-zone') || el.getAttribute('data-mp-home'), false);
   });
 
   // deep-link init

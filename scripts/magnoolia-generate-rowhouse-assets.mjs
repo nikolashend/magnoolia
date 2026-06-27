@@ -345,17 +345,24 @@ async function main() {
     // hotspot-calibrated (matches the mask); alternate views are premium visuals
     // and rely on the row cards for selection (no faked polygons).
     perspective: {
-      image: overviewPrimary,
-      views: [
-        { key: 'primary',   label: 'view_primary',   image: overviewPrimary,   hotspots: true },
-        ...(hasSecondary ? [{ key: 'secondary', label: 'view_secondary', image: overviewSecondary, hotspots: false }] : []),
-        ...(overviewDusk ? [{ key: 'dusk', label: 'view_dusk', image: overviewDusk, hotspots: false }] : []),
-      ],
+      // Phase 35: the secondary daylight render (3.jpg) is the MAIN/default view
+      // (labelled "Üldvaade"); the calibrated 1.jpg render moves to "Teine vaade".
+      image: hasSecondary ? overviewSecondary : overviewPrimary,
+      views: hasSecondary
+        ? [
+            { key: 'secondary', label: 'view_primary',   image: overviewSecondary, hotspots: false },
+            { key: 'primary',   label: 'view_secondary', image: overviewPrimary,   hotspots: true },
+            ...(overviewDusk ? [{ key: 'dusk', label: 'view_dusk', image: overviewDusk, hotspots: false }] : []),
+          ]
+        : [
+            { key: 'primary', label: 'view_primary', image: overviewPrimary, hotspots: true },
+            ...(overviewDusk ? [{ key: 'dusk', label: 'view_dusk', image: overviewDusk, hotspots: false }] : []),
+          ],
     },
     floorplans, // by plan type (fallback): { 'type-a': {floor_1,floor_2}, 'type-b': {...} }
     floorplans_by_building: floorplansByBuilding, // authoritative per-building sheets keyed by building number
     overview: { primary: overviewPrimary, secondary: overviewSecondary, has_secondary_view: hasSecondary },
-    asendiplaan: { clean: asendiplaan, enlarge_pdf: 'assets/magnoolia/asendiplaan/VEEBI _ASENDIPLAAN.pdf' },
+    asendiplaan: { clean: asendiplaan, enlarge_pdf: 'assets/magnoolia/asendiplaan/asendiplaan.pdf' },
     rows,
     counts: { rows: rows.length, homes: rows.reduce((n, r) => n + r.homes.length, 0) },
     optimization: {

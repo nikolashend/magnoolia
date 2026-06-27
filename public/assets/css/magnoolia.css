@@ -4386,6 +4386,12 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 .mg-mp__marker.is-active .mg-mp__marker-num { background: #fff; color: #1d2430; }
 .mg-mp__marker-label { font-size: 12.5px; font-weight: 600; }
 @media (max-width: 575px) { .mg-mp__marker-label { display: none; } .mg-mp__marker { padding: 4px; } }
+/* Phase 35: per-home box markers — compact, status-coloured pill with the box number */
+.mg-mp__marker--home { background: transparent; border: none; padding: 0; backdrop-filter: none; gap: 0; opacity: .94; }
+.mg-mp__marker--home:hover, .mg-mp__marker--home.is-active, .mg-mp__marker--home.is-hover { background: transparent; opacity: 1; transform: translate(-50%,-50%) scale(1.14); }
+.mg-mp__marker--home .mg-mp__marker-num { width: auto; min-width: 20px; height: 21px; padding: 0 7px; border-radius: 100px; border: 2px solid #fff; box-shadow: 0 1px 5px rgba(0,0,0,.4); font-size: 11px; letter-spacing: .02em; }
+.mg-mp__marker--home.is-active .mg-mp__marker-num { outline: 2px solid #1d2430; outline-offset: 1px; }
+.mg-mp__zone--home.is-active { fill: rgba(200,148,67,.34); stroke: #f3d9a8; stroke-width: 0.8; }
 .mg-mp__hint { font-size: 12px; color: #a8a196; margin-top: 10px; }
 
 .mg-mp__rows { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 8px; }
@@ -4400,6 +4406,7 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 
 .mg-mp__detail { margin-top: 26px; background: #faf8f4; border: 1px solid rgba(29,36,48,.08); border-radius: 18px; padding: 26px; }
 .mg-mp__detail-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 26px; }
+.mg-mp__detail-grid--nomap { grid-template-columns: 1fr; }
 @media (max-width: 860px) { .mg-mp__detail-grid { grid-template-columns: 1fr; } }
 .mg-mp__detail-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #c89443; }
 .mg-mp__detail-title { font-size: 26px; font-weight: 700; color: #1d2430; margin: 4px 0 6px; }
@@ -4437,6 +4444,10 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 .mg-mp__ftab.is-active { background: #1d2430; color: #fff; border-color: #1d2430; }
 .mg-mp__floor-stage { position: relative; background: #fff; border: 1px solid rgba(29,36,48,.08); border-radius: 14px; padding: 16px; text-align: center; }
 .mg-mp__floor-stage img { max-width: 100%; height: auto; display: inline-block; }
+/* Phase 35: both floor plans side by side (no tab toggle) */
+.mg-mp__floors-both { display: flex; gap: 16px; flex-wrap: wrap; }
+.mg-mp__floor-fig { margin: 0; flex: 1 1 280px; background: #fff; border: 1px solid rgba(29,36,48,.08); border-radius: 14px; padding: 16px; text-align: center; }
+.mg-mp__floor-fig figcaption { font-size: 13px; font-weight: 700; color: #6f6a61; margin-top: 10px; }
 .mg-mp__floor-open { position: absolute; top: 12px; right: 12px; font-size: 12px; font-weight: 700; color: #c89443; text-decoration: none; background: rgba(255,255,255,.9); padding: 6px 10px; border-radius: 8px; }
 .mg-mp__floor-cap { font-size: 13px; color: #6f6a61; margin-top: 10px; }
 

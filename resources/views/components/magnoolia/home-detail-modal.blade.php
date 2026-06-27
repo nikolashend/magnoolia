@@ -81,8 +81,9 @@
                  style="width:100%;height:100%;object-fit:cover;display:block;">
           </div>
 
-          {{-- Mini asendiplaan with marker --}}
-          @if($cleanUrl)
+          {{-- Mini asendiplaan with marker — Phase 35: hidden by default
+               (config magnoolia_rowhouses.show_location_map → true to restore). --}}
+          @if($cleanUrl && config('magnoolia_rowhouses.show_location_map'))
           <div style="margin-top:14px;">
             <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9c8b7e;margin-bottom:8px;">{{ __('magnoolia.rowhouse.map_location') }}</div>
             <div style="position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(29,36,48,.1);">
@@ -96,15 +97,22 @@
           </div>
           @endif
 
-          {{-- Floor plans (per-building images for all rows) --}}
+          {{-- Floor plans — Phase 35: both floors shown together (no tab toggle) --}}
           <div id="mg-hd-floors" style="margin-top:14px;display:none;">
             <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9c8b7e;margin-bottom:8px;">{{ __('magnoolia.rowhouse.floorplans_title') }}</div>
-            <div style="display:flex;gap:8px;margin-bottom:10px;">
-              <button type="button" class="mg-hd-ftab is-active" data-hd-floor="1" style="padding:7px 14px;border-radius:100px;border:1px solid rgba(29,36,48,.2);background:#1d2430;color:#fff;font-size:12.5px;font-weight:600;cursor:pointer;">{{ __('magnoolia.rowhouse.floor_1') }}</button>
-              <button type="button" class="mg-hd-ftab" data-hd-floor="2" style="padding:7px 14px;border-radius:100px;border:1px solid rgba(29,36,48,.2);background:#fff;color:#6f6a61;font-size:12.5px;font-weight:600;cursor:pointer;">{{ __('magnoolia.rowhouse.floor_2') }}</button>
-            </div>
-            <div style="border:1px solid rgba(29,36,48,.1);border-radius:12px;background:#fff;padding:10px;text-align:center;min-height:120px;">
-              <img id="mg-hd-floor-img" alt="" loading="lazy" decoding="async" style="max-width:440px;width:100%;height:auto;display:inline-block;">
+            <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+              <figure id="mg-hd-floor1-fig" style="margin:0;flex:1 1 220px;max-width:320px;">
+                <div style="border:1px solid rgba(29,36,48,.1);border-radius:12px;background:#fff;padding:10px;text-align:center;">
+                  <img id="mg-hd-floor1-img" alt="" loading="lazy" decoding="async" style="width:100%;height:auto;display:inline-block;cursor:zoom-in;">
+                </div>
+                <figcaption style="font-size:12px;color:#6f6a61;text-align:center;margin-top:6px;font-weight:600;">{{ __('magnoolia.rowhouse.floor_1') }}</figcaption>
+              </figure>
+              <figure id="mg-hd-floor2-fig" style="margin:0;flex:1 1 220px;max-width:320px;">
+                <div style="border:1px solid rgba(29,36,48,.1);border-radius:12px;background:#fff;padding:10px;text-align:center;">
+                  <img id="mg-hd-floor2-img" alt="" loading="lazy" decoding="async" style="width:100%;height:auto;display:inline-block;cursor:zoom-in;">
+                </div>
+                <figcaption style="font-size:12px;color:#6f6a61;text-align:center;margin-top:6px;font-weight:600;">{{ __('magnoolia.rowhouse.floor_2') }}</figcaption>
+              </figure>
             </div>
           </div>
         </div>
@@ -253,7 +261,7 @@
     var floors = document.getElementById('mg-hd-floors');
     floors.style.display = (h.floor1_img || h.floor2_img) ? '' : 'none';
     hdActiveHome = h;
-    hdSetFloor('1');
+    hdShowFloors(h);
 
     // Primary CTA — status aware
     var cta = document.getElementById('mg-hd-cta');
@@ -282,18 +290,15 @@
     }
   };
 
-  function hdSetFloor(f) {
-    var h = hdActiveHome; if (!h) return;
-    var img = document.getElementById('mg-hd-floor-img');
-    var src = f === '2' ? h.floor2_img : h.floor1_img;
-    var label = f === '2' ? @json(__('magnoolia.rowhouse.floor_2')) : @json(__('magnoolia.rowhouse.floor_1'));
-    if (src) { img.src = src; img.alt = (h.display || '') + ' — ' + label; img.style.display = ''; }
-    else { img.removeAttribute('src'); img.style.display = 'none'; }
-    document.querySelectorAll('.mg-hd-ftab').forEach(function (t) {
-      var on = t.getAttribute('data-hd-floor') === f;
-      t.classList.toggle('is-active', on);
-      t.style.background = on ? '#1d2430' : '#fff';
-      t.style.color = on ? '#fff' : '#6f6a61';
+  // Phase 35: render both floor plans at once; hide a figure with no image.
+  function hdShowFloors(h) {
+    var L1 = @json(__('magnoolia.rowhouse.floor_1'));
+    var L2 = @json(__('magnoolia.rowhouse.floor_2'));
+    [['1', h.floor1_img, L1], ['2', h.floor2_img, L2]].forEach(function (f) {
+      var fig = document.getElementById('mg-hd-floor' + f[0] + '-fig');
+      var img = document.getElementById('mg-hd-floor' + f[0] + '-img');
+      if (f[1]) { img.src = f[1]; img.alt = (h.display || '') + ' — ' + f[2]; fig.style.display = ''; }
+      else { img.removeAttribute('src'); fig.style.display = 'none'; }
     });
   }
 
@@ -305,8 +310,6 @@
 
   // Delegated triggers
   document.addEventListener('click', function (e) {
-    var ft = e.target.closest('.mg-hd-ftab');
-    if (ft && dialog.contains(ft)) { hdSetFloor(ft.getAttribute('data-hd-floor')); return; }
     var t = e.target.closest('[data-mg-home-open]');
     if (t) { e.preventDefault(); window.mgOpenHome(t.getAttribute('data-mg-home-open')); return; }
     if (e.target === overlay) close();

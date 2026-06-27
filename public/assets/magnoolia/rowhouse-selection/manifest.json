@@ -6,26 +6,15 @@
   },
   "perspective": {
     "image": {
-      "768": "assets/magnoolia/rowhouse-selection/overview/development-primary-768.webp",
-      "1280": "assets/magnoolia/rowhouse-selection/overview/development-primary-1280.webp",
-      "2048": "assets/magnoolia/rowhouse-selection/overview/development-primary-2048.webp",
-      "base": "assets/magnoolia/rowhouse-selection/overview/development-primary.webp"
+      "768": "assets/magnoolia/rowhouse-selection/overview/development-secondary-768.webp",
+      "1280": "assets/magnoolia/rowhouse-selection/overview/development-secondary-1280.webp",
+      "2048": "assets/magnoolia/rowhouse-selection/overview/development-secondary-2048.webp",
+      "base": "assets/magnoolia/rowhouse-selection/overview/development-secondary.webp"
     },
     "views": [
       {
-        "key": "primary",
-        "label": "view_primary",
-        "image": {
-          "768": "assets/magnoolia/rowhouse-selection/overview/development-primary-768.webp",
-          "1280": "assets/magnoolia/rowhouse-selection/overview/development-primary-1280.webp",
-          "2048": "assets/magnoolia/rowhouse-selection/overview/development-primary-2048.webp",
-          "base": "assets/magnoolia/rowhouse-selection/overview/development-primary.webp"
-        },
-        "hotspots": true
-      },
-      {
         "key": "secondary",
-        "label": "view_secondary",
+        "label": "view_primary",
         "image": {
           "768": "assets/magnoolia/rowhouse-selection/overview/development-secondary-768.webp",
           "1280": "assets/magnoolia/rowhouse-selection/overview/development-secondary-1280.webp",
@@ -33,6 +22,17 @@
           "base": "assets/magnoolia/rowhouse-selection/overview/development-secondary.webp"
         },
         "hotspots": false
+      },
+      {
+        "key": "primary",
+        "label": "view_secondary",
+        "image": {
+          "768": "assets/magnoolia/rowhouse-selection/overview/development-primary-768.webp",
+          "1280": "assets/magnoolia/rowhouse-selection/overview/development-primary-1280.webp",
+          "2048": "assets/magnoolia/rowhouse-selection/overview/development-primary-2048.webp",
+          "base": "assets/magnoolia/rowhouse-selection/overview/development-primary.webp"
+        },
+        "hotspots": true
       },
       {
         "key": "dusk",
@@ -180,7 +180,7 @@
       "1600": "assets/magnoolia/rowhouse-selection/asendiplaan/magnoolia-asendiplaan-clean-1600.webp",
       "base": "assets/magnoolia/rowhouse-selection/asendiplaan/magnoolia-asendiplaan-clean.webp"
     },
-    "enlarge_pdf": "assets/magnoolia/asendiplaan/VEEBI _ASENDIPLAAN.pdf"
+    "enlarge_pdf": "assets/magnoolia/asendiplaan/asendiplaan.pdf"
   },
   "rows": [
     {

@@ -26,10 +26,12 @@ class MagnooliaPhase29FrontendRenderTest extends TestCase
         // Phase 30: the primary selector is the perspective masterplan.
         $html = $this->get('/asendiplaan')->assertStatus(200)->getContent();
         $this->assertStringContainsString('id="mg-masterplan"', $html);
+        // Row cards remain as the no-JS / mobile fallback. Phase 35: render hotspots
+        // are now per-HOME boxes, rendered client-side (no server-side data-mp-zone).
         foreach (['tee-1', 'tee-3', 'tee-5', 'tee-7', 'tee-9', 'tee-11'] as $pos) {
             $this->assertStringContainsString('data-mp-row="' . $pos . '"', $html, "Missing row control {$pos}");
-            $this->assertStringContainsString('data-mp-zone="' . $pos . '"', $html, "Missing render hotspot {$pos}");
         }
+        $this->assertStringContainsString('"mode":"home"', $html, 'Main view must use per-home box hotspots');
     }
 
     public function test_asendiplaan_has_home_detail_section_and_homes(): void
