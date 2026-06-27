@@ -49,7 +49,7 @@
                     @if($dianaPhotoApproved)
                     {{-- Diana photo — shown only when diana_photo_approved => true in config --}}
                     <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
-                        <img src="{{ asset('assets/images/magnoolia/diana-tali.jpg') }}"
+                        <img src="{{ asset('assets/magnoolia/people/diana-tali.webp') }}"
                              alt="Diana Tali – Estlanda müügiinfo"
                              width="56" height="56"
                              loading="lazy"

@@ -129,6 +129,28 @@
   </div>
 </section>
 
+{{-- ── Phase 35: BIGBANK financing partner ─────────────────── --}}
+<section class="mg-page-section mg-page-section--white" id="bigbank">
+  <div class="container">
+    <div style="background:#fff;border:1px solid rgba(29,36,48,.08);border-radius:16px;padding:34px 40px;display:flex;gap:32px;align-items:center;flex-wrap:wrap;box-shadow:0 4px 20px rgba(29,36,48,.06);">
+      @php $bbExt = collect(['svg','webp','png'])->first(fn ($e) => file_exists(public_path('assets/magnoolia/logos/bigbank.'.$e))); @endphp
+      <div style="flex:0 0 auto;">
+        @if($bbExt)
+          <img src="{{ asset('assets/magnoolia/logos/bigbank.'.$bbExt) }}" alt="Bigbank" style="height:46px;width:auto;display:block;" loading="lazy" decoding="async">
+        @else
+          <div style="font-size:28px;font-weight:900;color:#003DA5;letter-spacing:-.02em;">Bigbank</div>
+        @endif
+      </div>
+      <div style="flex:1 1 320px;min-width:280px;">
+        <div style="font-size:11px;color:#c89443;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">{{ __('magnoolia.page.finantseerimine.bigbank_eyebrow') }}</div>
+        <h3 style="font-size:19px;font-weight:700;color:#1d2430;margin:0 0 10px;">{{ __('magnoolia.page.finantseerimine.bigbank_title') }}</h3>
+        <p style="font-size:14px;color:#6f6a61;line-height:1.7;margin:0 0 16px;">{{ __('magnoolia.page.finantseerimine.bigbank_body') }}</p>
+        <a href="{{ lroute('magnoolia.finantseerimine') }}#bigbank" class="zoomvilla-btn">{{ __('magnoolia.page.finantseerimine.cta_read') }} <i class="icon-angle-small-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
 {{-- ── Direct contact (horizontal full-width card) ──────────── --}}
 <section class="mg-page-section mg-page-section--cream">
   <div class="container">

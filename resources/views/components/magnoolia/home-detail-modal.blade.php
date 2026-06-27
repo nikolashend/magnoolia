@@ -47,6 +47,7 @@
           'my'         => $hl['y'] ?? null,
           'mappoly'    => $h['map_polygon'] ?? null,
           'price_public' => $cta['price_public'] ?? false,
+          'price'      => ($h['price_public'] ?? false) ? ($h['price'] ?? null) : null,
       ];
   })->values()->all();
 
@@ -96,29 +97,15 @@
             <div style="font-size:11px;color:#a8a196;margin-top:6px;">{{ __('magnoolia.rowhouse.marker_note') }}</div>
           </div>
           @endif
-
-          {{-- Floor plans — Phase 35: both floors shown together (no tab toggle) --}}
-          <div id="mg-hd-floors" style="margin-top:14px;display:none;">
-            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9c8b7e;margin-bottom:8px;">{{ __('magnoolia.rowhouse.floorplans_title') }}</div>
-            <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
-              <figure id="mg-hd-floor1-fig" style="margin:0;flex:1 1 220px;max-width:320px;">
-                <div style="border:1px solid rgba(29,36,48,.1);border-radius:12px;background:#fff;padding:10px;text-align:center;">
-                  <img id="mg-hd-floor1-img" alt="" loading="lazy" decoding="async" style="width:100%;height:auto;display:inline-block;cursor:zoom-in;">
-                </div>
-                <figcaption style="font-size:12px;color:#6f6a61;text-align:center;margin-top:6px;font-weight:600;">{{ __('magnoolia.rowhouse.floor_1') }}</figcaption>
-              </figure>
-              <figure id="mg-hd-floor2-fig" style="margin:0;flex:1 1 220px;max-width:320px;">
-                <div style="border:1px solid rgba(29,36,48,.1);border-radius:12px;background:#fff;padding:10px;text-align:center;">
-                  <img id="mg-hd-floor2-img" alt="" loading="lazy" decoding="async" style="width:100%;height:auto;display:inline-block;cursor:zoom-in;">
-                </div>
-                <figcaption style="font-size:12px;color:#6f6a61;text-align:center;margin-top:6px;font-weight:600;">{{ __('magnoolia.rowhouse.floor_2') }}</figcaption>
-              </figure>
-            </div>
-          </div>
         </div>
 
         {{-- Specs + CTAs --}}
         <div>
+          {{-- Phase 35: prominent price --}}
+          <div id="mg-hd-price-wrap" style="display:none;margin-bottom:16px;">
+            <div id="mg-hd-price" style="font-size:30px;font-weight:800;color:#1d2430;line-height:1;"></div>
+            <div style="font-size:12px;color:#c0392b;font-weight:700;text-transform:uppercase;margin-top:6px;">{{ __('magnoolia.rowhouse.offer_inline') }}</div>
+          </div>
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
             <span id="mg-hd-status-dot" style="width:10px;height:10px;border-radius:50%;background:#4caf50;"></span>
             <span id="mg-hd-status" style="font-size:14px;font-weight:700;color:#1d2430;"></span>
@@ -161,8 +148,38 @@
           </div>
         </div>
       </div>
+
+      {{-- Floor plans — Phase 35: full-width row (side by side on desktop),
+           click → lightbox with the large image. --}}
+      <div id="mg-hd-floors" style="margin-top:22px;display:none;border-top:1px solid rgba(29,36,48,.08);padding-top:20px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9c8b7e;margin-bottom:12px;">{{ __('magnoolia.rowhouse.floorplans_title') }}</div>
+        <div class="mg-hd-floors-row" style="display:flex;gap:16px;">
+          <figure id="mg-hd-floor1-fig" style="margin:0;flex:1 1 0;min-width:0;">
+            <button type="button" class="mg-hd-floor-btn" data-hd-floor-open="1" aria-label="{{ __('magnoolia.rowhouse.open_larger') }}"
+                    style="width:100%;border:1px solid rgba(29,36,48,.1);border-radius:12px;background:#fff;padding:12px;cursor:zoom-in;">
+              <img id="mg-hd-floor1-img" alt="" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;">
+            </button>
+            <figcaption style="font-size:12px;color:#6f6a61;text-align:center;margin-top:6px;font-weight:600;">{{ __('magnoolia.rowhouse.floor_1') }}</figcaption>
+          </figure>
+          <figure id="mg-hd-floor2-fig" style="margin:0;flex:1 1 0;min-width:0;">
+            <button type="button" class="mg-hd-floor-btn" data-hd-floor-open="2" aria-label="{{ __('magnoolia.rowhouse.open_larger') }}"
+                    style="width:100%;border:1px solid rgba(29,36,48,.1);border-radius:12px;background:#fff;padding:12px;cursor:zoom-in;">
+              <img id="mg-hd-floor2-img" alt="" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;">
+            </button>
+            <figcaption style="font-size:12px;color:#6f6a61;text-align:center;margin-top:6px;font-weight:600;">{{ __('magnoolia.rowhouse.floor_2') }}</figcaption>
+          </figure>
+        </div>
+      </div>
     </div>
   </div>
+</div>
+
+{{-- Floor-plan lightbox (full-screen, shared by the modal) --}}
+<div id="mg-hd-lightbox" role="dialog" aria-modal="true"
+     style="display:none;position:fixed;inset:0;z-index:9300;background:rgba(15,18,24,.9);align-items:center;justify-content:center;cursor:zoom-out;">
+  <button type="button" id="mg-hd-lb-close" aria-label="{{ __('magnoolia.rowhouse.modal_close') }}"
+          style="position:absolute;top:18px;right:22px;background:rgba(255,255,255,.14);border:none;color:#fff;font-size:24px;line-height:1;width:46px;height:46px;border-radius:50%;cursor:pointer;">&#x2715;</button>
+  <img id="mg-hd-lb-img" src="" alt="" style="max-width:94vw;max-height:92vh;object-fit:contain;border-radius:8px;">
 </div>
 
 @push('scripts')
@@ -227,6 +244,13 @@
     if (h.rooms) sub.push(h.rooms + ' ' + L.rooms);
     if (h.net) sub.push(h.net + ' m²');
     document.getElementById('mg-hd-subtitle').textContent = sub.join(' · ') + (h.yard ? '  ·  ' + L.yardInline.replace(':area', h.yard) : '');
+
+    // Phase 35 — prominent price
+    var priceWrap = document.getElementById('mg-hd-price-wrap');
+    if (h.price) {
+      document.getElementById('mg-hd-price').textContent = '€ ' + String(h.price).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      priceWrap.style.display = '';
+    } else { priceWrap.style.display = 'none'; }
 
     var statusLabel = L[h.status] || h.status;
     var statusColor = COLORS[h.status] || '#888';
@@ -308,8 +332,22 @@
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
+  // Floor-plan lightbox
+  var lightbox = document.getElementById('mg-hd-lightbox');
+  var lbImg = document.getElementById('mg-hd-lb-img');
+  function openLightbox(src, alt) { if (!src) return; lbImg.src = src; lbImg.alt = alt || ''; lightbox.style.display = 'flex'; }
+  function closeLightbox() { lightbox.style.display = 'none'; lbImg.removeAttribute('src'); }
+
   // Delegated triggers
   document.addEventListener('click', function (e) {
+    var fb = e.target.closest('[data-hd-floor-open]');
+    if (fb) {
+      e.preventDefault();
+      var im = document.getElementById('mg-hd-floor' + fb.getAttribute('data-hd-floor-open') + '-img');
+      if (im && im.getAttribute('src')) openLightbox(im.src, im.alt);
+      return;
+    }
+    if (e.target === lightbox || e.target.closest('#mg-hd-lb-close')) { closeLightbox(); return; }
     var t = e.target.closest('[data-mg-home-open]');
     if (t) { e.preventDefault(); window.mgOpenHome(t.getAttribute('data-mg-home-open')); return; }
     if (e.target === overlay) close();
@@ -318,6 +356,7 @@
 
   // ESC + simple focus trap
   document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lightbox.style.display === 'flex') { closeLightbox(); return; }
     if (overlay.style.display === 'none') return;
     if (e.key === 'Escape') { close(); return; }
     if (e.key === 'Enter' || e.key === ' ') {

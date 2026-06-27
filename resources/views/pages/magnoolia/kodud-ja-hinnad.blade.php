@@ -118,6 +118,32 @@
   @include('sections.magnoolia.hinnad')
 </div>
 
+{{-- ── Phase 35: 3D asendiplaan of the whole development ─────── --}}
+@php
+  $rhs3d = app(\App\Services\Magnoolia\RowhouseSelectionService::class);
+  $persImg3d = $rhs3d->perspectiveImage();
+  $av3d = '?v=' . $rhs3d->assetVersion();
+  $persSrc3d = $persImg3d ? asset($persImg3d['1280'] ?? $persImg3d['base']) . $av3d : null;
+  $persSet3d = $persImg3d ? collect($persImg3d)->filter(fn($v,$k)=>is_numeric($k))->map(fn($v,$k)=>asset($v).$av3d.' '.$k.'w')->implode(', ') : '';
+@endphp
+@if($persSrc3d)
+<section class="mg-page-section mg-page-section--white">
+  <div class="container">
+    <div class="mg-section-heading" style="text-align:center;margin-bottom:24px;">
+      <div class="mg-section-heading__eyebrow">{{ __('magnoolia.nav.masterplan') }}</div>
+      <h2 class="mg-section-heading__title">{{ __('magnoolia.rowhouse.mp_title') }}</h2>
+      <p class="mg-section-heading__subtitle">{{ __('magnoolia.rowhouse.mp_subtitle') }}</p>
+    </div>
+    <a href="{{ lroute('magnoolia.site-plan') }}#mg-masterplan" data-mg-analytics="magnoolia_homes_to_siteplan"
+       style="display:block;border-radius:16px;overflow:hidden;position:relative;box-shadow:0 14px 40px rgba(20,25,33,.14);max-width:1100px;margin:0 auto;">
+      <img src="{{ $persSrc3d }}" @if($persSet3d) srcset="{{ $persSet3d }}" sizes="(min-width:992px) 1100px, 100vw" @endif
+           width="1280" height="640" alt="{{ __('magnoolia.rowhouse.mp_img_alt') }}" loading="lazy" decoding="async" style="width:100%;display:block;">
+      <span style="position:absolute;left:50%;bottom:22px;transform:translateX(-50%);background:#c89443;color:#fff;padding:12px 26px;border-radius:100px;font-weight:700;font-size:15px;box-shadow:0 6px 20px rgba(0,0,0,.3);white-space:nowrap;">{{ __('magnoolia.rowhouse.cta_view_map') }} →</span>
+    </a>
+  </div>
+</section>
+@endif
+
 {{-- ── How to choose ────────────────────────────────────────── --}}
 <section class="mg-page-section mg-page-section--white">
   <div class="container">

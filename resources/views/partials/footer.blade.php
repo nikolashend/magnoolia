@@ -52,6 +52,7 @@
                     <li><a href="{{ lroute('magnoolia.ostuprotsess') }}">{{ __('magnoolia.footer.nav_purchase') }}</a></li>
                     <li><a href="{{ lroute('magnoolia.finantseerimine') }}">{{ __('magnoolia.footer.nav_financing') }}</a></li>
                     <li><a href="{{ lroute('magnoolia.kkk') }}">{{ __('magnoolia.footer.nav_faq') }}</a></li>
+                    <li><a href="{{ lroute('magnoolia.developer') }}">{{ __('magnoolia.footer.nav_developer') }}</a></li>
                     <li><a href="{{ lroute('magnoolia.contact') }}">{{ __('magnoolia.footer.nav_contact') }}</a></li>
                 </ul>
             </div>

@@ -76,12 +76,12 @@
 @section('title', $title . ' — Magnoolia')
 
 @section('content')
-<section class="mg-page-hero" style="padding:80px 0 30px;">
+<div class="mg-page-hero">
     <div class="container" style="max-width:860px;">
         <h1 class="mg-page-hero__title">{{ $title }}</h1>
-        <p style="color:#9a948a;font-size:13px;margin-top:8px;">{{ $t['updated'] }}: 2026</p>
+        <p class="mg-page-hero__lead" style="font-size:13px;margin-top:8px;">{{ $t['updated'] }}: 2026</p>
     </div>
-</section>
+</div>
 
 <section class="section-space" style="padding-top:10px;">
     <div class="container" style="max-width:860px;">

@@ -32,7 +32,7 @@ return [
 
         // Phase 11 feature flag — set to true only when client confirms
         // diana_photo_approved: show Diana photo in contact block
-        'diana_photo_approved' => false,
+        'diana_photo_approved' => true,
     ],
 
     'stages' => [
@@ -94,14 +94,14 @@ return [
         ],
         'extras' => [
             ['name' => 'Delux viimistluspaketi hinnalisa', 'price' => 8200],
-            ['name' => 'Päikesepaneelid koos salvestusseadmega (5kW)', 'price' => 6500],
-            ['name' => 'Jahutus elutuba-köök tsoonis (3kW)', 'price' => 2800],
-            ['name' => 'Valvesignalisatsiooni ja suitsuandurite kaabeldus koos lõppseadmetega', 'price' => 2500],
-            ['name' => 'Valvesignalisatsiooni ja suitsuandurite kaabeldus ilma lõppseadmeteta', 'price' => 600],
-            ['name' => 'Videovalve 4 välikaameraga + fonolukk rakendusega', 'price' => 2000],
-            ['name' => 'Sauna siseviimistluse hinnalisa koos klaaslahendusega', 'price' => 3500],
-            ['name' => 'WC valamukapp ja peegel (Balteco EC-seeria)', 'price' => 800],
-            ['name' => 'Bilsey nutikodu lahendus', 'price' => 2500],
+            ['name' => 'Päikesepaneelid hoone katusel koos salvestusseadmega, võimsus 5 kW', 'price' => 6500],
+            ['name' => 'Jahutus elutuba-köök tsoonis, Wind-Free 1-Way laekassett 3 kW koos äpist juhtimisega', 'price' => 2800],
+            ['name' => 'Valvesignalisatsiooni ja suitsuandurite kaabeldus koos valvekeskuse ja lõppseadmetega', 'price' => 2500],
+            ['name' => 'Ainult valvesignalisatsiooni ja suitsuandurite kaabeldus ilma lõppseadmeteta', 'price' => 600],
+            ['name' => 'Videovalve 4 välikaameraga HikVision + fono juhtimine läbi appi', 'price' => 2000],
+            ['name' => 'Sauna siseviimistluse hinnalisa koos klaaslahendusega (platvorm lava, Harvia keris, LED-valgustus)', 'price' => 3500],
+            ['name' => 'WC valamukapp Nu40 valamule ja peegel Balteco EC-seeria (80 cm)', 'price' => 800],
+            ['name' => 'Bilsey nutikodu lahendus (kõikide süsteemide juhtimine appist)', 'price' => 2500],
         ],
     ],
 

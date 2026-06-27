@@ -51,7 +51,10 @@ class MagnooliaPublicDataComposer
             'settings' => $settings,
             'stages' => $stages,
             'campaign' => $campaign,
-            'commercial' => $settings['commercial'] ?? config('magnoolia.commercial', []),
+            // Phase 35: "included" / "extras" are config-managed marketing content
+            // (not part of the unit draft→publish flow), so read them live from
+            // config — edits apply immediately without needing a republish.
+            'commercial' => config('magnoolia.commercial', $settings['commercial'] ?? []),
             'project' => array_merge(config('magnoolia.project', []), [
                 'contact_name' => $settings['sales_contact_name'] ?? config('magnoolia.project.contact_name', 'Diana Tali'),
                 'contact_phone' => $settings['sales_contact_phone'] ?? config('magnoolia.project.contact_phone'),

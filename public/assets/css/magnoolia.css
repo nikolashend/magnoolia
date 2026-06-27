@@ -1537,6 +1537,32 @@ a {
   }
 }
 
+/* Phase 35 — TRANSPARENT hero: drop the big white card so the render shows
+   through (premium, like the competitor). A left-side scrim + light text keep
+   the copy legible over the photo. */
+.main-slider-two__bg--photo::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(100deg, rgba(18,22,28,.80) 0%, rgba(18,22,28,.58) 36%, rgba(18,22,28,.24) 64%, rgba(18,22,28,0) 88%);
+}
+.main-slider-two .active .main-slider-two__content,
+.main-slider-two__content {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 150px 0 110px !important;
+}
+@media (max-width: 991px) {
+  .main-slider-two .active .main-slider-two__content,
+  .main-slider-two__content { margin: 110px 0 80px !important; }
+}
+.main-slider-two__title, .main-slider-two__title span { color: #ffffff !important; }
+.main-slider-two__text { color: rgba(255,255,255,.92) !important; }
+.main-slider-two__subtitle { background: rgba(255,255,255,.14) !important; color: #f0d8a8 !important; }
+.mg-hero-fact strong { color: #ffffff !important; }
+.mg-hero-fact span { color: rgba(255,255,255,.82) !important; }
+.mg-hero-fact { border-color: rgba(255,255,255,.22) !important; }
+
 /* Ghost variant for secondary hero CTA */
 .zoomvilla-btn--border {
   background: transparent !important;
@@ -4448,6 +4474,8 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 .mg-mp__floors-both { display: flex; gap: 16px; flex-wrap: wrap; }
 .mg-mp__floor-fig { margin: 0; flex: 1 1 280px; background: #fff; border: 1px solid rgba(29,36,48,.08); border-radius: 14px; padding: 16px; text-align: center; }
 .mg-mp__floor-fig figcaption { font-size: 13px; font-weight: 700; color: #6f6a61; margin-top: 10px; }
+/* Phase 35: home-detail modal floor plans wrap on small screens */
+@media (max-width: 640px) { .mg-hd-floors-row { flex-wrap: wrap; } .mg-hd-floors-row figure { flex: 1 1 100% !important; } }
 .mg-mp__floor-open { position: absolute; top: 12px; right: 12px; font-size: 12px; font-weight: 700; color: #c89443; text-decoration: none; background: rgba(255,255,255,.9); padding: 6px 10px; border-radius: 8px; }
 .mg-mp__floor-cap { font-size: 13px; color: #6f6a61; margin-top: 10px; }
 

@@ -53,6 +53,15 @@
             </p>
         </div>
 
+        {{-- ── Phase 35: special offer banner (red, uppercase) ──────────── --}}
+        <div class="wow fadeInUp" data-wow-duration="800ms"
+             style="border:2px solid #c0392b;background:#fff5f4;border-radius:12px;padding:16px 22px;margin-bottom:24px;display:flex;align-items:center;gap:14px;">
+            <i class="fas fa-tags" style="color:#c0392b;font-size:22px;flex-shrink:0;"></i>
+            <p style="margin:0;font-size:15px;font-weight:800;letter-spacing:.02em;color:#c0392b;text-transform:uppercase;line-height:1.5;">
+                {{ __('magnoolia.pricing.special_offer') }}
+            </p>
+        </div>
+
         {{-- ── Buyer orientation note ──────────────────────────────────── --}}
         <div class="mg-buyer-note wow fadeInUp" data-wow-duration="800ms"
              style="border-left:3px solid #c89443;background:#fff;border-radius:0 12px 12px 0;
@@ -317,7 +326,7 @@
             <div style="flex:1;min-width:240px;">
                 <h4 style="font-size:15px;font-weight:700;color:#1d2430;margin-bottom:14px;">{{ __('magnoolia.pricing.extras_title') }}</h4>
                 <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
-                    @foreach(($commercial['extras'] ?? []) as $extra)
+                    @foreach((!empty($commercial['extras']) ? $commercial['extras'] : __('magnoolia.pricing.extras_items')) as $extra)
                     <li style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;font-size:13px;color:#6f6a61;">
                         <span>{{ $extra['name'] }}</span>
                         <strong style="color:#1d2430;white-space:nowrap;">€ {{ number_format((int) ($extra['price'] ?? 0), 0, ',', ' ') }}</strong>

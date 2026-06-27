@@ -269,6 +269,12 @@ class MagnooliaController extends Controller
         return view('pages.magnoolia.legal', ['doc' => 'terms']);
     }
 
+    /** Phase 35 — "Arendajast" (about the developer, Estlanda). */
+    public function developer()
+    {
+        return view('pages.magnoolia.arendajast');
+    }
+
     /**
      * GET /kodud/{slug}  (ET)
      * GET /ru/kodud/{slug}  (RU)
