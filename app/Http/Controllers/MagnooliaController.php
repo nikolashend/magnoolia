@@ -43,9 +43,10 @@ class MagnooliaController extends Controller
      */
     public function sitePlan()
     {
-        $page = config('magnoolia_pages.pages.site_plan', []);
-
-        return view('pages.magnoolia.asendiplaan', compact('page'));
+        // Phase 35: the interactive site plan now lives on "Hinnad ja plaanid"
+        // (/kodud-ja-hinnad) alongside the prices — one page, no duplicate data.
+        // Keep the old URL working with a permanent redirect to that section.
+        return redirect()->to(lroute('magnoolia.homes') . '#mg-masterplan', 301);
     }
 
     /**

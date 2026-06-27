@@ -16,6 +16,8 @@ return [
         'header_cta'     => 'Запросить информацию',
         'mobile_menu'    => 'Открыть меню',
         'gallery'          => 'Галерея',
+        'prices_plans'     => 'Цены и планы',
+        'developer'        => 'Застройщик',
         'faq'              => 'FAQ',
         'architecture'     => 'Архитектура',
         'process'          => 'Процесс покупки',

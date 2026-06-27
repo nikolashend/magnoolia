@@ -54,13 +54,24 @@
     <p class="mg-page-hero__note">{{ mg_text('page.kodudjahinnad.note') }}</p>
     <div class="mg-page-hero__ctas">
       <a href="#hinnatabel" class="zoomvilla-btn">{{ __('magnoolia.page.kodudjahinnad.cta_table') }} <i class="icon-angle-small-right"></i></a>
-      <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border">{{ __('magnoolia.page.kodudjahinnad.cta_inquiry') }} <i class="icon-angle-small-right"></i></a>
+      <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border"
+         data-mg-inquiry-open data-source-component="hinnad_hero" data-mg-analytics="magnoolia_cta_click">{{ __('magnoolia.page.kodudjahinnad.cta_inquiry') }} <i class="icon-angle-small-right"></i></a>
     </div>
   </div>
 </div>
 
+{{-- ── Phase 35: interactive site plan (asendiplaan) at the top, then prices.
+       Selecting a home on the plan opens the same modal as the price table.
+       /asendiplaan redirects to this #mg-masterplan anchor. ── --}}
+@include('sections.magnoolia.interactive-masterplan')
+
+{{-- ── Hinnatabel (price table) ─────────────────────────────── --}}
+<div id="hinnatabel">
+  @include('sections.magnoolia.hinnad')
+</div>
+
 {{-- ── Plan comparison cards ────────────────────────────────── --}}
-<section class="mg-page-section mg-page-section--white" id="plaanid">
+<section class="mg-page-section mg-page-section--white" id="plaani-tuubid">
   <div class="container">
     <div class="mg-section-heading mg-section-heading--center">
       <div class="mg-section-heading__eyebrow">{{ __('magnoolia.page.kodudjahinnad.plans_eyebrow') }}</div>
@@ -83,8 +94,10 @@
           </ul>
           <p class="mg-comparison-card__pitch">{{ __('magnoolia.page.kodudjahinnad.plan_a_pitch') }}</p>
           <div class="mg-comparison-card__ctas">
-            <a href="{{ route('home') }}#plaanid" class="zoomvilla-btn">{{ __('magnoolia.page.kodudjahinnad.plan_a_cta_view') }} <i class="icon-angle-small-right"></i></a>
-            <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border">{{ __('magnoolia.page.kodudjahinnad.plan_a_cta_inq') }} <i class="icon-angle-small-right"></i></a>
+            <a href="{{ route('home') }}#plaanid" class="zoomvilla-btn"
+               onclick="event.preventDefault(); if(window.mgPlansOpen){window.mgPlansOpen();}">{{ __('magnoolia.page.kodudjahinnad.plan_a_cta_view') }} <i class="icon-angle-small-right"></i></a>
+            <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border"
+               data-mg-inquiry-open data-source-component="hinnad_plan_a" data-mg-analytics="magnoolia_cta_click">{{ __('magnoolia.page.kodudjahinnad.plan_a_cta_inq') }} <i class="icon-angle-small-right"></i></a>
           </div>
         </div>
       </div>
@@ -104,45 +117,16 @@
           </ul>
           <p class="mg-comparison-card__pitch">{{ __('magnoolia.page.kodudjahinnad.plan_b_pitch') }}</p>
           <div class="mg-comparison-card__ctas">
-            <a href="{{ route('home') }}#plaanid" class="zoomvilla-btn">{{ __('magnoolia.page.kodudjahinnad.plan_b_cta_view') }} <i class="icon-angle-small-right"></i></a>
-            <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border">{{ __('magnoolia.page.kodudjahinnad.plan_b_cta_inq') }} <i class="icon-angle-small-right"></i></a>
+            <a href="{{ route('home') }}#plaanid" class="zoomvilla-btn"
+               onclick="event.preventDefault(); if(window.mgPlansOpen){window.mgPlansOpen();}">{{ __('magnoolia.page.kodudjahinnad.plan_b_cta_view') }} <i class="icon-angle-small-right"></i></a>
+            <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border"
+               data-mg-inquiry-open data-source-component="hinnad_plan_b" data-mg-analytics="magnoolia_cta_click">{{ __('magnoolia.page.kodudjahinnad.plan_b_cta_inq') }} <i class="icon-angle-small-right"></i></a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-{{-- ── Hinnatabel ───────────────────────────────────────────── --}}
-<div id="hinnatabel">
-  @include('sections.magnoolia.hinnad')
-</div>
-
-{{-- ── Phase 35: 3D asendiplaan of the whole development ─────── --}}
-@php
-  $rhs3d = app(\App\Services\Magnoolia\RowhouseSelectionService::class);
-  $persImg3d = $rhs3d->perspectiveImage();
-  $av3d = '?v=' . $rhs3d->assetVersion();
-  $persSrc3d = $persImg3d ? asset($persImg3d['1280'] ?? $persImg3d['base']) . $av3d : null;
-  $persSet3d = $persImg3d ? collect($persImg3d)->filter(fn($v,$k)=>is_numeric($k))->map(fn($v,$k)=>asset($v).$av3d.' '.$k.'w')->implode(', ') : '';
-@endphp
-@if($persSrc3d)
-<section class="mg-page-section mg-page-section--white">
-  <div class="container">
-    <div class="mg-section-heading" style="text-align:center;margin-bottom:24px;">
-      <div class="mg-section-heading__eyebrow">{{ __('magnoolia.nav.masterplan') }}</div>
-      <h2 class="mg-section-heading__title">{{ __('magnoolia.rowhouse.mp_title') }}</h2>
-      <p class="mg-section-heading__subtitle">{{ __('magnoolia.rowhouse.mp_subtitle') }}</p>
-    </div>
-    <a href="{{ lroute('magnoolia.site-plan') }}#mg-masterplan" data-mg-analytics="magnoolia_homes_to_siteplan"
-       style="display:block;border-radius:16px;overflow:hidden;position:relative;box-shadow:0 14px 40px rgba(20,25,33,.14);max-width:1100px;margin:0 auto;">
-      <img src="{{ $persSrc3d }}" @if($persSet3d) srcset="{{ $persSet3d }}" sizes="(min-width:992px) 1100px, 100vw" @endif
-           width="1280" height="640" alt="{{ __('magnoolia.rowhouse.mp_img_alt') }}" loading="lazy" decoding="async" style="width:100%;display:block;">
-      <span style="position:absolute;left:50%;bottom:22px;transform:translateX(-50%);background:#c89443;color:#fff;padding:12px 26px;border-radius:100px;font-weight:700;font-size:15px;box-shadow:0 6px 20px rgba(0,0,0,.3);white-space:nowrap;">{{ __('magnoolia.rowhouse.cta_view_map') }} →</span>
-    </a>
-  </div>
-</section>
-@endif
 
 {{-- ── How to choose ────────────────────────────────────────── --}}
 <section class="mg-page-section mg-page-section--white">
@@ -185,8 +169,9 @@
 <section class="mg-page-section--cream mg-page-section--sm">
   <div class="container">
     <div class="mg-internal-links">
-      <a href="{{ lroute('magnoolia.site-plan') }}" class="mg-internal-link"><i class="fas fa-map"></i> {{ __('magnoolia.page.kodudjahinnad.link_plan') }}</a>
-      <a href="{{ route('home') }}#plaanid" class="mg-internal-link"><i class="fas fa-drafting-compass"></i> {{ __('magnoolia.page.kodudjahinnad.link_floorplans') }}</a>
+      <a href="#mg-masterplan" class="mg-internal-link"><i class="fas fa-map"></i> {{ __('magnoolia.page.kodudjahinnad.link_plan') }}</a>
+      <a href="{{ route('home') }}#plaanid" class="mg-internal-link"
+         onclick="event.preventDefault(); if(window.mgPlansOpen){window.mgPlansOpen();}"><i class="fas fa-drafting-compass"></i> {{ __('magnoolia.page.kodudjahinnad.link_floorplans') }}</a>
       <a href="{{ lroute('magnoolia.location') }}" class="mg-internal-link"><i class="fas fa-map-marker-alt"></i> {{ __('magnoolia.page.kodudjahinnad.link_loc') }}</a>
       <a href="{{ lroute('magnoolia.ostuprotsess') }}" class="mg-internal-link"><i class="fas fa-list-ol"></i> {{ __('magnoolia.page.kodudjahinnad.link_proc') }}</a>
       <a href="{{ lroute('magnoolia.contact') }}" class="mg-internal-link"><i class="fas fa-envelope"></i> {{ __('magnoolia.page.kodudjahinnad.link_cont') }}</a>
@@ -199,10 +184,51 @@
   'title'   => __('magnoolia.page.kodudjahinnad.cta_title'),
   'sub'     => __('magnoolia.page.kodudjahinnad.cta_sub'),
   'buttons' => [
-    ['label' => __('magnoolia.page.kodudjahinnad.cta_btn1'), 'url' => lroute('magnoolia.contact')],
+    ['label' => __('magnoolia.page.kodudjahinnad.cta_btn1'), 'url' => lroute('magnoolia.contact'), 'inquiry' => true, 'source' => 'hinnad_page_cta'],
     ['label' => __('magnoolia.page.kodudjahinnad.cta_btn2'), 'url' => 'tel:+37258164078', 'outline' => true, 'icon' => 'fas fa-phone'],
-    ['label' => __('magnoolia.page.kodudjahinnad.cta_btn3'), 'url' => lroute('magnoolia.site-plan'), 'outline' => true],
+    ['label' => __('magnoolia.page.kodudjahinnad.cta_btn3'), 'url' => '#mg-masterplan', 'outline' => true],
   ]
 ])
+
+{{-- ── Plans modal: the homepage "Korrusplaanid" section (Plan A/B floor plans),
+       opened by "Vaata plaani" — so the plans show in a modal, with no redirect. ── --}}
+{{-- The included section uses scroll-in reveal animations that never trigger inside a
+     modal: WOW.js (.wow → visibility:hidden) and GSAP SplitText (.sec-title__title /
+     .sec-title__tagline / .bw-split-* → each char span set to opacity:0). Force all of
+     it visible here, including the split char spans. --}}
+<style>
+  #mg-plans-overlay .wow,
+  #mg-plans-overlay .sec-title__title,
+  #mg-plans-overlay .sec-title__tagline,
+  #mg-plans-overlay [class*="bw-split"] { visibility:visible !important; opacity:1 !important; animation:none !important; transform:none !important; }
+  #mg-plans-overlay .sec-title__title *,
+  #mg-plans-overlay .sec-title__tagline *,
+  #mg-plans-overlay [class*="bw-split"] * { opacity:1 !important; visibility:visible !important; transform:none !important; }
+</style>
+<div id="mg-plans-overlay" role="dialog" aria-modal="true" aria-label="{{ __('magnoolia.floorplan.title') }}"
+     style="display:none;position:fixed;inset:0;z-index:9050;background:rgba(20,25,33,.6);overflow-y:auto;">
+  <div style="position:relative;max-width:1180px;margin:32px auto;background:#fbfaf7;border-radius:18px;overflow:hidden;box-shadow:0 24px 64px rgba(20,25,33,.32);">
+    <button type="button" onclick="window.mgPlansClose && window.mgPlansClose()" aria-label="{{ __('magnoolia.floorplan.lightbox_close') }}"
+            style="position:absolute;top:16px;right:16px;z-index:5;width:44px;height:44px;border-radius:50%;border:1px solid rgba(29,36,48,.15);background:#fff;cursor:pointer;font-size:22px;line-height:1;color:#1d2430;">&times;</button>
+    @include('sections.approved.floor-plan-source')
+  </div>
+</div>
+<script>
+(function () {
+  var ov = document.getElementById('mg-plans-overlay');
+  function open()  {
+    if (!ov) return;
+    ov.style.display = 'block'; ov.scrollTop = 0; document.body.style.overflow = 'hidden';
+    // Reveal WOW.js elements (they stay hidden inside a modal that never scrolls into view).
+    ov.querySelectorAll('.wow').forEach(function (el) {
+      el.style.visibility = 'visible'; el.style.opacity = '1'; el.style.animation = 'none'; el.classList.add('animated');
+    });
+  }
+  function close() { if (ov) { ov.style.display = 'none'; document.body.style.overflow = ''; } }
+  window.mgPlansOpen = open; window.mgPlansClose = close;
+  if (ov) ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ov && ov.style.display !== 'none') close(); });
+})();
+</script>
 
 @endsection

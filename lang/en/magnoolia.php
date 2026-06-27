@@ -16,6 +16,8 @@ return [
         'header_cta'     => 'Enquire',
         'mobile_menu'    => 'Open menu',
         'gallery'          => 'Gallery',
+        'prices_plans'     => 'Prices & plans',
+        'developer'        => 'Developer',
         'faq'              => 'FAQ',
         'architecture'     => 'Architecture',
         'process'          => 'Buying Process',

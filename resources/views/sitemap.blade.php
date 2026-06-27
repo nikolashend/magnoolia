@@ -10,7 +10,8 @@
     $slugPages = [
         // slug               priority  changefreq
         ['kodud-ja-hinnad',   '0.9',    'weekly'],
-        ['asendiplaan',       '0.8',    'monthly'],
+        // Phase 35: /asendiplaan now 301-redirects into /kodud-ja-hinnad#mg-masterplan,
+        // so it is intentionally omitted here (no redirecting URLs in the sitemap).
         ['asukoht',           '0.7',    'monthly'],
         ['ehitusinfo',        '0.7',    'monthly'],
         ['kontakt',           '0.6',    'monthly'],

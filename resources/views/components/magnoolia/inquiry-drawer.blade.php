@@ -22,7 +22,7 @@
      role="dialog"
      aria-modal="true"
      aria-labelledby="mg-inquiry-title"
-     style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.55);">
+     style="display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.55);">
 
   {{-- Drawer panel (right side) --}}
   <div id="mg-inquiry-panel"
@@ -226,6 +226,10 @@
     }
     closeBtn.focus();
   }
+
+  // Public opener — for CTAs that must stopPropagation (e.g. inside a clickable
+  // table row/card) and therefore can't rely on the delegated document handler.
+  window.mgInquiryOpen = open;
 
   function close() {
     overlay.style.display = 'none';

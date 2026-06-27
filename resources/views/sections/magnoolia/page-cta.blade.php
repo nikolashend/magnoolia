@@ -3,7 +3,9 @@
   Props:
     $title   — heading
     $sub     — sub text
-    $buttons — array of ['label', 'url', 'outline' => bool, 'icon' => 'fas fa-phone']
+    $buttons — array of ['label', 'url', 'outline' => bool, 'icon' => 'fas fa-phone',
+                         'inquiry' => bool (open the inquiry drawer instead of navigating),
+                         'source' => source_component for the inquiry drawer]
 --}}
 <section class="mg-page-cta">
   <div class="container">
@@ -14,7 +16,8 @@
     <div class="mg-page-cta__btns">
       @foreach($buttons ?? [] as $btn)
         <a href="{{ $btn['url'] }}"
-           class="{{ ($btn['outline'] ?? false) ? 'zoomvilla-btn zoomvilla-btn--border' : 'zoomvilla-btn' }}">
+           class="{{ ($btn['outline'] ?? false) ? 'zoomvilla-btn zoomvilla-btn--border' : 'zoomvilla-btn' }}"
+           @if(!empty($btn['inquiry'])) data-mg-inquiry-open data-source-component="{{ $btn['source'] ?? 'page_cta' }}" data-mg-analytics="magnoolia_cta_click" @endif>
           @if(!empty($btn['icon']))<i class="{{ $btn['icon'] }}" style="margin-right:7px;"></i>@endif
           {{ $btn['label'] }}
           @if(empty($btn['icon']))<i class="icon-angle-small-right"></i>@endif

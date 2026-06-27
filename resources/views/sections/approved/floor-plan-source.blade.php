@@ -20,8 +20,16 @@
         return $addrs ? implode(', ', $addrs) : '';
     };
 
-    $floor1 = asset('assets/images/magnoolia/PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001.jpg');
-    $floor2 = asset('assets/images/magnoolia/PR03023_PP_AR-5-02_Teise korruse plaan_page-0001.jpg');
+    // Use the optimized webp variants — the raw JPGs are ~3.8 MB each (too slow,
+    // looked like "no image" while loading). Display = light 1200w webp (~100 KB);
+    // lightbox zoom + download = full-res webp (~830 KB, sharp).
+    $fpDir = 'assets/images/magnoolia/';
+    $fp1   = 'PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001';
+    $fp2   = 'PR03023_PP_AR-5-02_Teise korruse plaan_page-0001';
+    $floor1     = asset($fpDir.$fp1.'.webp');
+    $floor2     = asset($fpDir.$fp2.'.webp');
+    $floor1Disp = asset($fpDir.$fp1.'-1200w.webp');
+    $floor2Disp = asset($fpDir.$fp2.'-1200w.webp');
 
     $plans = [
         [
@@ -33,6 +41,8 @@
             'units'      => $typeAUnits,
             'floor1_src' => $floor1,
             'floor2_src' => $floor2,
+            'floor1_disp'=> $floor1Disp,
+            'floor2_disp'=> $floor2Disp,
             'floor1_alt' => sprintf(__('magnoolia.floorplan.floor1_alt'), 'Plaan A'),
             'floor2_alt' => sprintf(__('magnoolia.floorplan.floor2_alt'), 'Plaan A'),
         ],
@@ -45,6 +55,8 @@
             'units'      => $typeBUnits,
             'floor1_src' => $floor1,
             'floor2_src' => $floor2,
+            'floor1_disp'=> $floor1Disp,
+            'floor2_disp'=> $floor2Disp,
             'floor1_alt' => sprintf(__('magnoolia.floorplan.floor1_alt'), 'Plaan B'),
             'floor2_alt' => sprintf(__('magnoolia.floorplan.floor2_alt'), 'Plaan B'),
         ],
@@ -103,10 +115,9 @@
                                 <span class="mg-plan-floor__num">{{ __('magnoolia.floorplan.floor_1') }}</span>
                             </div>
                             <div class="mg-plan-floor__img-wrap">
-                                <img loading="lazy" decoding="async" src="{{ $plan['floor1_src'] }}"
+                                <img loading="lazy" decoding="async" src="{{ $plan['floor1_disp'] ?? $plan['floor1_src'] }}"
                                      alt="{{ $plan['floor1_alt'] }}"
                                      width="560" height="545"
-                                     loading="lazy" decoding="async"
                                      class="mg-plan-floor__img">
                                 <div class="mg-plan-floor__overlay">
                                     <button type="button"
@@ -135,10 +146,9 @@
                                 <span class="mg-plan-floor__num">{{ __('magnoolia.floorplan.floor_2') }}</span>
                             </div>
                             <div class="mg-plan-floor__img-wrap">
-                                <img loading="lazy" decoding="async" src="{{ $plan['floor2_src'] }}"
+                                <img loading="lazy" decoding="async" src="{{ $plan['floor2_disp'] ?? $plan['floor2_src'] }}"
                                      alt="{{ $plan['floor2_alt'] }}"
                                      width="560" height="646"
-                                     loading="lazy" decoding="async"
                                      class="mg-plan-floor__img">
                                 <div class="mg-plan-floor__overlay">
                                     <button type="button"
@@ -163,10 +173,15 @@
 
                     {{-- Card CTAs --}}
                     <div class="mg-plan-card__ctas">
-                        <a href="{{ lroute('home') }}#hinnad" class="zoomvilla-btn">
+                        {{-- No redirects: close the plans modal (if open), select the "Vaba"
+                             tab and scroll to the price table. Works inline on the homepage too. --}}
+                        <a href="#hinnad" class="zoomvilla-btn"
+                           onclick="event.preventDefault(); if(window.mgPlansClose){window.mgPlansClose();} if(window.mgFilter){window.mgFilter('available');} var t=document.getElementById('hinnad'); if(t){t.scrollIntoView({behavior:'smooth',block:'start'});}">
                             {{ __('magnoolia.floorplan.cta_homes') }} <i class="icon-angle-small-right" aria-hidden="true"></i>
                         </a>
-                        <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="zoomvilla-btn zoomvilla-btn--border">
+                        {{-- Opens the inquiry form in the global drawer (over the modal) — no redirect. --}}
+                        <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="zoomvilla-btn zoomvilla-btn--border"
+                           data-mg-inquiry-open data-source-component="floorplan_card" data-mg-analytics="magnoolia_cta_click">
                             {{ __('magnoolia.floorplan.cta_ask') }} <i class="icon-angle-small-right" aria-hidden="true"></i>
                         </a>
                     </div>

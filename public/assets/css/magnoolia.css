@@ -1556,6 +1556,13 @@ a {
   .main-slider-two .active .main-slider-two__content,
   .main-slider-two__content { margin: 110px 0 80px !important; }
 }
+/* Wide screens (>=1640px): the floating header pill drops ~40px lower (its bottom
+   sits at ~160px instead of 120px), so the hero eyebrow/title tucked under it. Give
+   the hero content extra top clearance at these widths. */
+@media (min-width: 1640px) {
+  .main-slider-two .active .main-slider-two__content,
+  .main-slider-two__content { margin-top: 190px !important; }
+}
 .main-slider-two__title, .main-slider-two__title span { color: #ffffff !important; }
 .main-slider-two__text { color: rgba(255,255,255,.92) !important; }
 .main-slider-two__subtitle { background: rgba(255,255,255,.14) !important; color: #f0d8a8 !important; }

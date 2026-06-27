@@ -47,6 +47,17 @@
     $images = $managedGallery;
   }
 
+  // Remove duplicate photos: keep the first occurrence of each source image,
+  // preserving order. The same picture is often stored in several formats/variants
+  // (e.g. Cam001.jpg + Cam001.webp + Cam001-768w.webp) — normalise to the bare
+  // "dir/filename" (no extension, no -480/768/1200w suffix) so those collapse to one.
+  $galleryKey = function ($img) {
+    $rel = ltrim(str_replace(asset(''), '', $img['src'] ?? ''), '/');
+    $rel = preg_replace('~-(?:480|768|1200)w\.webp$~i', '', $rel); // drop responsive suffix
+    return preg_replace('~\.[a-z0-9]+$~i', '', $rel);              // drop file extension
+  };
+  $images = $images->unique($galleryKey)->values();
+
   // Pick optimized responsive WebP variants ({stem}-480w/-768w/-1200w.webp) for
   // fast loading; fall back to the original when no variant exists. Returns the
   // grid thumb + srcset (small) and a larger image for the lightbox.

@@ -18,6 +18,8 @@ return [
         'mobile_menu'      => 'Ava menüü',
         'architecture'     => 'Arhitektuur',
         'gallery'          => 'Galerii',
+        'prices_plans'     => 'Hinnad ja plaanid',
+        'developer'        => 'Arendaja',
         'purchase'         => 'Ostuprotsess',
         'financing'        => 'Finantseerimine',
         'faq'              => 'KKK',

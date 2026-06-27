@@ -36,7 +36,7 @@
                 <span class="mg-footer__col-title">{{ __('magnoolia.footer.col_project') }}</span>
                 <ul class="mg-footer__links">
                     <li><a href="{{ lroute('magnoolia.homes') }}">{{ __('magnoolia.footer.nav_homes') }}</a></li>
-                    <li><a href="{{ lroute('magnoolia.site-plan') }}">{{ __('magnoolia.footer.nav_site_plan') }}</a></li>
+                    <li><a href="{{ lroute('magnoolia.homes') }}#mg-masterplan">{{ __('magnoolia.footer.nav_site_plan') }}</a></li>
                     <li><a href="{{ lroute('magnoolia.location') }}">{{ __('magnoolia.footer.nav_location') }}</a></li>
                     <li><a href="{{ lroute('magnoolia.construction') }}">{{ __('magnoolia.footer.nav_construction') }}</a></li>
                     <li><a href="{{ lroute('magnoolia.sisedisain') }}">{{ __('magnoolia.footer.nav_interior') }}</a></li>

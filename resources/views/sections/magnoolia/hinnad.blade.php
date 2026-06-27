@@ -37,7 +37,7 @@
     ];
 @endphp
 
-<section class="section-space" id="hinnad" style="background:#f7f4ef;">
+<section class="section-space" id="hinnad" style="background:#f7f4ef;scroll-margin-top:150px;">
     <div class="container">
 
         {{-- Section header --}}
@@ -220,11 +220,14 @@
                         </td>
                         <td style="padding:15px 16px;text-align:center;white-space:nowrap;">
                             @if($st === 'sold')
-                                <a href="{{ lroute('home') }}#hinnad" class="mg-table-cta mg-table-cta--muted"
-                                   data-event="unit_view" data-unit-id="{{ $unit['address'] }}">{{ __($cfg['cta_key']) }}</a>
+                                <a href="#hinnad" class="mg-table-cta mg-table-cta--muted"
+                                   data-event="unit_view" data-unit-id="{{ $unit['address'] }}"
+                                   onclick="event.preventDefault(); event.stopPropagation(); if(window.mgFilter){window.mgFilter('available');} var t=document.getElementById('hinnad'); if(t){t.scrollIntoView({behavior:'smooth',block:'start'});}">{{ __($cfg['cta_key']) }}</a>
                             @else
                                 <a href="{{ lroute('magnoolia.contact') }}?unit={{ urlencode($unit['address']) }}#kontaktivorm" class="mg-table-cta"
-                                   data-event="unit_modal_open" data-unit-id="{{ $unit['address'] }}">{{ __($cfg['cta_key']) }}</a>
+                                   data-source-component="hinnad_table" data-unit-address="{{ $unit['address'] }}"
+                                   data-event="unit_modal_open" data-unit-id="{{ $unit['address'] }}"
+                                   onclick="event.stopPropagation(); if(window.mgInquiryOpen){event.preventDefault();window.mgInquiryOpen(this);}">{{ __($cfg['cta_key']) }}</a>
                             @endif
                         </td>
                     </tr>
@@ -298,8 +301,9 @@
                         {{ $publicPrice ? '€ '.number_format($publicPrice, 0, ',', ' ') : __('magnoolia.pricing.price_tbc') }}
                     </div>
                     @if($st !== 'sold')
-                    <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm"
-                       onclick="event.stopPropagation();"
+                    <a href="{{ lroute('magnoolia.contact') }}?unit={{ urlencode($unit['address']) }}#kontaktivorm"
+                       data-source-component="hinnad_card" data-unit-address="{{ $unit['address'] }}"
+                       onclick="event.stopPropagation(); if(window.mgInquiryOpen){event.preventDefault();window.mgInquiryOpen(this);}"
                        style="background:#c89443;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;min-height:40px;display:inline-flex;align-items:center;">
                         {{ __($cfg['cta_key']) }}
                     </a>
@@ -342,10 +346,11 @@
             <div style="flex:1;min-width:240px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;">
                 <p style="font-size:13px;color:#9a9490;font-style:italic;margin:0;">{{ __('magnoolia.pricing.disclaimer') }}</p>
                 <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                    <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="zoomvilla-btn">
+                    <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="zoomvilla-btn"
+                       data-mg-inquiry-open data-source-component="hinnad_includes" data-mg-analytics="magnoolia_cta_click">
                         {{ __('magnoolia.pricing.cta_inquiry') }} <i class="icon-angle-small-right"></i>
                     </a>
-                    <a href="{{ lroute('home') }}#asendiplaan" class="zoomvilla-btn zoomvilla-btn--border">
+                    <a href="{{ lroute('magnoolia.homes') }}#mg-masterplan" class="zoomvilla-btn zoomvilla-btn--border">
                         {{ __('magnoolia.nav.masterplan') }} <i class="icon-angle-small-right"></i>
                     </a>
                 </div>

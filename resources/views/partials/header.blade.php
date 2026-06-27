@@ -29,11 +29,21 @@
                 <nav class="main-header__nav main-menu">
                     <ul class="main-menu__list">
                         @php
+                            // Phase 35: top menu mirrors the kakumae structure.
+                            // "Hinnad ja plaanid" → Kodud ja hinnad (prices + the 3D
+                            // site plan section); Asendiplaan is reached from there,
+                            // not a separate menu item (no duplicate data).
                             $fallbackNavItems = collect([
                                 [
-                                    'label' => __('magnoolia.nav.about'),
-                                    'href' => lroute('home') . '#about',
-                                    'route_name' => 'home',
+                                    'label' => __('magnoolia.nav.location'),
+                                    'href' => lroute('magnoolia.location'),
+                                    'route_name' => 'magnoolia.location',
+                                    'open_blank' => false,
+                                ],
+                                [
+                                    'label' => __('magnoolia.nav.gallery'),
+                                    'href' => lroute('magnoolia.galerii'),
+                                    'route_name' => 'magnoolia.galerii',
                                     'open_blank' => false,
                                 ],
                                 [
@@ -43,15 +53,15 @@
                                     'open_blank' => false,
                                 ],
                                 [
-                                    'label' => __('magnoolia.nav.masterplan'),
-                                    'href' => lroute('magnoolia.site-plan'),
-                                    'route_name' => 'magnoolia.site-plan',
+                                    'label' => __('magnoolia.nav.architecture'),
+                                    'href' => lroute('magnoolia.arhitektuur'),
+                                    'route_name' => 'magnoolia.arhitektuur',
                                     'open_blank' => false,
                                 ],
                                 [
-                                    'label' => __('magnoolia.nav.building'),
-                                    'href' => lroute('magnoolia.construction'),
-                                    'route_name' => 'magnoolia.construction',
+                                    'label' => __('magnoolia.nav.developer'),
+                                    'href' => lroute('magnoolia.developer'),
+                                    'route_name' => 'magnoolia.developer',
                                     'open_blank' => false,
                                 ],
                                 [

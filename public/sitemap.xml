@@ -47,17 +47,8 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Asendiplaan (ET) -->
-  <url>
-    <loc>https://magnoolia.ee/asendiplaan</loc>
-    <xhtml:link rel="alternate" hreflang="et" href="https://magnoolia.ee/asendiplaan"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://magnoolia.ee/ru/asendiplaan"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://magnoolia.ee/en/asendiplaan"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url><loc>https://magnoolia.ee/ru/asendiplaan</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://magnoolia.ee/en/asendiplaan</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <!-- Phase 35: /asendiplaan now 301-redirects to /kodud-ja-hinnad#mg-masterplan,
+       so it is intentionally omitted from the sitemap (no redirecting URLs listed). -->
 
   <!-- Asukoht -->
   <url>

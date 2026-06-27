@@ -28,8 +28,8 @@
     {{-- Phase 26: Compact pricing/availability teaser --}}
     @include('sections.magnoolia.pricing-teaser')
 
-    {{-- Phase 28: Compact homepage availability board (all 19 homes, by stage) --}}
-    @include('sections.magnoolia.home-availability-board')
+    {{-- Phase 35: the "Saadavuse ülevaade" board was removed from the homepage — the
+         full price table with availability (below) covers the same data, no dupes. --}}
 
     {{-- 7. HINNAD JA PLAANID — pricing table --}}
     @include('sections.magnoolia.hinnad')

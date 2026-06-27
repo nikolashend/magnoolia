@@ -54,7 +54,7 @@
   $homesEnc = json_encode($homesJs, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
   $phone        = config('magnoolia.project.contact_phone', '+37258164078');
   $homesUrl     = lroute('magnoolia.homes');
-  $mapUrl       = lroute('magnoolia.site-plan');
+  $mapUrl       = lroute('magnoolia.homes') . '#mg-masterplan'; // Phase 35: plan lives on Hinnad ja plaanid
 @endphp
 
 <div id="mg-hd-overlay" role="presentation"
@@ -63,7 +63,7 @@
        style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(920px,94vw);max-height:92vh;overflow-y:auto;background:#fff;border-radius:18px;box-shadow:0 24px 64px rgba(20,25,33,.32);">
 
     {{-- Header --}}
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:24px 28px 16px;border-bottom:1px solid rgba(29,36,48,.08);position:sticky;top:0;background:#fff;border-radius:18px 18px 0 0;z-index:2;">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:24px 28px 16px;border-bottom:1px solid rgba(29,36,48,.08);position:sticky;top:0;background:#fff;border-radius:18px 18px 0 0;z-index:20;">
       <div>
         <div style="font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#c89443;">{{ __('magnoolia.rowhouse.detail_eyebrow') }}</div>
         <h2 id="mg-hd-title" style="font-size:24px;font-weight:700;color:#1d2430;margin:4px 0 6px;"></h2>
@@ -306,6 +306,7 @@
     }
 
     overlay.style.display = '';
+    if (dialog) dialog.scrollTop = 0; // always open scrolled to the top, not where the last home left off
     document.body.style.overflow = 'hidden';
     closeBtn.focus();
 

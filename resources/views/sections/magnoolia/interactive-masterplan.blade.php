@@ -126,7 +126,7 @@
 @endphp
 
 @if(count($rows) && $persSrc)
-<section class="mg-page-section mg-page-section--white" id="mg-masterplan" data-mg-masterplan>
+<section class="mg-page-section mg-page-section--white" id="mg-masterplan" data-mg-masterplan style="scroll-margin-top:150px;">
   <div class="container">
     <div class="mg-section-heading" style="margin-bottom:24px;">
       <div class="mg-section-heading__eyebrow">{{ __('magnoolia.rowhouse.mp_eyebrow') }}</div>
@@ -471,114 +471,10 @@
     </script>
     @endif
 
-    {{-- Row cards (reliable selector, primary on mobile) --}}
-    <div class="mg-mp__rows" role="tablist" aria-label="{{ __('magnoolia.rowhouse.row_select_label') }}">
-      @foreach($rows as $r)
-      @php $c = $r['availability_counts']; @endphp
-      <button type="button" class="mg-rh-card mg-mp__rowbtn" data-mp-row="{{ $r['pos'] }}" role="tab"
-              aria-controls="mg-mp-panel" aria-selected="false">
-        <div class="mg-rh-card__head">
-          <span class="mg-rh-card__title">{{ $r['title'] }}</span>
-          <span class="mg-stage-badge mg-stage-badge--{{ $r['stage'] }}">{{ $r['stage']===1 ? __('magnoolia.rowhouse.etapp_1') : __('magnoolia.rowhouse.etapp_2') }}</span>
-        </div>
-        <div class="mg-rh-card__meta">{{ __('magnoolia.rowhouse.homes_count', ['count'=>$r['home_count']]) }} · {{ __('magnoolia.rowhouse.completes', ['date'=>$r['completion']]) }}</div>
-        <div class="mg-rh-card__avail">
-          @if($c['available'])<span style="color:#4caf50;">● {{ $c['available'] }} {{ __('magnoolia.statuses.available') }}</span>@endif
-          @if($c['reserved'])<span style="color:#c89443;">● {{ $c['reserved'] }} {{ __('magnoolia.statuses.reserved') }}</span>@endif
-          @if($c['sold'])<span style="color:#9a948a;">● {{ $c['sold'] }} {{ __('magnoolia.statuses.sold') }}</span>@endif
-          @if($c['tbc'])<span style="color:#9c27b0;">● {{ $c['tbc'] }} {{ __('magnoolia.pricing.status_tbc') }}</span>@endif
-        </div>
-        <span class="mg-rh-card__cta">{{ __('magnoolia.rowhouse.row_cta') }} →</span>
-      </button>
-      @endforeach
-    </div>
-
-    {{-- Selected row panel (JS-populated) --}}
-    <div id="mg-mp-panel" class="mg-mp__panel" hidden>
-      <div class="mg-mp__panel-head">
-        <div>
-          <h3 class="mg-mp__panel-title" id="mg-mp-row-title"></h3>
-          <div class="mg-mp__panel-meta" id="mg-mp-row-meta"></div>
-        </div>
-      </div>
-      <p class="mg-mp__panel-help">{{ __('magnoolia.rowhouse.row_helper') }}</p>
-      <div class="mg-rh-homes__grid" id="mg-mp-homes"></div>
-    </div>
-
-    {{-- Selected home detail (JS-populated) --}}
-    @php $showLocator = (bool) config('magnoolia_rowhouses.show_location_map'); @endphp
-    <div id="mg-mp-detail" class="mg-mp__detail" hidden>
-      <div class="mg-mp__detail-grid {{ $showLocator ? '' : 'mg-mp__detail-grid--nomap' }}">
-        {{-- Left: identity + specs + CTA --}}
-        <div class="mg-mp__detail-main">
-          <div class="mg-mp__detail-eyebrow">{{ __('magnoolia.rowhouse.detail_eyebrow') }}</div>
-          <h3 class="mg-mp__detail-title" id="mg-d-title"></h3>
-          <div class="mg-mp__detail-sub" id="mg-d-sub"></div>
-          <div class="mg-mp__status"><span class="mg-mp__status-dot" id="mg-d-dot"></span><span id="mg-d-status"></span></div>
-
-          <p class="mg-mp__detail-desc">{{ __('magnoolia.rowhouse.detail_desc') }}</p>
-
-          <div class="mg-mp__specs" id="mg-d-specs"></div>
-
-          <div class="mg-mp__ctas">
-            <a id="mg-d-cta" href="{{ lroute('magnoolia.contact') }}#kontaktivorm"
-               data-mg-inquiry-open data-mg-analytics="magnoolia_home_detail_inquiry"
-               data-source-component="asendiplaan_home_detail"
-               data-unit-key="" data-unit-slug="" data-unit-address="" data-unit-stage="" data-unit-status="" data-unit-price-public=""
-               class="mg-btn mg-btn--gold"></a>
-            <a id="mg-d-cta2" href="tel:{{ $phone }}" data-mg-analytics="magnoolia_phone_click" class="mg-btn mg-btn--ghost">{{ __('magnoolia.rowhouse.cta_call') }}</a>
-            <a id="mg-d-cta3" href="{{ lroute('magnoolia.homes') }}" class="mg-mp__cta-link" data-mg-analytics="magnoolia_home_detail_secondary"></a>
-          </div>
-          <p class="mg-mp__trust">{{ __('magnoolia.rowhouse.trust_note') }}</p>
-        </div>
-
-        {{-- Right: synchronized 2D asendiplaan support map — Phase 35: hidden by
-             default (config magnoolia_rowhouses.show_location_map → true to restore). --}}
-        @if($cleanSrc && $showLocator)
-        <div class="mg-mp__detail-map">
-          <div class="mg-mp__map-label">{{ __('magnoolia.rowhouse.map_location') }}</div>
-          <div class="mg-mp__map" id="mg-d-map">
-            <img src="{{ $cleanSrc }}" alt="{{ __('magnoolia.rowhouse.alt_map') }}" loading="lazy" decoding="async">
-            <svg class="mg-mp__map-svg" id="mg-d-map-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" hidden
-                 style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;"></svg>
-            <span class="mg-mp__map-pin" id="mg-d-pin" hidden><span class="mg-mp__map-pin-label">{{ __('magnoolia.rowhouse.sinu_valik') }}</span></span>
-          </div>
-          @if($enlarge)
-          <a href="{{ asset($enlarge) }}" target="_blank" rel="noopener noreferrer" class="mg-mp__map-open" data-mg-analytics="magnoolia_asendiplaan_enlarge">{{ __('magnoolia.rowhouse.open_bigger') }} →</a>
-          @endif
-          <p class="mg-mp__map-note">{{ __('magnoolia.rowhouse.perspective_note') }}</p>
-        </div>
-        @endif
-      </div>
-
-      {{-- Floor plans — Phase 35: both floors shown together (no tab toggle) --}}
-      <div class="mg-mp__floors" id="mg-d-floors">
-        <div class="mg-mp__floors-title">{{ __('magnoolia.rowhouse.floorplans_title') }}</div>
-        <div class="mg-mp__floors-both">
-          <figure class="mg-mp__floor-fig" id="mg-d-floor1-fig">
-            <button type="button" class="mg-mp__floor-zoombtn" data-floor-open="1" aria-label="{{ __('magnoolia.rowhouse.open_larger') }}">
-              <img id="mg-d-floor1-img" alt="" loading="lazy" decoding="async">
-              <span class="mg-mp__floor-zoomhint">{{ __('magnoolia.rowhouse.open_larger') }} ⤢</span>
-            </button>
-            <figcaption>{{ __('magnoolia.rowhouse.floor_1') }}</figcaption>
-          </figure>
-          <figure class="mg-mp__floor-fig" id="mg-d-floor2-fig">
-            <button type="button" class="mg-mp__floor-zoombtn" data-floor-open="2" aria-label="{{ __('magnoolia.rowhouse.open_larger') }}">
-              <img id="mg-d-floor2-img" alt="" loading="lazy" decoding="async">
-              <span class="mg-mp__floor-zoomhint">{{ __('magnoolia.rowhouse.open_larger') }} ⤢</span>
-            </button>
-            <figcaption>{{ __('magnoolia.rowhouse.floor_2') }}</figcaption>
-          </figure>
-        </div>
-        <p id="mg-d-floor-empty" class="mg-mp__floor-empty" hidden>{{ __('magnoolia.rowhouse.floor_placeholder') }}</p>
-      </div>
-    </div>
-  </div>
-
-  {{-- Floor-plan lightbox --}}
-  <div id="mg-mp-lightbox" class="mg-mp__lightbox" role="dialog" aria-modal="true" aria-label="{{ __('magnoolia.rowhouse.floorplans_title') }}" hidden>
-    <button type="button" id="mg-mp-lightbox-close" class="mg-mp__lightbox-close" aria-label="{{ __('magnoolia.rowhouse.modal_close') }}">&#x2715;</button>
-    <img id="mg-mp-lightbox-img" src="" alt="">
+    {{-- Phase 35: selecting a home (a per-home box on the render) opens the SHARED
+         home-detail modal (window.mgOpenHome) — the exact same modal the price table
+         uses. The row cards, the expandable row panel and the old inline detail were
+         all removed so there is one detail surface (the modal) and no duplicates. --}}
   </div>
 </section>
 
@@ -586,79 +482,32 @@
 <script>
 (function () {
   var ROWS = {!! $rowsEnc !!};
-  var byRow = {}, byHome = {}, POLY_HOMES = [];
+  var byHome = {};
   ROWS.forEach(function (r) {
-    byRow[r.pos] = r;
-    r.homes.forEach(function (h) {
-      byHome[h.key] = h; byHome[h.unit_key] = h; byHome[h.slug] = h;
-      if (h.mappoly && h.mappoly.length > 2) POLY_HOMES.push(h);
-    });
+    r.homes.forEach(function (h) { byHome[h.key] = h; byHome[h.unit_key] = h; byHome[h.slug] = h; });
   });
 
-  // Draw every home plot as a clickable/hoverable zone on the clean asendiplaan
-  // support map; `activeKey` gets the emphasised style. Clicks bubble to the
-  // existing [data-mp-home] delegation, so selecting a plot switches homes.
-  function renderMapZones(activeKey) {
-    var mapSvg = document.getElementById('mg-d-map-svg');
-    if (!mapSvg) return;
-    if (!POLY_HOMES.length) { mapSvg.innerHTML = ''; mapSvg.setAttribute('hidden', ''); return; }
-    mapSvg.innerHTML = POLY_HOMES.map(function (h) {
-      var pts = h.mappoly.map(function (p) { return (p[0] * 100).toFixed(2) + ',' + (p[1] * 100).toFixed(2); }).join(' ');
-      var cls = 'mg-mp__map-zone' + (h.key === activeKey ? ' is-active' : '');
-      return '<polygon class="' + cls + '" data-mp-home="' + h.key + '" tabindex="0" role="button" aria-label="' + h.display + '" points="' + pts + '"></polygon>';
-    }).join('');
-    mapSvg.removeAttribute('hidden'); // SVG ignores .hidden=false; remove the attribute
+  var COLORS = { available:'#4caf50', reserved:'#c89443', sold:'#9a948a', tbc:'#9c27b0' };
+  var VIEWS = {!! $viewsEnc !!};
+  var VIEW_HOTSPOTS = {!! $viewHotspotsEnc !!};
+  var section = document.querySelector('[data-mg-masterplan]');
+  var state = { view: 0 };
+
+  // The first view whose hotspots are per-HOME boxes — the one users pick homes on.
+  var HOME_VIEW = 0;
+  for (var i = 0; i < VIEW_HOTSPOTS.length; i++) { if (VIEW_HOTSPOTS[i] && VIEW_HOTSPOTS[i].mode === 'home') { HOME_VIEW = i; break; } }
+
+  // Phase 35: clicking a home box opens the SHARED home-detail modal
+  // (window.mgOpenHome) — the exact same modal the price table uses.
+  function openHome(key) {
+    var h = byHome[key]; if (!h) return;
+    if (typeof window.mgOpenHome === 'function') { window.mgOpenHome(h.key); }
+    else { window.location.href = @json(lroute('magnoolia.homes')) + '#hinnatabel'; }
   }
 
-  var L = {
-    available: @json($statusLabels['available']), reserved: @json($statusLabels['reserved']),
-    sold: @json($statusLabels['sold']), tbc: @json($statusLabels['tbc']),
-    plan: @json(__('magnoolia.rowhouse.plan_prefix')), rooms: @json(__('magnoolia.rowhouse.rooms_unit')),
-    energy: @json(__('magnoolia.rowhouse.energy_value')),
-    sNet: @json(__('magnoolia.rowhouse.spec_net')), sYard: @json(__('magnoolia.rowhouse.spec_yard')),
-    sRooms: @json(__('magnoolia.rowhouse.spec_rooms')), sPark: @json(__('magnoolia.rowhouse.spec_parking')),
-    sStage: @json(__('magnoolia.rowhouse.spec_stage')), sCompl: @json(__('magnoolia.rowhouse.spec_completion')),
-    sEnergy: @json(__('magnoolia.rowhouse.spec_energy')),
-    ctaOffer: @json(__('magnoolia.rowhouse.cta_offer')), ctaAvail: @json(__('magnoolia.rowhouse.cta_availability')),
-    ctaFree: @json(__('magnoolia.rowhouse.cta_view_free')),
-    homesCount: @json(__('magnoolia.rowhouse.homes_count', ['count'=>'__N__'])),
-    etapp1: @json(__('magnoolia.rowhouse.etapp_1')), etapp2: @json(__('magnoolia.rowhouse.etapp_2')),
-    completes: @json(__('magnoolia.rowhouse.completes', ['date'=>'__D__'])),
-    viewHome: @json(__('magnoolia.rowhouse.view_home')), yardInline: @json(__('magnoolia.rowhouse.yard_inline')),
-    planCap: @json(__('magnoolia.rowhouse.floor_caption')),
-  };
-  var COLORS = { available:'#4caf50', reserved:'#c89443', sold:'#9a948a', tbc:'#9c27b0' };
-  var HOMES_URL = @json(lroute('magnoolia.homes'));
-  var CONTACT_URL = @json(lroute('magnoolia.contact').'#kontaktivorm');
-  var VIEWS = {!! $viewsEnc !!};
-  var L2 = {
-    pricelist: @json(__('magnoolia.rowhouse.cta_pricelist')),
-    similar: @json(__('magnoolia.rowhouse.cta_similar')),
-    viewFree: @json(__('magnoolia.rowhouse.cta_view_free')),
-    floorEmpty: @json(__('magnoolia.rowhouse.floor_placeholder')),
-  };
-  // premium thin-line spec icons
-  var SVG = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
-  var ICONS = {
-    net:        '<svg ' + SVG + '><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6"/></svg>',
-    yard:       '<svg ' + SVG + '><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>',
-    rooms:      '<svg ' + SVG + '><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>',
-    parking:    '<svg ' + SVG + '><path d="M5 17h14M6 17V9l2-4h8l2 4v8"/><circle cx="8" cy="17" r="1"/><circle cx="16" cy="17" r="1"/></svg>',
-    stage:      '<svg ' + SVG + '><path d="M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>',
-    completion: '<svg ' + SVG + '><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>',
-    energy:     '<svg ' + SVG + '><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg>',
-  };
-
-  var section = document.querySelector('[data-mg-masterplan]');
-  var panel = document.getElementById('mg-mp-panel');
-  var homesWrap = document.getElementById('mg-mp-homes');
-  var detail = document.getElementById('mg-mp-detail');
-  var VIEW_HOTSPOTS = {!! $viewHotspotsEnc !!};
-  var state = { row: null, home: null, floor: '1', view: 0 };
-
   // (Re)build the SVG zones + markers for a given view from its hotspot set.
-  // mode 'home' → per-box zones/markers (click opens the home detail directly);
-  // mode 'row'  → per-row zones/markers (click opens the row panel).
+  // mode 'home' → per-box zones/markers (click opens the home-detail modal);
+  // mode 'row'  → per-row markers (orientation only on the calibrated alt view).
   function renderHotspots(idx) {
     var entry = VIEW_HOTSPOTS[idx] || { mode: 'row', items: [] };
     var set = entry.items || [];
@@ -689,13 +538,6 @@
       }).join('');
     }
     if (wrap) wrap.setAttribute('data-mp-has-hotspots', has ? '1' : '0');
-    if (isHome && state.home) setActiveHomeZones(state.home);
-    else if (state.row) setActiveRow(state.row);
-  }
-  function setActiveHomeZones(key) {
-    document.querySelectorAll('[data-mp-home]').forEach(function (el) {
-      el.classList.toggle('is-active', el.getAttribute('data-mp-home') === key);
-    });
   }
 
   function switchView(idx) {
@@ -705,7 +547,7 @@
     state.view = idx;
     var img = document.getElementById('mg-mp-img');
     if (img) { img.src = v.src; if (v.srcset) img.setAttribute('srcset', v.srcset); img.alt = v.label; }
-    renderHotspots(idx); // per-view zones + markers (alternate views via config)
+    renderHotspots(idx);
     document.querySelectorAll('[data-mp-view]').forEach(function (p) {
       var on = +p.getAttribute('data-mp-view') === idx;
       p.classList.toggle('is-active', on); p.setAttribute('aria-pressed', on ? 'true' : 'false');
@@ -718,167 +560,22 @@
       .forEach(function (el) { el.classList.toggle('is-hover', on); });
   }
 
-  function setActiveRow(pos) {
-    document.querySelectorAll('[data-mp-row]').forEach(function (el) {
-      el.classList.toggle('is-active', el.getAttribute('data-mp-row') === pos);
-      if (el.hasAttribute('role')) el.setAttribute('aria-selected', el.getAttribute('data-mp-row') === pos ? 'true' : 'false');
-    });
-    document.querySelectorAll('[data-mp-zone]').forEach(function (z) {
-      z.classList.toggle('is-active', z.getAttribute('data-mp-zone') === pos);
-    });
-  }
-
-  function renderRow(pos, opts) {
-    var r = byRow[pos]; if (!r) return;
-    state.row = pos;
-    setActiveRow(pos);
-    document.getElementById('mg-mp-row-title').textContent = r.title;
-    document.getElementById('mg-mp-row-meta').textContent =
-      L.homesCount.replace('__N__', r.count) + ' · ' + (r.stage === 1 ? L.etapp1 : L.etapp2) + ' · ' + L.completes.replace('__D__', r.completion);
-    homesWrap.innerHTML = r.homes.map(function (h) {
-      var col = COLORS[h.status] || '#888';
-      return '<button type="button" class="mg-rh-home" data-mp-home="' + h.key + '">' +
-        (h.img ? '<span class="mg-rh-home__img"><img src="' + h.img + '" alt="' + h.display + '" loading="lazy"></span>' : '') +
-        '<span class="mg-rh-home__body">' +
-          '<span class="mg-rh-home__addr">' + h.display + '</span>' +
-          '<span class="mg-rh-home__spec">' + L.plan + ' ' + (h.plan || '') + ' · ' + (h.net || '') + ' m²</span>' +
-          '<span class="mg-rh-home__yard">' + L.yardInline.replace(':area', h.yard || '') + '</span>' +
-          '<span class="mg-rh-home__foot"><span class="mg-rh-chip" style="--c:' + col + '">' + (L[h.status] || h.status) + '</span>' +
-          '<span class="mg-rh-home__cta">' + L.viewHome + ' →</span></span>' +
-        '</span></button>';
-    }).join('');
-    panel.hidden = false;
-    if (!opts || !opts.silent) updateUrl();
-    if (opts && opts.scroll) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function specRow(icon, label, val) {
-    return val ? '<div class="mg-mp__spec"><dt><span class="mg-mp__spec-ic">' + (ICONS[icon] || '') + '</span>' + label + '</dt><dd>' + val + '</dd></div>' : '';
-  }
-
-  function renderHome(key, opts) {
-    var h = byHome[key]; if (!h) return;
-    if (byRow[h_rowPos(h)] && state.row !== h_rowPos(h)) renderRow(h_rowPos(h), { silent: true });
-    state.home = h.key;
-    document.querySelectorAll('[data-mp-home]').forEach(function (el) { el.classList.toggle('is-active', el.getAttribute('data-mp-home') === h.key); });
-
-    document.getElementById('mg-d-title').textContent = h.display;
-    var sub = []; if (h.plan) sub.push(L.plan + ' ' + h.plan); if (h.rooms) sub.push(h.rooms + ' ' + L.rooms); if (h.net) sub.push(h.net + ' m²');
-    document.getElementById('mg-d-sub').textContent = sub.join(' · ');
-    var col = COLORS[h.status] || '#888';
-    document.getElementById('mg-d-dot').style.background = col;
-    document.getElementById('mg-d-status').textContent = L[h.status] || h.status;
-
-    document.getElementById('mg-d-specs').innerHTML = '<dl>' + [
-      specRow('net', L.sNet, h.net ? h.net + ' m²' : null),
-      specRow('yard', L.sYard, h.yard ? h.yard + ' m²' : null),
-      specRow('rooms', L.sRooms, h.rooms),
-      specRow('parking', L.sPark, h.parking),
-      specRow('stage', L.sStage, h.stage ? (h.stage === 1 ? 'I' : 'II') : null),
-      specRow('completion', L.sCompl, h.completion),
-      specRow('energy', L.sEnergy, L.energy),
-    ].join('') + '</dl>';
-
-    // status-aware CTA panel
-    var cta = document.getElementById('mg-d-cta');
-    var cta3 = document.getElementById('mg-d-cta3');
-    if (h.status === 'sold') {
-      cta.textContent = L.ctaFree; cta.setAttribute('href', HOMES_URL); cta.removeAttribute('data-mg-inquiry-open');
-      cta3.textContent = L2.similar; cta3.setAttribute('href', CONTACT_URL);
-    } else {
-      cta.textContent = (h.status === 'reserved') ? L.ctaAvail : L.ctaOffer;
-      cta.setAttribute('href', CONTACT_URL); cta.setAttribute('data-mg-inquiry-open', '');
-      cta.setAttribute('data-unit-key', h.unit_key || ''); cta.setAttribute('data-unit-slug', h.slug || '');
-      cta.setAttribute('data-unit-address', h.address || ''); cta.setAttribute('data-unit-stage', h.stage || '');
-      cta.setAttribute('data-unit-status', h.status || ''); cta.setAttribute('data-unit-price-public', h.price_public ? 'true' : 'false');
-      cta3.textContent = (h.status === 'reserved') ? L.ctaFree : L2.pricelist;
-      cta3.setAttribute('href', HOMES_URL);
-    }
-
-    // map plot polygons — ALL homes are drawn as clickable zones on the clean
-    // asendiplaan (hand-set in config/magnoolia_hotspots.php → asendiplaan);
-    // the selected home is emphasised. Clicks reuse the [data-mp-home] handler.
-    var hasPoly = h.mappoly && h.mappoly.length > 2;
-    renderMapZones(h.key);
-
-    // map pin — only as a FALLBACK when the selected home has NO plot polygon.
-    var pin = document.getElementById('mg-d-pin');
-    if (pin) {
-      if (!hasPoly && h.mapx != null && h.mapy != null) { pin.style.left = (h.mapx * 100) + '%'; pin.style.top = (h.mapy * 100) + '%'; pin.hidden = false; }
-      else pin.hidden = true;
-    }
-
-    // floor plans — both floors shown together
-    showFloors(h);
-
-    detail.hidden = false;
-    if (!opts || !opts.silent) updateUrl();
-    if (opts && opts.scroll) detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  // Phase 35: render both floors at once; hide a figure with no image, show the
-  // placeholder only when neither floor has an image.
-  function showFloors(h) {
-    var L1 = @json(__('magnoolia.rowhouse.floor_1'));
-    var L2 = @json(__('magnoolia.rowhouse.floor_2'));
-    var empty = document.getElementById('mg-d-floor-empty');
-    var any = false;
-    [['1', h.floor1, L1], ['2', h.floor2, L2]].forEach(function (f) {
-      var fig = document.getElementById('mg-d-floor' + f[0] + '-fig');
-      var btn = fig.querySelector('.mg-mp__floor-zoombtn');
-      var img = document.getElementById('mg-d-floor' + f[0] + '-img');
-      if (f[1]) {
-        img.src = f[1]; img.alt = h.display + ' — ' + f[2];
-        btn.setAttribute('data-floor-src', f[1]); fig.style.display = ''; any = true;
-      } else {
-        img.removeAttribute('src'); fig.style.display = 'none';
-      }
-    });
-    empty.hidden = any;
-  }
-
-  function h_rowPos(h) { return 'tee-' + (h.key.split('-')[1]); }
-
-  function updateUrl() {
-    var p = new URLSearchParams(window.location.search);
-    if (state.row) p.set('row', state.row); else p.delete('row');
-    if (state.home) p.set('home', state.home); else p.delete('home');
-    history.replaceState({ row: state.row, home: state.home }, '', window.location.pathname + (p.toString() ? '?' + p.toString() : '') + '#mg-masterplan');
-  }
-
   // delegated events
   document.addEventListener('click', function (e) {
-    var rowEl = e.target.closest('[data-mp-row]');
-    if (rowEl && section.contains(rowEl)) { e.preventDefault(); state.home = null; detail.hidden = true; renderRow(rowEl.getAttribute('data-mp-row'), { scroll: true }); return; }
+    // a home box → open the shared modal
     var homeEl = e.target.closest('[data-mp-home]');
-    if (homeEl) { e.preventDefault(); renderHome(homeEl.getAttribute('data-mp-home'), { scroll: true }); return; }
-    var zone = e.target.closest('[data-mp-zone]');
-    if (zone) { e.preventDefault(); state.home = null; detail.hidden = true; renderRow(zone.getAttribute('data-mp-zone'), { scroll: true }); return; }
-    // view switcher
+    if (homeEl && section.contains(homeEl)) { e.preventDefault(); openHome(homeEl.getAttribute('data-mp-home')); return; }
+    // a row marker/zone exists only on the calibrated alt view → jump to the box
+    // view so a specific home can be picked.
+    var rowish = e.target.closest('[data-mp-row], [data-mp-zone]');
+    if (rowish && section.contains(rowish)) { e.preventDefault(); switchView(HOME_VIEW); return; }
     var pill = e.target.closest('[data-mp-view]');
     if (pill) { switchView(+pill.getAttribute('data-mp-view')); return; }
     if (e.target.closest('[data-mp-view-prev]')) { switchView(state.view - 1); return; }
     if (e.target.closest('[data-mp-view-next]')) { switchView(state.view + 1); return; }
-    // floor-plan lightbox (either floor)
-    var zoom = e.target.closest('[data-floor-open]');
-    if (zoom) { var s = zoom.getAttribute('data-floor-src'); if (s) openLightbox(s); return; }
-    var lb = document.getElementById('mg-mp-lightbox');
-    if (e.target === lb || e.target.closest('#mg-mp-lightbox-close')) { closeLightbox(); return; }
   });
 
-  function openLightbox(src) {
-    var lb = document.getElementById('mg-mp-lightbox');
-    var img = document.getElementById('mg-mp-lightbox-img');
-    img.src = src; lb.hidden = false; document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox() {
-    var lb = document.getElementById('mg-mp-lightbox');
-    lb.hidden = true; document.body.style.overflow = '';
-  }
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { var lb = document.getElementById('mg-mp-lightbox'); if (lb && !lb.hidden) closeLightbox(); }
-  });
-  // Marker ↔ polygon hover sync (only the map markers/zones, not the row cards)
+  // Marker ↔ polygon hover sync
   section.addEventListener('mouseover', function (e) {
     var el = e.target.closest('.mg-mp__marker[data-mp-row], .mg-mp__zone[data-mp-zone], .mg-mp__marker--home[data-mp-home], .mg-mp__zone--home[data-mp-home]');
     if (el) setHover(el.getAttribute('data-mp-row') || el.getAttribute('data-mp-zone') || el.getAttribute('data-mp-home'), true);
@@ -888,20 +585,13 @@
     if (el) setHover(el.getAttribute('data-mp-row') || el.getAttribute('data-mp-zone') || el.getAttribute('data-mp-home'), false);
   });
 
-  // deep-link init
+  // deep-link init: ?home= opens that home directly in the modal (if ready).
   (function init() {
-    renderHotspots(0); // JS-manage hotspots from the start (enables per-view + hover)
+    renderHotspots(0);
     var p = new URLSearchParams(window.location.search);
-    var row = p.get('row'), home = p.get('home');
-    if (home && byHome[home]) { renderRow(h_rowPos(byHome[home]), { silent: true }); renderHome(home, { silent: true }); }
-    else if (row && byRow[row]) { renderRow(row, { silent: true }); }
+    var home = p.get('home');
+    if (home && byHome[home]) { openHome(home); }
   })();
-
-  window.addEventListener('popstate', function (e) {
-    var s = e.state || {};
-    if (s.home && byHome[s.home]) { renderHome(s.home, { silent: true }); }
-    else if (s.row && byRow[s.row]) { state.home = null; detail.hidden = true; renderRow(s.row, { silent: true }); }
-  });
 })();
 </script>
 @endpush

@@ -49,17 +49,13 @@
     {{-- Navigation links --}}
     <nav aria-label="{{ __('magnoolia.nav.mobile_nav_label') }}" class="mg-mobile-nav__links">
         <ul role="list">
-            <li><a href="{{ route('home') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.home') }}</a></li>
-            <li><a href="{{ lroute('magnoolia.homes') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.homes') }}</a></li>
-            <li><a href="{{ lroute('magnoolia.site-plan') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.masterplan') }}</a></li>
+            {{-- Phase 35: same structure as the desktop top menu --}}
+            <li><a href="{{ route('home') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.about') }}</a></li>
             <li><a href="{{ lroute('magnoolia.location') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.location') }}</a></li>
-            <li><a href="{{ lroute('magnoolia.construction') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.building') }}</a></li>
-            <li><a href="{{ lroute('magnoolia.sisedisain') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.interior') }}</a></li>
-            <li><a href="{{ lroute('magnoolia.arhitektuur') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.architecture') }}</a></li>
             <li><a href="{{ lroute('magnoolia.galerii') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.gallery') }}</a></li>
-            <li><a href="{{ lroute('magnoolia.ostuprotsess') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.purchase') }}</a></li>
-            <li><a href="{{ lroute('magnoolia.finantseerimine') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.financing') }}</a></li>
-            <li><a href="{{ lroute('magnoolia.kkk') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.faq') }}</a></li>
+            <li><a href="{{ lroute('magnoolia.homes') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.homes') }}</a></li>
+            <li><a href="{{ lroute('magnoolia.arhitektuur') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.architecture') }}</a></li>
+            <li><a href="{{ lroute('magnoolia.developer') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.developer') }}</a></li>
             <li><a href="{{ lroute('magnoolia.contact') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.contact') }}</a></li>
         </ul>
     </nav>
