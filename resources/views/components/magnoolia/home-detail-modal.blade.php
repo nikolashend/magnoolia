@@ -142,9 +142,8 @@
 
             <a id="mg-hd-call" href="tel:{{ $phone }}" data-mg-analytics="magnoolia_phone_click"
                style="border:1.5px solid #c89443;color:#c89443;padding:12px 18px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:600;text-align:center;display:block;">{{ __('magnoolia.rowhouse.cta_call') }}</a>
-
-            <a id="mg-hd-map" href="{{ $mapUrl }}#mg-masterplan"
-               style="color:#6f6a61;padding:6px;text-decoration:none;font-size:13px;font-weight:600;text-align:center;display:block;">{{ __('magnoolia.rowhouse.cta_view_map') }} →</a>
+            {{-- Phase 35: "Vaata asendiplaani" link removed — it navigated away and on
+                 mobile left the modal impossible to close; the plan is already on this page. --}}
           </div>
         </div>
       </div>
@@ -277,10 +276,6 @@
       marker.style.top  = (h.my * 100) + '%';
       marker.style.display = '';
     } else if (marker) { marker.style.display = 'none'; }
-
-    // "Vaata asendiplaani" deep-links into the masterplan with this home selected
-    var mapLink = document.getElementById('mg-hd-map');
-    if (mapLink) mapLink.href = MAP_URL + '?home=' + encodeURIComponent(h.key) + '#mg-masterplan';
 
     var floors = document.getElementById('mg-hd-floors');
     floors.style.display = (h.floor1_img || h.floor2_img) ? '' : 'none';
