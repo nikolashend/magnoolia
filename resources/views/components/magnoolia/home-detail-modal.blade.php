@@ -308,6 +308,8 @@
     if (window.dataLayer) {
       window.dataLayer.push({ event: 'magnoolia_home_detail_open', unit_key: h.unit_key, asset_key: h.key, status: h.status });
     }
+    // Tell the interactive map (desktop + fullscreen) to highlight this plot.
+    document.dispatchEvent(new CustomEvent('mg:home-selected', { detail: { key: h.key } }));
   };
 
   // Phase 35: render both floor plans at once; hide a figure with no image.
@@ -323,19 +325,36 @@
   }
 
   // iOS-safe scroll lock: pin the body so the fixed overlay stays at the viewport
-  // top even when the page was scrolled (e.g. opened via a #hash). Without this the
-  // overlay/close button could end up above the visible area on mobile Safari.
-  var scrollLockY = 0;
+  // top even when the page was scrolled (e.g. opened via a #hash). The position:fixed
+  // guard makes it cooperate when this modal is opened OVER the fullscreen map (or the
+  // map over it): only the first locker pins/restores the body, so closing this modal
+  // does not unlock a still-open map.
+  var scrollLockY = 0, hdDidLock = false, hdMode = '';
   function lockScroll() {
-    scrollLockY = window.scrollY || window.pageYOffset || 0;
+    if (document.body.style.position === 'fixed' || document.body.style.overflow === 'hidden') { hdDidLock = false; return; }
+    hdDidLock = true;
+    // Only mobile needs the position:fixed trick (iOS keeps the fixed overlay in place).
+    // On desktop that trick causes a scroll jump on close, so just hide overflow there.
+    hdMode = window.matchMedia('(max-width: 768px)').matches ? 'fixed' : 'overflow';
     var b = document.body;
-    b.style.position = 'fixed'; b.style.top = (-scrollLockY) + 'px';
-    b.style.left = '0'; b.style.right = '0'; b.style.width = '100%'; b.style.overflow = 'hidden';
+    if (hdMode === 'fixed') {
+      scrollLockY = window.scrollY || window.pageYOffset || 0;
+      b.style.position = 'fixed'; b.style.top = (-scrollLockY) + 'px';
+      b.style.left = '0'; b.style.right = '0'; b.style.width = '100%'; b.style.overflow = 'hidden';
+    } else {
+      b.style.overflow = 'hidden';
+    }
   }
   function unlockScroll() {
+    if (!hdDidLock) return;
+    hdDidLock = false;
     var b = document.body;
-    b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = ''; b.style.overflow = '';
-    window.scrollTo(0, scrollLockY);
+    if (hdMode === 'fixed') {
+      b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = ''; b.style.overflow = '';
+      window.scrollTo(0, scrollLockY);
+    } else {
+      b.style.overflow = '';
+    }
   }
 
   function close() {

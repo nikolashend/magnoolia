@@ -234,20 +234,31 @@
   // iOS-safe scroll lock (keeps the fixed overlay at the viewport top on a scrolled
   // page). Cooperates with the home-detail modal: if the body is already pinned
   // (drawer opened on top of that modal) we don't re-lock or restore — that modal owns it.
-  var lockY = 0, didLock = false;
+  var lockY = 0, didLock = false, lockMode = '';
   function lockScroll() {
-    if (document.body.style.position === 'fixed') { didLock = false; return; }
-    didLock = true; lockY = window.scrollY || window.pageYOffset || 0;
+    if (document.body.style.position === 'fixed' || document.body.style.overflow === 'hidden') { didLock = false; return; }
+    didLock = true;
+    // position:fixed trick only on mobile (it causes a scroll jump on close on desktop).
+    lockMode = window.matchMedia('(max-width: 768px)').matches ? 'fixed' : 'overflow';
     var b = document.body;
-    b.style.position = 'fixed'; b.style.top = (-lockY) + 'px';
-    b.style.left = '0'; b.style.right = '0'; b.style.width = '100%'; b.style.overflow = 'hidden';
+    if (lockMode === 'fixed') {
+      lockY = window.scrollY || window.pageYOffset || 0;
+      b.style.position = 'fixed'; b.style.top = (-lockY) + 'px';
+      b.style.left = '0'; b.style.right = '0'; b.style.width = '100%'; b.style.overflow = 'hidden';
+    } else {
+      b.style.overflow = 'hidden';
+    }
   }
   function unlockScroll() {
     if (!didLock) return;
     didLock = false;
     var b = document.body;
-    b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = ''; b.style.overflow = '';
-    window.scrollTo(0, lockY);
+    if (lockMode === 'fixed') {
+      b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = ''; b.style.overflow = '';
+      window.scrollTo(0, lockY);
+    } else {
+      b.style.overflow = '';
+    }
   }
 
   function close() {

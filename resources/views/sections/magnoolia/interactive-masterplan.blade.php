@@ -494,6 +494,8 @@
     <div class="mg-mp-fs__viewport" id="mg-mp-fs-vp">
       <div class="mg-mp-fs__stage" id="mg-mp-fs-stage">
         <img id="mg-mp-fs-img" class="mg-mp-fs__img" alt="{{ __('magnoolia.rowhouse.mp_img_alt') }}" decoding="async" draggable="false">
+        {{-- Clickable plot zones (the whole house/box is tappable, not just the marker). --}}
+        <svg class="mg-mp-fs__svg" id="mg-mp-fs-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
         <div class="mg-mp-fs__markers" id="mg-mp-fs-markers"></div>
       </div>
     </div>
@@ -526,11 +528,17 @@
   .mg-mp-fs__viewport { position:relative; flex:1 1 auto; overflow:hidden; touch-action:none; -webkit-user-select:none; user-select:none; }
   .mg-mp-fs__stage { position:absolute; top:0; left:0; transform-origin:0 0; will-change:transform; }
   .mg-mp-fs__img { display:block; width:100%; height:auto; pointer-events:none; -webkit-user-drag:none; }
-  .mg-mp-fs__markers { position:absolute; inset:0; }
+  /* Clickable plot zones — the whole house/box is tappable, faintly tinted by status. */
+  .mg-mp-fs__svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .mg-mp-fs__zone { fill-opacity:.14; cursor:pointer; pointer-events:fill; }
+  .mg-mp-fs__zone.is-selected { fill-opacity:.5; stroke:#ffd24a; stroke-width:2.2; }
+  /* markers layer lets taps pass through to the zones; only the pills are interactive. */
+  .mg-mp-fs__markers { position:absolute; inset:0; pointer-events:none; }
   /* Markers live inside the scaled stage, so counter-scale them (--mk-inv = 1/zoom)
      to keep a constant, compact on-screen size at any zoom level. */
-  .mg-mp-fs__marker { position:absolute; transform:translate(-50%,-50%) scale(var(--mk-inv,1)); transform-origin:center; background:none; border:none; padding:6px; margin:-6px; cursor:pointer; }
+  .mg-mp-fs__marker { position:absolute; transform:translate(-50%,-50%) scale(var(--mk-inv,1)); transform-origin:center; background:none; border:none; padding:6px; margin:-6px; cursor:pointer; pointer-events:auto; }
   .mg-mp-fs__marker .num { display:flex; align-items:center; justify-content:center; min-width:23px; height:23px; padding:0 5px; border-radius:100px; color:#fff; font-size:11px; font-weight:700; white-space:nowrap; border:1.5px solid rgba(255,255,255,.92); box-shadow:0 1px 6px rgba(0,0,0,.45); }
+  .mg-mp-fs__marker.is-selected .num { border-color:#ffd24a; box-shadow:0 0 0 3px rgba(255,210,74,.95), 0 1px 6px rgba(0,0,0,.45); }
   .mg-mp-fs__hint { position:absolute; left:50%; transform:translateX(-50%); bottom:76px; background:rgba(0,0,0,.6); color:#fff; font-size:12px; padding:7px 14px; border-radius:100px; pointer-events:none; max-width:90%; text-align:center; }
   .mg-mp-fs__zoom { position:absolute; right:16px; bottom:16px; display:flex; flex-direction:column; gap:8px; }
   .mg-mp-fs__zoom button { width:44px; height:44px; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.12); color:#fff; font-size:22px; line-height:1; cursor:pointer; }
@@ -562,6 +570,24 @@
     if (typeof window.mgOpenHome === 'function') { window.mgOpenHome(h.key); }
     else { window.location.href = @json(lroute('magnoolia.homes')) + '#hinnatabel'; }
   }
+
+  // Selected-plot highlight, shared by the desktop inline map (.is-active) and the
+  // mobile fullscreen map (.is-selected). The home-detail modal dispatches
+  // 'mg:home-selected' on open, so this also fires when a home is opened from the
+  // price table — the chosen plot lights up on the map.
+  var selectedKey = null;
+  function applySelection() {
+    document.querySelectorAll('.mg-mp__zone--home, .mg-mp__marker--home').forEach(function (el) {
+      el.classList.toggle('is-active', !!selectedKey && el.getAttribute('data-mp-home') === selectedKey);
+    });
+    document.querySelectorAll('.mg-mp-fs__zone, .mg-mp-fs__marker').forEach(function (el) {
+      el.classList.toggle('is-selected', !!selectedKey && el.getAttribute('data-mp-fs-marker') === selectedKey);
+    });
+  }
+  document.addEventListener('mg:home-selected', function (e) {
+    selectedKey = (e.detail && e.detail.key) || null;
+    applySelection();
+  });
 
   // (Re)build the SVG zones + markers for a given view from its hotspot set.
   // mode 'home' → per-box zones/markers (click opens the home-detail modal);
@@ -596,6 +622,7 @@
       }).join('');
     }
     if (wrap) wrap.setAttribute('data-mp-has-hotspots', has ? '1' : '0');
+    applySelection();
   }
 
   function switchView(idx) {
@@ -644,19 +671,44 @@
     set.forEach(function (h) { if (h.marker) { x += h.marker[0]; y += h.marker[1]; n++; } });
     return n ? [x / n, y / n] : [0.5, 0.5];
   }
+  function fsMinDistPx(nW, nH) {
+    var entry = VIEW_HOTSPOTS[HOME_VIEW] || {}, set = (entry.mode === 'home' ? (entry.items || []) : []).filter(function (h) { return h.marker; });
+    var min = Infinity;
+    for (var i = 0; i < set.length; i++) for (var j = i + 1; j < set.length; j++) {
+      var d = Math.hypot((set[i].marker[0] - set[j].marker[0]) * nW, (set[i].marker[1] - set[j].marker[1]) * nH);
+      if (d < min) min = d;
+    }
+    return isFinite(min) && min > 0 ? min : nW * 0.03;
+  }
   function fsInit() {
     if (!fsVp.clientWidth) return;
-    baseW = fsVp.clientWidth;
-    var ratio = (fsImg.naturalWidth && fsImg.naturalHeight) ? fsImg.naturalHeight / fsImg.naturalWidth : 0.5;
-    baseH = baseW * ratio;
-    fsStage.style.width = baseW + 'px';
-    // Start zoomed in and centred on the home cluster so the boxes are already spread
-    // enough to tap individually (the cluster is dense in the foreshortened view).
-    s = 3.8;
+    // The stage is the FULL-RES image at its natural pixel size (≈4000px). The transform
+    // DOWN-scales it to fit the screen, so the browser samples from the high-res source
+    // → crisp at every zoom. (Previously the img was only viewport-wide, so scaling up
+    // blew up a tiny raster.) MAX ≈ 1 = native 1:1 pixels (sharpest).
+    var nW = fsImg.naturalWidth || 4000, nH = fsImg.naturalHeight || Math.round(nW * 0.5);
+    baseW = nW; baseH = nH;
+    fsStage.style.width = nW + 'px';
+    var W = fsVp.clientWidth, H = fsVp.clientHeight;
+    MIN = Math.max(0.02, Math.min(W / nW, H / nH) * 0.92); // whole plan fits
+    MAX = 1.15;                                            // ~native resolution
+    // Zoom so the closest pair of homes is ~46px apart on screen, centred on the cluster.
+    s = clamp(46 / fsMinDistPx(nW, nH), MIN, MAX);
     var c = fsCentroid();
-    tx = fsVp.clientWidth / 2 - c[0] * baseW * s;
-    ty = fsVp.clientHeight / 2 - c[1] * baseH * s;
+    tx = W / 2 - c[0] * nW * s;
+    ty = H / 2 - c[1] * nH * s;
     clampPan(); fsApply();
+  }
+  function renderFsZones() {
+    var svg = document.getElementById('mg-mp-fs-svg'); if (!svg) return;
+    var entry = VIEW_HOTSPOTS[HOME_VIEW] || {};
+    var set = entry.mode === 'home' ? (entry.items || []) : [];
+    svg.innerHTML = set.map(function (h) {
+      if (!h.hull) return '';
+      var pts = h.hull.map(function (p) { return (p[0] * 100).toFixed(2) + ',' + (p[1] * 100).toFixed(2); }).join(' ');
+      var col = COLORS[h.status] || '#888';
+      return '<polygon class="mg-mp-fs__zone" data-mp-fs-marker="' + h.key + '" points="' + pts + '" vector-effect="non-scaling-stroke" style="fill:' + col + ';"></polygon>';
+    }).join('');
   }
   function renderFsMarkers() {
     var entry = VIEW_HOTSPOTS[HOME_VIEW] || {};
@@ -666,17 +718,33 @@
       var col = COLORS[h.status] || '#888', num = (h.key || '').replace('tee-', '');
       return '<button type="button" class="mg-mp-fs__marker" data-mp-fs-marker="' + h.key + '" style="left:' + (h.marker[0] * 100) + '%;top:' + (h.marker[1] * 100) + '%;" aria-label="' + h.label + '"><span class="num" style="background:' + col + '">' + num + '</span></button>';
     }).join('');
+    applySelection();
+  }
+  // iOS-safe scroll lock (cooperates with the home-detail modal via the position:fixed
+  // guard — so opening the modal over the map doesn't double-lock, and closing the
+  // modal leaves the map's lock intact).
+  var fsLockY = 0, fsDidLock = false;
+  function fsLock() {
+    if (document.body.style.position === 'fixed') { fsDidLock = false; return; }
+    fsDidLock = true; fsLockY = window.scrollY || window.pageYOffset || 0;
+    var b = document.body; b.style.position = 'fixed'; b.style.top = (-fsLockY) + 'px';
+    b.style.left = '0'; b.style.right = '0'; b.style.width = '100%'; b.style.overflow = 'hidden';
+  }
+  function fsUnlock() {
+    if (!fsDidLock) return; fsDidLock = false;
+    var b = document.body; b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = ''; b.style.overflow = '';
+    window.scrollTo(0, fsLockY);
   }
   function openFs() {
     if (!fs) return;
     var v = VIEWS[HOME_VIEW] || VIEWS[0] || {};
     // Use the full-res render (≈4000px) and no srcset, so it stays sharp when zoomed.
     if (v.full || v.src) { fsImg.removeAttribute('srcset'); fsImg.removeAttribute('sizes'); fsImg.src = v.full || v.src; }
-    renderFsMarkers();
-    fs.hidden = false; document.body.style.overflow = 'hidden';
+    renderFsZones(); renderFsMarkers();
+    fs.hidden = false; fsLock();
     requestAnimationFrame(fsInit);
   }
-  function closeFs() { if (fs) { fs.hidden = true; document.body.style.overflow = ''; pts.clear(); } }
+  function closeFs() { if (fs) { fs.hidden = true; fsUnlock(); pts.clear(); } }
   function zoomBy(f) {
     var cx = fsVp.clientWidth / 2, cy = fsVp.clientHeight / 2;
     var sx = (cx - tx) / s, sy = (cy - ty) / s;
@@ -725,7 +793,9 @@
     if (single && tap) {
       var el = document.elementFromPoint(ux, uy);
       var mk = el && el.closest && el.closest('[data-mp-fs-marker]');
-      if (mk) { var key = mk.getAttribute('data-mp-fs-marker'); closeFs(); openHome(key); }
+      // Open the home modal OVER the map (don't close the map) — so closing the modal
+      // returns to the fullscreen map instead of dropping back to the page.
+      if (mk) { openHome(mk.getAttribute('data-mp-fs-marker')); }
     }
   });
   window.addEventListener('pointercancel', function (e) { pts.delete(e.pointerId); });
