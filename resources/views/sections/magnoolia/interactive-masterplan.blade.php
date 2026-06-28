@@ -29,6 +29,7 @@
       'label'    => __('magnoolia.rowhouse.' . ($v['label'] ?? 'view_primary')),
       'src'      => asset($img['1280'] ?? $img['base'] ?? '').$av,
       'srcset'   => collect($img)->filter(fn($x,$k)=>is_numeric($k))->map(fn($x,$k)=>asset($x).$av.' '.$k.'w')->implode(', '),
+      'full'     => asset($img['base'] ?? $img['2048'] ?? $img['1280'] ?? '').$av, // full-res for the zoomable fullscreen map
       'hotspots' => (bool) ($v['hotspots'] ?? false),
     ];
   })->values()->all();
@@ -507,9 +508,10 @@
 <style>
   .mg-mp__fsbtn { display:none; }
   @media (max-width: 768px) {
-    /* Inline markers/zones are visual only on mobile — taps go to the fullscreen map. */
-    .mg-mp__imgwrap .mg-mp__marker--home,
-    .mg-mp__imgwrap .mg-mp__zone--home { pointer-events:none; }
+    /* No markers on the small inline map — it is just a tappable preview that opens
+       the fullscreen, zoomable map. */
+    .mg-mp__imgwrap #mg-mp-markers,
+    .mg-mp__imgwrap #mg-mp-svg { display:none !important; }
     .mg-mp__fsbtn {
       display:inline-flex; align-items:center; gap:6px; position:absolute; right:10px; bottom:10px; z-index:7;
       background:rgba(29,36,48,.86); color:#fff; border:none; border-radius:100px; padding:8px 14px;
@@ -525,8 +527,10 @@
   .mg-mp-fs__stage { position:absolute; top:0; left:0; transform-origin:0 0; will-change:transform; }
   .mg-mp-fs__img { display:block; width:100%; height:auto; pointer-events:none; -webkit-user-drag:none; }
   .mg-mp-fs__markers { position:absolute; inset:0; }
-  .mg-mp-fs__marker { position:absolute; transform:translate(-50%,-50%); background:none; border:none; padding:6px; margin:-6px; cursor:pointer; }
-  .mg-mp-fs__marker .num { display:flex; align-items:center; justify-content:center; min-width:30px; height:30px; padding:0 7px; border-radius:100px; color:#fff; font-size:13px; font-weight:700; white-space:nowrap; border:2px solid rgba(255,255,255,.9); box-shadow:0 2px 10px rgba(0,0,0,.45); }
+  /* Markers live inside the scaled stage, so counter-scale them (--mk-inv = 1/zoom)
+     to keep a constant, compact on-screen size at any zoom level. */
+  .mg-mp-fs__marker { position:absolute; transform:translate(-50%,-50%) scale(var(--mk-inv,1)); transform-origin:center; background:none; border:none; padding:6px; margin:-6px; cursor:pointer; }
+  .mg-mp-fs__marker .num { display:flex; align-items:center; justify-content:center; min-width:23px; height:23px; padding:0 5px; border-radius:100px; color:#fff; font-size:11px; font-weight:700; white-space:nowrap; border:1.5px solid rgba(255,255,255,.92); box-shadow:0 1px 6px rgba(0,0,0,.45); }
   .mg-mp-fs__hint { position:absolute; left:50%; transform:translateX(-50%); bottom:76px; background:rgba(0,0,0,.6); color:#fff; font-size:12px; padding:7px 14px; border-radius:100px; pointer-events:none; max-width:90%; text-align:center; }
   .mg-mp-fs__zoom { position:absolute; right:16px; bottom:16px; display:flex; flex-direction:column; gap:8px; }
   .mg-mp-fs__zoom button { width:44px; height:44px; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.12); color:#fff; font-size:22px; line-height:1; cursor:pointer; }
@@ -621,11 +625,14 @@
   var fsStage = document.getElementById('mg-mp-fs-stage');
   var fsImg = document.getElementById('mg-mp-fs-img');
   var fsMk = document.getElementById('mg-mp-fs-markers');
-  var baseW = 0, baseH = 0, s = 2, tx = 0, ty = 0, MIN = 1, MAX = 9;
+  var baseW = 0, baseH = 0, s = 2, tx = 0, ty = 0, MIN = 1, MAX = 6;
   var pts = new Map(), base = {}, downX = 0, downY = 0, tap = false;
 
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-  function fsApply() { fsStage.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')'; }
+  function fsApply() {
+    fsStage.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+    if (fsMk) fsMk.style.setProperty('--mk-inv', String(1 / s)); // keep markers a constant size
+  }
   function clampPan() {
     var W = fsVp.clientWidth, H = fsVp.clientHeight, sw = baseW * s, sh = baseH * s;
     tx = sw <= W ? (W - sw) / 2 : clamp(tx, W - sw, 0);
@@ -663,7 +670,8 @@
   function openFs() {
     if (!fs) return;
     var v = VIEWS[HOME_VIEW] || VIEWS[0] || {};
-    if (v.src) { fsImg.src = v.src; if (v.srcset) fsImg.setAttribute('srcset', v.srcset); fsImg.setAttribute('sizes', '200vw'); }
+    // Use the full-res render (≈4000px) and no srcset, so it stays sharp when zoomed.
+    if (v.full || v.src) { fsImg.removeAttribute('srcset'); fsImg.removeAttribute('sizes'); fsImg.src = v.full || v.src; }
     renderFsMarkers();
     fs.hidden = false; document.body.style.overflow = 'hidden';
     requestAnimationFrame(fsInit);
