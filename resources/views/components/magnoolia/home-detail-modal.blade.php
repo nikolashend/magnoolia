@@ -303,7 +303,7 @@
     overlay.style.display = '';
     if (dialog) dialog.scrollTop = 0; // always open scrolled to the top, not where the last home left off
     lockScroll();
-    closeBtn.focus();
+    closeBtn.focus({ preventScroll: true });
 
     if (window.dataLayer) {
       window.dataLayer.push({ event: 'magnoolia_home_detail_open', unit_key: h.unit_key, asset_key: h.key, status: h.status });
@@ -360,7 +360,7 @@
   function close() {
     overlay.style.display = 'none';
     unlockScroll();
-    if (lastFocus && lastFocus.focus) lastFocus.focus();
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
   }
 
   // Floor-plan lightbox

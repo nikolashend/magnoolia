@@ -528,10 +528,20 @@
   .mg-mp-fs__viewport { position:relative; flex:1 1 auto; overflow:hidden; touch-action:none; -webkit-user-select:none; user-select:none; }
   .mg-mp-fs__stage { position:absolute; top:0; left:0; transform-origin:0 0; will-change:transform; }
   .mg-mp-fs__img { display:block; width:100%; height:auto; pointer-events:none; -webkit-user-drag:none; }
-  /* Clickable plot zones — the whole house/box is tappable, faintly tinted by status. */
+  /* Status colour for plot zones — identical scheme on desktop inline + mobile
+     fullscreen: available = green, reserved = gold, sold = grey, tbc = purple. */
+  .mg-z--available { fill:#4caf50 !important; }
+  .mg-z--reserved  { fill:#c89443 !important; }
+  .mg-z--sold      { fill:#9a948a !important; }
+  .mg-z--tbc       { fill:#9c27b0 !important; }
+  /* Desktop inline plots: subtle status tint; selected = stronger + white outline. */
+  .mg-mp__zone--home { fill-opacity:.10; transition:fill-opacity .15s; }
+  .mg-mp__imgwrap:hover .mg-mp__zone--home { fill-opacity:.20; }
+  .mg-mp__zone--home.is-active { fill-opacity:.52 !important; stroke:#fff !important; stroke-width:1.4 !important; }
+  /* Mobile fullscreen clickable plot zones. */
   .mg-mp-fs__svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
-  .mg-mp-fs__zone { fill-opacity:.14; cursor:pointer; pointer-events:fill; }
-  .mg-mp-fs__zone.is-selected { fill-opacity:.5; stroke:#ffd24a; stroke-width:2.2; }
+  .mg-mp-fs__zone { fill-opacity:.16; cursor:pointer; pointer-events:fill; }
+  .mg-mp-fs__zone.is-selected { fill-opacity:.55; stroke:#fff; stroke-width:2.4; }
   /* markers layer lets taps pass through to the zones; only the pills are interactive. */
   .mg-mp-fs__markers { position:absolute; inset:0; pointer-events:none; }
   /* Markers live inside the scaled stage, so counter-scale them (--mk-inv = 1/zoom)
@@ -605,7 +615,7 @@
       svg.innerHTML = set.map(function (h) {
         if (!h.hull) return '';
         var pts = h.hull.map(function (p) { return (p[0] * 100).toFixed(2) + ',' + (p[1] * 100).toFixed(2); }).join(' ');
-        if (isHome) return '<polygon class="mg-mp__zone mg-mp__zone--home" data-mp-home="' + h.key + '" points="' + pts + '"></polygon>';
+        if (isHome) return '<polygon class="mg-mp__zone mg-mp__zone--home mg-z--' + (h.status || 'tbc') + '" data-mp-home="' + h.key + '" points="' + pts + '" vector-effect="non-scaling-stroke"></polygon>';
         return '<polygon class="mg-mp__zone" data-mp-zone="' + h.pos + '" points="' + pts + '"></polygon>';
       }).join('');
     }
@@ -706,8 +716,7 @@
     svg.innerHTML = set.map(function (h) {
       if (!h.hull) return '';
       var pts = h.hull.map(function (p) { return (p[0] * 100).toFixed(2) + ',' + (p[1] * 100).toFixed(2); }).join(' ');
-      var col = COLORS[h.status] || '#888';
-      return '<polygon class="mg-mp-fs__zone" data-mp-fs-marker="' + h.key + '" points="' + pts + '" vector-effect="non-scaling-stroke" style="fill:' + col + ';"></polygon>';
+      return '<polygon class="mg-mp-fs__zone mg-z--' + (h.status || 'tbc') + '" data-mp-fs-marker="' + h.key + '" points="' + pts + '" vector-effect="non-scaling-stroke"></polygon>';
     }).join('');
   }
   function renderFsMarkers() {

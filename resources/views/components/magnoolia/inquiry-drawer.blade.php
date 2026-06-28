@@ -224,7 +224,7 @@
     if (window.dataLayer) {
       window.dataLayer.push({ event: 'magnoolia_form_open', source_component: src, unit_key: key });
     }
-    closeBtn.focus();
+    closeBtn.focus({ preventScroll: true });
   }
 
   // Public opener — for CTAs that must stopPropagation (e.g. inside a clickable
