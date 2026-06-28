@@ -1296,6 +1296,8 @@ return [
         'row_helper'       => 'This row includes several homes. Select a home to view its yard area, floor plans, status and inquiry options.',
         'trust_note'       => 'Diana confirms availability, the exact price and the layout before reservation.',
         'open_bigger'      => 'Open larger plan',
+        'open_fs'          => 'Enlarge map',
+        'fs_hint'          => 'Pinch to zoom · tap a home',
         'floor_caption'    => ':plan · :floor',
         // Phase 30.1 — polish
         'view_primary'      => 'Overview',

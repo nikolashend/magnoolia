@@ -1343,6 +1343,8 @@ return [
         'row_helper'       => 'Selles reas on mitu kodu. Vali sobiv kodu, et näha hooviala, korruseplaane, staatust ja päringu võimalust.',
         'trust_note'       => 'Diana kinnitab saadavuse, täpse hinna ja plaanilahenduse enne broneerimist.',
         'open_bigger'      => 'Ava suurem plaan',
+        'open_fs'          => 'Suurenda kaarti',
+        'fs_hint'          => 'Suumi sõrmedega · puuduta kodu',
         'floor_caption'    => ':plan · :floor',
         // Phase 30.1 — polish
         'view_primary'      => 'Üldvaade',

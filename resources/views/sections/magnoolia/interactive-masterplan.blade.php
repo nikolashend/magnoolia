@@ -145,6 +145,12 @@
              row cards below are the no-JS / mobile fallback. --}}
         <svg class="mg-mp__svg" id="mg-mp-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
         <div id="mg-mp-markers"></div>
+        {{-- Variant B (mobile): the inline markers are just a visual hint; tapping the
+             map opens a fullscreen, zoomable view where homes are big enough to tap. --}}
+        <button type="button" class="mg-mp__fsbtn" data-mp-fs aria-label="{{ __('magnoolia.rowhouse.open_fs') }}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+          <span>{{ __('magnoolia.rowhouse.open_fs') }}</span>
+        </button>
         {{-- Coordinate picker for hand-setting perspective hotspots: /asendiplaan?mp_grid=1 --}}
         @if(request()->boolean('mp_grid'))
         <svg class="mg-mp__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
@@ -476,7 +482,55 @@
          uses. The row cards, the expandable row panel and the old inline detail were
          all removed so there is one detail surface (the modal) and no duplicates. --}}
   </div>
+
+  {{-- Variant B: mobile fullscreen zoomable map (pinch/pan). Tapping a numbered home
+       closes this and opens the shared home-detail modal. --}}
+  <div id="mg-mp-fs" class="mg-mp-fs" hidden>
+    <div class="mg-mp-fs__bar">
+      <span class="mg-mp-fs__title">{{ __('magnoolia.rowhouse.mp_title') }}</span>
+      <button type="button" class="mg-mp-fs__close" data-mp-fs-close aria-label="{{ __('magnoolia.rowhouse.modal_close') }}">&#x2715;</button>
+    </div>
+    <div class="mg-mp-fs__viewport" id="mg-mp-fs-vp">
+      <div class="mg-mp-fs__stage" id="mg-mp-fs-stage">
+        <img id="mg-mp-fs-img" class="mg-mp-fs__img" alt="{{ __('magnoolia.rowhouse.mp_img_alt') }}" decoding="async" draggable="false">
+        <div class="mg-mp-fs__markers" id="mg-mp-fs-markers"></div>
+      </div>
+    </div>
+    <div class="mg-mp-fs__hint">{{ __('magnoolia.rowhouse.fs_hint') }}</div>
+    <div class="mg-mp-fs__zoom">
+      <button type="button" data-mp-fs-zoom="1" aria-label="+">+</button>
+      <button type="button" data-mp-fs-zoom="-1" aria-label="−">&minus;</button>
+    </div>
+  </div>
 </section>
+
+<style>
+  .mg-mp__fsbtn { display:none; }
+  @media (max-width: 768px) {
+    /* Inline markers/zones are visual only on mobile — taps go to the fullscreen map. */
+    .mg-mp__imgwrap .mg-mp__marker--home,
+    .mg-mp__imgwrap .mg-mp__zone--home { pointer-events:none; }
+    .mg-mp__fsbtn {
+      display:inline-flex; align-items:center; gap:6px; position:absolute; right:10px; bottom:10px; z-index:7;
+      background:rgba(29,36,48,.86); color:#fff; border:none; border-radius:100px; padding:8px 14px;
+      font-size:12px; font-weight:600; cursor:pointer; -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+    }
+  }
+  .mg-mp-fs { position:fixed; inset:0; z-index:9180; background:#0e1218; display:flex; flex-direction:column; }
+  .mg-mp-fs[hidden] { display:none; }
+  .mg-mp-fs__bar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 16px; color:#fff; flex:0 0 auto; }
+  .mg-mp-fs__title { font-size:14px; font-weight:700; }
+  .mg-mp-fs__close { width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.08); color:#fff; font-size:16px; cursor:pointer; flex:0 0 auto; }
+  .mg-mp-fs__viewport { position:relative; flex:1 1 auto; overflow:hidden; touch-action:none; -webkit-user-select:none; user-select:none; }
+  .mg-mp-fs__stage { position:absolute; top:0; left:0; transform-origin:0 0; will-change:transform; }
+  .mg-mp-fs__img { display:block; width:100%; height:auto; pointer-events:none; -webkit-user-drag:none; }
+  .mg-mp-fs__markers { position:absolute; inset:0; }
+  .mg-mp-fs__marker { position:absolute; transform:translate(-50%,-50%); background:none; border:none; padding:6px; margin:-6px; cursor:pointer; }
+  .mg-mp-fs__marker .num { display:flex; align-items:center; justify-content:center; min-width:30px; height:30px; padding:0 7px; border-radius:100px; color:#fff; font-size:13px; font-weight:700; white-space:nowrap; border:2px solid rgba(255,255,255,.9); box-shadow:0 2px 10px rgba(0,0,0,.45); }
+  .mg-mp-fs__hint { position:absolute; left:50%; transform:translateX(-50%); bottom:76px; background:rgba(0,0,0,.6); color:#fff; font-size:12px; padding:7px 14px; border-radius:100px; pointer-events:none; max-width:90%; text-align:center; }
+  .mg-mp-fs__zoom { position:absolute; right:16px; bottom:16px; display:flex; flex-direction:column; gap:8px; }
+  .mg-mp-fs__zoom button { width:44px; height:44px; border-radius:12px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.12); color:#fff; font-size:22px; line-height:1; cursor:pointer; }
+</style>
 
 @push('scripts')
 <script>
@@ -560,13 +614,128 @@
       .forEach(function (el) { el.classList.toggle('is-hover', on); });
   }
 
+  // ── Variant B: mobile fullscreen zoomable map (pinch + pan) ────────────────
+  var isMobile = function () { return window.matchMedia('(max-width: 768px)').matches; };
+  var fs = document.getElementById('mg-mp-fs');
+  var fsVp = document.getElementById('mg-mp-fs-vp');
+  var fsStage = document.getElementById('mg-mp-fs-stage');
+  var fsImg = document.getElementById('mg-mp-fs-img');
+  var fsMk = document.getElementById('mg-mp-fs-markers');
+  var baseW = 0, baseH = 0, s = 2, tx = 0, ty = 0, MIN = 1, MAX = 9;
+  var pts = new Map(), base = {}, downX = 0, downY = 0, tap = false;
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function fsApply() { fsStage.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')'; }
+  function clampPan() {
+    var W = fsVp.clientWidth, H = fsVp.clientHeight, sw = baseW * s, sh = baseH * s;
+    tx = sw <= W ? (W - sw) / 2 : clamp(tx, W - sw, 0);
+    ty = sh <= H ? (H - sh) / 2 : clamp(ty, H - sh, 0);
+  }
+  function fsCentroid() {
+    var entry = VIEW_HOTSPOTS[HOME_VIEW] || {}, set = entry.mode === 'home' ? (entry.items || []) : [];
+    var n = 0, x = 0, y = 0;
+    set.forEach(function (h) { if (h.marker) { x += h.marker[0]; y += h.marker[1]; n++; } });
+    return n ? [x / n, y / n] : [0.5, 0.5];
+  }
+  function fsInit() {
+    if (!fsVp.clientWidth) return;
+    baseW = fsVp.clientWidth;
+    var ratio = (fsImg.naturalWidth && fsImg.naturalHeight) ? fsImg.naturalHeight / fsImg.naturalWidth : 0.5;
+    baseH = baseW * ratio;
+    fsStage.style.width = baseW + 'px';
+    // Start zoomed in and centred on the home cluster so the boxes are already spread
+    // enough to tap individually (the cluster is dense in the foreshortened view).
+    s = 3.8;
+    var c = fsCentroid();
+    tx = fsVp.clientWidth / 2 - c[0] * baseW * s;
+    ty = fsVp.clientHeight / 2 - c[1] * baseH * s;
+    clampPan(); fsApply();
+  }
+  function renderFsMarkers() {
+    var entry = VIEW_HOTSPOTS[HOME_VIEW] || {};
+    var set = entry.mode === 'home' ? (entry.items || []) : [];
+    fsMk.innerHTML = set.map(function (h) {
+      if (!h.marker) return '';
+      var col = COLORS[h.status] || '#888', num = (h.key || '').replace('tee-', '');
+      return '<button type="button" class="mg-mp-fs__marker" data-mp-fs-marker="' + h.key + '" style="left:' + (h.marker[0] * 100) + '%;top:' + (h.marker[1] * 100) + '%;" aria-label="' + h.label + '"><span class="num" style="background:' + col + '">' + num + '</span></button>';
+    }).join('');
+  }
+  function openFs() {
+    if (!fs) return;
+    var v = VIEWS[HOME_VIEW] || VIEWS[0] || {};
+    if (v.src) { fsImg.src = v.src; if (v.srcset) fsImg.setAttribute('srcset', v.srcset); fsImg.setAttribute('sizes', '200vw'); }
+    renderFsMarkers();
+    fs.hidden = false; document.body.style.overflow = 'hidden';
+    requestAnimationFrame(fsInit);
+  }
+  function closeFs() { if (fs) { fs.hidden = true; document.body.style.overflow = ''; pts.clear(); } }
+  function zoomBy(f) {
+    var cx = fsVp.clientWidth / 2, cy = fsVp.clientHeight / 2;
+    var sx = (cx - tx) / s, sy = (cy - ty) / s;
+    s = clamp(s * f, MIN, MAX); tx = cx - sx * s; ty = cy - sy * s; clampPan(); fsApply();
+  }
+  if (fsImg) fsImg.addEventListener('load', function () { if (fs && !fs.hidden) fsInit(); });
+
+  function snapshot() {
+    var arr = Array.from(pts.values());
+    base = { tx: tx, ty: ty, s: s };
+    if (arr.length >= 1) { base.x0 = arr[0].x; base.y0 = arr[0].y; }
+    if (arr.length >= 2) {
+      base.d0 = Math.hypot(arr[0].x - arr[1].x, arr[0].y - arr[1].y) || 1;
+      var r = fsVp.getBoundingClientRect();
+      base.sx = ((arr[0].x + arr[1].x) / 2 - r.left - tx) / s;
+      base.sy = ((arr[0].y + arr[1].y) / 2 - r.top - ty) / s;
+    }
+  }
+  function gestureMove() {
+    var arr = Array.from(pts.values());
+    if (arr.length === 1 && base.x0 != null) {
+      tx = base.tx + (arr[0].x - base.x0); ty = base.ty + (arr[0].y - base.y0);
+    } else if (arr.length >= 2) {
+      var d = Math.hypot(arr[0].x - arr[1].x, arr[0].y - arr[1].y);
+      var r = fsVp.getBoundingClientRect();
+      var mx = (arr[0].x + arr[1].x) / 2 - r.left, my = (arr[0].y + arr[1].y) / 2 - r.top;
+      s = clamp(base.s * d / base.d0, MIN, MAX); tx = mx - base.sx * s; ty = my - base.sy * s;
+    }
+    clampPan(); fsApply();
+  }
+  if (fsVp) fsVp.addEventListener('pointerdown', function (e) {
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pts.size === 1) { downX = e.clientX; downY = e.clientY; tap = true; }
+    snapshot();
+  });
+  window.addEventListener('pointermove', function (e) {
+    if (!pts.has(e.pointerId)) return;
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pts.size === 1 && Math.hypot(e.clientX - downX, e.clientY - downY) > 10) tap = false;
+    gestureMove();
+  });
+  window.addEventListener('pointerup', function (e) {
+    if (!pts.has(e.pointerId)) return;
+    var single = pts.size === 1, ux = e.clientX, uy = e.clientY;
+    pts.delete(e.pointerId); snapshot();
+    if (single && tap) {
+      var el = document.elementFromPoint(ux, uy);
+      var mk = el && el.closest && el.closest('[data-mp-fs-marker]');
+      if (mk) { var key = mk.getAttribute('data-mp-fs-marker'); closeFs(); openHome(key); }
+    }
+  });
+  window.addEventListener('pointercancel', function (e) { pts.delete(e.pointerId); });
+
   // delegated events
   document.addEventListener('click', function (e) {
-    // a home box → open the shared modal
+    // fullscreen map controls
+    if (e.target.closest('[data-mp-fs-close]')) { e.preventDefault(); closeFs(); return; }
+    var zb = e.target.closest('[data-mp-fs-zoom]');
+    if (zb) { e.preventDefault(); zoomBy(+zb.getAttribute('data-mp-fs-zoom') > 0 ? 1.4 : 1 / 1.4); return; }
+    if (e.target.closest('[data-mp-fs]')) { e.preventDefault(); openFs(); return; }
+    // mobile: tapping the (small) inline map opens the fullscreen zoomable view
+    var wrap = e.target.closest('.mg-mp__imgwrap');
+    if (wrap && section.contains(wrap) && isMobile() && !e.target.closest('[data-mp-view-prev],[data-mp-view-next]')) { e.preventDefault(); openFs(); return; }
+    // desktop: a home box → open the shared modal
     var homeEl = e.target.closest('[data-mp-home]');
     if (homeEl && section.contains(homeEl)) { e.preventDefault(); openHome(homeEl.getAttribute('data-mp-home')); return; }
-    // a row marker/zone exists only on the calibrated alt view → jump to the box
-    // view so a specific home can be picked.
+    // a row marker/zone exists only on the calibrated alt view → jump to the box view
     var rowish = e.target.closest('[data-mp-row], [data-mp-zone]');
     if (rowish && section.contains(rowish)) { e.preventDefault(); switchView(HOME_VIEW); return; }
     var pill = e.target.closest('[data-mp-view]');
@@ -574,6 +743,8 @@
     if (e.target.closest('[data-mp-view-prev]')) { switchView(state.view - 1); return; }
     if (e.target.closest('[data-mp-view-next]')) { switchView(state.view + 1); return; }
   });
+
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && fs && !fs.hidden) closeFs(); });
 
   // Marker ↔ polygon hover sync
   section.addEventListener('mouseover', function (e) {

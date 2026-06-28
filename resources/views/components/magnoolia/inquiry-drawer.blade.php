@@ -219,7 +219,7 @@
 
     hint.textContent = address ? address : '';
     overlay.style.display = '';
-    document.body.style.overflow = 'hidden';
+    lockScroll();
 
     if (window.dataLayer) {
       window.dataLayer.push({ event: 'magnoolia_form_open', source_component: src, unit_key: key });
@@ -231,15 +231,43 @@
   // table row/card) and therefore can't rely on the delegated document handler.
   window.mgInquiryOpen = open;
 
+  // iOS-safe scroll lock (keeps the fixed overlay at the viewport top on a scrolled
+  // page). Cooperates with the home-detail modal: if the body is already pinned
+  // (drawer opened on top of that modal) we don't re-lock or restore — that modal owns it.
+  var lockY = 0, didLock = false;
+  function lockScroll() {
+    if (document.body.style.position === 'fixed') { didLock = false; return; }
+    didLock = true; lockY = window.scrollY || window.pageYOffset || 0;
+    var b = document.body;
+    b.style.position = 'fixed'; b.style.top = (-lockY) + 'px';
+    b.style.left = '0'; b.style.right = '0'; b.style.width = '100%'; b.style.overflow = 'hidden';
+  }
+  function unlockScroll() {
+    if (!didLock) return;
+    didLock = false;
+    var b = document.body;
+    b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = ''; b.style.overflow = '';
+    window.scrollTo(0, lockY);
+  }
+
   function close() {
     overlay.style.display = 'none';
-    document.body.style.overflow = '';
+    unlockScroll();
   }
 
   // Triggers
   document.addEventListener('click', function (e) {
     var trigger = e.target.closest('[data-mg-inquiry-open]');
     if (trigger) { e.preventDefault(); open(trigger); return; }
+    // Site-wide: ANY button-style link to the contact page ("Küsi pakkumist" and
+    // friends, on every page) opens this drawer instead of navigating. The href
+    // stays as a no-JS fallback. Plain text/footer nav links (.mg-internal-link) and
+    // the contact page's own in-page anchors are excluded.
+    var cta = e.target.closest('a.zoomvilla-btn[href]');
+    if (cta && !cta.classList.contains('mg-internal-link') &&
+        /\/(kontakt|contact)(\?|#|$)/.test(cta.getAttribute('href') || '')) {
+      e.preventDefault(); open(cta); return;
+    }
     if (e.target === overlay) { close(); }
   });
 

@@ -302,7 +302,7 @@
 
     overlay.style.display = '';
     if (dialog) dialog.scrollTop = 0; // always open scrolled to the top, not where the last home left off
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     closeBtn.focus();
 
     if (window.dataLayer) {
@@ -322,9 +322,25 @@
     });
   }
 
+  // iOS-safe scroll lock: pin the body so the fixed overlay stays at the viewport
+  // top even when the page was scrolled (e.g. opened via a #hash). Without this the
+  // overlay/close button could end up above the visible area on mobile Safari.
+  var scrollLockY = 0;
+  function lockScroll() {
+    scrollLockY = window.scrollY || window.pageYOffset || 0;
+    var b = document.body;
+    b.style.position = 'fixed'; b.style.top = (-scrollLockY) + 'px';
+    b.style.left = '0'; b.style.right = '0'; b.style.width = '100%'; b.style.overflow = 'hidden';
+  }
+  function unlockScroll() {
+    var b = document.body;
+    b.style.position = ''; b.style.top = ''; b.style.left = ''; b.style.right = ''; b.style.width = ''; b.style.overflow = '';
+    window.scrollTo(0, scrollLockY);
+  }
+
   function close() {
     overlay.style.display = 'none';
-    document.body.style.overflow = '';
+    unlockScroll();
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
 
