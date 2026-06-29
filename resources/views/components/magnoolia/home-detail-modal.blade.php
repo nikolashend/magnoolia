@@ -235,7 +235,10 @@
   window.mgOpenHome = function (key) {
     var h = byKey[key];
     if (!h) return;
-    lastFocus = document.activeElement;
+    // Re-selecting a home from the modal's mini-map re-runs this while the modal is
+    // already open — only the FIRST open should capture focus / lock the scroll.
+    var wasOpen = overlay.style.display !== 'none';
+    if (!wasOpen) lastFocus = document.activeElement;
 
     set('mg-hd-title', h.display);
     var sub = [];
@@ -302,7 +305,7 @@
 
     overlay.style.display = '';
     if (dialog) dialog.scrollTop = 0; // always open scrolled to the top, not where the last home left off
-    lockScroll();
+    if (!wasOpen) lockScroll();
     closeBtn.focus({ preventScroll: true });
 
     if (window.dataLayer) {
