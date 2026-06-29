@@ -34,6 +34,11 @@
                                 {!! mg_text('hero.h1') !!}
                             </h1>
 
+                            <p class="main-slider-two__tagline"
+                               style="font-family:'Cormorant Garamond','Playfair Display',Georgia,serif;font-style:italic;font-weight:500;font-size:clamp(20px,2.6vw,30px);line-height:1.25;color:#f0d8a8;margin:2px 0 16px;">
+                                {{ __('magnoolia.hero.tagline') }}
+                            </p>
+
                             <p class="main-slider-two__text">
                                 {{ mg_text('hero.subheadline') }}
                             </p>

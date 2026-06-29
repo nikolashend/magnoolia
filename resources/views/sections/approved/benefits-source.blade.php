@@ -104,6 +104,17 @@
                         <div class="service-card__shape"></div>
                     </div>
                 </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="700ms">
+                    <div class="service-card">
+                        <div class="service-card__icon-box"><span class="service-card__icon"><i class="icon-real-estate"></i></span></div>
+                        <div class="service-card__content"><div class="service-card__content__inner">
+                            <h3 class="service-card__title"><a href="{{ lroute('magnoolia.sisedisain') }}">{{ __('magnoolia.benefits.8.title') }}</a></h3>
+                            <p class="service-card__text">{{ __('magnoolia.benefits.8.text') }}</p>
+                            <a href="{{ lroute('magnoolia.sisedisain') }}" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
+                        </div></div>
+                        <div class="service-card__shape"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

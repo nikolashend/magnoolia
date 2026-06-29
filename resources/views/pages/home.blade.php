@@ -19,6 +19,9 @@
     {{-- 5. BENEFIT CARDS / services-three section-space (index-2 / home2/services.php) --}}
     @include('sections.approved.benefits-source')
 
+    {{-- 5b. Location teaser: "Looduse rahu, linna lähedus" + key distances --}}
+    @include('sections.magnoolia.location-teaser')
+
     {{-- 6. GALLERY STRIP / city-house section-space (index / home1/city-house.php) --}}
     @include('sections.approved.gallery-strip-source')
 

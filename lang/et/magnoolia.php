@@ -59,6 +59,7 @@ return [
     'hero' => [
         'eyebrow'       => 'Vaela küla · Kiili vald · Harjumaa',
         'h1'            => 'A-energiaklassi ridaelamukodud Tallinna lähedal',
+        'tagline'       => 'Elad ridaelamus, tunned end nagu eramajas',
         'subheadline'   => 'Magnoolia ühendab ridaelamu mugavuse, eramaja privaatsuse ja uusarenduse kindluse Vaela külas, Kiili vallas.',
         'stage_badge'   => 'I etapp valmib kevad 2027 · II etapp valmib kevad 2028',
         'stage_address_note' => 'I etapp: Magnoolia tee 1 ja 3 · II etapp: Magnoolia tee 5–11',
@@ -184,6 +185,13 @@ return [
     ],
 
     /* Benefits cards (benefits-source.blade) */
+    'home_location' => [
+        'eyebrow' => 'Asukoht',
+        'title'   => 'Looduse rahu, linna lähedus',
+        'sub'     => 'Vaela küla rahu ja roheluse keskel — kuid Tallinn ja igapäevased sihtkohad on käeulatuses.',
+        'cta'     => 'Vaata asukohta ja kaugusi',
+    ],
+
     'benefits' => [
         ['icon' => 'icon-trophy',      'title' => 'A-energiaklass',                  'text' => 'Madalad kommunaalkulud tänu maasoojuspumbale ja soojustagastusega ventilatsioonile'],
         ['icon' => 'icon-labyrinth',   'title' => 'Privaatne hooviala',              'text' => 'Igal kodul oma piiratud hooviala – privaatsus ilma kortermaja müruta'],
@@ -193,6 +201,7 @@ return [
         ['icon' => 'icon-garage',      'title' => 'Elektriauto laadimise ettevalmistus', 'text' => 'EV laadimiskaabli ettevalmistus mõlema parkimiskoha juures'],
         ['icon' => 'icon-real-estate', 'title' => 'Päikesepaneelide ettevalmistus',  'text' => 'Katus on ette valmistatud tulevaste päikesepaneelide paigalduseks'],
         ['icon' => 'icon-pin',         'title' => 'Tallinna lähedal',                'text' => 'Vaela küla, Kiili vald – looduslik keskkond ~20 minutit Tallinna kesklinnast'],
+        ['icon' => 'icon-real-estate', 'title' => 'Läbimõeldud kuni viimse detailini', 'text' => 'Planeeringust ja materjalivalikust kuni tehnosüsteemide ja viimistluseni — iga detail on läbi mõeldud.'],
     ],
 
     /* Pricing table */

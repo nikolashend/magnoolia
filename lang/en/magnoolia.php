@@ -33,6 +33,7 @@ return [
         'eyebrow'      => 'Vaela village · Kiili municipality · Harjumaa',
         'eyebrow_sub'  => 'New development · phase 1 spring 2027 / phase 2 spring 2028',
         'h1'           => 'A-energy-class homes<br><span>near Tallinn</span>',
+        'tagline'      => 'Live in a rowhouse, feel like in your own home',
         'subheadline'  => '19 new townhouses with private yard, balcony, terrace and smart energy systems. Phase 1 spring 2027, Phase 2 spring 2028.',
         'stage_badge'  => 'Phase 1 spring 2027 · Phase 2 spring 2028',
         'stage_streets'=> 'Phase 1: Magnoolia tee 1 and 3 &nbsp;&middot;&nbsp; Phase 2: Magnoolia tee 5–11',
@@ -141,6 +142,13 @@ return [
     ],
 
     /* Benefits cards */
+    'home_location' => [
+        'eyebrow' => 'Location',
+        'title'   => 'Nature’s calm, the city close by',
+        'sub'     => 'The quiet and greenery of Vaela village — with Tallinn and everyday destinations within easy reach.',
+        'cta'     => 'See location & distances',
+    ],
+
     'benefits' => [
         ['icon' => 'icon-trophy',      'title' => 'Energy class A',         'text' => 'Low energy bills via ground source heat pump and heat recovery ventilation'],
         ['icon' => 'icon-labyrinth',   'title' => 'Private yard',           'text' => 'Every home has its own fenced yard — privacy without apartment-block noise'],
@@ -150,6 +158,7 @@ return [
         ['icon' => 'icon-garage',      'title' => 'EV charging readiness',  'text' => 'EV charging station preparation at each of the two parking spaces'],
         ['icon' => 'icon-real-estate', 'title' => 'Solar panel readiness',   'text' => 'The roof is prepared for future solar panel installation'],
         ['icon' => 'icon-pin',         'title' => 'Near Tallinn',            'text' => 'Vaela village, Kiili municipality — a natural setting 20 minutes from Tallinn city centre'],
+        ['icon' => 'icon-real-estate', 'title' => 'Designed down to the last detail', 'text' => 'From the layout and material choices to the technical systems and finish — every detail is considered.'],
     ],
 
     /* Footer texts */
