@@ -118,7 +118,7 @@ class MagnooliaController extends Controller
         ]);
 
         $toEmail    = config('magnoolia.project.contact_email', 'diana@estlanda.ee');
-        $unitLabel  = $validated['selected_unit'] ?: __('magnoolia.forms.unit_none');
+        $unitLabel  = ($validated['selected_unit'] ?? '') ?: __('magnoolia.forms.unit_none');
         $locale     = app()->getLocale();
         $sourceUrl  = $request->headers->get('referer', $request->url());
         $referrer   = $request->session()->previousUrl() ?? $request->headers->get('referer');
@@ -164,7 +164,7 @@ class MagnooliaController extends Controller
         // 1) Send mail
         $mailStatus = 'sent';
         try {
-            Mail::raw($body, function ($message) use ($toEmail, $validated, $unitLabel) {
+            Mail::raw($body, function ($message) use ($toEmail, $validated, $unitLabel, $locale) {
                 $message->to($toEmail)
                         ->replyTo($validated['email'], $validated['name'])
                         ->subject("Magnoolia päring — {$unitLabel} — {$locale}");
