@@ -237,78 +237,77 @@
           @endforeach
         </div>
 
-        {{-- ── MOBILE CARDS ───────────────────────────────────────── --}}
-        <div class="d-lg-none" style="display:flex;flex-direction:column;gap:14px;">
-            @foreach($units as $unit)
-            @php
-                $st  = $unit['status'] ?? 'tbc';
-                $cfg = $statusCfg[$st] ?? $statusCfg['tbc'];
-                $sCfg = $stages[$unit['stage'] ?? 0] ?? null;
-                $publicPrice = ($unit['price_public'] ?? false) ? ($unit['price'] ?? null) : null;
-                $rh    = $rhLookup($unit);
-                $rhKey = $rh['asset_key'] ?? ($unit['unit_key'] ?? $unit['id'] ?? '');
-                $rhBld = $rh ? ('tee-' . $rh['building']) : '';
-                $rhYard = $rh ? RowhouseSelectionService::formatArea($rh['private_yard_area']) : null;
-            @endphp
-            <div class="mg-unit-card"
-                 data-status="{{ $st }}"
-                 data-stage="stage-{{ $unit['stage'] ?? 0 }}"
-                 data-building="{{ $rhBld }}"
-                 onclick="mgOpenHome('{{ $rhKey }}')"
-                 style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-top:3px solid #c89443;cursor:pointer;">
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
-                    <div>
-                        <div style="font-weight:700;color:#1d2430;font-size:15px;">{{ $unit['address'] }}</div>
-                        <div style="color:#6f6a61;font-size:13px;margin-top:3px;">
-                            {{ $unit['rooms'] ?? '—' }} {{ __('magnoolia.pricing.rooms_unit') }} · {{ number_format($unit['net_area'] ?? 0, 1) }} m² · {{ __('magnoolia.pricing.area_class') }}
-                        </div>
+        {{-- ── MOBILE TABLE (compact, desktop-style; replaces tall cards) ── --}}
+        {{-- Phase 36: condensed tabular layout — same columns mindset as desktop
+             (Aadress · Pind/Tube · Hind · Saadavus) but optimised for narrow
+             screens so the full list scrolls ~3× shorter than the old cards.
+             Each row is tappable → opens the home-detail modal (with Küsi pakkumist). --}}
+        <div class="d-lg-none mg-mtable-wrap">
+            @foreach($byStage as $stageNum => $stageUnits)
+            @php $sCfg = $stages[$stageNum] ?? null; @endphp
+            <div class="mg-mstage" data-mstage-group="{{ $stageNum }}" style="margin-bottom:18px;">
+                @if($sCfg)
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:11px 14px;background:#1d2430;border-radius:12px 12px 0 0;">
+                    <span style="background:#c89443;color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.05em;flex-shrink:0;">{{ $sCfg['label'] }}</span>
+                    <span style="margin-left:auto;color:rgba(200,148,67,.9);font-size:11.5px;font-weight:600;">{{ $sCfg['completion'] }}</span>
+                    <span style="color:rgba(255,255,255,.4);font-size:11.5px;">{{ count($stageUnits) }} {{ __('magnoolia.pricing.homes_label') }}</span>
+                </div>
+                @endif
+                <table class="mg-mtable" style="width:100%;border-collapse:collapse;background:#fff;{{ $sCfg ? 'border-radius:0 0 12px 12px;' : 'border-radius:12px;' }}overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.06);">
+                    <tbody>
+                        @foreach($stageUnits as $unit)
                         @php
-                            $mobilePtChip = match($unit['plan_type'] ?? null) {
+                            $st  = $unit['status'] ?? 'tbc';
+                            $cfg = $statusCfg[$st] ?? $statusCfg['tbc'];
+                            $publicPrice = ($unit['price_public'] ?? false) ? ($unit['price'] ?? null) : null;
+                            $rh    = $rhLookup($unit);
+                            $rhKey = $rh['asset_key'] ?? ($unit['unit_key'] ?? $unit['id'] ?? '');
+                            $rhBld = $rh ? ('tee-' . $rh['building']) : '';
+                            $mPtChip = match($unit['plan_type'] ?? null) {
                                 'type-a' => ['label' => 'Plaan A', 'class' => 'mg-plan-chip--a'],
                                 'type-b' => ['label' => 'Plaan B', 'class' => 'mg-plan-chip--b'],
                                 default  => null,
                             };
                         @endphp
-                        @if($mobilePtChip)
-                        <span class="mg-plan-chip {{ $mobilePtChip['class'] }}" style="margin-top:6px;display:inline-block;">{{ $mobilePtChip['label'] }}</span>
-                        @endif
-                    </div>
-                    <span class="mg-status {{ $cfg['class'] }}"
-                          style="padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;flex-shrink:0;">
-                        {{ $cfg['label'] }}
-                    </span>
-                </div>
-                @if($sCfg)
-                <div style="display:inline-flex;align-items:center;gap:6px;background:#f7f4ef;border-radius:8px;padding:4px 10px;margin-bottom:10px;font-size:12px;color:#6f6a61;">
-                    <span style="width:6px;height:6px;border-radius:50%;background:#c89443;flex-shrink:0;"></span>
-                    {{ $sCfg['label'] }} · {{ $sCfg['completion'] }}
-                </div>
-                @endif
-                <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:#6f6a61;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(29,36,48,.07);">
-                    @if(!empty($unit['terrace_area']) && $unit['terrace_area'] > 0)
-                        <span>{{ __('magnoolia.pricing.terrace_label') }} {{ number_format($unit['terrace_area'],1) }} m²</span>
-                    @endif
-                    @if(!empty($unit['balcony_area']) && $unit['balcony_area'] > 0)
-                        <span>{{ __('magnoolia.pricing.balcony_label') }} {{ number_format($unit['balcony_area'],1) }} m²</span>
-                    @endif
-                    @if($rhYard)
-                        <span>{{ __('magnoolia.rowhouse.spec_yard') }} {{ $rhYard }} m²</span>
-                    @endif
-                    <span>{{ $unit['parking'] ?? 2 }}× {{ __('magnoolia.pricing.parking_label') }}</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
-                    <div style="font-weight:700;color:#1d2430;font-size:15px;">
-                        {{ $publicPrice ? '€ '.number_format($publicPrice, 0, ',', ' ') : __('magnoolia.pricing.price_tbc') }}
-                    </div>
-                    @if($st !== 'sold')
-                    <a href="{{ lroute('magnoolia.contact') }}?unit={{ urlencode($unit['address']) }}#kontaktivorm"
-                       data-source-component="hinnad_card" data-unit-address="{{ $unit['address'] }}"
-                       onclick="event.stopPropagation(); if(window.mgInquiryOpen){event.preventDefault();window.mgInquiryOpen(this);}"
-                       style="background:#c89443;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;min-height:40px;display:inline-flex;align-items:center;">
-                        {{ __($cfg['cta_key']) }}
-                    </a>
-                    @endif
-                </div>
+                        <tr class="mg-unit-mrow"
+                            data-status="{{ $st }}"
+                            data-stage="stage-{{ $unit['stage'] ?? 0 }}"
+                            data-building="{{ $rhBld }}"
+                            aria-label="Ava kodu detailid: {{ $unit['address'] }}"
+                            tabindex="{{ $st === 'sold' ? '-1' : '0' }}"
+                            onclick="{{ $st !== 'sold' ? "mgOpenHome('".$rhKey."')" : '' }}"
+                            onkeydown="{{ $st !== 'sold' ? "if(event.key==='Enter'||event.key===' '){event.preventDefault();mgOpenHome('".$rhKey."');}" : '' }}"
+                            style="border-bottom:1px solid rgba(29,36,48,.07);cursor:{{ $st === 'sold' ? 'default' : 'pointer' }};{{ $st === 'sold' ? 'opacity:.55;' : '' }}">
+                            {{-- Address + plan/status chips --}}
+                            <td style="padding:12px 10px 12px 14px;vertical-align:middle;">
+                                <div style="font-weight:700;color:#1d2430;font-size:13.5px;line-height:1.25;">{{ $unit['address'] }}</div>
+                                <div style="display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap;">
+                                    @if($mPtChip)
+                                    <span class="mg-plan-chip {{ $mPtChip['class'] }}" style="font-size:9.5px;padding:1px 7px;">{{ $mPtChip['label'] }}</span>
+                                    @endif
+                                    <span class="mg-status {{ $cfg['class'] }}" style="padding:2px 8px;border-radius:20px;font-size:9.5px;font-weight:700;">{{ $cfg['label'] }}</span>
+                                </div>
+                            </td>
+                            {{-- Area + rooms --}}
+                            <td style="padding:12px 6px;text-align:center;vertical-align:middle;white-space:nowrap;">
+                                <div style="font-weight:600;color:#1d2430;font-size:13px;">{{ number_format($unit['net_area'] ?? 0, 1) }} m²</div>
+                                <div style="color:#9a9490;font-size:11px;margin-top:2px;">{{ $unit['rooms'] ?? '—' }} {{ __('magnoolia.pricing.rooms_unit') }}</div>
+                            </td>
+                            {{-- Price + tap affordance --}}
+                            <td style="padding:12px 12px 12px 6px;text-align:right;vertical-align:middle;white-space:nowrap;">
+                                <div style="display:inline-flex;align-items:center;gap:6px;">
+                                    <span style="font-weight:700;color:{{ $publicPrice ? '#1d2430' : '#c89443' }};font-size:{{ $publicPrice ? '13.5' : '11' }}px;">
+                                        {{ $publicPrice ? '€ '.number_format($publicPrice, 0, ',', ' ') : __('magnoolia.pricing.price_tbc_inline') }}
+                                    </span>
+                                    @if($st !== 'sold')
+                                    <i class="icon-angle-small-right" style="color:#c89443;font-size:15px;flex-shrink:0;"></i>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
             @endforeach
         </div>
@@ -380,9 +379,15 @@
             var tbl = header.nextElementSibling;
             if (tbl) tbl.style.display = hide ? 'none' : '';
         });
-        document.querySelectorAll('.mg-unit-card').forEach(function (card) {
-            var show = key === 'all' || card.dataset.status === key || card.dataset.stage === key || card.dataset.building === key;
-            card.style.display = show ? '' : 'none';
+        /* Mobile compact table rows */
+        document.querySelectorAll('.mg-unit-mrow').forEach(function (row) {
+            var show = key === 'all' || row.dataset.status === key || row.dataset.stage === key || row.dataset.building === key;
+            row.style.display = show ? '' : 'none';
+        });
+        /* Mobile stage groups — hide a group when none of its rows are visible */
+        document.querySelectorAll('[data-mstage-group]').forEach(function (group) {
+            var visible = group.querySelectorAll('.mg-unit-mrow:not([style*="display: none"])').length;
+            group.style.display = visible === 0 ? 'none' : '';
         });
         /* Update count — never show 0 when total>0 and all-filter */
         setTimeout(function () {

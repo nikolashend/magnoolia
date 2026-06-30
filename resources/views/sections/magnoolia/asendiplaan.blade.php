@@ -43,7 +43,7 @@
                 {{-- Phase 5 TODO: replace with interactive SVG mastplan --}}
                 {{-- data-masterplan="magnoolia" attribute reserved for future hotspots --}}
                 <div class="mg-masterplan" data-masterplan="magnoolia" style="position:relative;border-radius:20px;overflow:hidden;">
-                    <a href="{{ asset('assets/images/magnoolia/magnoolia_cam09-1600w.webp') }}" class="img-popup">
+                    <a href="{{ lroute('magnoolia.homes') }}#mg-masterplan" data-event="cta_click" data-dest="kodud-ja-hinnad" aria-label="{{ __('magnoolia.section.masterplan_title') }}">
                         <img {!! mg_img('magnoolia_cam09.jpg', '(max-width:991px) 100vw, 820px') !!}
                              alt="Magnoolia 19 kodu asendiplaan Kiili vallas"
                              width="820" height="560"
