@@ -1,4 +1,4 @@
-﻿{{-- SOURCE: php-template/parts/home2/apartment.php | class: apartment-two section-space --}}
+{{-- SOURCE: php-template/parts/home2/apartment.php | class: apartment-two section-space --}}
     <section class="apartment-two section-space">
         <div class="container">
             <div class="apartment-two__top">
@@ -22,7 +22,7 @@
                 <div class="row gutter-y-30">
                     <div class="col-lg-6">
                         <div class="apartment-two__thumb hover:shine">
-                            <img src="{{ asset('assets/images/magnoolia/magnoolia_cam09.jpg') }}" alt="Magnoolia kodu" style="width:533px;height:493px;object-fit:cover;display:block;" loading="lazy" decoding="async">
+                            <img {!! mg_img('magnoolia_cam09.jpg', '(max-width:991px) 100vw, 533px') !!} alt="Magnoolia kodu" style="width:533px;height:493px;object-fit:cover;display:block;" loading="lazy" decoding="async">
                         </div>
                     </div>
                     <div class="col-lg-6">

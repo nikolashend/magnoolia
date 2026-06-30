@@ -172,6 +172,13 @@
 <section class="mg-page-section mg-page-section--cream">
   <div class="container">
     <div style="max-width:760px;margin:0 auto;background:#fff;border-radius:16px;padding:32px 36px;border:1px solid rgba(29,36,48,.08);display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;">
+      @if(file_exists(public_path('assets/magnoolia/people/aet-piel.webp')))
+      <div style="flex-shrink:0;">
+        <img src="{{ asset('assets/magnoolia/people/aet-piel.webp') }}" alt="Aet Piel — sisekujundaja"
+             width="150" height="225" loading="lazy" decoding="async"
+             style="width:150px;height:auto;border-radius:14px;display:block;background:#f3efe7;">
+      </div>
+      @endif
       <div style="flex:1;min-width:240px;">
         <div style="font-size:11px;color:#c89443;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;">{{ __('magnoolia.page.sisedisain.aet_eyebrow') }}</div>
         <div style="font-size:24px;font-weight:700;color:#1d2430;line-height:1.2;margin-bottom:4px;">Aet Piel</div>
@@ -330,6 +337,9 @@
   </div>
 </section>
 @endif
+
+{{-- ── Materials & technical solutions (moved here from /ehitusinfo) ── --}}
+@include('partials.magnoolia.material-specs-section')
 
 {{-- ── FAQ ─────────────────────────────────────────────────── --}}
 @include('sections.magnoolia.page-faq', [

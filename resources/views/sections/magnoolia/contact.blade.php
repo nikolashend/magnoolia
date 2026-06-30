@@ -10,7 +10,7 @@
 
     {{-- Background accent image (hidden on mobile to avoid mid-stripe artifact) --}}
     <div class="mg-contact-bg-accent" style="position:absolute;right:0;top:0;bottom:0;width:45%;pointer-events:none;z-index:0;">
-        <img src="{{ asset('assets/images/magnoolia/Interior 5-2.jpg') }}"
+        <img {!! mg_img('Interior 5-2.jpg', '45vw') !!}
              alt=""
              aria-hidden="true"
              loading="lazy"

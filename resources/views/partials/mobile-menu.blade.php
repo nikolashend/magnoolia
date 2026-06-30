@@ -55,6 +55,8 @@
             <li><a href="{{ lroute('magnoolia.galerii') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.gallery') }}</a></li>
             <li><a href="{{ lroute('magnoolia.homes') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.homes') }}</a></li>
             <li><a href="{{ lroute('magnoolia.arhitektuur') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.architecture') }}</a></li>
+            <li><a href="{{ lroute('magnoolia.sisedisain') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.interior') }}</a></li>
+            <li><a href="{{ lroute('magnoolia.construction') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.building') }}</a></li>
             <li><a href="{{ lroute('magnoolia.developer') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.developer') }}</a></li>
             <li><a href="{{ lroute('magnoolia.contact') }}" onclick="mgMobileNavClose()">{{ __('magnoolia.nav.contact') }}</a></li>
         </ul>

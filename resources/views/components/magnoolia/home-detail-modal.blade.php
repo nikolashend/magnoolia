@@ -86,7 +86,11 @@
                (config magnoolia_rowhouses.show_location_map → true to restore). --}}
           @if($cleanUrl && config('magnoolia_rowhouses.show_location_map'))
           <div style="margin-top:14px;">
-            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9c8b7e;margin-bottom:8px;">{{ __('magnoolia.rowhouse.map_location') }}</div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9c8b7e;margin-bottom:6px;">{{ __('magnoolia.rowhouse.map_location') }}</div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:#c89443;font-weight:600;margin-bottom:10px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5M11 8v6M8 11h6"/></svg>
+              {{ __('magnoolia.rowhouse.map_hint') }}
+            </div>
             <div style="position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(29,36,48,.1);">
               <img src="{{ $cleanUrl }}" alt="{{ __('magnoolia.rowhouse.alt_map') }}" width="1024" height="1436" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;">
               <svg id="mg-hd-map-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" hidden
@@ -412,7 +416,7 @@
 @media (max-width: 720px) {
   #mg-hd-dialog .mg-hd-grid { grid-template-columns: 1fr !important; }
 }
-.mg-hd-map-zone { fill: rgba(200,148,67,.12); stroke: rgba(185,128,43,.6); stroke-width: 1.5px; stroke-linejoin: round; vector-effect: non-scaling-stroke; pointer-events: auto; cursor: pointer; outline: none; transition: fill .15s ease, stroke-width .15s ease; }
+.mg-hd-map-zone { fill: rgba(200,148,67,.2); stroke: rgba(185,128,43,.75); stroke-width: 1.5px; stroke-linejoin: round; vector-effect: non-scaling-stroke; pointer-events: auto; cursor: pointer; outline: none; transition: fill .15s ease, stroke-width .15s ease; }
 .mg-hd-map-zone:hover, .mg-hd-map-zone:focus-visible { fill: rgba(200,148,67,.42); stroke: #b9802b; stroke-width: 2px; }
 .mg-hd-map-zone.is-active { fill: rgba(200,148,67,.55); stroke: #b9802b; stroke-width: 2.5px; filter: drop-shadow(0 1px 4px rgba(185,128,43,.55)); }
 </style>

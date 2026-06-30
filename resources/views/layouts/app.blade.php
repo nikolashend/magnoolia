@@ -42,8 +42,7 @@
     {{-- LCP hero preload (homepage only) --}}
     @if(request()->routeIs('home'))
     <link rel="preload" as="image"
-          href="{{ asset('assets/images/magnoolia/Cam001.0000.jpg') }}"
-          imagesrcset="{{ asset('assets/images/magnoolia/Cam001.0000.jpg') }}"
+          href="{{ asset('assets/images/magnoolia/Cam001.0000-1600w.webp') }}"
           fetchpriority="high">
     @endif
 

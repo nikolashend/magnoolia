@@ -35,14 +35,24 @@ class NavItemSeeder extends Seeder
                 'sort_order' => 4,
             ],
             [
+                'label'      => ['et' => 'Sisedisain',      'ru' => 'Дизайн',       'en' => 'Interior'],
+                'route_name' => 'magnoolia.sisedisain',
+                'sort_order' => 5,
+            ],
+            [
+                'label'      => ['et' => 'Ehitusinfo',      'ru' => 'Строительство', 'en' => 'Building info'],
+                'route_name' => 'magnoolia.construction',
+                'sort_order' => 6,
+            ],
+            [
                 'label'      => ['et' => 'Arendaja',        'ru' => 'Застройщик',   'en' => 'Developer'],
                 'route_name' => 'magnoolia.developer',
-                'sort_order' => 5,
+                'sort_order' => 7,
             ],
             [
                 'label'      => ['et' => 'Kontakt',         'ru' => 'Контакт',      'en' => 'Contact'],
                 'route_name' => 'magnoolia.contact',
-                'sort_order' => 6,
+                'sort_order' => 8,
             ],
         ];
 

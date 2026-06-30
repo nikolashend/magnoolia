@@ -123,6 +123,33 @@ if (! function_exists('mg_text')) {
     }
 }
 
+if (! function_exists('mg_img')) {
+    /**
+     * Responsive <img> attributes (src + srcset + sizes) for a Magnoolia render
+     * that has pre-generated webp variants (-480w/-768w/-1200w/-1600w.webp)
+     * sitting next to the original in assets/images/magnoolia/. Falls back to the
+     * original file untouched when no variants exist (no regression).
+     *
+     * Echo with {!! mg_img('Cam005.0000.jpg', '(max-width:991px) 100vw, 50vw') !!}
+     */
+    function mg_img(string $file, string $sizes = '100vw', string $dir = 'assets/images/magnoolia'): string
+    {
+        $name = pathinfo($file, PATHINFO_FILENAME);
+        if (! is_file(public_path($dir . '/' . $name . '-1200w.webp'))) {
+            return 'src="' . e(asset($dir . '/' . $file)) . '"';
+        }
+        $widths = [480, 768, 1200, 1600];
+        $srcset = [];
+        foreach ($widths as $w) {
+            $srcset[] = e(asset($dir . '/' . $name . '-' . $w . 'w.webp')) . ' ' . $w . 'w';
+        }
+
+        return 'src="' . e(asset($dir . '/' . $name . '-1200w.webp')) . '"'
+            . ' srcset="' . implode(', ', $srcset) . '"'
+            . ' sizes="' . e($sizes) . '"';
+    }
+}
+
 if (! function_exists('mg_gallery')) {
     /**
      * Published gallery items (Phase 33.1) for the public /galerii page, resolved

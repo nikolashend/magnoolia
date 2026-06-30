@@ -48,11 +48,13 @@
     ];
     $t = $T[$loc] ?? $T['et'];
 
-    // Sister projects — per the brief, the "Magnoolia" link is replaced with Raime.
+    // Sister developments as cards (kakumae.com style) — each links to that
+    // development's own site and shows a real exterior photo of the project
+    // (sourced from the respective sites, optimised to webp).
     $projects = [
-        ['name' => 'Keila Park Residence', 'url' => 'https://keilaresidence.estlanda.ee/'],
-        ['name' => 'Nõmmeliiva kodud',     'url' => 'https://nommeliiva.ee/'],
-        ['name' => 'Raime ridaelamud',     'url' => 'https://raime-ridaelamud.estlanda.ee/'],
+        ['name' => 'Keila Park Residence', 'url' => 'https://keilaresidence.estlanda.ee/',   'img' => 'keila.webp'],
+        ['name' => 'Nõmmeliiva kodud',     'url' => 'https://nommeliiva.estlanda.ee/',        'img' => 'nommeliiva.webp'],
+        ['name' => 'Kakumäe Residence',    'url' => 'https://kakumae.com/',                   'img' => 'kakumae.webp'],
     ];
 @endphp
 
@@ -83,13 +85,19 @@
         {{-- Other Estlanda projects --}}
         <div style="margin-top:48px;">
             <h2 style="font-size:22px;color:#1d2430;margin:0 0 18px;">{{ $t['projects_title'] }}</h2>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;">
                 @foreach($projects as $pr)
                     <a href="{{ $pr['url'] }}" target="_blank" rel="noopener noreferrer"
-                       style="display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #e7e9ee;border-radius:12px;padding:18px 20px;text-decoration:none;color:#1d2430;font-weight:700;font-size:15px;transition:border-color .15s;"
-                       onmouseover="this.style.borderColor='#c89443'" onmouseout="this.style.borderColor='#e7e9ee'">
-                        {{ $pr['name'] }}
-                        <span style="color:#c89443;">↗</span>
+                       style="display:block;border:1px solid #e7e9ee;border-radius:14px;overflow:hidden;text-decoration:none;color:#1d2430;transition:border-color .15s,box-shadow .15s;"
+                       onmouseover="this.style.borderColor='#c89443';this.style.boxShadow='0 12px 26px rgba(29,36,48,.12)'"
+                       onmouseout="this.style.borderColor='#e7e9ee';this.style.boxShadow='none'">
+                        <span style="display:block;aspect-ratio:16/10;overflow:hidden;background:#fbf8f3;">
+                            <img src="{{ asset('assets/magnoolia/developments/'.$pr['img']) }}" alt="{{ $pr['name'] }}"
+                                 loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;">
+                        </span>
+                        <span style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;font-weight:700;font-size:15px;">
+                            {{ $pr['name'] }}<span style="color:#c89443;">↗</span>
+                        </span>
                     </a>
                 @endforeach
             </div>

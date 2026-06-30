@@ -1,4 +1,4 @@
-﻿{{-- SOURCE: php-template/parts/home2/services.php | class: services-three section-space --}}
+{{-- SOURCE: php-template/parts/home2/services.php | class: services-three section-space --}}
     <section class="services-three section-space">
         <div class="container">
             <div class="sec-title text-center">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-lg-6 col-md-12 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="300ms">
                     <div class="service-card__image">
-                        <img src="{{ asset('assets/images/magnoolia/Interior 1.jpg') }}" alt="Magnoolia sisevaade" style="width:100%;height:347px;object-fit:cover;display:block;" loading="lazy" decoding="async">
+                        <img {!! mg_img('Interior 1.jpg', '(max-width:991px) 100vw, 520px') !!} alt="Magnoolia sisevaade" style="width:100%;height:347px;object-fit:cover;display:block;" loading="lazy" decoding="async">
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="100ms">
@@ -115,6 +115,24 @@
                         <div class="service-card__shape"></div>
                     </div>
                 </div>
+                @foreach([
+                    ['i'=>'icon-buildings',   'n'=>9,  'url'=>lroute('magnoolia.arhitektuur')],
+                    ['i'=>'icon-real-estate', 'n'=>10, 'url'=>lroute('magnoolia.arhitektuur')],
+                    ['i'=>'icon-house',       'n'=>11, 'url'=>lroute('magnoolia.arhitektuur')],
+                    ['i'=>'icon-labyrinth',   'n'=>12, 'url'=>lroute('magnoolia.homes')],
+                ] as $bi => $bc)
+                <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="{{ ($bi+1)*100 }}ms">
+                    <div class="service-card">
+                        <div class="service-card__icon-box"><span class="service-card__icon"><i class="{{ $bc['i'] }}"></i></span></div>
+                        <div class="service-card__content"><div class="service-card__content__inner">
+                            <h3 class="service-card__title"><a href="{{ $bc['url'] }}">{{ __('magnoolia.benefits.'.$bc['n'].'.title') }}</a></h3>
+                            <p class="service-card__text">{{ __('magnoolia.benefits.'.$bc['n'].'.text') }}</p>
+                            <a href="{{ $bc['url'] }}" class="service-card__link">{{ __('magnoolia.section.benefits_link') }}<i class="icon-angle-small-right"></i></a>
+                        </div></div>
+                        <div class="service-card__shape"></div>
+                    </div>
+                </div>
+                @endforeach
             </div>
         </div>
     </section>

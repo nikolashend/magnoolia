@@ -59,6 +59,18 @@
                                     'open_blank' => false,
                                 ],
                                 [
+                                    'label' => __('magnoolia.nav.interior'),
+                                    'href' => lroute('magnoolia.sisedisain'),
+                                    'route_name' => 'magnoolia.sisedisain',
+                                    'open_blank' => false,
+                                ],
+                                [
+                                    'label' => __('magnoolia.nav.building'),
+                                    'href' => lroute('magnoolia.construction'),
+                                    'route_name' => 'magnoolia.construction',
+                                    'open_blank' => false,
+                                ],
+                                [
                                     'label' => __('magnoolia.nav.developer'),
                                     'href' => lroute('magnoolia.developer'),
                                     'route_name' => 'magnoolia.developer',

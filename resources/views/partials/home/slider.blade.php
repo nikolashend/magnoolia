@@ -8,7 +8,7 @@
             @if(config('magnoolia.media.hero_video'))
                 <div class="main-slider-two__bg" style="background:none;overflow:hidden;">
                     <video
-                        poster="{{ asset('assets/images/magnoolia/Cam001.0000.jpg') }}"
+                        poster="{{ asset('assets/images/magnoolia/Cam001.0000-1600w.webp') }}"
                         autoplay muted loop playsinline
                         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"
                         aria-hidden="true"
