@@ -113,6 +113,10 @@
   </div>
 </section>
 
+{{-- ── Energiasäästlik + tehnosüsteemid (prepared client copy) ── --}}
+@include('sections.magnoolia.energiasaastlik')
+@include('sections.magnoolia.tehnosysteemid')
+
 {{-- ── Technical accordion ─────────────────────────────────── --}}
 <section class="mg-page-section mg-page-section--white">
   <div class="container">

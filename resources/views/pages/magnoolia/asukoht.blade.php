@@ -329,6 +329,9 @@
   </div>
 </section>
 
+{{-- ── Teenused ja vaba aeg (prepared client copy) ─────── --}}
+@include('sections.magnoolia.asukoht-details')
+
 {{-- ── Answer Unit (AI-citable) ──────────────────────── --}}
 @php
   $au = __('magnoolia.answer_unit.asukoht');

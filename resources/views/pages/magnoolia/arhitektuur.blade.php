@@ -126,6 +126,9 @@
   </div>
 </section>
 
+{{-- ── Planeering – disain – miljöö (prepared client copy) ──── --}}
+@include('sections.magnoolia.planeering-miljoo')
+
 {{-- ── More exterior renders ───────────────────────────────── --}}
 <section class="mg-page-section mg-page-section--white">
   <div class="container">

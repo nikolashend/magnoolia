@@ -16,6 +16,9 @@
     {{-- 4. ABOUT / Miks Magnoolia? / about-one section-space (index / home1/about.php) --}}
     @include('sections.approved.about-magnoolia-source')
 
+    {{-- 4b. INTRO NARRATIVE — prepared client copy "Eksklusiivsed A-energiaklassi ridaelamud" --}}
+    @include('sections.magnoolia.intro-narrative')
+
     {{-- 5. BENEFIT CARDS / services-three section-space (index-2 / home2/services.php) --}}
     @include('sections.approved.benefits-source')
 
