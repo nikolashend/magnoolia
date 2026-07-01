@@ -185,6 +185,9 @@
   </div>
 </section>
 
+{{-- ── Ostuprotsess ja hinnatingimused (prepared client copy) ── --}}
+@include('sections.magnoolia.kontakt-terms')
+
 {{-- ── Contact form (full-width) ──────────────────────────── --}}{{-- Answer unit above form --}}
 @php
   $au = __('magnoolia.answer_unit.kontakt');

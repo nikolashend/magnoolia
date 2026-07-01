@@ -145,7 +145,7 @@
               'Tikkurila Symphony Opus II L497',
               'Ukselink BETA SLIM — must / harjatud kroom / grafiit',
               'Puitliist 65×15, värvitud',
-              'Jung LS 990 mattvalge',
+              'Schneider Sedna lülitid ja pistikud',
               'Põrandakütte display',
               'Korteri fonotelefon (video intercom)',
               'IP20 / IP65 kohtvalgustid',
@@ -156,6 +156,9 @@
             </li>
             @endforeach
           </ul>
+          <p style="margin:14px 0 0;font-size:13px;color:#6f6a61;font-style:italic;line-height:1.55;">
+            {{ ['ru' => 'В пакете Delux можно выбрать розетки и выключатели в антрацитово-сером (графит) тоне.', 'en' => 'In the Delux package, sockets and switches can be chosen in an anthracite-grey (graphite) tone.'][app()->getLocale()] ?? 'Delux paketis on võimalik valida antratsiithall (grafiit) toonis pistikud ja lülitid.' }}
+          </p>
         </div>
       </div>
 
@@ -168,7 +171,10 @@
   </div>
 </section>
 
-{{-- ── Phase 26: Aet Piel — personaalne sisekujundus ──────── --}}
+{{-- ── Aet Piel — personaalne sisekujundus.
+     TEMPORARILY HIDDEN (no agreement with Aet Piel yet) — do NOT delete, re-enable later
+     by changing @if(false) back to @if(true). --}}
+@if(false)
 <section class="mg-page-section mg-page-section--cream">
   <div class="container">
     <div style="max-width:760px;margin:0 auto;background:#fff;border-radius:16px;padding:32px 36px;border:1px solid rgba(29,36,48,.08);display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;">
@@ -224,6 +230,8 @@
     </div>
   </div>
 </section>
+@endif
+{{-- /Aet Piel hidden --}}
 
 {{-- ── Interior gallery grid ───────────────────────────────── --}}
 <section class="mg-page-section mg-page-section--white" id="sisepildid">

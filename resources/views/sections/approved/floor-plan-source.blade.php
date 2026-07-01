@@ -24,12 +24,11 @@
     // looked like "no image" while loading). Display = light 1200w webp (~100 KB);
     // lightbox zoom + download = full-res webp (~830 KB, sharp).
     $fpDir = 'assets/images/magnoolia/';
-    $fp1   = 'PR03023_PP_AR-5-01_Esimese korruse plaan_page-0001';
-    $fp2   = 'PR03023_PP_AR-5-02_Teise korruse plaan_page-0001';
-    $floor1     = asset($fpDir.$fp1.'.webp');
-    $floor2     = asset($fpDir.$fp2.'.webp');
-    $floor1Disp = asset($fpDir.$fp1.'-1200w.webp');
-    $floor2Disp = asset($fpDir.$fp2.'-1200w.webp');
+    // Plaan A and Plaan B have distinct 1st- and 2nd-floor plans.
+    $floorA1 = asset($fpDir.'plan-a-1korrus.webp');  $floorA1Disp = asset($fpDir.'plan-a-1korrus-1200w.webp');
+    $floorA2 = asset($fpDir.'plan-a-2korrus.webp');  $floorA2Disp = asset($fpDir.'plan-a-2korrus-1200w.webp');
+    $floorB1 = asset($fpDir.'plan-b-1korrus.webp');  $floorB1Disp = asset($fpDir.'plan-b-1korrus-1200w.webp');
+    $floorB2 = asset($fpDir.'plan-b-2korrus.webp');  $floorB2Disp = asset($fpDir.'plan-b-2korrus-1200w.webp');
 
     $plans = [
         [
@@ -39,10 +38,10 @@
             'badge_css'  => 'mg-plan-badge--a',
             'desc'       => __('magnoolia.floorplan.plan_a_desc'),
             'units'      => $typeAUnits,
-            'floor1_src' => $floor1,
-            'floor2_src' => $floor2,
-            'floor1_disp'=> $floor1Disp,
-            'floor2_disp'=> $floor2Disp,
+            'floor1_src' => $floorA1,
+            'floor2_src' => $floorA2,
+            'floor1_disp'=> $floorA1Disp,
+            'floor2_disp'=> $floorA2Disp,
             'floor1_alt' => sprintf(__('magnoolia.floorplan.floor1_alt'), 'Plaan A'),
             'floor2_alt' => sprintf(__('magnoolia.floorplan.floor2_alt'), 'Plaan A'),
         ],
@@ -53,10 +52,10 @@
             'badge_css'  => 'mg-plan-badge--b',
             'desc'       => __('magnoolia.floorplan.plan_b_desc'),
             'units'      => $typeBUnits,
-            'floor1_src' => $floor1,
-            'floor2_src' => $floor2,
-            'floor1_disp'=> $floor1Disp,
-            'floor2_disp'=> $floor2Disp,
+            'floor1_src' => $floorB1,
+            'floor2_src' => $floorB2,
+            'floor1_disp'=> $floorB1Disp,
+            'floor2_disp'=> $floorB2Disp,
             'floor1_alt' => sprintf(__('magnoolia.floorplan.floor1_alt'), 'Plaan B'),
             'floor2_alt' => sprintf(__('magnoolia.floorplan.floor2_alt'), 'Plaan B'),
         ],

@@ -4224,13 +4224,15 @@ button.mg-faq-card__q[aria-expanded="true"] i {
   .main-header--two .main-menu .main-menu__list > li + li { margin-left: 12px; }
   .main-header--two .main-menu__list > li > a { font-size: 14px; }
 }
-/* "Ridaelamu mugavus. Eramaja privaatsus." card (about-two): frosted glass over the
-   render instead of a solid white box — same vibe as the hero eyebrow pill. */
+/* "Ridaelamu mugavus. Eramaja privaatsus." card (about-two): frosted glass —
+   NOT a solid white box, but not 100% transparent either (that left the text
+   unreadable over the render). Semi-transparent white + blur keeps it legible
+   while the render still shows through. Desktop only; on mobile the box is hidden. */
 .about-two__content::after {
-  background-color: rgba(255,255,255,.4) !important;
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,.6);
+  background-color: rgba(255,255,255,0) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+  backdrop-filter: blur(5px) !important;
+  border: 1px solid rgba(255,255,255,.8) !important;
 }
 .main-header__logo a {
   display: flex !important;

@@ -120,6 +120,8 @@
                     ['i'=>'icon-real-estate', 'n'=>10, 'url'=>lroute('magnoolia.arhitektuur')],
                     ['i'=>'icon-house',       'n'=>11, 'url'=>lroute('magnoolia.arhitektuur')],
                     ['i'=>'icon-labyrinth',   'n'=>12, 'url'=>lroute('magnoolia.homes')],
+                    ['i'=>'icon-garage',      'n'=>13, 'url'=>lroute('magnoolia.arhitektuur')],
+                    ['i'=>'icon-trophy',      'n'=>14, 'url'=>lroute('magnoolia.construction')],
                 ] as $bi => $bc)
                 <div class="col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="{{ ($bi+1)*100 }}ms">
                     <div class="service-card">

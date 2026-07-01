@@ -207,6 +207,8 @@ return [
         ['icon' => 'icon-real-estate', 'title' => 'Panoraamvaated',                  'text' => 'Maast laeni aknad, elutoa paralleellükandaknad terrassile ja klaasitud rõdud.'],
         ['icon' => 'icon-house',       'title' => '2,85 m kõrged laed',              'text' => 'Eluruumide kõrged laed loovad avarust, mida ridaelamust tavaliselt ei oota.'],
         ['icon' => 'icon-labyrinth',   'title' => 'Madal hoonestustihedus',          'text' => 'Vaid 19 kodu rahulikus looduskeskkonnas – piisavalt avarust, valgust ja privaatsust.'],
+        ['icon' => 'icon-garage',      'title' => 'Autovarjualune kahele',           'text' => 'Ägedad ribipostidel lahendusega varjualused, väline panipaik 5,3 m² ja elektriauto laadimisvalmidus.'],
+        ['icon' => 'icon-trophy',      'title' => 'Kompromissitu kvaliteet',         'text' => 'Piirdeaed, oma prügiaedik ja distantsilt avatav värav. Ehitusgarantii 2 aastat.'],
     ],
 
     /* Pricing table */
@@ -254,7 +256,7 @@ return [
             ['name' => 'Jahutus elutuba-köök tsoonis (Wind-Free 1-Way laekassett 3 kW, app-juhtimine)', 'price' => 2800],
             ['name' => 'Valvesignalisatsioon ja suitsuandurid (valvekeskus + lõppseadmed)', 'price' => 2500],
             ['name' => 'Valvesignalisatsiooni ja suitsuandurite kaabeldus (ilma lõppseadmeteta)', 'price' => 600],
-            ['name' => 'Videovalve 4 välikaameraga (HikVision) + fonojuhtimine appist', 'price' => 2000],
+            ['name' => 'Videovalve 4 välikaameraga (HikVision) + fonojuhtimine appist', 'price' => 2400],
             ['name' => 'Sauna siseviimistlus klaaslahendusega (lava, Harvia keris, LED)', 'price' => 3500],
             ['name' => 'WC valamukapp Nu40 + peegel (Balteco EC-seeria, 80 cm)', 'price' => 800],
             ['name' => 'Bilsey nutikodu lahendus (süsteemide juhtimine appist)', 'price' => 2500],
@@ -1010,7 +1012,7 @@ return [
                     'kicker' => 'Terrass',
                     'title'  => 'Privaatne terrass igale kodule',
                     'body'   => 'Iga Magnoolia kodu alumisel korrusel on terrassiväljapääs. Terrass on privaatseks kasutuseks. Mõõdud kinnitatakse projektis.',
-                    'list'   => ['Eraldiseisev sissepääs tänavalt', 'Terrass elutoa jätkuna', 'Kodude vahelised seinad privaatsuse tagamiseks'],
+                    'list'   => ['Eraldiseisev sissepääs tänavalt', 'Terrass elutoa jätkuna', 'Elutoa ägedad lükandaknad terrassile', 'Kodude vahelised seinad privaatsuse tagamiseks'],
                     'reverse'=> false,
                 ],
                 [
@@ -1024,9 +1026,9 @@ return [
                 [
                     'img'    => 'Cam004.0000.jpg',
                     'kicker' => 'Parkimine',
-                    'title'  => 'Parkimiskoht kodu juures',
-                    'body'   => 'Iga kodu juurde kuulub krundisisene parkimiskoht. Elektriautode laadimise ettevalmistus on kavandatud parkimislahenduse osana.',
-                    'list'   => ['Parkimiskoht kodu ees', 'EA-laadimise ettevalmistus (täpsustub)', 'Külaliste parkimislahendus väljatöötamisel'],
+                    'title'  => 'Kaks varjualusega parkimiskohta',
+                    'body'   => 'Iga kodu juurde kuulub kaks varjualusega parkimiskohta autovarjualuse all. Elektriautode laadimise ettevalmistus on kavandatud parkimislahenduse osana.',
+                    'list'   => ['2 varjualusega parkimiskohta iga kodu juures', 'EA-laadimise ettevalmistus (täpsustub)', 'Külaliste parkimislahendus väljatöötamisel'],
                     'reverse'=> false,
                 ],
             ],

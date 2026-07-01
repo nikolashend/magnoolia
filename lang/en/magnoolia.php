@@ -164,6 +164,8 @@ return [
         ['icon' => 'icon-real-estate', 'title' => 'Panoramic views',         'text' => 'Floor-to-ceiling windows, living-room sliding doors to the terrace and glazed balconies.'],
         ['icon' => 'icon-house',       'title' => '2.85 m high ceilings',    'text' => 'High living-space ceilings create a sense of space you rarely expect from a rowhouse.'],
         ['icon' => 'icon-labyrinth',   'title' => 'Low building density',    'text' => 'Just 19 homes in a calm natural setting — plenty of space, light and privacy.'],
+        ['icon' => 'icon-garage',      'title' => 'Carport for two cars',    'text' => 'Striking rib-post carports, an external storage room of 5.3 m² and readiness for EV charging.'],
+        ['icon' => 'icon-trophy',      'title' => 'Uncompromising quality',    'text' => 'A fence, your own waste enclosure and a remotely-openable gate. A 2-year construction warranty.'],
     ],
 
     /* Footer texts */
@@ -238,7 +240,7 @@ return [
             ['name' => 'Cooling for living-kitchen zone (Wind-Free 1-Way 3 kW, app control)', 'price' => 2800],
             ['name' => 'Security alarm and smoke detectors (panel + end devices)', 'price' => 2500],
             ['name' => 'Alarm & smoke-detector cabling only (no end devices)', 'price' => 600],
-            ['name' => 'Video surveillance, 4 outdoor cameras (HikVision) + door intercom via app', 'price' => 2000],
+            ['name' => 'Video surveillance, 4 outdoor cameras (HikVision) + door intercom via app', 'price' => 2400],
             ['name' => 'Sauna interior with glass solution (bench, Harvia heater, LED)', 'price' => 3500],
             ['name' => 'WC vanity unit Nu40 + mirror (Balteco EC, 80 cm)', 'price' => 800],
             ['name' => 'Bilsey smart-home solution (system control via app)', 'price' => 2500],
@@ -960,7 +962,7 @@ return [
                     'kicker' => 'Terrace',
                     'title'  => 'Private terrace for every home',
                     'body'   => 'Every Magnoolia home has a door from the ground floor to the terrace. The terrace is designed for private outdoor use. Dimensions are confirmed in the construction project.',
-                    'list'   => ['Separate entrance from the street', 'Terrace as an extension of the living room', 'Walls between homes for privacy'],
+                    'list'   => ['Separate entrance from the street', 'Terrace as an extension of the living room', 'Striking living-room sliding doors onto the terrace', 'Walls between homes for privacy'],
                     'reverse'=> false,
                 ],
                 [
@@ -974,9 +976,9 @@ return [
                 [
                     'img'    => 'Cam004.0000.jpg',
                     'kicker' => 'Parking',
-                    'title'  => 'Parking space by the home',
-                    'body'   => 'Every home includes a parking space on the plot. EV charging preparation is planned as part of the parking solution.',
-                    'list'   => ['Parking space in front of the home', 'EV charging preparation (to be confirmed)', 'Guest parking solution in development'],
+                    'title'  => 'Two covered parking spaces',
+                    'body'   => 'Every home includes two covered parking spaces under the carport. EV charging preparation is planned as part of the parking solution.',
+                    'list'   => ['2 covered parking spaces per home', 'EV charging preparation (to be confirmed)', 'Guest parking solution in development'],
                     'reverse'=> false,
                 ],
             ],

@@ -113,9 +113,11 @@
   </div>
 </section>
 
-{{-- ── Energiasäästlik + tehnosüsteemid (prepared client copy) ── --}}
-@include('sections.magnoolia.energiasaastlik')
-@include('sections.magnoolia.tehnosysteemid')
+{{-- ── Tehniline kirjeldus (prepared client copy from Ehitusinfo.xlsx) ── --}}
+@include('sections.magnoolia.ehitusinfo-spec-1')
+@include('sections.magnoolia.ehitusinfo-spec-2')
+@include('sections.magnoolia.ehitusinfo-spec-3')
+@include('sections.magnoolia.ehitusinfo-spec-4')
 
 {{-- ── Technical accordion ─────────────────────────────────── --}}
 <section class="mg-page-section mg-page-section--white">

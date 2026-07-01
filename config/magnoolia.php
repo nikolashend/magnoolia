@@ -98,7 +98,7 @@ return [
             ['name' => 'Jahutus elutuba-köök tsoonis, Wind-Free 1-Way laekassett 3 kW koos äpist juhtimisega', 'price' => 2800],
             ['name' => 'Valvesignalisatsiooni ja suitsuandurite kaabeldus koos valvekeskuse ja lõppseadmetega', 'price' => 2500],
             ['name' => 'Ainult valvesignalisatsiooni ja suitsuandurite kaabeldus ilma lõppseadmeteta', 'price' => 600],
-            ['name' => 'Videovalve 4 välikaameraga HikVision + fono juhtimine läbi appi', 'price' => 2000],
+            ['name' => 'Videovalve 4 välikaameraga HikVision + fono juhtimine läbi appi', 'price' => 2400],
             ['name' => 'Sauna siseviimistluse hinnalisa koos klaaslahendusega (platvorm lava, Harvia keris, LED-valgustus)', 'price' => 3500],
             ['name' => 'WC valamukapp Nu40 valamule ja peegel Balteco EC-seeria (80 cm)', 'price' => 800],
             ['name' => 'Bilsey nutikodu lahendus (kõikide süsteemide juhtimine appist)', 'price' => 2500],
