@@ -94,7 +94,7 @@
           "item": "{{ $canonicalBase }}"
         }
       ]
-    },
+    }@if(request()->routeIs('home', 'home.ru', 'home.en', '*magnoolia.kkk')),
     {
       "@@type": "FAQPage",
       "@@id": "{{ $canonicalBase }}/#faq",
@@ -172,7 +172,7 @@
           }
         }
       ]
-    }
+    }@endif
   ]
 }
 </script>

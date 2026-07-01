@@ -30,14 +30,24 @@
     };
 
     if ($hreflangBase === 'home' || $hreflangBase === '') {
-        $hreflangEt = $canonicalBase;
-        $hreflangRu = $canonicalBase . '/ru';
-        $hreflangEn = $canonicalBase . '/en';
+        $hreflangs = [
+            'et' => $canonicalBase,
+            'ru' => $canonicalBase . '/ru',
+            'en' => $canonicalBase . '/en',
+        ];
     } else {
-        $hreflangEt = $resolveAlt($hreflangBase);
-        $hreflangRu = $resolveAlt('ru.' . $hreflangBase);
-        $hreflangEn = $resolveAlt('en.' . $hreflangBase);
+        // Only emit hreflang for locales that actually have this page (single-locale
+        // SEO landing pages must NOT claim non-existent ru/en alternates).
+        $altRoutes = ['et' => $hreflangBase, 'ru' => 'ru.' . $hreflangBase, 'en' => 'en.' . $hreflangBase];
+        $hreflangs = [];
+        foreach ($altRoutes as $lc => $rn) {
+            if (\Illuminate\Support\Facades\Route::has($rn)) {
+                $hreflangs[$lc] = $resolveAlt($rn);
+            }
+        }
     }
+    // x-default → ET version when it exists, otherwise this page's own canonical (self).
+    $xDefault = $hreflangs['et'] ?? $canonicalUrl;
 
     $titles = [
         'et' => 'Magnoolia Kodud — A-energiaklassi ridaelamukodud Vaelas Tallinna lähedal',
@@ -82,8 +92,8 @@
 {{-- ── Canonical ────────────────────────────────────────────────── --}}
 <link rel="canonical" href="{{ $canonicalUrl }}">
 
-{{-- ── hreflang ─────────────────────────────────────────────────── --}}
-<link rel="alternate" hreflang="et"        href="{{ $hreflangEt }}">
-<link rel="alternate" hreflang="ru"        href="{{ $hreflangRu }}">
-<link rel="alternate" hreflang="en"        href="{{ $hreflangEn }}">
-<link rel="alternate" hreflang="x-default" href="{{ $hreflangEt }}">
+{{-- ── hreflang (only locales that actually have this page) ───────── --}}
+@foreach($hreflangs as $hl => $hlUrl)
+<link rel="alternate" hreflang="{{ $hl }}" href="{{ $hlUrl }}">
+@endforeach
+<link rel="alternate" hreflang="x-default" href="{{ $xDefault }}">

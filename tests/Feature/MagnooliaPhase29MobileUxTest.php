@@ -23,8 +23,10 @@ class MagnooliaPhase29MobileUxTest extends TestCase
     public function test_homes_page_has_mobile_card_fallback(): void
     {
         $html = $this->get('/kodud-ja-hinnad')->assertStatus(200)->getContent();
-        $this->assertStringContainsString('d-lg-none', $html, 'Mobile card container must exist');
-        $this->assertStringContainsString('mg-unit-card', $html);
+        $this->assertStringContainsString('d-lg-none', $html, 'Mobile layout container must exist');
+        // Phase 36: the tall mobile cards were replaced by a compact, desktop-style
+        // table — each home is now a tappable `mg-unit-mrow` inside `mg-mtable`.
+        $this->assertStringContainsString('mg-unit-mrow', $html);
     }
 
     public function test_modal_is_accessible_dialog(): void

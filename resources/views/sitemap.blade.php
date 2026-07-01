@@ -127,4 +127,33 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="{{ $base }}/{{ $slug }}"/>
   </url>
 @endforeach
+@php
+  // Phase 34.2 — single-locale SEO / Google Ads landing pages.
+  // These have no cross-locale equivalents, so no xhtml:link alternates.
+  $landingEt = [
+    'ridaelamud-harjumaa', 'ridamajad-harjumaa', 'uusarendus-kiili', 'uusarendus-harjumaa',
+    'uus-kodu-tallinna-lahedal', 'maja-muuk-harjumaa', 'a-energiaklassi-ridaelamud',
+    'perekodu-tallinna-lahedal', 'ridaelamu-oma-hooviga', 'ridaelamu-vaela-kula',
+  ];
+  $landingIntl = [
+    'en/new-townhouses-near-tallinn', 'en/terraced-houses-harju-county',
+    'ru/taunhaus-rjadom-s-tallinnom', 'ru/novyj-dom-v-harjumaa',
+  ];
+@endphp
+@foreach($landingEt as $lp)
+  <url>
+    <loc>{{ $base }}/{{ $lp }}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <lastmod>{{ now()->toDateString() }}</lastmod>
+  </url>
+@endforeach
+@foreach($landingIntl as $lp)
+  <url>
+    <loc>{{ $base }}/{{ $lp }}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>{{ now()->toDateString() }}</lastmod>
+  </url>
+@endforeach
 </urlset>

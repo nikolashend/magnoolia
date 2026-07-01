@@ -83,6 +83,44 @@
         </div>{{-- /.mg-footer__grid --}}
     </div>
 
+    {{-- Populaarsed otsingud — internal linking to Phase 34.2 SEO landing pages.
+         Locale-aware: ET landings on ET, EN on EN, RU on RU (routes are single-locale). --}}
+    @php
+        $mgLoc = app()->getLocale();
+        $popular = match ($mgLoc) {
+            'ru' => [
+                ['Таунхаусы рядом с Таллином', 'ru.magnoolia.lp.taunhaus-rjadom-s-tallinnom'],
+                ['Новый дом в Харьюмаа', 'ru.magnoolia.lp.novyj-dom-v-harjumaa'],
+            ],
+            'en' => [
+                ['New townhouses near Tallinn', 'en.magnoolia.lp.new-townhouses-near-tallinn'],
+                ['Terraced houses in Harju County', 'en.magnoolia.lp.terraced-houses-harju-county'],
+            ],
+            default => [
+                ['Ridaelamud Harjumaal', 'magnoolia.lp.ridaelamud-harjumaa'],
+                ['Ridamajad Harjumaal', 'magnoolia.lp.ridamajad-harjumaa'],
+                ['Uusarendus Kiili vallas', 'magnoolia.lp.uusarendus-kiili'],
+                ['Uusarendus Harjumaal', 'magnoolia.lp.uusarendus-harjumaa'],
+                ['A-energiaklassi ridaelamud', 'magnoolia.lp.a-energiaklassi-ridaelamud'],
+                ['Uus kodu Tallinna lähedal', 'magnoolia.lp.uus-kodu-tallinna-lahedal'],
+                ['Perekodu Tallinna lähedal', 'magnoolia.lp.perekodu-tallinna-lahedal'],
+                ['Ridaelamu oma hooviga', 'magnoolia.lp.ridaelamu-oma-hooviga'],
+                ['Ridaelamukodud Vaela külas', 'magnoolia.lp.ridaelamu-vaela-kula'],
+            ],
+        };
+        $popularTitle = ['ru' => 'Популярные запросы', 'en' => 'Popular searches'][$mgLoc] ?? 'Populaarsed otsingud';
+    @endphp
+    <div class="mg-container" style="padding-top:22px;">
+        <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:18px;">
+            <span style="display:block;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;">{{ $popularTitle }}</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px 10px;">
+                @foreach($popular as [$label, $rn])
+                    <a href="{{ route($rn) }}" style="font-size:12.5px;color:rgba(255,255,255,.6);text-decoration:none;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:6px 14px;transition:color .2s,background .2s;" onmouseover="this.style.color='#fff';this.style.background='rgba(200,148,67,.22)'" onmouseout="this.style.color='rgba(255,255,255,.6)';this.style.background='rgba(255,255,255,.06)'">{{ $label }}</a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
     {{-- Estlanda developer trust bar --}}
     @if(file_exists(public_path('assets/magnoolia/logos/estlanda-2.webp')))
     <div class="mg-container" style="padding-top:24px;padding-bottom:8px;border-top:1px solid rgba(255,255,255,.08);">

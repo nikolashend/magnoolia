@@ -244,6 +244,21 @@ class MagnooliaController extends Controller
         return view('pages.magnoolia.finantseerimine', compact('page'));
     }
 
+    /**
+     * GET — Phase 34.2 SEO/Ads commercial landing pages.
+     * The exact Blade is selected via the route default 'lpview'
+     * (e.g. 'ridaelamud-harjumaa' → pages/magnoolia/landing/ridaelamud-harjumaa.blade.php,
+     *  'en.new-townhouses-near-tallinn' → pages/magnoolia/landing/en/new-townhouses-near-tallinn.blade.php).
+     * Self-contained dev-managed pages — no DB content, no price_cents exposure.
+     */
+    public function landing(\Illuminate\Http\Request $request)
+    {
+        $view = $request->route()->defaults['lpview'] ?? null;
+        abort_unless(is_string($view) && view()->exists('pages.magnoolia.landing.' . $view), 404);
+
+        return view('pages.magnoolia.landing.' . $view);
+    }
+
     /** GET /kkk */
     public function faq()
     {

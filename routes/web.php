@@ -48,6 +48,32 @@ Route::get('/privaatsus',       [MagnooliaController::class, 'privacy'])       -
 Route::get('/tingimused',       [MagnooliaController::class, 'terms'])         ->name('magnoolia.terms');
 Route::get('/arendajast',       [MagnooliaController::class, 'developer'])     ->name('magnoolia.developer');
 
+// ── Phase 34.2: SEO / Google Ads commercial landing pages (ET, indexable) ────
+$mgLandingsEt = [
+    'ridaelamud-harjumaa', 'ridamajad-harjumaa', 'uusarendus-kiili', 'uusarendus-harjumaa',
+    'uus-kodu-tallinna-lahedal', 'maja-muuk-harjumaa', 'a-energiaklassi-ridaelamud',
+    'perekodu-tallinna-lahedal', 'ridaelamu-oma-hooviga', 'ridaelamu-vaela-kula',
+];
+foreach ($mgLandingsEt as $_slug) {
+    Route::get('/' . $_slug, [MagnooliaController::class, 'landing'])
+        ->defaults('lpview', $_slug)
+        ->name('magnoolia.lp.' . $_slug);
+}
+
+// EN / RU buyer-intent landing pages (standalone, single-locale)
+$mgLandingsIntl = [
+    'en/new-townhouses-near-tallinn'  => 'en.new-townhouses-near-tallinn',
+    'en/terraced-houses-harju-county' => 'en.terraced-houses-harju-county',
+    'ru/taunhaus-rjadom-s-tallinnom'  => 'ru.taunhaus-rjadom-s-tallinnom',
+    'ru/novyj-dom-v-harjumaa'         => 'ru.novyj-dom-v-harjumaa',
+];
+foreach ($mgLandingsIntl as $_path => $_view) {
+    $_loc = explode('/', $_path)[0];
+    Route::get('/' . $_path, [MagnooliaController::class, 'landing'])
+        ->defaults('lpview', $_view)
+        ->name($_loc . '.magnoolia.lp.' . substr($_view, strlen($_loc) + 1));
+}
+
 // ── Locale prefix groups: /ru/... and /en/... ────────────────────────────────
 foreach (['ru', 'en'] as $_loc) {
     Route::prefix($_loc)

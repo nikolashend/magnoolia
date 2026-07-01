@@ -145,6 +145,42 @@
             cta:         target.textContent.trim().slice(0, 80)
         });
     });
+    // Phase 34.2 — phone/email (primary conversions), data-mg-analytics CTAs, scroll depth.
+    // All guarded so a missing GTM container can never throw a JS error.
+    document.addEventListener('click', function(e) {
+        try {
+            var a = e.target.closest('a[href^="tel:"], a[href^="mailto:"], [data-mg-analytics]');
+            if (!a) return;
+            var href = a.getAttribute('href') || '';
+            var isTel = href.indexOf('tel:') === 0, isMail = href.indexOf('mailto:') === 0;
+            if (!isTel && !isMail && a.hasAttribute('data-event')) return; // already tracked above
+            var ev = isTel ? 'phone_click' : isMail ? 'email_click' : (a.dataset.mgAnalytics || 'cta_click');
+            window.dataLayer.push({
+                event: ev,
+                page_locale: document.documentElement.lang || null,
+                page_url: window.location.href,
+                cta: (a.textContent || '').trim().slice(0, 80),
+                source_component: a.dataset.sourceComponent || null
+            });
+        } catch (err) {}
+    });
+    (function() {
+        var fired = {};
+        function onScroll() {
+            try {
+                var h = document.documentElement;
+                var pct = (h.scrollTop + window.innerHeight) / (h.scrollHeight || 1) * 100;
+                [50, 90].forEach(function(t) {
+                    if (pct >= t && !fired[t]) {
+                        fired[t] = true;
+                        window.dataLayer.push({ event: 'scroll_' + t, page_url: window.location.href });
+                    }
+                });
+                if (fired[50] && fired[90]) window.removeEventListener('scroll', onScroll);
+            } catch (err) {}
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+    })();
     // Form events
     (function() {
         var form = document.querySelector('form[data-event="contact_form_start"]');

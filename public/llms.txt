@@ -1,6 +1,6 @@
 # Magnoolia Kodud — LLM Reference File
 # https://magnoolia.ee/llms.txt
-# Last updated: 2026-06-11 (Phase 28)
+# Last updated: 2026-07-01 (Phase 34.2)
 
 ## Brand
 Name: Magnoolia Kodud
@@ -55,6 +55,23 @@ Company: Estlanda Ehitus OÜ
 /kodud-ja-hinnad — all 19 homes, floor plans, prices
 /asendiplaan — site plan showing home placement, interactive unit discovery
 /vordle — unit comparison page (up to 3 homes side by side)
+
+## SEO / commercial landing pages (Phase 34.2 — buyer-intent entry pages)
+/ridaelamud-harjumaa — A-energy townhouses (ridaelamu) in Harju County
+/ridamajad-harjumaa — townhouses (ridamaja synonym) in Harju County
+/uusarendus-kiili — new development in Kiili municipality (Vaela village)
+/uusarendus-harjumaa — new development in Harju County near Tallinn
+/uus-kodu-tallinna-lahedal — new home near Tallinn (apartment-to-townhouse move)
+/maja-muuk-harjumaa — house-like comfort in a townhouse, Harju County
+/a-energiaklassi-ridaelamud — A-energy-class townhouses (energy efficiency)
+/perekodu-tallinna-lahedal — family home near Tallinn
+/ridaelamu-oma-hooviga — townhouse with a private yard
+/ridaelamu-vaela-kula — townhouses in Vaela village, Kiili municipality
+/en/new-townhouses-near-tallinn — EN: new townhouses near Tallinn
+/en/terraced-houses-harju-county — EN: terraced houses in Harju County
+/ru/taunhaus-rjadom-s-tallinnom — RU: townhouses near Tallinn
+/ru/novyj-dom-v-harjumaa — RU: new home in Harju County
+Note: these are buyer-intent landing pages; the canonical price/availability source is /kodud-ja-hinnad.
 
 ## Unit pages (Phase 25 — individual home detail pages)
 /kodud/magnoolia-tee-1-1 — Magnoolia tee 1/1, 5 rooms, 129.6 m², private yard 959.7 m², stage I
