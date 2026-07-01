@@ -60,6 +60,14 @@ foreach ($mgLandingsEt as $_slug) {
         ->name('magnoolia.lp.' . $_slug);
 }
 
+// Phase 34.3: location hub pages (ET, indexable) — /asukoht/{hub}
+$mgLocationHubs = ['vaela-kula', 'kiili-vald', 'tallinna-lahedal'];
+foreach ($mgLocationHubs as $_h) {
+    Route::get('/asukoht/' . $_h, [MagnooliaController::class, 'landing'])
+        ->defaults('lpview', 'asukoht.' . $_h)
+        ->name('magnoolia.hub.' . $_h);
+}
+
 // EN / RU buyer-intent landing pages (standalone, single-locale)
 $mgLandingsIntl = [
     'en/new-townhouses-near-tallinn'  => 'en.new-townhouses-near-tallinn',

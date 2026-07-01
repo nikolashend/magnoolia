@@ -34,6 +34,10 @@ class MagnooliaPhase342LandingTest extends TestCase
             ['/en/terraced-houses-harju-county', 'en'],
             ['/ru/taunhaus-rjadom-s-tallinnom', 'ru'],
             ['/ru/novyj-dom-v-harjumaa', 'ru'],
+            // Phase 34.3 — location hubs (ET)
+            ['/asukoht/vaela-kula', 'et'],
+            ['/asukoht/kiili-vald', 'et'],
+            ['/asukoht/tallinna-lahedal', 'et'],
         ];
     }
 

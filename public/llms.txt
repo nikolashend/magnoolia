@@ -73,6 +73,11 @@ Company: Estlanda Ehitus OÜ
 /ru/novyj-dom-v-harjumaa — RU: new home in Harju County
 Note: these are buyer-intent landing pages; the canonical price/availability source is /kodud-ja-hinnad.
 
+## Location hub pages (Phase 34.3 — local SEO)
+/asukoht/vaela-kula — Vaela village context (Kiili municipality, near Tallinn)
+/asukoht/kiili-vald — Kiili municipality: schools, sport, services, leisure
+/asukoht/tallinna-lahedal — proximity to Tallinn (commute, green environment)
+
 ## Unit pages (Phase 25 — individual home detail pages)
 /kodud/magnoolia-tee-1-1 — Magnoolia tee 1/1, 5 rooms, 129.6 m², private yard 959.7 m², stage I
 /kodud/magnoolia-tee-1-2 — Magnoolia tee 1/2, 4 rooms, 129.2 m², private yard 513.2 m², stage I

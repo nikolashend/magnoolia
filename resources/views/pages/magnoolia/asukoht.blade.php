@@ -332,6 +332,19 @@
 {{-- ── Teenused ja vaba aeg (prepared client copy) ─────── --}}
 @include('sections.magnoolia.asukoht-details')
 
+{{-- Piirkonna teemalehed — Phase 34.3 location hubs (ET-only routes) --}}
+@if(app()->getLocale() === 'et')
+<section class="mg-page-section--cream mg-page-section--sm">
+  <div class="container">
+    <div class="mg-internal-links">
+      <a href="{{ route('magnoolia.hub.vaela-kula') }}" class="mg-internal-link"><i class="fas fa-map-marker-alt"></i> Vaela küla</a>
+      <a href="{{ route('magnoolia.hub.kiili-vald') }}" class="mg-internal-link"><i class="fas fa-map"></i> Kiili vald</a>
+      <a href="{{ route('magnoolia.hub.tallinna-lahedal') }}" class="mg-internal-link"><i class="fas fa-city"></i> Tallinna lähedal</a>
+    </div>
+  </div>
+</section>
+@endif
+
 {{-- ── Answer Unit (AI-citable) ──────────────────────── --}}
 @php
   $au = __('magnoolia.answer_unit.asukoht');

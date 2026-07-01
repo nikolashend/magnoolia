@@ -134,6 +134,7 @@
     'ridaelamud-harjumaa', 'ridamajad-harjumaa', 'uusarendus-kiili', 'uusarendus-harjumaa',
     'uus-kodu-tallinna-lahedal', 'maja-muuk-harjumaa', 'a-energiaklassi-ridaelamud',
     'perekodu-tallinna-lahedal', 'ridaelamu-oma-hooviga', 'ridaelamu-vaela-kula',
+    'asukoht/vaela-kula', 'asukoht/kiili-vald', 'asukoht/tallinna-lahedal',
   ];
   $landingIntl = [
     'en/new-townhouses-near-tallinn', 'en/terraced-houses-harju-county',
