@@ -344,20 +344,28 @@
     @endif
 
     @if(request()->boolean('box_grid'))
-    {{-- Phase 35 PER-HOME BOX editor over the MAIN perspective view (3.jpg):
-         /asendiplaan?box_grid=1 — pick a home, click its box corners, Save, repeat
-         for all 19, then Copy and paste into
-         config/magnoolia_hotspots.php → 'perspective_boxes' => ['secondary' => [ … ]]. --}}
+    {{-- Phase 35 PER-HOME BOX editor over a perspective view:
+         /asendiplaan?box_grid=1                  → traces "Üldvaade"  (key secondary)
+         /asendiplaan?box_grid=1&box_view=primary → traces "Teine vaade" (key primary)
+         Pick a home, click its box corners, Save, repeat for all 19, then Copy and
+         paste into config/magnoolia_hotspots.php → 'perspective_boxes' => ['{key}' => [ … ]].
+         The picker preloads that view's existing boxes so you can refine, not restart. --}}
     @php
       $boxHomes = collect($rows)->flatMap(fn($r)=>collect($r['homes'])->map(fn($h)=>[
         'key'=>$h['asset_key'], 'label'=>$h['display_address'],
       ]))->values()->all();
-      $boxMainKey = collect($views)->first()['key'] ?? 'secondary'; // current main view key
+      // Which VIEW to trace boxes on: ?box_view=primary edits "Teine vaade",
+      // otherwise the first view ("Üldvaade" / secondary). The picker shows that
+      // view's render and writes config under perspective_boxes.{key}.
+      $boxViewSel   = collect($viewsJs)->firstWhere('key', request()->query('box_view'));
+      $boxMainKey   = $boxViewSel['key']    ?? (collect($views)->first()['key'] ?? 'secondary');
+      $boxImgSrc    = $boxViewSel['src']    ?? $persSrc;
+      $boxImgSrcset = $boxViewSel['srcset'] ?? $persSrcset;
     @endphp
     {{-- Wide breakout so the 3D render is as large as possible for precise tracing. --}}
     <div class="mg-mp__map-picker" style="margin-top:20px;width:min(96vw,1700px);position:relative;left:50%;transform:translateX(-50%);">
       <div class="mg-mp__map-picker-stage" id="mg-box-stage" style="position:relative;width:100%;">
-        <img src="{{ $persSrc }}" @if($persSrcset) srcset="{{ $persSrcset }}" @endif alt="" decoding="async" style="width:100%;display:block;">
+        <img src="{{ $boxImgSrc }}" @if($boxImgSrcset) srcset="{{ $boxImgSrcset }}" @endif alt="" decoding="async" style="width:100%;display:block;">
         <svg class="mg-mp__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
              style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;">
           @for($i = 1; $i < 20; $i++)
@@ -535,8 +543,11 @@
   .mg-z--sold      { fill:#9a948a !important; }
   .mg-z--tbc       { fill:#9c27b0 !important; }
   /* Desktop inline plots: subtle status tint; selected = stronger + white outline. */
-  .mg-mp__zone--home { fill-opacity:.10; transition:fill-opacity .15s; }
+  .mg-mp__zone--home { fill-opacity:.10; transition:fill-opacity .15s, stroke .15s; }
   .mg-mp__imgwrap:hover .mg-mp__zone--home { fill-opacity:.20; }
+  /* Hovering a single plot (or its address pill — JS mirrors is-hover onto both)
+     lights up just that house's polygon, above the ambient hover tint. */
+  .mg-mp__zone--home.is-hover, .mg-mp__zone--home:hover { fill-opacity:.44 !important; stroke:#fff !important; stroke-width:1 !important; }
   .mg-mp__zone--home.is-active { fill-opacity:.52 !important; stroke:#fff !important; stroke-width:1.4 !important; }
   /* Mobile fullscreen clickable plot zones. */
   .mg-mp-fs__svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
