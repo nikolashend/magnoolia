@@ -4668,3 +4668,10 @@ button.mg-faq-card__q[aria-expanded="true"] i {
   .search-popup__overlay,
   .header-right-sidebar__overlay { cursor: auto !important; }
 }
+/* Hide the theme's JS cursor-follower (gold ring + dot that trails the mouse,
+   .custom-cursor__cursor / __cursor-two) where there is no mouse — otherwise it
+   sits stuck on the page in mobile/touch views. */
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor__cursor,
+  .custom-cursor__cursor-two { display: none !important; }
+}

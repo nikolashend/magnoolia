@@ -345,7 +345,9 @@
     // plot zones (all homes) + pin fallback when the open home has no polygon
     var hasPoly = h.mappoly && h.mappoly.length > 2;
     renderHdMapZones(h.key);
-    resetHdZoom(); // each home opens at 1× so it never stays zoomed/scrolled off
+    // Reset zoom only on a FRESH open; keep the current zoom/scroll when the user
+    // picks another plot from the map inside the already-open modal.
+    if (!wasOpen) resetHdZoom();
     var marker = document.getElementById('mg-hd-marker');
     if (marker && !hasPoly && h.mx != null && h.my != null) {
       marker.style.left = (h.mx * 100) + '%';
