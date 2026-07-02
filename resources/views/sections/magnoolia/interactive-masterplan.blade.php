@@ -25,10 +25,10 @@
 
   // Phase 30.1 — perspective view switcher set (primary is hotspot-calibrated)
   $views   = $rhs->perspectiveViews();
-  // TEMP: hide the "Teine vaade" (primary) and "Õhtuvaade" (dusk) tabs on
-  // production while their boxes are being calibrated — keep all views on local.
+  // TEMP: hide only the "Õhtuvaade" (dusk) tab on production — "Üldvaade" and
+  // "Teine vaade" are both shown. All views remain available on local.
   if (! app()->environment('local')) {
-    $views = collect($views)->reject(fn ($v) => in_array($v['key'] ?? '', ['primary', 'dusk'], true))->values()->all();
+    $views = collect($views)->reject(fn ($v) => in_array($v['key'] ?? '', ['dusk'], true))->values()->all();
   }
   $viewsJs = collect($views)->map(function ($v) use ($av) {
     $img = $v['image'] ?? [];
@@ -367,23 +367,35 @@
       // view's render and writes config under perspective_boxes.{key}.
       $boxViewSel   = collect($viewsJs)->firstWhere('key', request()->query('box_view'));
       $boxMainKey   = $boxViewSel['key']    ?? (collect($views)->first()['key'] ?? 'secondary');
-      $boxImgSrc    = $boxViewSel['src']    ?? $persSrc;
-      $boxImgSrcset = $boxViewSel['srcset'] ?? $persSrcset;
+      // Full-res render (base = 4000px) for the picker, with NO srcset, so zooming
+      // in stays sharp instead of upscaling a small responsive variant.
+      $boxImgFull   = $boxViewSel['full']   ?? (asset($pers['base'] ?? $pers['2048'] ?? $pers['1280'] ?? '') . $av);
     @endphp
     {{-- Wide breakout so the 3D render is as large as possible for precise tracing. --}}
     <div class="mg-mp__map-picker" style="margin-top:20px;width:min(96vw,1700px);position:relative;left:50%;transform:translateX(-50%);">
-      <div class="mg-mp__map-picker-stage" id="mg-box-stage" style="position:relative;width:100%;">
-        <img src="{{ $boxImgSrc }}" @if($boxImgSrcset) srcset="{{ $boxImgSrcset }}" @endif alt="" decoding="async" style="width:100%;display:block;">
-        <svg class="mg-mp__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
-             style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;">
-          @for($i = 1; $i < 20; $i++)
-            <line x1="{{ $i*5 }}" y1="0" x2="{{ $i*5 }}" y2="100" stroke="#ffd24a" stroke-opacity=".35" stroke-width=".08"/>
-            <line x1="0" y1="{{ $i*5 }}" x2="100" y2="{{ $i*5 }}" stroke="#ffd24a" stroke-opacity=".35" stroke-width=".08"/>
-          @endfor
-        </svg>
-        <div id="mg-box-pick" style="position:absolute;inset:0;z-index:5;cursor:crosshair;"></div>
-        <svg id="mg-box-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
-             style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:6;overflow:visible;"></svg>
+      {{-- Zoom viewport: clips the stage; the stage (image + grid + click layer +
+           polygons) is scaled/panned as ONE transform, so normalized 0–1 click
+           coords stay correct at any zoom. Wheel = zoom to cursor, drag = pan. --}}
+      <div id="mg-box-vp" style="position:relative;overflow:hidden;touch-action:none;">
+        <div class="mg-mp__map-picker-stage" id="mg-box-stage" style="position:relative;width:100%;transform-origin:0 0;will-change:transform;">
+          <img src="{{ $boxImgFull }}" alt="" decoding="async" style="width:100%;display:block;">
+          <svg class="mg-mp__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
+               style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;">
+            @for($i = 1; $i < 20; $i++)
+              <line x1="{{ $i*5 }}" y1="0" x2="{{ $i*5 }}" y2="100" stroke="#ffd24a" stroke-opacity=".35" stroke-width=".08"/>
+              <line x1="0" y1="{{ $i*5 }}" x2="100" y2="{{ $i*5 }}" stroke="#ffd24a" stroke-opacity=".35" stroke-width=".08"/>
+            @endfor
+          </svg>
+          <div id="mg-box-pick" style="position:absolute;inset:0;z-index:5;cursor:crosshair;"></div>
+          <svg id="mg-box-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
+               style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:6;overflow:visible;"></svg>
+        </div>
+        <div style="position:absolute;top:8px;right:8px;z-index:10;display:flex;gap:6px;">
+          <button type="button" id="mg-box-zin" class="mg-btn mg-btn--ghost" style="width:34px;height:34px;padding:0;font-size:18px;line-height:1;background:rgba(29,36,48,.86);color:#fff;">+</button>
+          <button type="button" id="mg-box-zout" class="mg-btn mg-btn--ghost" style="width:34px;height:34px;padding:0;font-size:20px;line-height:1;background:rgba(29,36,48,.86);color:#fff;">&minus;</button>
+          <button type="button" id="mg-box-zreset" class="mg-btn mg-btn--ghost" style="width:34px;height:34px;padding:0;font-size:15px;line-height:1;background:rgba(29,36,48,.86);color:#fff;" title="Lähtesta suum">&#x21ba;</button>
+        </div>
+        <div id="mg-box-zlabel" style="position:absolute;left:8px;bottom:8px;z-index:10;background:rgba(29,36,48,.82);color:#fff;font-size:11px;font-weight:600;padding:4px 9px;border-radius:8px;pointer-events:none;">rull = suum · lohista = liiguta · klõps = punkt · 1.0×</div>
       </div>
       <div class="mg-mp__picker" id="mg-box-panel" style="margin-top:12px;">
         <div class="mg-mp__picker-row" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
@@ -420,6 +432,53 @@
       var TOTAL = {{ count($boxHomes) }};
       var boxes = {};   // key -> [[x,y], ...]
       var cur = [];     // current points
+
+      // ── Zoom & pan ────────────────────────────────────────────────────────
+      // The whole stage (image + grid + click layer + polygons) is transformed as
+      // one, so click→normalized-coord math is unchanged: getBoundingClientRect on
+      // the click layer already reflects the scaled/panned rect.
+      var vp = document.getElementById('mg-box-vp');
+      var stage = document.getElementById('mg-box-stage');
+      var zlabel = document.getElementById('mg-box-zlabel');
+      var zs = 1, ztx = 0, zty = 0, ZMIN = 1, ZMAX = 12;
+      function clampPan() {
+        var W = vp.clientWidth, H = vp.clientHeight;
+        ztx = Math.min(0, Math.max(W - W * zs, ztx));
+        zty = Math.min(0, Math.max(H - H * zs, zty));
+      }
+      function applyT() {
+        clampPan();
+        stage.style.transform = 'translate(' + ztx + 'px,' + zty + 'px) scale(' + zs + ')';
+        if (zlabel) zlabel.textContent = 'rull = suum · lohista = liiguta · klõps = punkt · ' + zs.toFixed(1) + '×';
+      }
+      function zoomAt(cx, cy, ns) {
+        ns = Math.min(ZMAX, Math.max(ZMIN, ns));
+        var ix = (cx - ztx) / zs, iy = (cy - zty) / zs;
+        zs = ns; ztx = cx - ix * zs; zty = cy - iy * zs; applyT();
+      }
+      vp.addEventListener('wheel', function (e) {
+        e.preventDefault();
+        var r = vp.getBoundingClientRect();
+        zoomAt(e.clientX - r.left, e.clientY - r.top, zs * (e.deltaY < 0 ? 1.15 : 1 / 1.15));
+      }, { passive: false });
+      document.getElementById('mg-box-zin').addEventListener('click', function () { zoomAt(vp.clientWidth / 2, vp.clientHeight / 2, zs * 1.4); });
+      document.getElementById('mg-box-zout').addEventListener('click', function () { zoomAt(vp.clientWidth / 2, vp.clientHeight / 2, zs / 1.4); });
+      document.getElementById('mg-box-zreset').addEventListener('click', function () { zs = 1; ztx = 0; zty = 0; applyT(); });
+      // Drag = pan; a near-still press = a point click (guarded below).
+      var panning = false, panMoved = false, psx = 0, psy = 0, plx = 0, ply = 0;
+      pick.addEventListener('pointerdown', function (e) {
+        panning = true; panMoved = false; psx = plx = e.clientX; psy = ply = e.clientY;
+        try { pick.setPointerCapture(e.pointerId); } catch (err) {}
+      });
+      pick.addEventListener('pointermove', function (e) {
+        if (!panning) return;
+        if (Math.hypot(e.clientX - psx, e.clientY - psy) > 4) { panMoved = true; pick.style.cursor = 'grabbing'; }
+        if (panMoved) { ztx += e.clientX - plx; zty += e.clientY - ply; applyT(); }
+        plx = e.clientX; ply = e.clientY;
+      });
+      function endPan(e) { panning = false; pick.style.cursor = 'crosshair'; try { pick.releasePointerCapture(e.pointerId); } catch (err) {} }
+      pick.addEventListener('pointerup', endPan);
+      pick.addEventListener('pointercancel', endPan);
 
       function centroid(pts) {
         var x = 0, y = 0; pts.forEach(function (p) { x += p[0]; y += p[1]; });
@@ -463,6 +522,7 @@
         out.value = "'perspective_boxes' => [\n        '" + MAIN_KEY + "' => [\n" + lines.join('\n') + "\n        ],\n    ],";
       }
       pick.addEventListener('click', function (e) {
+        if (panMoved) { panMoved = false; return; } // it was a pan, not a point
         var r = pick.getBoundingClientRect();
         var x = +(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width))).toFixed(3);
         var y = +(Math.min(1, Math.max(0, (e.clientY - r.top) / r.height))).toFixed(3);
