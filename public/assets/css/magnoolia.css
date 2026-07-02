@@ -4659,3 +4659,12 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 .mg-mp__zone.is-active.is-hover { fill: rgba(200,148,67,.58); stroke: #f3d9a8; stroke-width: 1; }
 .mg-mp__marker.is-hover { background: #c89443; transform: translate(-50%,-50%) scale(1.06); }
 .mg-mp__marker.is-hover .mg-mp__marker-num { background: #fff; color: #1d2430; }
+
+/* Drop the theme's custom close.png mouse cursor on off-canvas/overlay backdrops
+   in the mobile/tablet layout — it only gets in the way there (touch has no
+   cursor; in responsive testing it obscures the map). Desktop keeps it. */
+@media (max-width: 1199px) {
+  .mobile-nav__overlay,
+  .search-popup__overlay,
+  .header-right-sidebar__overlay { cursor: auto !important; }
+}
