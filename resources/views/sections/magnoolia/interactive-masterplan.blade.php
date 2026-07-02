@@ -15,6 +15,9 @@
   $clean = $rhs->asendiplaanImage();
   $enlarge = $rhs->enlargePdf();
   $av    = '?v=' . $rhs->assetVersion(); // cache-bust for regenerated assets
+  // Polygon-editing pickers (?mp_grid / ?my_grid / ?box_grid) are dev-only tools —
+  // never expose them on production, even via a direct link.
+  $canEdit = app()->environment('local');
 
   $persSrc  = $pers ? asset($pers['1280'] ?? $pers['base']).$av : null;
   $persSrcset = $pers ? collect($pers)->filter(fn($v,$k)=>is_numeric($k))->map(fn($v,$k)=>asset($v).$av.' '.$k.'w')->implode(', ') : '';
@@ -22,6 +25,11 @@
 
   // Phase 30.1 — perspective view switcher set (primary is hotspot-calibrated)
   $views   = $rhs->perspectiveViews();
+  // TEMP: hide the "Teine vaade" (primary) and "Õhtuvaade" (dusk) tabs on
+  // production while their boxes are being calibrated — keep all views on local.
+  if (! app()->environment('local')) {
+    $views = collect($views)->reject(fn ($v) => in_array($v['key'] ?? '', ['primary', 'dusk'], true))->values()->all();
+  }
   $viewsJs = collect($views)->map(function ($v) use ($av) {
     $img = $v['image'] ?? [];
     return [
@@ -153,7 +161,7 @@
           <span>{{ __('magnoolia.rowhouse.open_fs') }}</span>
         </button>
         {{-- Coordinate picker for hand-setting perspective hotspots: /asendiplaan?mp_grid=1 --}}
-        @if(request()->boolean('mp_grid'))
+        @if($canEdit && request()->boolean('mp_grid'))
         <svg class="mg-mp__grid" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"
              style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;">
           @for($i = 1; $i < 10; $i++)
@@ -188,7 +196,7 @@
       <p class="mg-mp__hint">{{ __('magnoolia.rowhouse.mp_render_note') }}</p>
     </div>
 
-    @if(request()->boolean('mp_grid'))
+    @if($canEdit && request()->boolean('mp_grid'))
     {{-- Coordinate picker readout (dev/admin helper, only with ?mp_grid=1) --}}
     <div class="mg-mp__picker" id="mg-mp-picker">
       <div class="mg-mp__picker-row">
@@ -230,7 +238,7 @@
     </script>
     @endif
 
-    @if(request()->boolean('my_grid') && $cleanSrc)
+    @if($canEdit && request()->boolean('my_grid') && $cleanSrc)
     {{-- Phase 35 PER-HOME plot editor over the CLEAN 2D asendiplaan:
          /asendiplaan?my_grid=1 — pick a home, click its plot corners, Save, repeat,
          then Copy and paste into config/magnoolia_hotspots.php → 'asendiplaan' => [ … ]. --}}
@@ -343,7 +351,7 @@
     </script>
     @endif
 
-    @if(request()->boolean('box_grid'))
+    @if($canEdit && request()->boolean('box_grid'))
     {{-- Phase 35 PER-HOME BOX editor over a perspective view:
          /asendiplaan?box_grid=1                  → traces "Üldvaade"  (key secondary)
          /asendiplaan?box_grid=1&box_view=primary → traces "Teine vaade" (key primary)
