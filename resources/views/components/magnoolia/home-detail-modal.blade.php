@@ -254,22 +254,54 @@
   var hdMapInner = document.getElementById('mg-hd-map-inner');
   var hdZoom = 1;
   function applyHdZoom() { if (hdMapInner) hdMapInner.style.width = (hdZoom * 100) + '%'; }
-  function setHdZoom(z) {
+  function setHdZoom(z, focal) {
     if (!hdMapVp || !hdMapInner) return;
+    var rect = hdMapVp.getBoundingClientRect();
+    var px = focal ? (focal.x - rect.left) : hdMapVp.clientWidth / 2;   // screen point to
+    var py = focal ? (focal.y - rect.top)  : hdMapVp.clientHeight / 2;  // hold fixed
     var oldW = hdMapInner.offsetWidth || 1, oldH = hdMapInner.offsetHeight || 1;
-    var fx = (hdMapVp.scrollLeft + hdMapVp.clientWidth / 2) / oldW;   // keep the current
-    var fy = (hdMapVp.scrollTop + hdMapVp.clientHeight / 2) / oldH;   // centre fixed
+    var fx = (hdMapVp.scrollLeft + px) / oldW;
+    var fy = (hdMapVp.scrollTop + py) / oldH;
     hdZoom = Math.min(4, Math.max(1, z));
     applyHdZoom();
     var nW = hdMapInner.offsetWidth, nH = hdMapInner.offsetHeight;
-    hdMapVp.scrollLeft = fx * nW - hdMapVp.clientWidth / 2;
-    hdMapVp.scrollTop  = fy * nH - hdMapVp.clientHeight / 2;
+    hdMapVp.scrollLeft = fx * nW - px;
+    hdMapVp.scrollTop  = fy * nH - py;
   }
   function resetHdZoom() { hdZoom = 1; applyHdZoom(); if (hdMapVp) { hdMapVp.scrollTop = 0; hdMapVp.scrollLeft = 0; } }
   (function () {
     var zin = document.getElementById('mg-hd-zin'), zout = document.getElementById('mg-hd-zout');
     if (zin) zin.addEventListener('click', function () { setHdZoom(hdZoom * 1.5); });
     if (zout) zout.addEventListener('click', function () { setHdZoom(hdZoom / 1.5); });
+    // Two-finger pinch zoom. One finger keeps native scroll (pan) + tap-to-open a home;
+    // only a 2-finger gesture takes over to zoom around the pinch midpoint.
+    if (!hdMapVp) return;
+    var d0 = 0, z0 = 1, pinching = false, wasPinch = false;
+    var dist = function (t) { return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY); };
+    var mid  = function (t) { return { x: (t[0].clientX + t[1].clientX) / 2, y: (t[0].clientY + t[1].clientY) / 2 }; };
+    var lastTap = 0, lastX = 0, lastY = 0;
+    hdMapVp.addEventListener('touchstart', function (e) {
+      if (e.touches.length === 1) wasPinch = false;
+      if (e.touches.length === 2) { pinching = true; wasPinch = true; d0 = dist(e.touches); z0 = hdZoom; }
+    }, { passive: true });
+    hdMapVp.addEventListener('touchmove', function (e) {
+      if (pinching && e.touches.length === 2) {
+        e.preventDefault(); // stop native two-finger scroll while pinching
+        if (d0 > 0) setHdZoom(z0 * dist(e.touches) / d0, mid(e.touches));
+      }
+    }, { passive: false });
+    hdMapVp.addEventListener('touchend', function (e) {
+      if (e.touches.length < 2) pinching = false;
+      // Double-tap toggles zoom around the tapped point (skip the tail of a pinch).
+      if (wasPinch || e.touches.length !== 0 || e.changedTouches.length !== 1) return;
+      var t = e.changedTouches[0], now = e.timeStamp;
+      if (now - lastTap < 300 && Math.hypot(t.clientX - lastX, t.clientY - lastY) < 30) {
+        e.preventDefault(); // this tap zooms — don't also open a home
+        setHdZoom(hdZoom > 1.2 ? 1 : 2.5, { x: t.clientX, y: t.clientY });
+        lastTap = 0;
+      } else { lastTap = now; lastX = t.clientX; lastY = t.clientY; }
+    }, { passive: false });
+    hdMapVp.addEventListener('touchcancel', function () { pinching = false; }, { passive: true });
   })();
 
   window.mgOpenHome = function (key) {
