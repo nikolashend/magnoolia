@@ -651,6 +651,9 @@
   // The first view whose hotspots are per-HOME boxes — the one users pick homes on.
   var HOME_VIEW = 0;
   for (var i = 0; i < VIEW_HOTSPOTS.length; i++) { if (VIEW_HOTSPOTS[i] && VIEW_HOTSPOTS[i].mode === 'home') { HOME_VIEW = i; break; } }
+  // Which view the fullscreen map renders. Set on open() to the active tab (if it
+  // has home boxes), so "Suurenda kaart" enlarges the view you're actually on.
+  var fsViewIdx = HOME_VIEW;
 
   // Phase 35: clicking a home box opens the SHARED home-detail modal
   // (window.mgOpenHome) — the exact same modal the price table uses.
@@ -755,13 +758,13 @@
     ty = sh <= H ? (H - sh) / 2 : clamp(ty, H - sh, 0);
   }
   function fsCentroid() {
-    var entry = VIEW_HOTSPOTS[HOME_VIEW] || {}, set = entry.mode === 'home' ? (entry.items || []) : [];
+    var entry = VIEW_HOTSPOTS[fsViewIdx] || {}, set = entry.mode === 'home' ? (entry.items || []) : [];
     var n = 0, x = 0, y = 0;
     set.forEach(function (h) { if (h.marker) { x += h.marker[0]; y += h.marker[1]; n++; } });
     return n ? [x / n, y / n] : [0.5, 0.5];
   }
   function fsMinDistPx(nW, nH) {
-    var entry = VIEW_HOTSPOTS[HOME_VIEW] || {}, set = (entry.mode === 'home' ? (entry.items || []) : []).filter(function (h) { return h.marker; });
+    var entry = VIEW_HOTSPOTS[fsViewIdx] || {}, set = (entry.mode === 'home' ? (entry.items || []) : []).filter(function (h) { return h.marker; });
     var min = Infinity;
     for (var i = 0; i < set.length; i++) for (var j = i + 1; j < set.length; j++) {
       var d = Math.hypot((set[i].marker[0] - set[j].marker[0]) * nW, (set[i].marker[1] - set[j].marker[1]) * nH);
@@ -790,7 +793,7 @@
   }
   function renderFsZones() {
     var svg = document.getElementById('mg-mp-fs-svg'); if (!svg) return;
-    var entry = VIEW_HOTSPOTS[HOME_VIEW] || {};
+    var entry = VIEW_HOTSPOTS[fsViewIdx] || {};
     var set = entry.mode === 'home' ? (entry.items || []) : [];
     svg.innerHTML = set.map(function (h) {
       if (!h.hull) return '';
@@ -799,7 +802,7 @@
     }).join('');
   }
   function renderFsMarkers() {
-    var entry = VIEW_HOTSPOTS[HOME_VIEW] || {};
+    var entry = VIEW_HOTSPOTS[fsViewIdx] || {};
     var set = entry.mode === 'home' ? (entry.items || []) : [];
     fsMk.innerHTML = set.map(function (h) {
       if (!h.marker) return '';
@@ -825,7 +828,10 @@
   }
   function openFs() {
     if (!fs) return;
-    var v = VIEWS[HOME_VIEW] || VIEWS[0] || {};
+    // Enlarge the CURRENTLY active tab if it has home boxes; else the first home view.
+    var ae = VIEW_HOTSPOTS[state.view];
+    fsViewIdx = (ae && ae.mode === 'home') ? state.view : HOME_VIEW;
+    var v = VIEWS[fsViewIdx] || VIEWS[0] || {};
     // Use the full-res render (≈4000px) and no srcset, so it stays sharp when zoomed.
     if (v.full || v.src) { fsImg.removeAttribute('srcset'); fsImg.removeAttribute('sizes'); fsImg.src = v.full || v.src; }
     renderFsZones(); renderFsMarkers();
