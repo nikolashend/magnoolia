@@ -15,7 +15,8 @@
   $locale = app()->getLocale();
   $clean  = $rhs->asendiplaanImage();
   $av     = '?v=' . $rhs->assetVersion(); // cache-bust for regenerated assets
-  $cleanUrl = $clean ? asset($clean['1024'] ?? $clean['base']).$av : null;
+  // Higher-res (1600px) so the in-modal location map stays sharp when zoomed on mobile.
+  $cleanUrl = $clean ? asset($clean['1600'] ?? $clean['base'] ?? $clean['1024']).$av : null;
 
   $homesJs = collect($rhs->allHomes())->map(function ($h) use ($av) {
       $img   = $h['image']['768'] ?? $h['image']['base'] ?? null;
@@ -91,12 +92,22 @@
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5M11 8v6M8 11h6"/></svg>
               {{ __('magnoolia.rowhouse.map_hint') }}
             </div>
-            <div style="position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(29,36,48,.1);">
-              <img src="{{ $cleanUrl }}" alt="{{ __('magnoolia.rowhouse.alt_map') }}" width="1024" height="1436" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;">
-              <svg id="mg-hd-map-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" hidden
-                   style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;"></svg>
-              <span id="mg-hd-marker" aria-hidden="true"
-                    style="position:absolute;width:26px;height:26px;border-radius:50%;border:3px solid #c89443;background:rgba(200,148,67,.32);box-shadow:0 0 0 6px rgba(200,148,67,.18);transform:translate(-50%,-50%);display:none;z-index:3;"></span>
+            <div class="mg-hd-map-wrap" style="position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(29,36,48,.1);">
+              {{-- Scroll viewport: zoom scales the inner width so the container scrolls
+                   natively (touch-drag pans, taps still hit the plot zones). --}}
+              <div id="mg-hd-map-vp" class="mg-hd-map-vp" style="position:relative;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y;">
+                <div id="mg-hd-map-inner" style="position:relative;width:100%;">
+                  <img src="{{ $cleanUrl }}" alt="{{ __('magnoolia.rowhouse.alt_map') }}" width="1600" height="2243" loading="lazy" decoding="async" style="width:100%;height:auto;display:block;">
+                  <svg id="mg-hd-map-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" hidden
+                       style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;overflow:visible;"></svg>
+                  <span id="mg-hd-marker" aria-hidden="true"
+                        style="position:absolute;width:26px;height:26px;border-radius:50%;border:3px solid #c89443;background:rgba(200,148,67,.32);box-shadow:0 0 0 6px rgba(200,148,67,.18);transform:translate(-50%,-50%);display:none;z-index:3;"></span>
+                </div>
+              </div>
+              <div class="mg-hd-map-zoom">
+                <button type="button" id="mg-hd-zin" aria-label="+">+</button>
+                <button type="button" id="mg-hd-zout" aria-label="&minus;">&minus;</button>
+              </div>
             </div>
             <div style="font-size:11px;color:#a8a196;margin-top:6px;">{{ __('magnoolia.rowhouse.marker_note') }}</div>
           </div>
@@ -236,6 +247,31 @@
   var lastFocus = null;
   var hdActiveHome = null;
 
+  // In-modal location-map zoom (mobile). Scaling the inner wrapper's WIDTH makes the
+  // overflow viewport scroll natively: touch-drag pans, and single taps still reach
+  // the plot zones (no manual coordinate math / no drag-vs-tap conflict).
+  var hdMapVp = document.getElementById('mg-hd-map-vp');
+  var hdMapInner = document.getElementById('mg-hd-map-inner');
+  var hdZoom = 1;
+  function applyHdZoom() { if (hdMapInner) hdMapInner.style.width = (hdZoom * 100) + '%'; }
+  function setHdZoom(z) {
+    if (!hdMapVp || !hdMapInner) return;
+    var oldW = hdMapInner.offsetWidth || 1, oldH = hdMapInner.offsetHeight || 1;
+    var fx = (hdMapVp.scrollLeft + hdMapVp.clientWidth / 2) / oldW;   // keep the current
+    var fy = (hdMapVp.scrollTop + hdMapVp.clientHeight / 2) / oldH;   // centre fixed
+    hdZoom = Math.min(4, Math.max(1, z));
+    applyHdZoom();
+    var nW = hdMapInner.offsetWidth, nH = hdMapInner.offsetHeight;
+    hdMapVp.scrollLeft = fx * nW - hdMapVp.clientWidth / 2;
+    hdMapVp.scrollTop  = fy * nH - hdMapVp.clientHeight / 2;
+  }
+  function resetHdZoom() { hdZoom = 1; applyHdZoom(); if (hdMapVp) { hdMapVp.scrollTop = 0; hdMapVp.scrollLeft = 0; } }
+  (function () {
+    var zin = document.getElementById('mg-hd-zin'), zout = document.getElementById('mg-hd-zout');
+    if (zin) zin.addEventListener('click', function () { setHdZoom(hdZoom * 1.5); });
+    if (zout) zout.addEventListener('click', function () { setHdZoom(hdZoom / 1.5); });
+  })();
+
   window.mgOpenHome = function (key) {
     var h = byKey[key];
     if (!h) return;
@@ -277,6 +313,7 @@
     // plot zones (all homes) + pin fallback when the open home has no polygon
     var hasPoly = h.mappoly && h.mappoly.length > 2;
     renderHdMapZones(h.key);
+    resetHdZoom(); // each home opens at 1× so it never stays zoomed/scrolled off
     var marker = document.getElementById('mg-hd-marker');
     if (marker && !hasPoly && h.mx != null && h.my != null) {
       marker.style.left = (h.mx * 100) + '%';
@@ -415,6 +452,14 @@
 <style>
 @media (max-width: 720px) {
   #mg-hd-dialog .mg-hd-grid { grid-template-columns: 1fr !important; }
+}
+/* In-modal location map zoom — controls + scroll cap are mobile-only; desktop
+   keeps the map exactly as before (controls hidden, no height cap, no scroll). */
+.mg-hd-map-zoom { display: none; position: absolute; top: 8px; right: 8px; z-index: 5; gap: 6px; }
+.mg-hd-map-zoom button { width: 36px; height: 36px; border-radius: 8px; border: none; background: rgba(29,36,48,.85); color: #fff; font-size: 20px; line-height: 1; cursor: pointer; box-shadow: 0 1px 5px rgba(0,0,0,.3); }
+@media (max-width: 720px) {
+  .mg-hd-map-zoom { display: flex; }
+  .mg-hd-map-vp { max-height: 60vh; }
 }
 .mg-hd-map-zone { fill: rgba(200,148,67,.2); stroke: rgba(185,128,43,.75); stroke-width: 1.5px; stroke-linejoin: round; vector-effect: non-scaling-stroke; pointer-events: auto; cursor: pointer; outline: none; transition: fill .15s ease, stroke-width .15s ease; }
 .mg-hd-map-zone:hover, .mg-hd-map-zone:focus-visible { fill: rgba(200,148,67,.42); stroke: #b9802b; stroke-width: 2px; }
