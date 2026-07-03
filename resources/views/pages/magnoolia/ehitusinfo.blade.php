@@ -119,47 +119,6 @@
 @include('sections.magnoolia.ehitusinfo-spec-3')
 @include('sections.magnoolia.ehitusinfo-spec-4')
 
-{{-- ── Technical accordion ─────────────────────────────────── --}}
-<section class="mg-page-section mg-page-section--white">
-  <div class="container">
-    <div class="mg-section-heading" style="margin-bottom:40px;">
-      <div class="mg-section-heading__eyebrow">{{ __('magnoolia.page.ehitusinfo.accordion_eyebrow') }}</div>
-      <h2 class="mg-section-heading__title">{{ __('magnoolia.page.ehitusinfo.accordion_title') }}</h2>
-    </div>
-
-    <div style="display:flex;flex-direction:column;gap:12px;max-width:860px;">
-      @foreach(__('magnoolia.page.ehitusinfo.accordion_items') as $idx => $group)
-      <details style="background:#f8f5f0;border-radius:12px;overflow:hidden;border:1px solid rgba(29,36,48,.07);"
-               data-event="accordion_open" data-accordion-index="{{ $idx }}">
-        <summary style="padding:18px 24px;font-size:16px;font-weight:700;color:#1d2430;cursor:pointer;
-                        list-style:none;display:flex;justify-content:space-between;align-items:center;
-                        user-select:none;"
-                 onclick="this.parentElement.open ? this.querySelector('.mg-acc-icon').textContent='+'
-                           : this.querySelector('.mg-acc-icon').textContent='−'">
-          {{ $group['title'] }}
-          <span class="mg-acc-icon" style="font-size:20px;font-weight:300;color:#c89443;width:24px;
-                 text-align:center;flex-shrink:0;">+</span>
-        </summary>
-        <div style="padding:0 24px 20px;">
-          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
-            @foreach($group['items'] as $item)
-            <li style="display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#444;line-height:1.6;">
-              <i class="fas fa-check" style="color:#c89443;flex-shrink:0;margin-top:3px;font-size:11px;"></i>
-              {{ $item }}
-            </li>
-            @endforeach
-          </ul>
-        </div>
-      </details>
-      @endforeach
-    </div>
-
-    <p class="mg-seo-note" style="margin-top:20px;">
-      {{ __('magnoolia.page.ehitusinfo.accordion_note') }}
-    </p>
-  </div>
-</section>
-
 
 {{-- ── Stages ────────────────────────────────────────────────── --}}
 <section class="mg-page-section mg-page-section--white">

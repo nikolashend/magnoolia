@@ -62,10 +62,24 @@
 
 @section('content')
 <div class="mg-page-hero">
-    <div class="container" style="max-width:900px;">
-        <div class="mg-page-hero__eyebrow">{{ $t['eyebrow'] }}</div>
-        <h1 class="mg-page-hero__title">{{ $t['title'] }}</h1>
-        <p class="mg-page-hero__lead">{{ $t['lead'] }}</p>
+    <div class="container" style="max-width:1120px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:48px;flex-wrap:wrap;">
+            <div style="flex:1 1 460px;min-width:280px;">
+                <div class="mg-page-hero__eyebrow">{{ $t['eyebrow'] }}</div>
+                <h1 class="mg-page-hero__title">{{ $t['title'] }}</h1>
+                <p class="mg-page-hero__lead">{{ $t['lead'] }}</p>
+            </div>
+            <div style="flex:1 1 240px;min-width:180px;text-align:center;">
+                <picture>
+                    <source srcset="{{ asset('assets/magnoolia/logos/estlanda-1.webp') }}" type="image/webp">
+                    <img src="{{ asset('assets/magnoolia/logos/estlanda-1.png') }}"
+                         alt="Estlanda Ehitus"
+                         width="200" height="115"
+                         loading="lazy" decoding="async"
+                         style="width:100%;max-width:200px;height:auto;display:inline-block;filter:brightness(0) invert(1);">
+                </picture>
+            </div>
+        </div>
     </div>
 </div>
 

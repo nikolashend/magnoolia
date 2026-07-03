@@ -150,6 +150,14 @@ return [
         'cta'     => 'See location & distances',
     ],
 
+    /* Homepage developer strip */
+    'home_developer' => [
+        'eyebrow' => 'Developer & builder',
+        'title'   => 'Magnoolia is developed by Estlanda',
+        'body'    => 'Magnoolia is developed and built by Estlanda — a company operating successfully in real-estate development and construction since 2009.',
+        'cta'     => 'About the developer',
+    ],
+
     'benefits' => [
         ['icon' => 'icon-trophy',      'title' => 'Energy class A',         'text' => 'Low energy bills via ground source heat pump and heat recovery ventilation'],
         ['icon' => 'icon-labyrinth',   'title' => 'Private, spacious yards', 'text' => 'Every home has its own private, spacious yard — privacy without apartment-block noise'],

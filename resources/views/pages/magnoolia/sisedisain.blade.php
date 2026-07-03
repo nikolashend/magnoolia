@@ -152,13 +152,17 @@
             ] as $item)
             <li style="display:flex;align-items:baseline;gap:10px;font-size:13.5px;color:#444;line-height:1.5;">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c89443" stroke-width="2.5" style="flex-shrink:0;margin-top:2px;" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              {{ $item }}
+              <span>
+                {{ $item }}
+                @if(str_contains($item, 'Schneider Sedna'))
+                <span style="display:block;margin-top:3px;font-size:12px;color:#6f6a61;font-style:italic;line-height:1.5;">
+                  {{ ['ru' => 'В пакете Delux можно выбрать розетки и выключатели в антрацитово-сером (графит) тоне.', 'en' => 'In the Delux package, sockets and switches can be chosen in an anthracite-grey (graphite) tone.'][app()->getLocale()] ?? 'Delux paketis on võimalik valida antratsiithall (grafiit) toonis pistikud ja lülitid.' }}
+                </span>
+                @endif
+              </span>
             </li>
             @endforeach
           </ul>
-          <p style="margin:14px 0 0;font-size:13px;color:#6f6a61;font-style:italic;line-height:1.55;">
-            {{ ['ru' => 'В пакете Delux можно выбрать розетки и выключатели в антрацитово-сером (графит) тоне.', 'en' => 'In the Delux package, sockets and switches can be chosen in an anthracite-grey (graphite) tone.'][app()->getLocale()] ?? 'Delux paketis on võimalik valida antratsiithall (grafiit) toonis pistikud ja lülitid.' }}
-          </p>
         </div>
       </div>
 

@@ -62,6 +62,9 @@
     @endphp
     @include('sections.magnoolia.answer-unit', ['unit' => $au])
 
+    {{-- 12c. ARENDAJA — Estlanda developer strip with large logo --}}
+    @include('sections.magnoolia.developer-strip')
+
     {{-- 13. KONTAKT — Diana Tali, inquiry form --}}
     @include('sections.magnoolia.contact')
 

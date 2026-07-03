@@ -193,6 +193,14 @@ return [
         'cta'     => 'Vaata asukohta ja kaugusi',
     ],
 
+    /* Homepage developer strip */
+    'home_developer' => [
+        'eyebrow' => 'Arendaja ja ehitaja',
+        'title'   => 'Magnoolia arendaja on Estlanda',
+        'body'    => 'Magnoolia arendaja ja ehitaja on Estlanda — alates 2009. aastast edukalt kinnisvaraarenduse ja ehituse valdkonnas tegutsev ettevõte.',
+        'cta'     => 'Loe arendajast',
+    ],
+
     'benefits' => [
         ['icon' => 'icon-trophy',      'title' => 'A-energiaklass',                  'text' => 'Madalad kommunaalkulud tänu maasoojuspumbale ja soojustagastusega ventilatsioonile'],
         ['icon' => 'icon-labyrinth',   'title' => 'Privaatsed ja suured hoovialad',  'text' => 'Igal kodul oma privaatne ja avar hooviala – privaatsus ilma kortermaja müruta'],
