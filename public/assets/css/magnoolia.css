@@ -3692,6 +3692,7 @@ body {
   position: relative;
   background: #e8e3db;
   min-height: 340px;
+  align-self: stretch; /* fill the full row height so no beige bg shows below the image when the text column is taller */
 }
 .mg-feature-row__img img {
   width: 100%;
