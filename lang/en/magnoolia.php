@@ -104,6 +104,8 @@ return [
         'gallery_view'     => 'VIEW',
         'gallery_cards'    => [
             ['img'=>'Cam001.0000.jpg',             'alt'=>'Magnoolia front view',               'title'=>'Front elevation',                     'f'=>[['i'=>'icon-bedroom',   'v'=>'4–5 rooms'],['i'=>'icon-labyrinth','v'=>'~129–143 m²'],['i'=>'icon-real-estate','v'=>'Terrace + balcony']]],
+            ['img'=>'Cam017.0000.jpg',             'alt'=>'Magnoolia home at dusk — facade LED lighting', 'title'=>'Facade LED lighting',           'f'=>[['i'=>'icon-house','v'=>'Facade LED lighting'],['i'=>'icon-garage','v'=>'Covered parking'],['i'=>'icon-pin','v'=>'Vaela village']]],
+            ['img'=>'Cam020.0000.jpg',             'alt'=>'Magnoolia terrace and living-room sliding door at dusk', 'title'=>'Terrace & living-room sliding door', 'f'=>[['i'=>'icon-real-estate','v'=>'Living-room sliding door'],['i'=>'icon-labyrinth','v'=>'Private terrace'],['i'=>'icon-house','v'=>'LED lighting']]],
             ['img'=>'Cam004.0000.jpg',             'alt'=>'Magnoolia side view',                'title'=>'Side view — terrace',              'f'=>[['i'=>'icon-real-estate','v'=>'Terrace 18–24 m²'],['i'=>'icon-labyrinth','v'=>'Private yard'],['i'=>'icon-trophy','v'=>'Energy class A']]],
             ['img'=>'Cam005.0000.jpg',             'alt'=>'Magnoolia rear view',                'title'=>'Rear view — balcony',              'f'=>[['i'=>'icon-real-estate','v'=>'Balcony 9.5–11.5 m²'],['i'=>'icon-house','v'=>'Garden views'],['i'=>'icon-celemder','v'=>'Ready 2027']]],
             ['img'=>'Cam014.0000.jpg',             'alt'=>'Magnoolia street view at dusk',      'title'=>'Street & entrances',                  'f'=>[['i'=>'icon-garage','v'=>'Covered parking'],['i'=>'icon-buildings','v'=>'Row of homes'],['i'=>'icon-pin','v'=>'Vaela village']]],
@@ -489,6 +491,8 @@ return [
             'filter_aria'    => 'Gallery categories',
             'grid_aria'      => 'Gallery images',
             'lightbox_open'  => 'Open',
+            'alt_cam017' => 'Magnoolia townhouse at dusk — facade LED lighting',
+            'alt_cam020' => 'Magnoolia terrace and living-room sliding door at dusk',
             'alt_cam001' => 'Magnoolia townhouses — south view',
             'alt_cam004' => 'Magnoolia townhouses — facade',
             'alt_cam005' => 'Magnoolia townhouses — terrace',
@@ -966,7 +970,7 @@ return [
             'feat_title'     => 'Four outdoor space elements',
             'features'       => [
                 [
-                    'img'    => 'Cam005.0000.jpg',
+                    'img'    => 'Cam020.0000.jpg',
                     'kicker' => 'Terrace',
                     'title'  => 'Private terrace for every home',
                     'body'   => 'Every Magnoolia home has a door from the ground floor to the terrace. The terrace is designed for private outdoor use. Dimensions are confirmed in the construction project.',

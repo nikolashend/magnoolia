@@ -146,6 +146,8 @@ return [
         'gallery_view'     => 'VAATA',
         'gallery_cards'    => [
             ['img'=>'Cam001.0000.jpg',             'alt'=>'Magnoolia üldvaade eest',          'title'=>'Üldvaade — välisfassaad',   'f'=>[['i'=>'icon-bedroom',   'v'=>'4–5 tuba'],['i'=>'icon-labyrinth','v'=>'~129–143 m²'],['i'=>'icon-real-estate','v'=>'Terrass + rõdu']]],
+            ['img'=>'Cam017.0000.jpg',             'alt'=>'Magnoolia kodu õhtuvalguses — fassaadi LED-valgustus', 'title'=>'Fassaadi LED-valgustus',    'f'=>[['i'=>'icon-house','v'=>'LED-fassaadivalgustus'],['i'=>'icon-garage','v'=>'Kaetud parkimine'],['i'=>'icon-pin','v'=>'Vaela küla']]],
+            ['img'=>'Cam020.0000.jpg',             'alt'=>'Magnoolia terrass ja elutoa lükandaken õhtuvalguses', 'title'=>'Terrass ja elutoa lükandaken', 'f'=>[['i'=>'icon-real-estate','v'=>'Elutoa lükandaken'],['i'=>'icon-labyrinth','v'=>'Privaatne terrass'],['i'=>'icon-house','v'=>'LED-valgustus']]],
             ['img'=>'Cam004.0000.jpg',             'alt'=>'Magnoolia külgvaade',             'title'=>'Külgvaade — terrass',          'f'=>[['i'=>'icon-real-estate','v'=>'Terrass 18–24 m²'],['i'=>'icon-labyrinth','v'=>'Privaatne aed'],['i'=>'icon-trophy','v'=>'A-energiaklass']]],
             ['img'=>'Cam005.0000.jpg',             'alt'=>'Magnoolia tagavaade',                 'title'=>'Tagavaade — rõdu',             'f'=>[['i'=>'icon-real-estate','v'=>'Rõdu 9,5–11,5 m²'],['i'=>'icon-house','v'=>'Roheline vaade'],['i'=>'icon-celemder','v'=>'Valmib 2027']]],
             ['img'=>'Cam014.0000.jpg',             'alt'=>'Magnoolia tänavavaade õhtuvalguses', 'title'=>'Tänav ja sissepääsud',  'f'=>[['i'=>'icon-garage','v'=>'Kaetud parkimine'],['i'=>'icon-buildings','v'=>'Ridaelamud reas'],['i'=>'icon-pin','v'=>'Vaela küla']]],
@@ -525,6 +527,8 @@ return [
             'grid_aria'      => 'Galerii pildid',
             'lightbox_open'  => 'Ava suurelt',
             // Alt texts
+            'alt_cam017' => 'Magnoolia ridaelamukodu õhtuvalguses — fassaadi LED-valgustus',
+            'alt_cam020' => 'Magnoolia terrass ja elutoa lükandaken õhtuvalguses',
             'alt_cam001' => 'Magnoolia ridaelamukodud — lõunaküljelt',
             'alt_cam004' => 'Magnoolia ridaelamukodud — fassaadivaade',
             'alt_cam005' => 'Magnoolia ridaelamukodud — terrass',
@@ -1016,7 +1020,7 @@ return [
             'feat_title'     => 'Neli välisruumi elementi',
             'features'       => [
                 [
-                    'img'    => 'Cam005.0000.jpg',
+                    'img'    => 'Cam020.0000.jpg',
                     'kicker' => 'Terrass',
                     'title'  => 'Privaatne terrass igale kodule',
                     'body'   => 'Iga Magnoolia kodu alumisel korrusel on terrassiväljapääs. Terrass on privaatseks kasutuseks. Mõõdud kinnitatakse projektis.',

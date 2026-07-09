@@ -9,6 +9,7 @@
 @php
   $base = rtrim(config('magnoolia.seo.canonical_base', 'https://magnoolia.ee'), '/');
   $exteriorImages = [
+    ['file' => 'Cam017.0000.jpg',         'alt' => 'Magnoolia ridaelamukodu õhtuvalguses — fassaadi LED-valgustus', 'cat' => 'välisvaated'],
     ['file' => 'Cam001.0000.jpg',         'alt' => 'Magnoolia ridaelamukodude välisvaade lõunast',        'cat' => 'välisvaated'],
     ['file' => 'Cam004.0000.jpg',         'alt' => 'Magnoolia ridaelamukodud — fassaadivaade',             'cat' => 'välisvaated'],
     ['file' => 'Cam005.0000.jpg',         'alt' => 'Magnoolia ridaelamukodud — terrass ja hooviala',       'cat' => 'välisvaated'],

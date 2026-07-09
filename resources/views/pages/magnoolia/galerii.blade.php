@@ -11,6 +11,8 @@
   // Phase 26 — updated gallery structure
   $allImages = [
     // ── Exterior (3D renders) ─────────────────────────────────────
+    ['src' => asset('assets/magnoolia/gallery/exterior/Cam017.jpg'),   'alt' => __('magnoolia.page.galerii.alt_cam017'),   'cat' => 'valised',  'label' => __('magnoolia.page.galerii.label_ext')],
+    ['src' => asset('assets/magnoolia/gallery/exterior/Cam020.jpg'),   'alt' => __('magnoolia.page.galerii.alt_cam020'),   'cat' => 'valised',  'label' => __('magnoolia.page.galerii.label_terr')],
     ['src' => asset('assets/magnoolia/gallery/exterior/Cam001.jpg'),   'alt' => __('magnoolia.page.galerii.alt_cam001'),   'cat' => 'valised',  'label' => __('magnoolia.page.galerii.label_ext')],
     ['src' => asset('assets/magnoolia/gallery/exterior/Cam004.jpg'),   'alt' => __('magnoolia.page.galerii.alt_cam004'),   'cat' => 'valised',  'label' => __('magnoolia.page.galerii.label_ext')],
     ['src' => asset('assets/magnoolia/gallery/exterior/Cam005.jpg'),   'alt' => __('magnoolia.page.galerii.alt_cam005'),   'cat' => 'valised',  'label' => __('magnoolia.page.galerii.label_terr')],
