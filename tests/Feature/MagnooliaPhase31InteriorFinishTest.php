@@ -5,11 +5,12 @@ namespace Tests\Feature;
 use Tests\TestCase;
 
 /**
- * Phase 31 — /ehitusinfo interior finish & equipment standard section.
+ * Phase 31 — interior finish & equipment standard section.
+ * The block was later moved from /ehitusinfo to /sisedisain (client request).
  */
 class MagnooliaPhase31InteriorFinishTest extends TestCase
 {
-    private function html(string $url = '/ehitusinfo'): string
+    private function html(string $url = '/sisedisain'): string
     {
         return $this->get($url)->assertStatus(200)->getContent();
     }
@@ -28,7 +29,7 @@ class MagnooliaPhase31InteriorFinishTest extends TestCase
     {
         $html = $this->html();
         foreach ([
-            'Jung LS 990', 'Damixa Core', 'Balteco Onyx 40', 'RAK Resort', 'ACO plaaditud',
+            'Schneider Sedna', 'Damixa Core', 'Balteco Onyx 40', 'RAK Resort', 'ACO plaaditud',
             'Tikkurila Symphony Opus II', 'Swedoor', 'Pure Alt Bazalt', 'Freedust Grey',
             'BETA SLIM', 'Samsung', 'kalasabaparkett',
         ] as $name) {
@@ -67,8 +68,8 @@ class MagnooliaPhase31InteriorFinishTest extends TestCase
 
     public function test_ru_and_en_render(): void
     {
-        $this->assertStringContainsString('Внутренняя отделка и стандарт оснащения', $this->html('/ru/ehitusinfo'));
-        $this->assertStringContainsString('Interior finish and equipment standard', $this->html('/en/ehitusinfo'));
+        $this->assertStringContainsString('Внутренняя отделка и стандарт оснащения', $this->html('/ru/sisedisain'));
+        $this->assertStringContainsString('Interior finish and equipment standard', $this->html('/en/sisedisain'));
         // no unresolved keys
         $this->assertStringNotContainsString('magnoolia.interior.', $this->html());
     }

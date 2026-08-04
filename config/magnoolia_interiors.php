@@ -31,7 +31,7 @@ return [
             'overview' => $base . 'electrical-overview.webp',
             'items'    => [
                 ['name' => 'Põrandakütte displei', 'type' => 'standard'],
-                ['name' => 'Pistikud ja lülitid Jung LS 990, mattvalge', 'type' => 'standard'],
+                ['name' => 'Pistikud ja lülitid Schneider Sedna, mattvalge', 'type' => 'standard'],
                 ['name' => 'Korteri fonotelefon', 'type' => 'standard'],
                 ['name' => 'Süvistatavad kohtvalgustid (IP20 / IP65), mattvalge', 'type' => 'standard'],
             ],
@@ -85,6 +85,7 @@ return [
                 ['name' => 'Prantsuse kalasabaparkett Selekt (naturaalne või tumedam antiik)', 'type' => 'paid'],
                 ['name' => 'Jahutusseadmed Samsung (sise- ja välisosad)', 'type' => 'paid'],
                 ['name' => 'Valamukapp Nu40 valamule', 'type' => 'paid'],
+                ['name' => 'Pistikud ja lülitid Schneider Sedna, antratsiithall', 'type' => 'paid'],
             ],
         ],
 
