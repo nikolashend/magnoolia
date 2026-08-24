@@ -61,7 +61,10 @@ class MagnooliaPhase31InteriorFinishTest extends TestCase
     {
         $html = $this->html();
         $this->assertStringContainsString('data-mg-analytics="ehitusinfo-siseviimistlus-cta"', $html);
-        $this->assertStringContainsString('data-source-component="ehitusinfo_siseviimistlus"', $html);
+        // Phase 35.1 item 15: the finish block lives on /sisedisain, so its leads are
+        // tagged sisedisain_viimistluspakett — they used to arrive labelled "ehitusinfo",
+        // which made them look unrelated to the interior enquiry in the Leads admin.
+        $this->assertStringContainsString('data-source-component="sisedisain_viimistluspakett"', $html);
         $this->assertStringContainsString('data-mg-inquiry-open', $html);
         $this->assertStringNotContainsString('price_cents', $html);
     }

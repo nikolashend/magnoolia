@@ -1,12 +1,12 @@
 # Magnoolia Phase 27 — Image Optimization Report
 
-**Date:** 2026-06-09
+**Date:** 2026-08-24
 
 ## Summary
-- Processed: 32 images
-- Skipped (below 300KB threshold): 19
+- Processed: 34 images
+- Skipped (below 300KB threshold): 23
 - Errors: 0
-- Total original size: 136.6 MB
+- Total original size: 148.6 MB
 
 ## Processed Images
 
@@ -109,6 +109,13 @@
 - 1200w WebP: 97KB
 - 1600w WebP: 167KB
 - defaultw WebP: 1123KB
+### Cam007.0000.jpg
+- Original: 6165KB
+- 480w WebP: 13KB
+- 768w WebP: 29KB
+- 1200w WebP: 66KB
+- 1600w WebP: 114KB
+- defaultw WebP: 777KB
 ### Cam014.0000.jpg
 - Original: 4151KB
 - 480w WebP: 13KB
@@ -116,6 +123,13 @@
 - 1200w WebP: 56KB
 - 1600w WebP: 93KB
 - defaultw WebP: 533KB
+### Cam020.0000.jpg
+- Original: 6079KB
+- 480w WebP: 16KB
+- 768w WebP: 34KB
+- 1200w WebP: 72KB
+- 1600w WebP: 120KB
+- defaultw WebP: 769KB
 ### Interior 1.jpg
 - Original: 9079KB
 - 480w WebP: 50KB
@@ -223,6 +237,8 @@
 - defaultw WebP: 524KB
 
 ## Skipped (Below Threshold)
+- Cam017.jpg: 131KB
+- Cam020.jpg: 149KB
 - ikea.jpg: 11KB
 - kergliiklusteed.jpg: 11KB
 - kiili-cycling.jpg: 14KB
@@ -242,3 +258,5 @@
 - kiili-walking.jpg: 9KB
 - kurna-park-2.jpg: 10KB
 - kurna-park.jpg: 12KB
+- Cam017.0000.jpg: 193KB
+- diana-tali.jpg: 35KB

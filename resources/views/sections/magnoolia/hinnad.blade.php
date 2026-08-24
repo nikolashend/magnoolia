@@ -17,6 +17,16 @@
     ])->all();
     $stages = $mgPublic['stages'] ?? [];
     $campaign = $mgPublic['campaign'] ?? [];
+
+    // Phase 35.1 item 11 — "Netopind kokku" is not stored: it is köetav pind
+    // (net_area) + panipaiga pind (storage_area). Returns null when either part
+    // is missing so a made-up total is never printed. "Isiklik maa-ala" is shown
+    // as a whole number: a decimal reads as false precision for a plot.
+    $mgNetTotal = function (array $u): ?float {
+        $heated = (float) ($u['net_area'] ?? 0);
+        $store  = (float) ($u['storage_area'] ?? 0);
+        return ($heated > 0 && $store > 0) ? $heated + $store : null;
+    };
     $commercial = $mgPublic['commercial'] ?? [];
 
     // Each $unit IS already a rowhouse home view-model.
@@ -53,14 +63,20 @@
             </p>
         </div>
 
-        {{-- ── Phase 35: special offer banner (red, uppercase) ──────────── --}}
+        {{-- ── Special offer banner (red, uppercase) ───────────────────
+             Phase 35.1 item 9: text now comes from the admin Campaign screen, not a
+             hardcoded lang string, and the banner disappears when the campaign is
+             switched off there. Previously it advertised a fixed 20 000 € offer with
+             an August 2026 deadline that nobody could edit or retire. --}}
+        @if($campaign['enabled'] ?? false)
         <div class="wow fadeInUp" data-wow-duration="800ms"
              style="border:2px solid #c0392b;background:#fff5f4;border-radius:12px;padding:16px 22px;margin-bottom:24px;display:flex;align-items:center;gap:14px;">
             <i class="fas fa-tags" style="color:#c0392b;font-size:22px;flex-shrink:0;"></i>
             <p style="margin:0;font-size:15px;font-weight:800;letter-spacing:.02em;color:#c0392b;text-transform:uppercase;line-height:1.5;">
-                {{ __('magnoolia.pricing.special_offer') }}
+                {{ $campaign['body'] }}
             </p>
         </div>
+        @endif
 
         {{-- ── Buyer orientation note ──────────────────────────────────── --}}
         <div class="mg-buyer-note wow fadeInUp" data-wow-duration="800ms"
@@ -158,8 +174,9 @@
                 <thead>
                     <tr style="background:#2c3441;color:rgba(255,255,255,.72);">
                         <th style="padding:14px 16px;text-align:left;font-size:13px;font-weight:600;letter-spacing:.04em;">{{ __('magnoolia.pricing.address') }}</th>
-                        <th style="padding:14px 16px;text-align:center;font-size:13px;font-weight:600;">{{ __('magnoolia.pricing.area') }}</th>
+                        <th style="padding:14px 16px;text-align:center;font-size:13px;font-weight:600;">{{ __('magnoolia.pricing.area_total') }}</th>
                         <th style="padding:14px 16px;text-align:center;font-size:13px;font-weight:600;">{{ __('magnoolia.pricing.rooms') }}</th>
+                        <th style="padding:14px 16px;text-align:center;font-size:13px;font-weight:600;">{{ __('magnoolia.pricing.private_land') }}</th>
                         <th style="padding:14px 16px;text-align:center;font-size:13px;font-weight:600;">{{ __('magnoolia.pricing.terrace') }}</th>
                         <th style="padding:14px 16px;text-align:center;font-size:13px;font-weight:600;">{{ __('magnoolia.pricing.balcony') }}</th>
                         <th style="padding:14px 16px;text-align:center;font-size:13px;font-weight:600;">{{ __('magnoolia.pricing.parking') }}</th>
@@ -203,8 +220,10 @@
                             <span class="mg-plan-chip {{ $ptChip['class'] }}">{{ $ptChip['label'] }}</span>
                             @endif
                         </td>
-                        <td style="padding:15px 16px;text-align:center;color:#1d2430;font-weight:500;">{{ number_format($unit['net_area'] ?? 0, 1) }} m²</td>
+                        @php $mgTotal = $mgNetTotal($unit); @endphp
+                        <td style="padding:15px 16px;text-align:center;color:#1d2430;font-weight:500;">{{ $mgTotal ? number_format($mgTotal, 1, ',', ' ').' m²' : '—' }}</td>
                         <td style="padding:15px 16px;text-align:center;color:#1d2430;">{{ $unit['rooms'] ?? '—' }}</td>
+                        <td style="padding:15px 16px;text-align:center;color:#6f6a61;font-size:13px;">{{ !empty($unit['private_yard_area']) ? number_format(round($unit['private_yard_area']), 0, ',', ' ').' m²' : '—' }}</td>
                         <td style="padding:15px 16px;text-align:center;color:#6f6a61;font-size:13px;">{{ !empty($unit['terrace_area']) ? number_format($unit['terrace_area'],1).' m²' : '—' }}</td>
                         <td style="padding:15px 16px;text-align:center;color:#6f6a61;font-size:13px;">{{ !empty($unit['balcony_area']) ? number_format($unit['balcony_area'],1).' m²' : '—' }}</td>
                         <td style="padding:15px 16px;text-align:center;color:#6f6a61;">{{ $unit['parking'] ?? 2 }}×</td>
@@ -290,7 +309,8 @@
                             </td>
                             {{-- Area + rooms --}}
                             <td style="padding:12px 6px;text-align:center;vertical-align:middle;white-space:nowrap;">
-                                <div style="font-weight:600;color:#1d2430;font-size:13px;">{{ number_format($unit['net_area'] ?? 0, 1) }} m²</div>
+                                @php $mgTotalM = $mgNetTotal($unit); @endphp
+                                <div style="font-weight:600;color:#1d2430;font-size:13px;">{{ $mgTotalM ? number_format($mgTotalM, 1, ',', ' ').' m²' : '—' }}</div>
                                 <div style="color:#9a9490;font-size:11px;margin-top:2px;">{{ $unit['rooms'] ?? '—' }} {{ __('magnoolia.pricing.rooms_unit') }}</div>
                             </td>
                             {{-- Price + tap affordance --}}

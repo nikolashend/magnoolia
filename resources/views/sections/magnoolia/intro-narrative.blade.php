@@ -5,6 +5,7 @@
   $N = [
     'et' => [
       'eyebrow' => 'Tutvustus',
+      'alt'     => 'Magnoolia ridaelamute õhtune fassaadivaade LED-valgustusega',
       'title'   => 'Eksklusiivsed A-energiaklassi ridaelamud',
       'p' => [
         'Tallinna lähiümbruse valdadest on Kiili valla asumid mõne aasta jooksul teinud läbi kiire arengu, kuhu on lisandunud arvukalt nii uusi elamuid kui ka kaubanduspindasid. Suur mööblikauplus IKEA on koduhoovist praktiliselt näha, selle kõrvale rajatud kodupood Selver, esimene Decathlon sporditarvete kauplus Eestis ja muud kaubanduspinnad. Jalutuskäigu kaugusel paikneb uhiuus Vaela lasteaed, lähim kool ja spordihoone paiknevad Kiili keskuses.',
@@ -13,6 +14,7 @@
     ],
     'ru' => [
       'eyebrow' => 'Знакомство',
+      'alt'     => 'Вечерний вид фасада рядных домов Magnoolia с LED-подсветкой',
       'title'   => 'Эксклюзивные рядные дома класса A',
       'p' => [
         'Среди волостей ближайшего пригорода Таллина посёлки волости Кийли за несколько лет пережили быстрое развитие: здесь появилось множество как новых жилых домов, так и торговых площадей. Большой мебельный магазин IKEA виден практически со двора, рядом с ним построен продуктовый магазин Selver, первый в Эстонии магазин спорттоваров Decathlon и другие торговые площади. В нескольких минутах ходьбы находится новый детский сад Vaela, а ближайшая школа и спортивный зал — в центре Кийли.',
@@ -21,6 +23,7 @@
     ],
     'en' => [
       'eyebrow' => 'Introduction',
+      'alt'     => 'Evening facade view of the Magnoolia terraced houses with LED lighting',
       'title'   => 'Exclusive A-energy-class terraced houses',
       'p' => [
         'Among the municipalities on Tallinn’s doorstep, the settlements of Kiili municipality have gone through rapid growth in just a few years, gaining numerous new homes as well as retail space. The large IKEA furniture store is practically visible from the yard, with a Selver grocery store built next to it, the first Decathlon sports store in Estonia and other retail nearby. The brand-new Vaela kindergarten is within walking distance, and the nearest school and sports hall are in the Kiili centre.',
@@ -36,7 +39,10 @@
     <div class="row align-items-center gutter-y-40">
       <div class="col-lg-6">
         <div class="hover:shine" style="border-radius:20px;overflow:hidden;">
-          <img {!! mg_img('magnoolia_cam09.jpg', '(max-width:991px) 100vw, 560px') !!} alt="{{ $n['title'] }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;">
+          {{-- Phase 35.1 item 3 (corrected placement): Indrek asked for the evening
+               LED facade view in this Tutvustus block, not in the facts block above.
+               Source: materials/24.08.2026/Lisa Cam_20 lükandaken.jpg (4500×2250). --}}
+          <img {!! mg_img('Cam020.0000.jpg', '(max-width:991px) 100vw, 560px') !!} alt="{{ $n['alt'] }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;">
         </div>
       </div>
       <div class="col-lg-6">

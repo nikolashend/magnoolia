@@ -262,6 +262,24 @@ window._mgLastFocus = null;
         return v ? (parseFloat(v).toFixed(1) + ' m²') : null;
     }
 
+    /* Phase 35.1 (Indrek item 11): hooviala is a plot measurement — a decimal
+       like 959,7 m² reads as false precision for a yard, so it is shown as a
+       whole number (round half up). Underlying data is untouched. */
+    function fmtAreaWhole(v) {
+        return v ? (Math.round(parseFloat(v)) + ' m²') : null;
+    }
+
+    /* "Netopind kokku" is not a stored field: it is köetav pind + panipaiga pind
+       (Indrek's own annotation: 129,6 + 7,3 = 136,9). Returns null when either
+       part is missing, so no invented total is ever displayed. */
+    function fmtNetTotal(unit) {
+        var heated = parseFloat(unit.net_area);
+        var store  = parseFloat(unit.storage_area);
+        if (!heated) { return null; }
+        if (!store)  { return null; }
+        return (heated + store).toFixed(1) + ' m²';
+    }
+
     function fitNote(unit, status) {
         var stageMsg = String(unit.stage || 1) === '1'
             ? (I18N.stage1_advantage || 'I etapi kodu eelis on varasem valmimine (kevad 2027).')
@@ -322,11 +340,15 @@ window._mgLastFocus = null;
         var ptLabel = unit.plan_type === 'type-a' ? (I18N.plan_a || 'Plaan A') : (unit.plan_type === 'type-b' ? (I18N.plan_b || 'Plaan B') : (I18N.plan_tbc || 'Täpsustamisel'));
         document.getElementById('mg-specs-grid').innerHTML =
             specCell(I18N.spec_rooms      || 'Tube',       unit.rooms || '—')
-            + specCell(I18N.spec_area     || 'Netopind',   fmtArea(unit.net_area) || '—')
+            /* Phase 35.1 item 11 — three distinct areas, in Indrek's order:
+               köetav pind → panipaiga pind → netopind kokku. The old single
+               "Netopind" row showed net_area alone, i.e. the heated area only. */
+            + specCell(I18N.spec_heated_area || 'Köetav pind', fmtArea(unit.net_area) || '—')
             + specCell(I18N.spec_terrace  || 'Terrass',    fmtArea(unit.terrace_area) || '—')
             + specCell(I18N.spec_balcony  || 'R\u00f5du',  fmtArea(unit.balcony_area) || '—')
-            + specCell(I18N.spec_storage  || 'Panipaik',   unit.storage_area ? fmtArea(unit.storage_area) : (I18N.plan_tbc || 'Täpsustamisel'))
-            + specCell(I18N.spec_yard     || 'Hooviala',   unit.private_yard_area ? fmtArea(unit.private_yard_area) : (I18N.plan_tbc || 'Täpsustamisel'))
+            + specCell(I18N.spec_storage  || 'Panipaiga pind', unit.storage_area ? fmtArea(unit.storage_area) : (I18N.plan_tbc || 'Täpsustamisel'))
+            + (fmtNetTotal(unit) ? specCell(I18N.spec_net_total || 'Netopind kokku', fmtNetTotal(unit)) : '')
+            + specCell(I18N.spec_yard     || 'Isiklik maa-ala',   unit.private_yard_area ? fmtAreaWhole(unit.private_yard_area) : (I18N.plan_tbc || 'Täpsustamisel'))
             + specCell(I18N.spec_parking  || 'Parkimine',  (unit.parking || 2) + '\u00d7')
             + specCell(I18N.spec_completion || 'Valmimine', unit.completion || (I18N.plan_tbc || 'Täpsustamisel'))
             + specCell(I18N.spec_plan_type || 'Plaanit\u00fc\u00fcp', ptLabel);

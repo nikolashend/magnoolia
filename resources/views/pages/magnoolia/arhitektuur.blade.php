@@ -10,6 +10,9 @@
   $base = rtrim(config('magnoolia.seo.canonical_base', 'https://magnoolia.ee'), '/');
   $exteriorImages = [
     ['file' => 'Cam017.0000.jpg',         'alt' => 'Magnoolia ridaelamukodu õhtuvalguses — fassaadi LED-valgustus', 'cat' => 'välisvaated'],
+    // Phase 35.1 item 13 — renders Indrek listed as missing (materials/24.08.2026)
+    ['file' => 'Cam020.0000.jpg',         'alt' => 'Magnoolia ridaelamute õhtune fassaadivaade LED-valgustusega ja terrassi lükandaknega', 'cat' => 'välisvaated'],
+    ['file' => 'Cam007.0000.jpg',         'alt' => 'Magnoolia ridaelamukodude õhtuvaade hooviala poolt',   'cat' => 'välisvaated'],
     ['file' => 'Cam001.0000.jpg',         'alt' => 'Magnoolia ridaelamukodude välisvaade lõunast',        'cat' => 'välisvaated'],
     ['file' => 'Cam004.0000.jpg',         'alt' => 'Magnoolia ridaelamukodud — fassaadivaade',             'cat' => 'välisvaated'],
     ['file' => 'Cam005.0000.jpg',         'alt' => 'Magnoolia ridaelamukodud — terrass ja hooviala',       'cat' => 'välisvaated'],

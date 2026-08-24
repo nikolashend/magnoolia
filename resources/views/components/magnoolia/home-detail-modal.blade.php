@@ -33,8 +33,17 @@
           'address'    => $h['address'],
           'plan'       => $h['plan_label'],
           'rooms'      => $h['rooms'],
+          // Phase 35.1 item 11 — the three areas Indrek annotated, plus terrace/balcony.
+          // 'total' is köetav pind + panipaiga pind and stays null when either part
+          // is missing, so no invented total is shown. The plot is a whole number.
           'net'        => RowhouseSelectionService::formatArea($h['net_area']),
-          'yard'       => RowhouseSelectionService::formatArea($h['private_yard_area']),
+          'storage'    => RowhouseSelectionService::formatArea($h['storage_area'] ?? null),
+          'total'      => (!empty($h['net_area']) && !empty($h['storage_area']))
+                              ? RowhouseSelectionService::formatArea($h['net_area'] + $h['storage_area'])
+                              : null,
+          'terrace'    => RowhouseSelectionService::formatArea($h['terrace_area'] ?? null),
+          'balcony'    => RowhouseSelectionService::formatArea($h['balcony_area'] ?? null),
+          'yard'       => isset($h['private_yard_area']) ? number_format(round($h['private_yard_area']), 0, ',', ' ') : null,
           'parking'    => $h['parking_spaces'],
           'stage'      => $h['stage'],
           'completion' => $h['completion'],
@@ -129,7 +138,11 @@
           <dl style="margin:0 0 22px;display:flex;flex-direction:column;gap:0;">
             @php
               $specRows = [
-                ['mg-hd-net', __('magnoolia.rowhouse.spec_net')],
+                ['mg-hd-net', __('magnoolia.rowhouse.spec_heated')],
+                ['mg-hd-storage', __('magnoolia.rowhouse.spec_storage')],
+                ['mg-hd-total', __('magnoolia.rowhouse.spec_total')],
+                ['mg-hd-terrace', __('magnoolia.rowhouse.spec_terrace')],
+                ['mg-hd-balcony', __('magnoolia.rowhouse.spec_balcony')],
                 ['mg-hd-yard', __('magnoolia.rowhouse.spec_yard')],
                 ['mg-hd-rooms', __('magnoolia.rowhouse.spec_rooms')],
                 ['mg-hd-parking', __('magnoolia.rowhouse.spec_parking')],
@@ -316,7 +329,7 @@
     var sub = [];
     if (h.plan) sub.push(L.plan + ' ' + h.plan);
     if (h.rooms) sub.push(h.rooms + ' ' + L.rooms);
-    if (h.net) sub.push(h.net + ' m²');
+    if (h.total || h.net) sub.push((h.total || h.net) + ' m²');
     document.getElementById('mg-hd-subtitle').textContent = sub.join(' · ') + (h.yard ? '  ·  ' + L.yardInline.replace(':area', h.yard) : '');
 
     // Phase 35 — prominent price
@@ -332,6 +345,10 @@
     document.getElementById('mg-hd-status-dot').style.background = statusColor;
 
     set('mg-hd-net', h.net ? h.net + ' m²' : null);
+    set('mg-hd-storage', h.storage ? h.storage + ' m²' : null);
+    set('mg-hd-total', h.total ? h.total + ' m²' : null);
+    set('mg-hd-terrace', h.terrace ? h.terrace + ' m²' : null);
+    set('mg-hd-balcony', h.balcony ? h.balcony + ' m²' : null);
     set('mg-hd-yard', h.yard ? h.yard + ' m²' : null);
     set('mg-hd-rooms', h.rooms || null);
     set('mg-hd-parking', h.parking || null);

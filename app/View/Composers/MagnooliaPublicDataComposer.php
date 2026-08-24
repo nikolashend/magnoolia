@@ -32,18 +32,48 @@ class MagnooliaPublicDataComposer
             ],
         ];
 
-        $campaign = [
-            'enabled' => (bool) ($settings['campaign']['active'] ?? false),
-            'title' => 'KAMPAANIA',
-            'body' => null,
-        ];
+        // ── Campaign / Eripakkumine — ONE source for the whole site (Phase 35.1, items 5 + 9)
+        //
+        // Before this, three places disagreed: the homepage teaser read
+        // config/magnoolia.php, the red banner on /kodud-ja-hinnad was a hardcoded
+        // lang string, and only the lower banner used the admin Campaign screen. So
+        // switching the campaign off in admin left the offer visible on two pages.
+        //
+        // Rule: once anything has been published, the admin Campaign screen is
+        // authoritative — inactive there means the offer disappears everywhere.
+        // config/magnoolia.php is only a fallback for a site that has never
+        // published (fresh install), so nothing breaks before the first publish.
+        $locale = app()->getLocale();
+        $hasPublication = ! empty($settings);
 
-        if ($campaign['enabled']) {
-            $locale = app()->getLocale();
-            $noteKey = 'note_' . $locale;
-            $campaign['body'] = $settings['campaign'][$noteKey]
-                ?? $settings['campaign']['note_et']
-                ?? config('magnoolia.campaign.body');
+        if ($hasPublication) {
+            $published = $settings['campaign'] ?? [];
+            $active = (bool) ($published['active'] ?? false);
+            $body = $active
+                ? ($published['note_' . $locale] ?? $published['note_et'] ?? null)
+                : null;
+
+            $campaign = [
+                'enabled'    => $active && filled($body),
+                'title'      => 'KAMPAANIA',
+                'body'       => $body,
+                'body_short' => $body,
+                'deadline'   => $published['deadline'] ?? null,
+                'legal_note' => $published['legal_note'] ?? null,
+                'source'     => 'admin',
+            ];
+        } else {
+            $cfg = config('magnoolia.campaign', []);
+
+            $campaign = [
+                'enabled'    => (bool) ($cfg['enabled'] ?? false),
+                'title'      => $cfg['title'] ?? 'KAMPAANIA',
+                'body'       => $cfg['body_' . $locale] ?? $cfg['body_et'] ?? null,
+                'body_short' => $cfg['body_short_' . $locale] ?? $cfg['body_short_et'] ?? null,
+                'deadline'   => $cfg['deadline'] ?? null,
+                'legal_note' => $cfg['disclaimer_et'] ?? null,
+                'source'     => 'config',
+            ];
         }
 
         $view->with('mgPublic', [

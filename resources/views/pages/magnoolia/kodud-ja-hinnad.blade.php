@@ -27,7 +27,7 @@
       "@@type": "ApartmentComplex",
       "@@id": "{{ $base }}/#apartment-complex",
       "name": "Magnoolia ridaelamukodud",
-      "description": "19 A-energiaklassi ridaelamukodu Vaela külas, Kiili vallas, Tallinna lähedal. Plaan A (4 tuba, ~129.6 m²) ja Plaan B (5 tuba, ~143.2 m²).",
+      "description": "19 A-energiaklassi ridaelamukodu Vaela külas, Kiili vallas, Tallinna lähedal. Plaan A (4 tuba, ~129.2 m²) ja Plaan B (5 tuba, ~129.6 m²).",
       "url": "{{ $base }}/kodud-ja-hinnad",
       "address": {
         "@@type": "PostalAddress",
@@ -81,12 +81,16 @@
     <div class="row gutter-y-24">
       <div class="col-lg-6 wow fadeInUp" data-wow-duration="700ms" data-wow-delay="0ms">
         <div class="mg-comparison-card">
+          {{-- Phase 35.1 item 12: Indrek asked for the variants to say what actually
+               differs between them, not just "bigger". --}}
+          <div class="mg-comparison-card__badge mg-comparison-card__badge--plain">{{ __('magnoolia.page.kodudjahinnad.plan_a_badge') }}</div>
           <div class="mg-comparison-card__plan">{{ __('magnoolia.page.kodudjahinnad.plan_a_name') }}</div>
           <div class="mg-comparison-card__title">{{ __('magnoolia.page.kodudjahinnad.plan_a_title') }}</div>
           <div class="mg-comparison-card__size">{{ __('magnoolia.page.kodudjahinnad.plan_a_size') }}</div>
           <ul class="mg-comparison-card__specs">
             <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_rooms') }}</span><strong>4</strong></li>
-            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_area') }}</span><strong>ca 129,6 m²</strong></li>
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_washrooms') }}</span><strong>3</strong></li>
+            <li><span>{{ __('magnoolia.pricing.area_total') }}</span><strong>ca 134 m²</strong></li>
             <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_terrace') }}</span><strong>{{ __('magnoolia.page.kodudjahinnad.spec_check') }}</strong></li>
             <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_yard') }}</span><strong>{{ __('magnoolia.page.kodudjahinnad.spec_check') }}</strong></li>
             <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_parking') }}</span><strong>2</strong></li>
@@ -109,7 +113,8 @@
           <div class="mg-comparison-card__size">{{ __('magnoolia.page.kodudjahinnad.plan_b_size') }}</div>
           <ul class="mg-comparison-card__specs">
             <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_rooms') }}</span><strong>5</strong></li>
-            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_area') }}</span><strong>ca 143,2 m²</strong></li>
+            <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_washrooms') }}</span><strong>2</strong></li>
+            <li><span>{{ __('magnoolia.pricing.area_total') }}</span><strong>ca 137 m²</strong></li>
             <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_terrace') }}</span><strong>{{ __('magnoolia.page.kodudjahinnad.plan_b_terrass') }}</strong></li>
             <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_yard') }}</span><strong>{{ __('magnoolia.page.kodudjahinnad.spec_check') }}</strong></li>
             <li><span>{{ __('magnoolia.page.kodudjahinnad.spec_parking') }}</span><strong>2</strong></li>

@@ -65,7 +65,13 @@
     </p>
     <div class="mg-page-hero__ctas">
       <a href="#sisepildid" class="zoomvilla-btn">{{ __('magnoolia.page.sisedisain.cta_view') }} <i class="icon-angle-small-right"></i></a>
-      <a href="{{ lroute('magnoolia.contact') }}" class="zoomvilla-btn zoomvilla-btn--border">{{ __('magnoolia.page.sisedisain.cta_inquiry') }}</a>
+      {{-- Phase 35.1 item 15: this used to be a bare link to /kontakt, so the lead
+           arrived with no indication it came from Sisedisain. It now opens the same
+           inquiry drawer as the other finish CTAs, tagged with a Sisedisain source;
+           the href stays as a no-JS fallback so the button can never dead-end. --}}
+      <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="zoomvilla-btn zoomvilla-btn--border"
+         data-mg-inquiry-open data-source-component="sisedisain_viimistlus"
+         data-mg-analytics="magnoolia_cta_click">{{ __('magnoolia.page.sisedisain.cta_inquiry') }}</a>
     </div>
   </div>
 </div>
@@ -89,91 +95,11 @@
   </div>
 </section>
 
-{{-- ── Phase 26: Prestige pakett — sanitaarruumid ─────────── --}}
-<section class="mg-page-section mg-page-section--white" id="prestige">
-  <div class="container">
-    <div class="mg-section-heading" style="margin-bottom:40px;">
-      <div class="mg-section-heading__eyebrow">{{ __('magnoolia.page.sisedisain.prestige_eyebrow') }}</div>
-      <h2 class="mg-section-heading__title">{{ __('magnoolia.page.sisedisain.prestige_title') }}</h2>
-      <p class="mg-section-heading__subtitle">{{ __('magnoolia.page.sisedisain.prestige_sub') }}</p>
-    </div>
-
-    <div class="row gutter-y-32">
-
-      {{-- Sanitaarruumid --}}
-      <div class="col-lg-6">
-        <div style="background:#f8f5f0;border-radius:16px;padding:28px;height:100%;border-left:4px solid #c89443;">
-          <h3 style="font-size:16px;font-weight:700;color:#1d2430;margin:0 0 16px;display:flex;align-items:center;gap:10px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c89443" stroke-width="2" aria-hidden="true"><path d="M4 12a8 8 0 0 1 16 0Z"/><path d="M2 12h20"/><path d="M4 12v8"/><path d="M20 12v8"/></svg>
-            {{ __('magnoolia.page.sisedisain.sanitary_title') }}
-          </h3>
-          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
-            @foreach([
-              'RAK Resort rimless WC-pott',
-              'Loputuskasti nupp SLIM — kroom või must',
-              'Valamu Balteco Onyx 40',
-              'Damixa Core valamusegisti',
-              'ACO plaaditud dušširenn',
-              'Dušiklaas alumiiniumraamis, ulatub laeni',
-              'Damixa Core duššilift',
-            ] as $item)
-            <li style="display:flex;align-items:baseline;gap:10px;font-size:13.5px;color:#444;line-height:1.5;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c89443" stroke-width="2.5" style="flex-shrink:0;margin-top:2px;" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              {{ $item }}
-            </li>
-            @endforeach
-            <li style="display:flex;align-items:baseline;gap:10px;font-size:13px;color:#888;font-style:italic;line-height:1.5;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2.5" style="flex-shrink:0;margin-top:2px;" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              {{ __('magnoolia.page.sisedisain.sanitary_extra') }}: Balteco Nova valamukapp
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      {{-- Materjalid ja pinnad --}}
-      <div class="col-lg-6">
-        <div style="background:#f8f5f0;border-radius:16px;padding:28px;height:100%;border-left:4px solid #c89443;">
-          <h3 style="font-size:16px;font-weight:700;color:#1d2430;margin:0 0 16px;display:flex;align-items:center;gap:10px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c89443" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v6"/></svg>
-            {{ __('magnoolia.page.sisedisain.materials_title') }}
-          </h3>
-          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
-            @foreach([
-              'Milk Oak Rustic Light — põrandaparkett',
-              'Ivory Oak Rustic Light — alternatiiv',
-              'Tikkurila Symphony Opus II G497',
-              'Tikkurila Symphony Opus II L497',
-              'Ukselink BETA SLIM — must / harjatud kroom / grafiit',
-              'Puitliist 65×15, värvitud',
-              'Schneider Sedna lülitid ja pistikud',
-              'Põrandakütte display',
-              'Korteri fonotelefon (video intercom)',
-              'IP20 / IP65 kohtvalgustid',
-            ] as $item)
-            <li style="display:flex;align-items:baseline;gap:10px;font-size:13.5px;color:#444;line-height:1.5;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c89443" stroke-width="2.5" style="flex-shrink:0;margin-top:2px;" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>
-                {{ $item }}
-                @if(str_contains($item, 'Schneider Sedna'))
-                <span style="display:block;margin-top:3px;font-size:12px;color:#6f6a61;font-style:italic;line-height:1.5;">
-                  {{ ['ru' => 'В пакете Delux можно выбрать розетки и выключатели в антрацитово-сером (графит) тоне.', 'en' => 'In the Delux package, sockets and switches can be chosen in an anthracite-grey (graphite) tone.'][app()->getLocale()] ?? 'Delux paketis on võimalik valida antratsiithall (grafiit) toonis pistikud ja lülitid.' }}
-                </span>
-                @endif
-              </span>
-            </li>
-            @endforeach
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    {{-- Developer replacement disclaimer --}}
-    <div style="margin-top:24px;padding:14px 20px;background:#f0ede8;border-radius:8px;font-size:12px;color:#888;font-style:italic;">
-      {{ __('magnoolia.page.sisedisain.replacement_disclaimer') }}
-    </div>
-  </div>
-</section>
+{{-- Phase 35.1 item 17: the "Prestige pakett / Rahulik ja kvaliteetne kodutunne"
+     teaser section that stood here was removed at Indrek's request — the same
+     sanitary/finish specification is listed in full further down the page
+     (material-specs + interior-finish sections), so it was duplicate content.
+     Nothing linked to its #prestige anchor. --}}
 
 {{-- ── Aet Piel — personaalne sisekujundus.
      TEMPORARILY HIDDEN (no agreement with Aet Piel yet) — do NOT delete, re-enable later

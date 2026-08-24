@@ -10,7 +10,10 @@
  * - Stage 1: Magnoolia tee 1 + 3 (keypunch: kevad 2027)
  * - Stage 2: Magnoolia tee 5, 7, 9, 11 (keypunch: kevad 2028)
  * - Status: available | reserved | sold | tbc
- * - plan_type: type-a (4-room 129.6m2) | type-b (5-room 143.2m2, corner)
+ * - plan_type: type-a (4-room, net_area 129.2 m2) | type-b (5-room, net_area 129.6 m2)
+ *   Phase 35.1: the old comment claimed type-b was 143.2 m2. No unit in the
+ *   published dataset has that area — the figure was stale and is gone from the
+ *   site copy, plan cards and JSON-LD (Indrek item 12).
  */
 
 return [

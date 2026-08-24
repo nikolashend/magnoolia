@@ -1564,6 +1564,10 @@ a {
   .main-slider-two__content { margin-top: 190px !important; }
 }
 .main-slider-two__title, .main-slider-two__title span { color: #ffffff !important; }
+/* Phase 35.1: the theme sets text-transform: capitalize on the hero title, which
+   renders "Tallinna Lähedal". Estonian capitalises only the first word of a
+   sentence, so the headline must print exactly as it is written in the CMS. */
+.main-slider-two__title, .main-slider-two__title span { text-transform: none !important; }
 .main-slider-two__text { color: rgba(255,255,255,.92) !important; }
 .main-slider-two__subtitle { background: rgba(255,255,255,.14) !important; color: #f0d8a8 !important; }
 .mg-hero-fact strong { color: #ffffff !important; }
@@ -3188,6 +3192,20 @@ body {
   padding: 3px 14px;
   border-radius: 20px;
 }
+/* Phase 35.1 item 12 — the variant badges now carry a descriptive phrase
+   ("Variant B — suurem panipaik ja terrass") instead of a two-word tag, so they
+   must not be uppercased and need room to wrap on narrow screens. Plan A gets a
+   neutral tone; Plan B keeps the gold "featured" treatment. */
+.mg-comparison-card__badge {
+  text-transform: none;
+  letter-spacing: .01em;
+  font-size: 11.5px;
+  max-width: calc(100% - 64px);
+  white-space: normal;
+  line-height: 1.35;
+}
+.mg-comparison-card__badge--plain { background: #1d2430; }
+
 .mg-comparison-card__plan {
   font-size: 11px;
   font-weight: 700;
@@ -3677,11 +3695,14 @@ body {
 /* ?? Feature row (image + text side by side) ?????????????????? */
 .mg-feature-row {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  /* Phase 35.1 item 14 — the columns used to alternate 1.1fr/1fr, so every second
+     photo came out ~4% narrower. Equal columns give all four elements the exact
+     same image size, which is what Indrek asked for. */
+  grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: center;
 }
-.mg-feature-row--reverse { grid-template-columns: 1fr 1.1fr; }
+.mg-feature-row--reverse { grid-template-columns: 1fr 1fr; }
 @media (max-width: 991px) {
   .mg-feature-row,
   .mg-feature-row--reverse { grid-template-columns: 1fr; gap: 36px; }
@@ -3691,8 +3712,13 @@ body {
   overflow: hidden;
   position: relative;
   background: #e8e3db;
-  min-height: 340px;
-  align-self: stretch; /* fill the full row height so no beige bg shows below the image when the text column is taller */
+  /* Phase 35.1 item 14 — the image used to stretch to the row height, so a row
+     with one bullet less (Kasutusõigusega hooviala) rendered a visibly smaller
+     photo than its neighbours. A fixed 4:3 box makes every element identical and
+     larger than the old 340px floor. */
+  aspect-ratio: 4 / 3;
+  min-height: 420px;
+  align-self: center;
 }
 .mg-feature-row__img img {
   width: 100%;
@@ -4611,8 +4637,10 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 /* Layer 2+3 — category cards (details/summary) */
 .mg-if__cats { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
 .mg-if-card { background: #faf8f4; border: 1px solid rgba(29,36,48,.10); border-radius: 16px; overflow: hidden; transition: box-shadow .2s, border-color .2s; }
-.mg-if-card[open] { border-color: rgba(200,148,67,.45); box-shadow: 0 12px 32px rgba(29,36,48,.08); }
-.mg-if-card__summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 18px; padding: 22px 24px; }
+.mg-if-card[open], .mg-if-card--static { border-color: rgba(200,148,67,.45); box-shadow: 0 12px 32px rgba(29,36,48,.08); }
+/* Phase 35.1 item 18 — the card is no longer a <details>: no pointer, nothing to click. */
+.mg-if-card__summary { list-style: none; display: flex; align-items: center; gap: 18px; padding: 22px 24px; }
+.mg-if-card--static .mg-if-card__title { margin: 0; }
 .mg-if-card__summary::-webkit-details-marker { display: none; }
 .mg-if-card__icon { flex-shrink: 0; width: 46px; height: 46px; border-radius: 12px; background: #1d2430; color: #c89443; display: flex; align-items: center; justify-content: center; }
 .mg-if-card__icon svg { width: 22px; height: 22px; }
@@ -4625,7 +4653,10 @@ button.mg-faq-card__q[aria-expanded="true"] i {
 @media (max-width: 600px) { .mg-if-card__toggle span, .mg-if-card__desc { display: none; } }
 .mg-if-card__body { padding: 0 24px 24px; }
 .mg-if-card__grid { display: grid; grid-template-columns: 1fr; gap: 22px; }
-@media (min-width: 768px) { .mg-if-card__grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+/* Phase 35.1 items 10 + 18: the proof sheet used to sit in a half-width column,
+   which made an important sales visual unreadably small. It now spans the full
+   card width underneath the item list. */
+.mg-if-card__grid { grid-template-columns: 1fr; }
 .mg-if-card__items { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; }
 .mg-if-item { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 11px 0; border-bottom: 1px solid rgba(29,36,48,.07); }
 .mg-if-item:last-child { border-bottom: none; }

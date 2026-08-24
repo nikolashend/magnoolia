@@ -7,7 +7,10 @@
   $locale   = app()->getLocale();
   $units    = $mgPublic['units'] ?? [];
   $settings = $mgPublic['settings'] ?? [];
-  $campaign = config('magnoolia.campaign', []);
+  // Phase 35.1 item 5 — read the single campaign source (admin Campaign screen,
+  // config only as a pre-first-publish fallback). Was config() directly, which
+  // ignored the admin switch.
+  $campaign = $mgPublic['campaign'] ?? [];
 
   $total     = count($units);
   $available = collect($units)->where('status', 'available')->count();
@@ -16,7 +19,7 @@
 
   $stage1Complete = $settings['stage_1_completion'] ?? 'Kevad 2027';
   $stage2Complete = $settings['stage_2_completion'] ?? 'Kevad 2028';
-  $showCampaign   = !empty($campaign['enabled']) && !empty($campaign['amount_eur']);
+  $showCampaign   = !empty($campaign['enabled']) && filled($campaign['body_short'] ?? null);
 @endphp
 
 <section class="section-space" style="background:#1d2430;">
@@ -30,18 +33,10 @@
         @if($locale==='ru') АКЦИЯ @elseif($locale==='en') OFFER @else KAMPAANIA @endif
       </span>
       <span style="color:#fff;font-size:14px;flex:1;">
-        @if($locale==='ru') {{ $campaign['body_short_ru'] ?? '' }}
-        @elseif($locale==='en') {{ $campaign['body_short_en'] ?? '' }}
-        @else {{ $campaign['body_short_et'] ?? '' }}
-        @endif
+        {{ $campaign['body_short'] ?? '' }}
       </span>
-      @if(!($campaign['legal_final'] ?? true))
-      <span style="font-size:11px;color:rgba(255,255,255,.65);">
-        @if($locale==='ru') Точные условия уточняет Diana.
-        @elseif($locale==='en') Exact terms confirmed by Diana.
-        @else Täpsed tingimused kinnitab Diana.
-        @endif
-      </span>
+      @if(filled($campaign['legal_note'] ?? null))
+      <span style="font-size:11px;color:rgba(255,255,255,.65);">{{ $campaign['legal_note'] }}</span>
       @endif
     </div>
     @endif

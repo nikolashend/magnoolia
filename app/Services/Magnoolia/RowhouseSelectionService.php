@@ -275,6 +275,11 @@ class RowhouseSelectionService
             'net_area'          => isset($canon['net_area']) ? (float) $canon['net_area'] : null,
             'terrace_area'      => isset($canon['terrace_area']) ? (float) $canon['terrace_area'] : null,
             'balcony_area'      => isset($canon['balcony_area']) ? (float) $canon['balcony_area'] : null,
+            // Phase 35.1 item 11 — storage_area was the one area field this mapper
+            // dropped, so "panipaiga pind" was filled in the admin but invisible on
+            // the public site, and "Netopind kokku" (köetav + panipaiga) could not
+            // be computed for the price table.
+            'storage_area'      => isset($canon['storage_area']) ? (float) $canon['storage_area'] : null,
             'private_yard_area' => isset($canon['private_yard_area']) ? (float) $canon['private_yard_area'] : null,
             'parking_spaces'    => $canon['parking_spaces'] ?? null,
             'price'             => $price,

@@ -159,13 +159,21 @@
         </div>
         <div class="mg-unit-specs" style="display:flex;flex-direction:column;gap:0;">
           @php
+            // Phase 35.1 item 11 — same three areas as the price table and the unit
+            // modal: köetav pind + panipaiga pind = netopind kokku. The total is
+            // omitted when either part is missing, and the plot is a whole number.
+            $uHeated = (float) ($unit['net_area'] ?? 0);
+            $uStore  = (float) ($unit['storage_area'] ?? 0);
+            $uTotal  = ($uHeated > 0 && $uStore > 0) ? $uHeated + $uStore : null;
+
             $specs = [
-              ['label' => 'Tubade arv',      'value' => $rooms ? $rooms . ' tuba' : null],
-              ['label' => 'Netopind',         'value' => $area ? $area . ' m²' : null],
-              ['label' => 'Terrass',          'value' => isset($unit['terrace_area']) && $unit['terrace_area'] ? $unit['terrace_area'] . ' m²' : null],
-              ['label' => 'Rõdu',             'value' => isset($unit['balcony_area']) && $unit['balcony_area'] ? $unit['balcony_area'] . ' m²' : null],
-              ['label' => 'Panipaik',         'value' => isset($unit['storage_area']) && $unit['storage_area'] ? $unit['storage_area'] . ' m²' : null],
-              ['label' => 'Eraaed',           'value' => isset($unit['private_yard_area']) && $unit['private_yard_area'] ? $unit['private_yard_area'] . ' m²' : null],
+              ['label' => 'Tubade arv',       'value' => $rooms ? $rooms . ' tuba' : null],
+              ['label' => 'Köetav pind',      'value' => $uHeated ? number_format($uHeated, 1, ',', ' ') . ' m²' : null],
+              ['label' => 'Panipaiga pind',   'value' => $uStore ? number_format($uStore, 1, ',', ' ') . ' m²' : null],
+              ['label' => 'Netopind kokku',   'value' => $uTotal ? number_format($uTotal, 1, ',', ' ') . ' m²' : null],
+              ['label' => 'Terrassi pind',    'value' => isset($unit['terrace_area']) && $unit['terrace_area'] ? $unit['terrace_area'] . ' m²' : null],
+              ['label' => 'Rõdu pind',        'value' => isset($unit['balcony_area']) && $unit['balcony_area'] ? $unit['balcony_area'] . ' m²' : null],
+              ['label' => 'Isiklik maa-ala',  'value' => isset($unit['private_yard_area']) && $unit['private_yard_area'] ? number_format(round($unit['private_yard_area']), 0, ',', ' ') . ' m²' : null],
               ['label' => 'Parkimiskohad',    'value' => isset($unit['parking_spaces']) ? $unit['parking_spaces'] . ' kohta' : null],
               ['label' => __('magnoolia.pricing.stage'),      'value' => $stageLabel],
               ['label' => __('magnoolia.pricing.completion'),  'value' => $completion],

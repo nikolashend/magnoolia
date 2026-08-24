@@ -3,7 +3,7 @@
 
     Premium native interior-finish / equipment standard section for /ehitusinfo.
     Data: config/magnoolia_interiors.php. Copy: magnoolia.interior.* (ET/RU/EN).
-    Layout: editorial render block → 5 expandable category cards (<details>, no JS)
+    Layout: editorial render block → 5 always-visible category blocks (no JS)
     → AI answer block → disclaimer + CTA. Proof sheets open larger via a link.
 --}}
 @php
@@ -69,13 +69,13 @@
           @endforeach
         </ul>
         <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="mg-btn mg-btn--gold mg-if__editorial-cta"
-           data-mg-inquiry-open data-source-component="ehitusinfo_siseviimistlus"
+           data-mg-inquiry-open data-source-component="sisedisain_viimistluspakett"
            data-mg-analytics="ehitusinfo-siseviimistlus-cta">{{ __('magnoolia.interior.editorial_cta') }}</a>
       </div>
     </div>
     @endif
 
-    {{-- Layer 2+3 — expandable category cards (native <details>, no JS) --}}
+    {{-- Layer 2+3 — category blocks, permanently open (Phase 35.1 item 18) --}}
     <div class="mg-if__cats">
       @foreach($cats as $key => $cat)
       @php
@@ -83,16 +83,23 @@
         $desc  = __('magnoolia.interior.cat.'.$key.'.description');
         $proofFull = $imgUrl($cat['overview'] ?? null);
         $proofSm   = $catImgUrl($cat['overview'] ?? null);
+        $proofLg   = ($cat['overview'] ?? null)
+            ? asset(preg_replace('/\.webp$/', '-1400.webp', $cat['overview']))
+            : $proofSm;
       @endphp
-      <details class="mg-if-card" @if($loop->first) open @endif>
-        <summary class="mg-if-card__summary" data-mg-analytics="ehitusinfo-materials-detail-open">
+      {{-- Phase 35.1 item 18 — "pidevalt avatud": this used to be a <details>
+           accordion. Opening it by default was not enough: buyers could still
+           collapse it, and Indrek asked for the specification to be permanently
+           visible because people were not finding it behind the "+". The toggle
+           is gone entirely — plain headings, content always on screen. --}}
+      <section class="mg-if-card mg-if-card--static">
+        <div class="mg-if-card__summary">
           <span class="mg-if-card__icon" aria-hidden="true">{!! $icons[$cat['icon'] ?? 'finish'] ?? '' !!}</span>
           <span class="mg-if-card__head">
-            <span class="mg-if-card__title">{{ $title }}</span>
+            <h3 class="mg-if-card__title">{{ $title }}</h3>
             <span class="mg-if-card__desc">{{ $desc }}</span>
           </span>
-          <span class="mg-if-card__toggle"><span>{{ __('magnoolia.interior.view_details') }}</span><i aria-hidden="true">+</i></span>
-        </summary>
+        </div>
 
         <div class="mg-if-card__body">
           <div class="mg-if-card__grid">
@@ -112,7 +119,10 @@
               <a href="{{ $proofFull }}" target="_blank" rel="noopener noreferrer"
                  data-mg-analytics="ehitusinfo-materials-detail-open"
                  aria-label="{{ __('magnoolia.interior.open_larger') }}">
-                <img src="{{ $proofSm }}" loading="lazy" decoding="async" width="768" height="430"
+                {{-- Phase 35.1 item 10: serve the large variant, not the 768 thumbnail. --}}
+                <img src="{{ $proofLg }}" srcset="{{ $proofSm }} 768w, {{ $proofLg }} 1400w"
+                     sizes="(min-width:992px) 900px, 100vw"
+                     loading="lazy" decoding="async" width="1400" height="789"
                      alt="{{ __('magnoolia.interior.proof_alt', ['category' => $title]) }}">
                 <span class="mg-if-card__proof-zoom">{{ __('magnoolia.interior.open_larger') }} ↗</span>
               </a>
@@ -123,7 +133,7 @@
           <p class="mg-if__disclaimer mg-if__disclaimer--sm">{{ $disclaimer }}</p>
           @endif
         </div>
-      </details>
+      </section>
       @endforeach
     </div>
 
@@ -137,10 +147,10 @@
     <p class="mg-if__disclaimer">{{ $disclaimer }}</p>
     <div class="mg-if__ctas">
       <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="mg-btn mg-btn--gold"
-         data-mg-inquiry-open data-source-component="ehitusinfo_siseviimistlus"
+         data-mg-inquiry-open data-source-component="sisedisain_viimistluspakett"
          data-mg-analytics="ehitusinfo-siseviimistlus-cta">{{ __('magnoolia.interior.cta_package') }}</a>
       <a href="{{ lroute('magnoolia.contact') }}#kontaktivorm" class="mg-btn mg-btn--ghost"
-         data-mg-inquiry-open data-source-component="ehitusinfo_siseviimistlus_offer"
+         data-mg-inquiry-open data-source-component="sisedisain_viimistluspakett_offer"
          data-mg-analytics="ehitusinfo-paid-options-open">{{ __('magnoolia.interior.cta_offer') }}</a>
     </div>
   </div>

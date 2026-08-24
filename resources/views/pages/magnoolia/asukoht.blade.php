@@ -8,6 +8,14 @@
 @section('content')
 @php
   $base = rtrim(config('magnoolia.seo.canonical_base', 'https://magnoolia.ee'), '/');
+
+  // Phase 35.1 item 6 — one address string for every map link on this page.
+  // The buttons used to pass "Magnoolia+tee,Vaela,Kiili+vald" unencoded: Google
+  // could not resolve it and opened a map with no marker. The full, encoded
+  // address resolves correctly (it is the same one the embed below uses), and
+  // /maps/search/?api=1 is Google's documented, key-free URL format.
+  $mgAddress = 'Magnoolia tee, Vaela küla, Kiili vald, Harjumaa';
+  $mgMapUrl  = 'https://www.google.com/maps/search/?api=1&query=' . urlencode($mgAddress);
 @endphp
 
 <script type="application/ld+json">
@@ -71,7 +79,7 @@
       {{ mg_text('page.asukoht.lead') }}
     </p>
     <div class="mg-page-hero__ctas">
-      <a href="https://maps.google.com/?q=Magnoolia+tee,Vaela,Kiili+vald" target="_blank" rel="noopener"
+      <a href="{{ $mgMapUrl }}" target="_blank" rel="noopener"
          class="zoomvilla-btn">
         {{ __('magnoolia.page.asukoht.cta_map') }} <i class="fas fa-external-link-alt" style="font-size:12px;"></i>
       </a>
@@ -90,18 +98,70 @@
       <div class="mg-location-fallback__body">
         <div class="mg-location-fallback__label">{{ __('magnoolia.page.asukoht.address_label') }}</div>
         <div class="mg-location-fallback__address">Magnoolia tee, Vaela küla, Kiili vald, Harjumaa</div>
-        <a href="https://maps.google.com/?q=Magnoolia+tee,Vaela,Kiili+vald"
-           target="_blank" rel="noopener"
-           class="zoomvilla-btn" style="margin-top:20px;margin-bottom:20px;display:inline-flex;">
-          <i class="fas fa-directions" style="margin-right:8px;"></i> {{ __('magnoolia.page.asukoht.address_map_btn') }}
-        </a>
+        {{-- Phase 35.1 item 6: the duplicate "Ava aadress Google Mapsis" button that
+             stood here was removed — the same action already sits in the page hero.
+             Its place is taken by the actual map view Indrek asked for. --}}
       </div>
-      <div class="mg-location-fallback__img" aria-hidden="true">
-        <img src="{{ asset('assets/images/magnoolia/Magnoolia tee_ES_7.jpg') }}"
-             alt="Magnoolia tee keskkond Vaela külas"
-             width="560" height="380" loading="lazy">
+      <div class="mg-location-fallback__img">
+        <iframe
+          src="https://maps.google.com/maps?q={{ urlencode($mgAddress) }}&z=14&hl={{ app()->getLocale() }}&output=embed"
+          title="{{ __('magnoolia.page.asukoht.map_title') }}"
+          width="560" height="380" style="border:0;width:100%;height:100%;min-height:340px;display:block;border-radius:14px;"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
       </div>
     </div>
+
+    {{-- Phase 35.1 item 6: important nearby objects. A keyless Google Maps embed can
+         only centre one location, so instead of an API key each object opens on the
+         map in a new tab. No key is exposed and nothing depends on a paid quota. --}}
+    <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;">
+      <span style="font-size:12.5px;color:#6f6a61;">{{ __('magnoolia.page.asukoht.map_nearby') }}</span>
+      @foreach([
+        ['Vaela lasteaed',       'Vaela lasteaed, Kiili vald'],
+        ['Kiili kool',           'Kiili Gümnaasium, Kiili'],
+        ['Kiili spordihoone',    'Kiili Spordikompleks, Kiili'],
+        ['IKEA',                 'IKEA Tallinn, Kurna'],
+        ['Selver',               'Selver, Kurna, Kiili vald'],
+        ['Decathlon',            'Decathlon, Kurna'],
+      ] as [$pinLabel, $pinQuery])
+        <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($pinQuery) }}" target="_blank" rel="noopener noreferrer"
+           style="font-size:12.5px;color:#1d2430;text-decoration:none;background:#fff;border:1px solid rgba(200,148,67,.35);border-radius:999px;padding:5px 13px;">
+          <i class="fas fa-map-pin" style="color:#c89443;font-size:11px;margin-right:5px;"></i>{{ $pinLabel }}
+        </a>
+      @endforeach
+    </div>
+  </div>
+</section>
+
+{{-- ── Architect site plan (Phase 35.1 item 7) ──────────────────
+     Indrek asked for the architect's asendiplaan here, in higher resolution
+     than the version on the price page, with the "Opmani tee" label visible.
+     Source: materials/24.08.2026/MAGNOOLIA_ASENDIPLAAN.pdf, rasterised to
+     2400×3365 webp + 1200/768 variants. The interactive masterplan on
+     /kodud-ja-hinnad is untouched — this is a static, legible overview. --}}
+<section class="mg-page-section mg-page-section--white" id="asendiplaan-joonis">
+  <div class="container">
+    <div class="mg-section-heading mg-section-heading--center">
+      <h2 class="mg-section-heading__title">{{ __('magnoolia.page.asukoht.siteplan_title') }}</h2>
+      <p class="mg-section-heading__subtitle">{{ __('magnoolia.page.asukoht.siteplan_sub') }}</p>
+    </div>
+    <figure style="margin:0;">
+      <a href="{{ asset('assets/magnoolia/asendiplaan/asendiplaan-hires.webp') }}"
+         target="_blank" rel="noopener noreferrer"
+         aria-label="{{ __('magnoolia.page.asukoht.siteplan_open') }}"
+         style="display:block;background:#fff;border:1px solid #e8e3da;border-radius:14px;padding:14px;">
+        <img src="{{ asset('assets/magnoolia/asendiplaan/asendiplaan-hires-1200.webp') }}"
+             srcset="{{ asset('assets/magnoolia/asendiplaan/asendiplaan-hires-768.webp') }} 768w, {{ asset('assets/magnoolia/asendiplaan/asendiplaan-hires-1200.webp') }} 1200w, {{ asset('assets/magnoolia/asendiplaan/asendiplaan-hires.webp') }} 2400w"
+             sizes="(min-width:992px) 900px, 100vw"
+             width="1200" height="1682" loading="lazy" decoding="async"
+             alt="Magnoolia arenduse arhitekti asendiplaan Opmani tee tähisega"
+             style="display:block;width:100%;max-width:900px;height:auto;margin:0 auto;">
+      </a>
+      <figcaption style="text-align:center;font-size:13.5px;color:#6f6a61;margin-top:12px;">
+        {{ __('magnoolia.page.asukoht.siteplan_open') }} ↗
+      </figcaption>
+    </figure>
   </div>
 </section>
 
@@ -290,7 +350,7 @@
         <h2 class="mg-editorial-row__title">{{ __('magnoolia.page.asukoht.transport_title') }}</h2>
         <p class="mg-editorial-row__body">{{ __('magnoolia.page.asukoht.transport_body') }}</p>
         <p class="mg-editorial-row__body">{{ __('magnoolia.page.asukoht.transport_note') }}</p>
-        <a href="https://maps.google.com/?q=Magnoolia+tee,Vaela,Kiili+vald"
+        <a href="{{ $mgMapUrl }}"
            target="_blank" rel="noopener noreferrer"
            class="zoomvilla-btn"
            data-mg-analytics="magnoolia_location_map_open"

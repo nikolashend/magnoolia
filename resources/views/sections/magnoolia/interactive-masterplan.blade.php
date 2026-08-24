@@ -113,8 +113,17 @@
           'address'    => $h['address'],
           'plan'       => $h['plan_label'],
           'rooms'      => $h['rooms'],
+          // Phase 35.1 item 11 — the three areas Indrek annotated, plus terrace/balcony.
+          // 'total' is köetav pind + panipaiga pind and stays null when either part
+          // is missing, so no invented total is shown. The plot is a whole number.
           'net'        => RowhouseSelectionService::formatArea($h['net_area']),
-          'yard'       => RowhouseSelectionService::formatArea($h['private_yard_area']),
+          'storage'    => RowhouseSelectionService::formatArea($h['storage_area'] ?? null),
+          'total'      => (!empty($h['net_area']) && !empty($h['storage_area']))
+                              ? RowhouseSelectionService::formatArea($h['net_area'] + $h['storage_area'])
+                              : null,
+          'terrace'    => RowhouseSelectionService::formatArea($h['terrace_area'] ?? null),
+          'balcony'    => RowhouseSelectionService::formatArea($h['balcony_area'] ?? null),
+          'yard'       => isset($h['private_yard_area']) ? number_format(round($h['private_yard_area']), 0, ',', ' ') : null,
           'parking'    => $h['parking_spaces'],
           'stage'      => $h['stage'],
           'completion' => $h['completion'],

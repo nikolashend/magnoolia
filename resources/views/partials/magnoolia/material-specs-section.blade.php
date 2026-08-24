@@ -100,22 +100,10 @@
         </div>
       </div>
 
-      {{-- Cross-link to Sisedisain --}}
-      <div class="col-12">
-        <div style="background:#1d2430;border-radius:12px;padding:20px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
-          <div style="color:#fff;">
-            <div style="font-size:11px;color:#c89443;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;">
-              {{ app()->getLocale()==='ru' ? 'Дизайн интерьера' : (app()->getLocale()==='en' ? 'Interior design' : 'Siseviimistlus') }}
-            </div>
-            <div style="font-size:15px;font-weight:600;">
-              {{ app()->getLocale()==='ru' ? 'Материалы, отделка и дополнительные опции подробно описаны на странице Sisedisain' : (app()->getLocale()==='en' ? 'Materials, finishes and add-on options are detailed on the Sisedisain page' : 'Materjalid, viimistlus ja lisavalikud on üksikasjalikult kirjeldatud sisedisaini lehel') }}
-            </div>
-          </div>
-          <a href="{{ lroute('magnoolia.sisedisain') }}"
-             style="flex-shrink:0;background:#c89443;color:#fff;text-decoration:none;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:700;white-space:nowrap;">
-            {{ app()->getLocale()==='ru' ? 'Дизайн интерьера →' : (app()->getLocale()==='en' ? 'Interior design →' : 'Sisedisain →') }}
-          </a>
-        </div>
+      {{-- Phase 35.1 item 16: the dark "Sisedisain →" strip that used to sit here
+           was removed. This partial is only ever included on /sisedisain itself, so
+           the button always linked to the page the visitor was already on. The
+           useful CTAs (contact / gallery) further down the page are untouched. --}}
       </div>
 
     </div>

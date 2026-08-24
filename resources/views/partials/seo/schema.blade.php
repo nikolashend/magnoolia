@@ -168,7 +168,7 @@
           "name": "Kui suured on Magnoolia kodud?",
           "acceptedAnswer": {
             "@@type": "Answer",
-            "text": "Magnoolia pakub kahte plaanitüüpi: 4-toaline Plaan A (~129,6 m²) ja 5-toaline Plaan B (~143,2 m²). Kõigi juurde kuulub laoruum ja 2 parkimiskohta."
+            "text": "Magnoolia pakub kahte plaanitüüpi: 4-toaline Plaan A (~129,2 m²) ja 5-toaline Plaan B (~129,6 m²). Kõigi juurde kuulub panipaik ja 2 parkimiskohta."
           }
         }
       ]
