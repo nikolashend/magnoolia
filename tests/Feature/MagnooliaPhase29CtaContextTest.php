@@ -46,7 +46,7 @@ class MagnooliaPhase29CtaContextTest extends TestCase
 
     public function test_no_price_cents_on_selection_surfaces(): void
     {
-        foreach (['/asendiplaan', '/kodud-ja-hinnad', '/'] as $url) {
+        foreach ([ '/kodud-ja-hinnad', '/'] as $url) {
             $html = $this->get($url)->assertStatus(200)->getContent();
             $this->assertStringNotContainsString('price_cents', $html, "price_cents leaked on {$url}");
         }

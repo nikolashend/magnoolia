@@ -16,10 +16,13 @@ final class MagnooliaRenderedHtmlAudit
      */
     public static function urls(): array
     {
+        // Pages that must RENDER (HTTP 200). /asendiplaan is deliberately absent:
+        // it is a permanent redirect into /kodud-ja-hinnad#mg-masterplan, so it has
+        // no HTML of its own to audit (Phase 35.0).
         return [
-            '/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht', '/ehitusinfo', '/kontakt', '/galerii', '/sisedisain', '/arhitektuur-ja-valisdisain', '/ostuprotsess', '/finantseerimine', '/kkk', '/aitah',
-            '/ru', '/ru/kodud-ja-hinnad', '/ru/asendiplaan', '/ru/asukoht', '/ru/ehitusinfo', '/ru/kontakt', '/ru/galerii', '/ru/sisedisain', '/ru/arhitektuur-ja-valisdisain', '/ru/ostuprotsess', '/ru/finantseerimine', '/ru/kkk', '/ru/aitah',
-            '/en', '/en/kodud-ja-hinnad', '/en/asendiplaan', '/en/asukoht', '/en/ehitusinfo', '/en/kontakt', '/en/galerii', '/en/sisedisain', '/en/arhitektuur-ja-valisdisain', '/en/ostuprotsess', '/en/finantseerimine', '/en/kkk', '/en/aitah',
+            '/', '/kodud-ja-hinnad', '/asukoht', '/ehitusinfo', '/kontakt', '/galerii', '/sisedisain', '/arhitektuur-ja-valisdisain', '/ostuprotsess', '/finantseerimine', '/kkk', '/aitah',
+            '/ru', '/ru/kodud-ja-hinnad', '/ru/asukoht', '/ru/ehitusinfo', '/ru/kontakt', '/ru/galerii', '/ru/sisedisain', '/ru/arhitektuur-ja-valisdisain', '/ru/ostuprotsess', '/ru/finantseerimine', '/ru/kkk', '/ru/aitah',
+            '/en', '/en/kodud-ja-hinnad', '/en/asukoht', '/en/ehitusinfo', '/en/kontakt', '/en/galerii', '/en/sisedisain', '/en/arhitektuur-ja-valisdisain', '/en/ostuprotsess', '/en/finantseerimine', '/en/kkk', '/en/aitah',
         ];
     }
 
@@ -68,9 +71,28 @@ final class MagnooliaRenderedHtmlAudit
      */
     public static function forbiddenStrings(string $locale): array
     {
-        return [
+        // Public HTML must only ever name the configured canonical host. Which of
+        // the known hosts counts as "wrong" therefore depends on configuration, not
+        // on a fixed list: magnoolia.estlanda.ee is a duplicate while magnoolia.ee
+        // is canonical, and the reverse is true when the roles are swapped.
+        // Plain "estlanda.ee" is never listed — it is the developer's own site and
+        // the sales mail address (Phase 35.0).
+        $canonicalHost = (string) parse_url(
+            (string) config('magnoolia.canonical_domain', config('magnoolia.seo.canonical_base', 'https://magnoolia.ee')),
+            PHP_URL_HOST
+        );
+
+        $knownHosts = [
             'magnoolia.adme.ee',
+            'magnoolia.estlanda.ee',
+            'magnoolia.ee',
+            'estlanda.ee/magnoolia',
         ];
+
+        return array_values(array_filter(
+            $knownHosts,
+            static fn (string $host): bool => $canonicalHost === '' || ! str_starts_with($host, $canonicalHost)
+        ));
     }
 
     /**

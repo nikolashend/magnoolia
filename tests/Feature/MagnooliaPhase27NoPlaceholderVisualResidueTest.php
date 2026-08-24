@@ -26,7 +26,7 @@ class MagnooliaPhase27NoPlaceholderVisualResidueTest extends TestCase
         app(MagnooliaPublicationService::class)->publish($admin->id, 'Phase 27 placeholder test');
 
         $this->pages = [
-            '/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht',
+            '/', '/kodud-ja-hinnad', '/asukoht',
             '/galerii', '/sisedisain', '/ehitusinfo',
             '/arhitektuur-ja-valisdisain', '/finantseerimine',
             '/ostuprotsess', '/kkk', '/kontakt',

@@ -26,7 +26,7 @@ class MagnooliaPhase27ImageOptimizationTest extends TestCase
         app(MagnooliaPublicationService::class)->publish($admin->id, 'Phase 27 image test');
 
         $this->pages = [
-            '/', '/kodud-ja-hinnad', '/asendiplaan',
+            '/', '/kodud-ja-hinnad',
             '/asukoht', '/galerii', '/sisedisain', '/kontakt',
         ];
     }

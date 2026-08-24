@@ -15,7 +15,7 @@ class MagnooliaPhase333NoRegressionTest extends TestCase
 
     public function test_public_pages_render_200_in_all_locales(): void
     {
-        $paths = ['/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht', '/galerii', '/kontakt'];
+        $paths = ['/', '/kodud-ja-hinnad', '/asukoht', '/galerii', '/kontakt'];
         foreach ($paths as $p) {
             $this->get($p)->assertOk();
             $this->get('/ru' . ($p === '/' ? '' : $p))->assertOk();

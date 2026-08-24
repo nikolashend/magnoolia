@@ -41,7 +41,7 @@ class MagnooliaPhase29LanguageTest extends TestCase
 
     public function test_no_unresolved_translation_keys(): void
     {
-        foreach (['/asendiplaan', '/ru/asendiplaan', '/en/asendiplaan', '/kodud-ja-hinnad', '/ehitusinfo'] as $url) {
+        foreach ([ '/kodud-ja-hinnad', '/ehitusinfo'] as $url) {
             $html = $this->get($url)->assertStatus(200)->getContent();
             $this->assertStringNotContainsString('magnoolia.rowhouse.', $html,
                 "Unresolved translation key rendered on {$url}");

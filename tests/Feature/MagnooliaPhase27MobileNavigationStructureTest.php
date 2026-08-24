@@ -26,7 +26,7 @@ class MagnooliaPhase27MobileNavigationStructureTest extends TestCase
     public function test_all_et_routes_accessible(): void
     {
         $routes = [
-            '/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht',
+            '/', '/kodud-ja-hinnad', '/asukoht',
             '/ehitusinfo', '/sisedisain', '/arhitektuur-ja-valisdisain',
             '/galerii', '/finantseerimine', '/ostuprotsess', '/kkk', '/kontakt',
         ];
@@ -38,7 +38,7 @@ class MagnooliaPhase27MobileNavigationStructureTest extends TestCase
     public function test_all_ru_routes_accessible(): void
     {
         $routes = [
-            '/ru', '/ru/kodud-ja-hinnad', '/ru/asendiplaan', '/ru/asukoht',
+            '/ru', '/ru/kodud-ja-hinnad', '/ru/asukoht',
             '/ru/ehitusinfo', '/ru/sisedisain', '/ru/arhitektuur-ja-valisdisain',
             '/ru/galerii', '/ru/finantseerimine', '/ru/ostuprotsess', '/ru/kkk', '/ru/kontakt',
         ];
@@ -50,7 +50,7 @@ class MagnooliaPhase27MobileNavigationStructureTest extends TestCase
     public function test_all_en_routes_accessible(): void
     {
         $routes = [
-            '/en', '/en/kodud-ja-hinnad', '/en/asendiplaan', '/en/asukoht',
+            '/en', '/en/kodud-ja-hinnad', '/en/asukoht',
             '/en/ehitusinfo', '/en/sisedisain', '/en/arhitektuur-ja-valisdisain',
             '/en/galerii', '/en/finantseerimine', '/en/ostuprotsess', '/en/kkk', '/en/kontakt',
         ];

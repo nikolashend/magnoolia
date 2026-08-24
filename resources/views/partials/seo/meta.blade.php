@@ -6,7 +6,7 @@
 @php
     $project = config('magnoolia.project', []);
     $canonicalBase = rtrim(config('magnoolia.canonical_domain', config('magnoolia.seo.canonical_base', config('app.url', url('/')))), '/');
-    $isIndexable = config('magnoolia.seo.indexable', false) || !config('magnoolia.seo.noindex', true);
+    $isIndexable = mg_is_indexable();
     $isThankYou  = request()->is('aitah') || request()->is('ru/aitah') || request()->is('en/aitah');
     $noindex = !$isIndexable || $isThankYou;
     $locale = app()->getLocale();

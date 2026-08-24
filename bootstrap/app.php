@@ -18,6 +18,14 @@ return Application::configure(basePath: dirname(__DIR__))
             'magnoolia.login-throttle' => \App\Http\Middleware\MagnooliaLoginThrottle::class,
         ]);
 
+        $middleware->web(prepend: [
+            // Phase 35.0 — adopt the serving host as the canonical base, so
+            // flipping the magnoolia.ee ⇄ magnoolia.estlanda.ee redirect in the
+            // hosting panel needs no code or config change. Must run before
+            // anything reads the canonical domain.
+            \App\Http\Middleware\ResolveCanonicalDomain::class,
+        ]);
+
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\SecurityHeaders::class,

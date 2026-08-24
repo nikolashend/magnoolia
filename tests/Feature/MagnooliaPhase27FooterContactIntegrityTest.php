@@ -24,7 +24,7 @@ class MagnooliaPhase27FooterContactIntegrityTest extends TestCase
         $this->create19TestUnits();
         app(MagnooliaPublicationService::class)->publish($admin->id, 'Phase 27 footer test');
 
-        $this->pages = ['/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht', '/kontakt'];
+        $this->pages = ['/', '/kodud-ja-hinnad', '/asukoht', '/kontakt'];
     }
 
     public function test_no_placeholder_phone_on_any_page(): void

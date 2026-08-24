@@ -29,7 +29,6 @@ class MagnooliaPhase26RenderedHtmlAssetAuditTest extends TestCase
         $this->pages = [
             '/'                  => 'homepage',
             '/kodud-ja-hinnad'   => 'kodudjahinnad',
-            '/asendiplaan'       => 'asendiplaan',
             '/asukoht'           => 'asukoht',
             '/sisedisain'        => 'sisedisain',
             '/finantseerimine'   => 'finantseerimine',

@@ -103,7 +103,7 @@ class MagnooliaPhase27MobileRenderedHtmlAuditTest extends TestCase
     {
         // If a @yield has no @section for it, it outputs empty string, which is fine.
         // But @section without @endsection would cause parse error → 500.
-        $pages = ['/', '/kodud-ja-hinnad', '/asendiplaan', '/sisedisain', '/galerii'];
+        $pages = ['/', '/kodud-ja-hinnad', '/sisedisain', '/galerii'];
         foreach ($pages as $url) {
             $this->get($url)->assertStatus(200);
         }
@@ -113,7 +113,7 @@ class MagnooliaPhase27MobileRenderedHtmlAuditTest extends TestCase
     {
         $pages = [
             '/', '/ru', '/en',
-            '/kodud-ja-hinnad', '/asendiplaan', '/asukoht',
+            '/kodud-ja-hinnad', '/asukoht',
             '/ehitusinfo', '/sisedisain', '/arhitektuur-ja-valisdisain',
             '/galerii', '/finantseerimine', '/ostuprotsess', '/kkk', '/kontakt',
         ];

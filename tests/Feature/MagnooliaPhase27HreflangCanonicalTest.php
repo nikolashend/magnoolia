@@ -24,7 +24,7 @@ class MagnooliaPhase27HreflangCanonicalTest extends TestCase
         $this->create19TestUnits();
         app(MagnooliaPublicationService::class)->publish($admin->id, 'Phase 27 hreflang test');
 
-        $this->pages = ['/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht', '/kontakt'];
+        $this->pages = ['/', '/kodud-ja-hinnad', '/asukoht', '/kontakt'];
     }
 
     public function test_all_pages_have_full_hreflang_set(): void

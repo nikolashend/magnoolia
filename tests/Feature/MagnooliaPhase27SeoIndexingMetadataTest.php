@@ -25,7 +25,7 @@ class MagnooliaPhase27SeoIndexingMetadataTest extends TestCase
 
     public function test_no_page_has_metateave_title(): void
     {
-        $pages = ['/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht', '/kontakt'];
+        $pages = ['/', '/kodud-ja-hinnad', '/ehitusinfo', '/asukoht', '/kontakt'];
         foreach ($pages as $url) {
             $html = $this->get($url)->assertStatus(200)->getContent();
             $this->assertStringNotContainsString(
@@ -38,7 +38,7 @@ class MagnooliaPhase27SeoIndexingMetadataTest extends TestCase
 
     public function test_no_page_has_generic_description(): void
     {
-        $pages = ['/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht', '/kontakt'];
+        $pages = ['/', '/kodud-ja-hinnad', '/ehitusinfo', '/asukoht', '/kontakt'];
         foreach ($pages as $url) {
             $html = $this->get($url)->assertStatus(200)->getContent();
             $this->assertStringNotContainsString(
@@ -80,7 +80,7 @@ class MagnooliaPhase27SeoIndexingMetadataTest extends TestCase
 
     public function test_canonical_present_on_every_page(): void
     {
-        $pages = ['/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht'];
+        $pages = ['/', '/kodud-ja-hinnad', '/ehitusinfo', '/asukoht'];
         foreach ($pages as $url) {
             $html = $this->get($url)->assertStatus(200)->getContent();
             $this->assertStringContainsString(
@@ -111,7 +111,7 @@ class MagnooliaPhase27SeoIndexingMetadataTest extends TestCase
 
     public function test_each_public_page_has_exactly_one_h1(): void
     {
-        $pages = ['/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht', '/kontakt'];
+        $pages = ['/', '/kodud-ja-hinnad', '/ehitusinfo', '/asukoht', '/kontakt'];
         foreach ($pages as $url) {
             $html = $this->get($url)->assertStatus(200)->getContent();
             $h1Count = substr_count(strtolower($html), '<h1');
@@ -130,7 +130,6 @@ class MagnooliaPhase27SeoIndexingMetadataTest extends TestCase
         $expected = [
             '/'                => 'Magnoolia',
             '/kodud-ja-hinnad' => 'kodud',
-            '/asendiplaan'     => 'asendiplaan',
             '/asukoht'         => 'asukoht',
         ];
 

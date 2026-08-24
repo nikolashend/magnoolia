@@ -15,7 +15,7 @@ class MagnooliaPhase34FinalLaunchTest extends TestCase
     use RefreshDatabase;
 
     private const PATHS = [
-        '/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht', '/ehitusinfo',
+        '/', '/kodud-ja-hinnad', '/asukoht', '/ehitusinfo',
         '/sisedisain', '/arhitektuur-ja-valisdisain', '/galerii', '/ostuprotsess',
         '/finantseerimine', '/kkk', '/kontakt',
     ];

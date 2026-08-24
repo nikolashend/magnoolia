@@ -25,7 +25,7 @@ class MagnooliaPhase27GlobalCtaConsistencyTest extends TestCase
         app(MagnooliaPublicationService::class)->publish($admin->id, 'Phase 27 CTA test');
 
         $this->ctaPages = [
-            '/', '/kodud-ja-hinnad', '/asendiplaan',
+            '/', '/kodud-ja-hinnad',
             '/asukoht', '/galerii', '/kontakt',
         ];
     }

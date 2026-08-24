@@ -16,6 +16,10 @@ class MagnooliaRobotsReleaseGateTest extends TestCase
 
     public function test_staging_home_has_noindex(): void
     {
+        // Phase 35.0: indexing is on by default so production cannot be deindexed
+        // by an unset env var. A non-production host must therefore switch off the
+        // modern flag as well — the legacy `noindex` alone no longer wins.
+        Config::set('magnoolia.seo.indexable', false);
         Config::set('magnoolia.seo.noindex', true);
 
         $response = $this->renderUrl('/');

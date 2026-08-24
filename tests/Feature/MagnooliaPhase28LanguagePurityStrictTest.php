@@ -14,7 +14,7 @@ class MagnooliaPhase28LanguagePurityStrictTest extends TestCase
 {
     use RefreshDatabase;
 
-    private array $etPages = ['/', '/kodud-ja-hinnad', '/asendiplaan', '/ehitusinfo', '/sisedisain', '/kontakt'];
+    private array $etPages = ['/', '/kodud-ja-hinnad', '/ehitusinfo', '/sisedisain', '/kontakt'];
     private array $ruPages = ['/ru', '/ru/kodud-ja-hinnad', '/ru/kontakt'];
     private array $enPages = ['/en', '/en/kodud-ja-hinnad', '/en/kontakt'];
 

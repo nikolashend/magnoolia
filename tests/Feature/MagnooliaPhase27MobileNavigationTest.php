@@ -41,7 +41,6 @@ class MagnooliaPhase27MobileNavigationTest extends TestCase
 
         $requiredLinks = [
             '/kodud-ja-hinnad',
-            '/asendiplaan',
             '/asukoht',
             '/kontakt',
         ];

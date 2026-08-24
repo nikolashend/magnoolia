@@ -19,7 +19,7 @@ class MagnooliaPhase32PublicHardeningTest extends TestCase
 {
     /** ET (no prefix), RU and EN public routes that must always be healthy. */
     private const PUBLIC_PATHS = [
-        '/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht', '/ehitusinfo',
+        '/', '/kodud-ja-hinnad', '/asukoht', '/ehitusinfo',
         '/sisedisain', '/arhitektuur-ja-valisdisain', '/galerii',
         '/ostuprotsess', '/finantseerimine', '/kkk', '/kontakt',
     ];

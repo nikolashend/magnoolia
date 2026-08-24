@@ -97,6 +97,24 @@ if (! function_exists('magnoolia_url')) {
     }
 }
 
+if (! function_exists('mg_is_indexable')) {
+    /**
+     * Single source of truth for "may search engines index this site?" (Phase 35.0).
+     *
+     * `indexable` is the modern switch; `noindex` is the legacy one. They are OR-ed
+     * so that MAGNOOLIA_INDEXABLE=true wins over a stale MAGNOOLIA_NOINDEX=true —
+     * exactly the situation that kept production silently deindexed.
+     *
+     * Individual pages that must stay out of the index (the /aitah thank-you page,
+     * admin) opt out at their own level, not here.
+     */
+    function mg_is_indexable(): bool
+    {
+        return (bool) config('magnoolia.seo.indexable', true)
+            || ! config('magnoolia.seo.noindex', false);
+    }
+}
+
 if (! function_exists('mg_text')) {
     /**
      * Page-Texts CMS read helper (Phase 33.1).

@@ -136,12 +136,38 @@ return [
         'canonical_base'    => env('MAGNOOLIA_CANONICAL_DOMAIN', env('MAGNOOLIA_CANONICAL_BASE', 'https://magnoolia.ee')),
         'og_image'          => 'assets/images/magnoolia/Cam001.0000.jpg',
 
-        // Indexing control — MAGNOOLIA_INDEXABLE=true → index,follow,max-image-preview:large
-        //                     MAGNOOLIA_INDEXABLE=false (default) → noindex,nofollow
-        // Legacy support: MAGNOOLIA_NOINDEX=false also enables indexing
-        'indexable' => env('MAGNOOLIA_INDEXABLE', false),
+        // ── Indexing control (Phase 35.0) ────────────────────────────────
+        // The site is LIVE, so the shipped default is "indexable". A deploy that
+        // only does `git pull` + `config:cache` therefore serves index,follow —
+        // production no longer depends on anyone remembering to edit .env.
+        //
+        //   MAGNOOLIA_INDEXABLE=true  → index,follow,max-image-preview:large
+        //   MAGNOOLIA_INDEXABLE=false → noindex,nofollow  (use on staging/preview)
+        //
+        // Legacy switch MAGNOOLIA_NOINDEX is still honoured, but `indexable` wins
+        // (the two are OR-ed in mg_is_indexable()), so a stale MAGNOOLIA_NOINDEX=true
+        // left over from staging can no longer silently deindex production.
+        // NB: any non-production host (staging, preview, a copy of this repo on a
+        // second domain) MUST set MAGNOOLIA_INDEXABLE=false explicitly.
+        'indexable' => env('MAGNOOLIA_INDEXABLE', true),
         'env'       => env('MAGNOOLIA_ENV', 'staging'),
-        'noindex'   => env('MAGNOOLIA_NOINDEX', true),
+        'noindex'   => env('MAGNOOLIA_NOINDEX', false),
+
+        // ── Public hosts (Phase 35.0) ────────────────────────────────────
+        // The site is reachable on two hosts, one of which redirects to the other
+        // at the hosting layer. Whichever one a request actually arrives on is
+        // adopted as the canonical base for that request (ResolveCanonicalDomain),
+        // so reversing the redirect in the hosting panel needs no deploy and no
+        // .env edit — canonical, hreflang, OG, schema, robots.txt and the sitemap
+        // all follow automatically.
+        //
+        // "www." is stripped, so www and apex share one canonical.
+        // A host that is NOT listed here (localhost, an IP, a preview domain, or a
+        // forged Host header) is ignored, and canonical_domain above is used.
+        'public_hosts' => [
+            'magnoolia.ee',
+            'magnoolia.estlanda.ee',
+        ],
     ],
 
 ];

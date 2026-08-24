@@ -10,27 +10,38 @@ use Tests\TestCase;
  */
 class MagnooliaPhase28SeoAiLaunchFilesTest extends TestCase
 {
-    public function test_sitemap_xml_exists_and_is_valid(): void
+    /**
+     * Phase 35.0: /sitemap.xml is a dynamic route, not a file. A static
+     * public/sitemap.xml would be served by Apache before Laravel ever runs and
+     * would silently freeze the sitemap (it predates the 14 SEO landing pages),
+     * so its absence is the requirement.
+     */
+    public function test_no_static_sitemap_shadows_the_dynamic_route(): void
     {
-        $this->assertFileExists(public_path('sitemap.xml'),
-            'sitemap.xml must exist in public folder');
+        $this->assertFileDoesNotExist(public_path('sitemap.xml'),
+            'A static public/sitemap.xml shadows the dynamic /sitemap.xml route — delete it.');
+    }
 
-        $content = file_get_contents(public_path('sitemap.xml'));
-        $this->assertNotEmpty($content, 'sitemap.xml must not be empty');
+    public function test_sitemap_xml_is_valid(): void
+    {
+        $content = $this->sitemap();
+
+        $this->assertNotEmpty($content, 'sitemap must not be empty');
         $this->assertStringContainsString('urlset', $content,
-            'sitemap.xml must contain urlset element');
+            'sitemap must contain urlset element');
         $this->assertStringContainsString('magnoolia.ee', $content,
-            'sitemap.xml must reference magnoolia.ee domain');
+            'sitemap must reference magnoolia.ee domain');
     }
 
     public function test_sitemap_contains_all_required_pages(): void
     {
-        $content = file_get_contents(public_path('sitemap.xml'));
+        $content = $this->sitemap();
 
         $requiredUrls = [
-            'magnoolia.ee/',
+            'magnoolia.ee',
             'kodud-ja-hinnad',
-            'asendiplaan',
+            // 'asendiplaan' is intentionally absent: it 301s into
+            // /kodud-ja-hinnad#mg-masterplan and a sitemap must not list redirects.
             'asukoht',
             'ehitusinfo',
             'sisedisain',
@@ -44,25 +55,38 @@ class MagnooliaPhase28SeoAiLaunchFilesTest extends TestCase
 
         foreach ($requiredUrls as $url) {
             $this->assertStringContainsString($url, $content,
-                "sitemap.xml must contain URL containing '{$url}'");
+                "sitemap must contain URL containing '{$url}'");
         }
     }
 
     public function test_sitemap_has_ru_and_en_alternatives(): void
     {
-        $content = file_get_contents(public_path('sitemap.xml'));
+        $content = $this->sitemap();
         $this->assertStringContainsString('/ru/', $content,
-            'sitemap.xml must include RU locale pages');
+            'sitemap must include RU locale pages');
         $this->assertStringContainsString('/en/', $content,
-            'sitemap.xml must include EN locale pages');
+            'sitemap must include EN locale pages');
     }
 
-    public function test_robots_txt_exists_and_allows_crawling(): void
+    private function sitemap(): string
     {
-        $this->assertFileExists(public_path('robots.txt'),
-            'robots.txt must exist');
+        return $this->get('/sitemap.xml')->assertOk()->getContent();
+    }
 
-        $content = file_get_contents(public_path('robots.txt'));
+    /**
+     * Phase 35.0: like the sitemap, robots.txt is a route, not a file. A static
+     * public/robots.txt is served by Apache before Laravel runs, so it froze the
+     * sitemap URL to one hardcoded domain and could contradict the robots meta tag.
+     */
+    public function test_no_static_robots_shadows_the_dynamic_route(): void
+    {
+        $this->assertFileDoesNotExist(public_path('robots.txt'),
+            'A static public/robots.txt shadows the dynamic /robots.txt route — delete it.');
+    }
+
+    public function test_robots_txt_allows_crawling(): void
+    {
+        $content = $this->get('/robots.txt')->assertOk()->getContent();
         $this->assertStringContainsString('Allow', $content,
             'robots.txt must not block all crawling');
         $this->assertStringContainsString('sitemap', strtolower($content),

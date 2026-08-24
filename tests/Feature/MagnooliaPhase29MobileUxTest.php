@@ -40,7 +40,7 @@ class MagnooliaPhase29MobileUxTest extends TestCase
 
     public function test_no_source_or_onedrive_paths_leak(): void
     {
-        foreach (['/asendiplaan', '/kodud-ja-hinnad', '/ehitusinfo', '/'] as $url) {
+        foreach ([ '/kodud-ja-hinnad', '/ehitusinfo', '/'] as $url) {
             $html = strtolower($this->get($url)->assertStatus(200)->getContent());
             $this->assertStringNotContainsString('materials/phase29', $html, "source path leaked on {$url}");
             $this->assertStringNotContainsString('onedrive', $html, "onedrive leaked on {$url}");

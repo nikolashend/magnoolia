@@ -14,7 +14,7 @@ class MagnooliaPhase28NoVisualResidueStrictTest extends TestCase
     use RefreshDatabase;
 
     private array $publicPages = [
-        '/', '/kodud-ja-hinnad', '/asendiplaan', '/asukoht',
+        '/', '/kodud-ja-hinnad', '/asukoht',
         '/ehitusinfo', '/sisedisain', '/galerii', '/kkk',
         '/kontakt', '/ostuprotsess', '/finantseerimine',
     ];

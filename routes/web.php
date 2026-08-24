@@ -131,11 +131,14 @@ foreach (['ru', 'en'] as $_loc) {
 
 // ── Sitemap ──────────────────────────────────────────────────────────────
 Route::get('/robots.txt', function () {
-    $noindex = config('magnoolia.seo.noindex', true) || request()->is('aitah') || request()->is('ru/aitah') || request()->is('en/aitah');
+    // Phase 35.0: share one indexability decision with the meta tag, so robots.txt
+    // and <meta name="robots"> can never disagree (they did: a static
+    // public/robots.txt said "Allow: /" while every page said noindex,nofollow).
+    $sitemap = magnoolia_url('/sitemap.xml');
 
-    $content = $noindex
-        ? "User-agent: *\nDisallow: /\n\nSitemap: https://magnoolia.ee/sitemap.xml\n"
-        : "User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /admin/\n\nSitemap: https://magnoolia.ee/sitemap.xml\n";
+    $content = mg_is_indexable()
+        ? "User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /admin/\n\nSitemap: {$sitemap}\n"
+        : "User-agent: *\nDisallow: /\n\nSitemap: {$sitemap}\n";
 
     return response($content, 200)->header('Content-Type', 'text/plain; charset=UTF-8');
 })->name('robots');

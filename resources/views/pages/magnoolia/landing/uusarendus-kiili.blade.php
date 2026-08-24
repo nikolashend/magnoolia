@@ -27,6 +27,8 @@
      'a' => 'Ehitus toimub etappidena. I etapp valmib 2027. Järgmiste etappide täpne ajakava täpsustatakse müügikonsultandiga.'],
     ['q' => 'Kust näen Kiili uusarenduse hindu?',
      'a' => 'I etapi kodude hinnad on avalikud hinnakirjas, II etapi hinnad täpsustatakse. Kehtivad hinnad ja saadavuse leiad lehelt „Kodud ja hinnad“.'],
+    ['q' => 'Mis teeb Magnooliast premium kodud Kiili vallas?',
+     'a' => 'Kodud on A-energiaklassis: maasoojuspump, soojustagastusega ventilatsioon ja põrandaküte hoiavad küttekulud kontrolli all. Siseviimistluse standardpaketi on kujundanud sisearhitekt Aet Piel ning iga kodu juurde kuulub privaatne hooviala, terrass, rõdu ja oma parkimiskohad.'],
   ];
 @endphp
 

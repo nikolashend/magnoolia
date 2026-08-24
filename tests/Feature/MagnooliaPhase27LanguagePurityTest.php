@@ -43,7 +43,7 @@ class MagnooliaPhase27LanguagePurityTest extends TestCase
     public function test_en_pages_return_200(): void
     {
         $enPages = [
-            '/en', '/en/kodud-ja-hinnad', '/en/asendiplaan',
+            '/en', '/en/kodud-ja-hinnad',
             '/en/asukoht', '/en/galerii', '/en/kontakt',
         ];
         foreach ($enPages as $url) {
