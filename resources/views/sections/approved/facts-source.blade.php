@@ -4,7 +4,9 @@
             <div class="row align-items-end gutter-y-30">
                 <div class="col-lg-6">
                     <div class="about-two__thumb hover:shine" style="width:1075px;min-height:839px;">
-                        <img {!! mg_img('Cam005.0000.jpg', '(max-width:991px) 100vw, 50vw') !!} alt="Magnoolia A-energiaklassi kodud Vaela külas" style="width:100%;height:100%;min-height:839px;object-fit:cover;display:block;" loading="lazy" decoding="async">
+                        {{-- Phase 36 Module B — assignable slot; unbound it serves the shipped file. --}}
+                        @php $mgWhyImg = mg_slot('home.why.image'); @endphp
+                        <img src="{{ $mgWhyImg['src'] }}" alt="{{ $mgWhyImg['alt'] }}" style="width:100%;height:100%;min-height:839px;object-fit:cover;display:block;" loading="lazy" decoding="async">
                     </div>
                 </div>
                 <div class="col-lg-6">

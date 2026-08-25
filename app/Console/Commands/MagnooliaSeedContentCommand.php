@@ -17,71 +17,29 @@ class MagnooliaSeedContentCommand extends Command
     protected $description = 'Seed/refresh the Magnoolia Page-Texts CMS blocks from the current lang files.';
 
     /**
-     * Curated, client-facing editable blocks. Each entry: [lang key (without
-     * "magnoolia."), page slug (must exist in MagnooliaContentBlock::PAGES), label].
-     * Every key here is wired into a public template via mg_text(), so editing +
-     * publishing it changes the live site. Values are pre-filled from lang files,
-     * so seeding/publishing changes nothing visually until the client edits.
+     * Phase 36 Module A — the editable set now lives in config/magnoolia_editable.php,
+     * grouped by page and section with labels written for the client ("Veerg: netopind
+     * kokku"), not for a developer ("pricing.area_total").
+     *
+     * It used to be a 34-entry array right here, which meant every new editable text
+     * was a code change. Phase 35.1 showed the cost of that: ~60% of the client's
+     * corrections were strings he could not reach.
+     *
+     * @return array<int, array{0: string, 1: string, 2: string, 3: string}> [key, page, label, group]
      */
-    private const BLOCKS = [
-        // Homepage hero
-        ['hero.h1', 'home', 'Homepage — hero headline (H1)'],
-        ['hero.subheadline', 'home', 'Homepage — hero subheadline'],
-        ['hero.cta_primary', 'home', 'Homepage — primary CTA button'],
+    private function registry(): array
+    {
+        $rows = [];
+        foreach (config('magnoolia_editable', []) as $page => $definition) {
+            foreach ($definition['groups'] ?? [] as $group => $keys) {
+                foreach ($keys as $key => $label) {
+                    $rows[] = [$key, $page, $label, $group];
+                }
+            }
+        }
 
-        // Kodud ja hinnad
-        ['page.kodudjahinnad.page_h1', 'kodud', 'Homes & prices — page heading'],
-        ['page.kodudjahinnad.lead', 'kodud', 'Homes & prices — lead paragraph'],
-        ['page.kodudjahinnad.note', 'kodud', 'Homes & prices — notice above price table'],
-
-        // Asendiplaan
-        ['page.asendiplaan.page_h1', 'asendiplaan', 'Site plan — page heading'],
-        ['page.asendiplaan.lead', 'asendiplaan', 'Site plan — lead paragraph'],
-        ['page.asendiplaan.note', 'asendiplaan', 'Site plan — notice'],
-
-        // Asukoht
-        ['page.asukoht.page_h1', 'asukoht', 'Location — page heading'],
-        ['page.asukoht.lead', 'asukoht', 'Location — lead paragraph'],
-
-        // Ehitusinfo
-        ['page.ehitusinfo.page_h1', 'ehitusinfo', 'Construction — page heading'],
-        ['page.ehitusinfo.lead', 'ehitusinfo', 'Construction — lead paragraph'],
-        ['page.ehitusinfo.note', 'ehitusinfo', 'Construction — disclaimer notice'],
-
-        // Sisedisain / siseviimistlus
-        ['page.sisedisain.page_h1', 'sisedisain', 'Interior — page heading'],
-        ['page.sisedisain.lead', 'sisedisain', 'Interior — lead paragraph'],
-        ['page.sisedisain.note', 'sisedisain', 'Interior — notice'],
-        ['page.sisedisain.disclaimer_body', 'sisedisain', 'Interior — illustrative-samples disclaimer'],
-
-        // Galerii
-        ['page.galerii.page_h1', 'galerii', 'Gallery — page heading'],
-        ['page.galerii.lead', 'galerii', 'Gallery — lead paragraph'],
-        ['page.galerii.note', 'galerii', 'Gallery — notice'],
-
-        // Ostuprotsess
-        ['page.ostuprotsess.page_h1', 'ostuprotsess', 'Buying process — page heading'],
-        ['page.ostuprotsess.lead', 'ostuprotsess', 'Buying process — lead paragraph'],
-        ['page.ostuprotsess.note', 'ostuprotsess', 'Buying process — notice'],
-
-        // Finantseerimine
-        ['page.finantseerimine.page_h1', 'finantseerimine', 'Financing — page heading'],
-        ['page.finantseerimine.lead', 'finantseerimine', 'Financing — lead paragraph'],
-        ['page.finantseerimine.note', 'finantseerimine', 'Financing — notice'],
-
-        // KKK
-        ['page.kkk.page_h1', 'kkk', 'FAQ — page heading'],
-        ['page.kkk.lead', 'kkk', 'FAQ — lead paragraph'],
-
-        // Kontakt
-        ['page.kontakt.page_h1', 'kontakt', 'Contact — page heading'],
-        ['page.kontakt.lead', 'kontakt', 'Contact — lead paragraph'],
-        ['page.kontakt.direct_note', 'kontakt', 'Contact — response-time / direct note'],
-
-        // Footer (global)
-        ['footer.tagline', 'footer', 'Footer — tagline'],
-        ['footer.desc', 'footer', 'Footer — description paragraph'],
-    ];
+        return $rows;
+    }
 
     public function handle(): int
     {
@@ -90,10 +48,11 @@ class MagnooliaSeedContentCommand extends Command
         $updated = 0;
         $sort = 0;
 
-        foreach (self::BLOCKS as [$key, $page, $label]) {
+        foreach ($this->registry() as [$key, $page, $label, $group]) {
             $values = [
                 'page' => $page,
                 'label' => $label,
+                'group' => $group,
                 'sort_order' => $sort++,
                 'is_active' => true,
                 'et' => $this->langValue($key, 'et'),

@@ -19,7 +19,14 @@
     @foreach($blocks as $page => $pageBlocks)
         <div class="card" id="page-{{ $page }}" style="margin-bottom:14px;scroll-margin-top:16px;">
             <h3 style="margin:0 0 12px;border-bottom:1px solid #edf0f4;padding-bottom:8px;">{{ $pages[$page] ?? ucfirst($page) }}</h3>
-            @foreach($pageBlocks as $block)
+            {{-- Phase 36 Module A: a page can now hold ~40 texts instead of three, so
+                 they are grouped by the block they belong to on the site. Without this
+                 the client scrolls a flat list looking for "the area column heading". --}}
+            @foreach($pageBlocks->groupBy(fn ($b) => $b->group ?: '—') as $groupName => $groupBlocks)
+            @if($pageBlocks->pluck('group')->filter()->unique()->count() > 1)
+                <div style="margin:18px 0 10px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#c89443;">{{ $groupName }}</div>
+            @endif
+            @foreach($groupBlocks as $block)
                 <form method="POST" action="{{ route('admin.magnoolia.content.update', $block) }}" style="margin-bottom:18px;">
                     @csrf @method('PATCH')
                     <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;">
@@ -41,6 +48,7 @@
                         <button type="submit">Save draft</button>
                     </div>
                 </form>
+            @endforeach
             @endforeach
         </div>
     @endforeach

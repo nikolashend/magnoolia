@@ -53,13 +53,24 @@ class MagnooliaPublicDataComposer
                 ? ($published['note_' . $locale] ?? $published['note_et'] ?? null)
                 : null;
 
+            // The gold ribbon on the home page is sized for a one-liner, the red
+            // banner for the full sentence. They are separate fields; falling back
+            // to the long text keeps the ribbon filled if the short one is blank.
+            $short = $active
+                ? ($published['note_short_' . $locale] ?? $published['note_short_et'] ?? null)
+                : null;
+
+            $legal = $locale === 'et'
+                ? ($published['legal_note'] ?? null)
+                : ($published['legal_note_' . $locale] ?? $published['legal_note'] ?? null);
+
             $campaign = [
                 'enabled'    => $active && filled($body),
                 'title'      => 'KAMPAANIA',
                 'body'       => $body,
-                'body_short' => $body,
+                'body_short' => filled($short) ? $short : $body,
                 'deadline'   => $published['deadline'] ?? null,
-                'legal_note' => $published['legal_note'] ?? null,
+                'legal_note' => $legal,
                 'source'     => 'admin',
             ];
         } else {

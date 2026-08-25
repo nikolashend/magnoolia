@@ -8,6 +8,33 @@
   $base = rtrim(config('magnoolia.seo.canonical_base', 'https://magnoolia.ee'), '/');
 
   $groups = __('magnoolia.page.kkk.groups');
+
+  // Phase 36 Module C — when the FAQ list is published, its questions replace the
+  // lang ones. Each question carries the heading it belongs under, so the page
+  // keeps its seven groups; anything without a heading joins the first group.
+  // The visible list and the JSON-LD below both read $groups, so Google can no
+  // longer be shown a different FAQ from the one on the page.
+  $mgFaq = mg_list('kkk.faq');
+  if ($mgFaq !== []) {
+      $byGroup = [];
+      foreach ($mgFaq as $row) {
+          if (blank($row['q'] ?? null) || blank($row['a'] ?? null)) {
+              continue;
+          }
+          $byGroup[(string) ($row['group'] ?? '0')][] = ['q' => $row['q'], 'a' => $row['a']];
+      }
+      $rebuilt = [];
+      foreach (array_values($groups) as $gi => $group) {
+          $faqs = $byGroup[(string) $gi] ?? [];
+          if ($faqs !== []) {
+              // Keep the group's own id and icon — the anchor links above rely on them.
+              $rebuilt[] = ['faqs' => $faqs] + $group;
+          }
+      }
+      if ($rebuilt !== []) {
+          $groups = $rebuilt;
+      }
+  }
 @endphp
 
 <script type="application/ld+json">

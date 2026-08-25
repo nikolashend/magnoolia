@@ -86,6 +86,14 @@
         $proofLg   = ($cat['overview'] ?? null)
             ? asset(preg_replace('/\.webp$/', '-1400.webp', $cat['overview']))
             : $proofSm;
+        // Phase 36 Module B — "kuidas neid musta taustaga fotosid asendada?".
+        // Each proof sheet is now a slot; a bound media item replaces the whole set.
+        $proofSlot = mg_slot('sisedisain.proof.' . $key);
+        if ($proofSlot['bound']) {
+            $proofFull = $proofSlot['src'];
+            $proofSm   = $proofSlot['src'];
+            $proofLg   = $proofSlot['src'];
+        }
       @endphp
       {{-- Phase 35.1 item 18 — "pidevalt avatud": this used to be a <details>
            accordion. Opening it by default was not enough: buyers could still
@@ -103,8 +111,21 @@
 
         <div class="mg-if-card__body">
           <div class="mg-if-card__grid">
+            @php
+              // Phase 36 Module C — the equipment rows are an editable list per
+              // category. Unpublished, this falls back to the config array, so the
+              // specification stays exactly as it ships.
+              $mgItems = array_map(
+                  fn ($row) => ['name' => $row['name'] ?? '', 'type' => $row['type'] ?? 'standard'],
+                  mg_list('sisedisain.spec.' . $key)
+              );
+              $mgItems = array_values(array_filter($mgItems, fn ($row) => filled($row['name'])));
+              if ($mgItems === []) {
+                  $mgItems = $cat['items'];
+              }
+            @endphp
             <ul class="mg-if-card__items">
-              @foreach($cat['items'] as $item)
+              @foreach($mgItems as $item)
               <li class="mg-if-item">
                 <span class="mg-if-item__name">{{ $item['name'] }}</span>
                 <span class="mg-if-item__badge mg-if-item__badge--{{ $item['type'] }}">

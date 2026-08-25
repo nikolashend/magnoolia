@@ -14,6 +14,19 @@ use Filament\Tables\Table;
 
 class NavItemResource extends Resource
 {
+
+    /**
+     * Phase 36 — the theme's own content resources stay with the developer.
+     *
+     * The client admin can reach the Filament panel now (it is the only login),
+     * but this resource is not part of the Magnoolia control centre: it belongs to
+     * the original template. Hiding it keeps that screen free of things nobody
+     * asked the client to manage.
+     */
+    public static function canViewAny(): bool
+    {
+        return in_array(optional(auth()->user())->role, ['magnoolia_admin', 'magnoolia_editor'], true);
+    }
     protected static ?string $model = NavItem::class;
     protected static string|\BackedEnum|null $navigationIcon  = 'heroicon-o-bars-3';
     protected static string|\UnitEnum|null   $navigationGroup = 'Site Settings';

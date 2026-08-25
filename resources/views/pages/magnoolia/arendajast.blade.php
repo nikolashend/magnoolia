@@ -100,13 +100,35 @@
         <div style="margin-top:48px;">
             <h2 style="font-size:22px;color:#1d2430;margin:0 0 18px;">{{ $t['projects_title'] }}</h2>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;">
-                @foreach($projects as $pr)
+                @php
+                    // Phase 36 Module C — published list wins; otherwise the three
+                    // shipped cards defined above are used unchanged.
+                    $mgProjects = [];
+                    foreach (mg_list('arendajast.projects') as $row) {
+                        $mgProjects[] = [
+                            'name' => $row['name'] ?? '',
+                            'url'  => $row['url'] ?? '#',
+                            'src'  => $row['image'] ?? '',
+                            'alt'  => $row['image_alt'] ?? ($row['name'] ?? ''),
+                        ];
+                    }
+                    if ($mgProjects === []) {
+                        foreach ($projects as $pr) {
+                            $mgProjects[] = [
+                                'name' => $pr['name'], 'url' => $pr['url'],
+                                'src'  => asset('assets/magnoolia/developments/' . $pr['img']),
+                                'alt'  => $pr['name'],
+                            ];
+                        }
+                    }
+                @endphp
+                @foreach($mgProjects as $pr)
                     <a href="{{ $pr['url'] }}" target="_blank" rel="noopener noreferrer"
                        style="display:block;border:1px solid #e7e9ee;border-radius:14px;overflow:hidden;text-decoration:none;color:#1d2430;transition:border-color .15s,box-shadow .15s;"
                        onmouseover="this.style.borderColor='#c89443';this.style.boxShadow='0 12px 26px rgba(29,36,48,.12)'"
                        onmouseout="this.style.borderColor='#e7e9ee';this.style.boxShadow='none'">
                         <span style="display:block;aspect-ratio:16/10;overflow:hidden;background:#fbf8f3;">
-                            <img src="{{ asset('assets/magnoolia/developments/'.$pr['img']) }}" alt="{{ $pr['name'] }}"
+                            <img src="{{ $pr['src'] }}" alt="{{ $pr['alt'] }}"
                                  loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;">
                         </span>
                         <span style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;font-weight:700;font-size:15px;">

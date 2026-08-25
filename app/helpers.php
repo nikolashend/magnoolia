@@ -129,14 +129,31 @@ if (! function_exists('mg_text')) {
         $locale = app()->getLocale();
         try {
             $payload = app(\App\Services\Magnoolia\MagnooliaPublicDataRepository::class)->getPublicPayload();
+
+            // 1) This locale was edited — use it.
             $override = $payload['content'][$locale][$key] ?? null;
             if (is_string($override) && $override !== '') {
                 return $override;
+            }
+
+            // 2) Phase 36 — filling every language is optional, so an edit made only
+            //    in Estonian must win over the older translation sitting in the lang
+            //    file. Otherwise leaving RU/EN blank silently keeps stale text that
+            //    now contradicts the Estonian: exactly what happened to
+            //    "Ridaelamu mugavus, eramaja kogemus", corrected in ET while RU/EN
+            //    still promised "privaatsus". Falling back to the edited Estonian is
+            //    an untranslated string; falling back to the lang file is a wrong one.
+            if ($locale !== 'et') {
+                $estonian = $payload['content']['et'][$key] ?? null;
+                if (is_string($estonian) && $estonian !== '') {
+                    return $estonian;
+                }
             }
         } catch (\Throwable $e) {
             // fall through to lang value
         }
 
+        // 3) Never edited — the lang file translation for this locale is correct.
         return $default ?? (string) __('magnoolia.' . $key);
     }
 }
@@ -168,6 +185,191 @@ if (! function_exists('mg_img')) {
     }
 }
 
+if (! function_exists('mg_img_path')) {
+    /**
+     * mg_img() for a full public path rather than a bare file name.
+     *
+     * Needed by the Module C lists: an entry stores its picture as a media path,
+     * and without this the home-page cards would go from serving 1200w webp to
+     * serving the full-size JPEG the moment the list is published — a performance
+     * regression caused by nothing the client did.
+     */
+    function mg_img_path(string $path, string $sizes = '100vw'): string
+    {
+        $path = ltrim($path, '/');
+        $dir = trim(dirname($path), '.');
+
+        return mg_img(basename($path), $sizes, $dir !== '' ? $dir : 'assets/images/magnoolia');
+    }
+}
+
+if (! function_exists('mg_slot')) {
+    /**
+     * Phase 36, Module B — resolve a named image slot.
+     *
+     * Returns ready-to-print attributes for an <img>: src, alt, and width/height
+     * when the media item knows them. When the slot is unbound (or anything at all
+     * goes wrong) it falls back to the file the template shipped with, so a missing
+     * assignment can never leave a hole on the page.
+     *
+     * Usage in a template (note the long @php form — this Laravel dropped the
+     * @php(...) short form, which compiles to an unterminated "<?php(" and takes
+     * the rest of the template down with it):
+     *     @php $img = mg_slot('home.intro.image'); @endphp
+     *     <img src="{{ $img['src'] }}" alt="{{ $img['alt'] }}" loading="lazy">
+     *
+     * @return array{src: string, alt: string, width: int|null, height: int|null, bound: bool}
+     */
+    function mg_slot(string $key): array
+    {
+        // NB: slot keys contain dots ("home.intro.image"), which config() would read
+        // as nesting — so the registry is fetched whole and indexed directly.
+        $definition = config('magnoolia_slots', [])[$key] ?? [];
+
+        // Some shipped renders have spaces in their file names ("Interior 1.jpg").
+        // The registry stores the real on-disk name so the file can be verified;
+        // only the URL needs the space encoded. Encoding just the space (rather
+        // than the whole path) leaves an already-encoded media path untouched.
+        $url = fn (string $path): string => str_replace(' ', '%20', asset($path));
+
+        $fallback = [
+            'src'    => $url($definition['default'] ?? ''),
+            'alt'    => (string) ($definition['alt'] ?? ''),
+            'width'  => null,
+            'height' => null,
+            'bound'  => false,
+        ];
+
+        try {
+            $slot = app(\App\Services\Magnoolia\MagnooliaPublicDataRepository::class)
+                ->getPublicPayload()['slots'][$key] ?? null;
+
+            if (! is_array($slot) || blank($slot['src'] ?? null)) {
+                return $fallback;
+            }
+
+            $locale = app()->getLocale();
+            // The media item carries its own alt text; the registry alt is only the
+            // safety net for an unbound slot.
+            $alt = $slot['alt_' . $locale] ?? $slot['alt_et'] ?? null;
+
+            return [
+                'src'    => $url($slot['src']),
+                'alt'    => filled($alt) ? $alt : $fallback['alt'],
+                'width'  => $slot['width'] ?? null,
+                'height' => $slot['height'] ?? null,
+                'bound'  => true,
+            ];
+        } catch (\Throwable $e) {
+            return $fallback;
+        }
+    }
+}
+
+if (! function_exists('mg_list')) {
+    /**
+     * Phase 36, Module C — resolve a named editable list for the current locale.
+     *
+     * Returns [] when the list has never been published, and the template then
+     * uses the array it ships with. That is the whole safety contract: this can
+     * go live before anything is seeded and the site does not change.
+     *
+     * Each returned entry is a flat array of the type's fields, with `image`
+     * already resolved to a URL and `image_alt` alongside it, so a Blade template
+     * reads it exactly like the literal array it replaces.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    function mg_list(string $key): array
+    {
+        try {
+            $items = app(\App\Services\Magnoolia\MagnooliaPublicDataRepository::class)
+                ->getPublicPayload()['lists'][$key] ?? null;
+
+            if (! is_array($items) || $items === []) {
+                return [];
+            }
+
+            $locale = app()->getLocale();
+
+            return array_values(array_map(function (array $item) use ($locale) {
+                $out = ($item['meta'] ?? []) + [];
+
+                // Translatable fields: this locale, else Estonian (decision 4).
+                // Keys are taken from both, so a field filled only in the current
+                // language is not dropped for lacking an Estonian counterpart.
+                $estonian = $item['et'] ?? [];
+                $own = $item[$locale] ?? [];
+                foreach (array_keys($own + $estonian) as $field) {
+                    $value = $own[$field] ?? null;
+                    $out[$field] = filled($value) ? $value : ($estonian[$field] ?? null);
+                }
+
+                if (filled($item['image'] ?? null)) {
+                    // Both forms: `image` to print, `image_path` for mg_img_path()
+                    // when the template wants the responsive variants.
+                    $out['image_path'] = $item['image'];
+                    $out['image']      = str_replace(' ', '%20', asset($item['image']));
+                    $out['image_alt']  = $item['image_alt_' . $locale] ?? $item['image_alt_et'] ?? ($out['alt'] ?? '');
+                }
+
+                return $out;
+            }, $items));
+        } catch (\Throwable $e) {
+            return [];
+        }
+    }
+}
+
+if (! function_exists('mg_faq')) {
+    /**
+     * Phase 36, Module C — question/answer pairs for a FAQ block.
+     *
+     * The visible FAQ and the Google FAQ snippet must be generated from the same
+     * call. They were two hand-maintained copies before and had already drifted
+     * (Phase 35.1 item 12), which is a correctness problem for search results,
+     * not a cosmetic one.
+     *
+     * Falls back to the given lang key so a page keeps working before seeding.
+     *
+     * @return array<int, array{q: string, a: string}>
+     */
+    function mg_faq(string $listKey, ?string $langKey = null): array
+    {
+        $items = mg_list($listKey);
+
+        if ($items !== []) {
+            return array_values(array_filter(array_map(
+                fn (array $i) => ['q' => (string) ($i['q'] ?? ''), 'a' => (string) ($i['a'] ?? '')],
+                $items
+            ), fn (array $i) => $i['q'] !== '' && $i['a'] !== ''));
+        }
+
+        if ($langKey === null) {
+            return [];
+        }
+
+        $lang = __($langKey);
+        if (! is_array($lang)) {
+            return [];
+        }
+
+        // Two shipped shapes: a list of ['q'=>..,'a'=>..] and a flat q1/a1/q2/a2 map.
+        if (array_is_list($lang)) {
+            return array_values(array_filter($lang, fn ($i) => is_array($i) && filled($i['q'] ?? null)));
+        }
+
+        $out = [];
+        for ($n = 1; isset($lang['q' . $n]); $n++) {
+            if (filled($lang['a' . $n] ?? null)) {
+                $out[] = ['q' => $lang['q' . $n], 'a' => $lang['a' . $n]];
+            }
+        }
+
+        return $out;
+    }
+}
+
 if (! function_exists('mg_gallery')) {
     /**
      * Published gallery items (Phase 33.1) for the public /galerii page, resolved
@@ -178,6 +380,19 @@ if (! function_exists('mg_gallery')) {
      */
     function mg_gallery(): array
     {
+        // Phase 36 Module C — when the gallery list is published it decides both
+        // which pictures appear and in what order (Phase 35.1 item 8). Without it
+        // the media library's own id order is used, as before.
+        $ordered = mg_list('galerii.items');
+        if ($ordered !== []) {
+            return array_values(array_map(fn (array $i) => [
+                'src'   => $i['image'] ?? '',
+                'alt'   => $i['alt'] ?? ($i['image_alt'] ?? ''),
+                'cat'   => $i['cat'] ?? 'valised',
+                'label' => '',
+            ], array_filter($ordered, fn (array $i) => filled($i['image'] ?? null))));
+        }
+
         try {
             $items = app(\App\Services\Magnoolia\MagnooliaPublicDataRepository::class)->getPublicPayload()['gallery'] ?? [];
             $loc = app()->getLocale();

@@ -127,6 +127,31 @@ class MagnooliaValidationService
             }
         }
 
+        // Campaign: publishing an empty admin campaign silently removes an offer the
+        // site is still advertising from config. That is a real content loss and it
+        // is invisible on the Campaign screen, so say it out loud before publishing.
+        // A warning, not a blocker — deliberately retiring the offer is legitimate,
+        // and blocking it would recreate the problem Phase 35.1 fixed.
+        $configCampaign = config('magnoolia.campaign', []);
+        $configAdvertises = ($configCampaign['enabled'] ?? false) && filled($configCampaign['body_et'] ?? null);
+        $adminHasCampaign = $settings && $settings->campaign_active && filled($settings->campaign_note_et);
+
+        if ($configAdvertises && ! $adminHasCampaign) {
+            $errors['warnings'][] = $settings && filled($settings->campaign_note_et)
+                ? 'The campaign is switched OFF in admin — the offer will disappear from every page.'
+                : 'No campaign is set in admin, so publishing removes the offer the site currently shows. '
+                  . 'Run "php artisan magnoolia:seed-campaign" to load the current wording into the Campaign screen, or set it there by hand.';
+        }
+
+        if ($settings && $settings->campaign_active && blank($settings->campaign_note_et)) {
+            $errors['warnings'][] = 'The campaign is active but has no Estonian text, so nothing will be shown.';
+        }
+
+        if ($settings && $settings->campaign_active && $settings->campaign_deadline
+            && $settings->campaign_deadline->isPast()) {
+            $errors['warnings'][] = 'The campaign deadline (' . $settings->campaign_deadline->toDateString() . ') has passed.';
+        }
+
         return $errors;
     }
 }

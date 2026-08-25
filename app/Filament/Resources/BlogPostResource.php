@@ -13,6 +13,19 @@ use Filament\Tables\Table;
 
 class BlogPostResource extends Resource
 {
+
+    /**
+     * Phase 36 — the theme's own content resources stay with the developer.
+     *
+     * The client admin can reach the Filament panel now (it is the only login),
+     * but this resource is not part of the Magnoolia control centre: it belongs to
+     * the original template. Hiding it keeps that screen free of things nobody
+     * asked the client to manage.
+     */
+    public static function canViewAny(): bool
+    {
+        return in_array(optional(auth()->user())->role, ['magnoolia_admin', 'magnoolia_editor'], true);
+    }
     protected static ?string $model = BlogPost::class;
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
     protected static string|\UnitEnum|null $navigationGroup = 'Legacy (developer)';

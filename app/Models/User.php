@@ -12,9 +12,22 @@ use Filament\Panel;
 
 class User extends Authenticatable implements FilamentUser
 {
+    /**
+     * Phase 36 — the client admin has to get in.
+     *
+     * /login redirects to the Filament login, which is the only login form there
+     * is. While this excluded magnoolia_client_admin, the role could not
+     * authenticate at all — so the whole control centre built for it
+     * (Page Texts, Piltide asukohad, Nimekirjad, Publish) was unreachable, as was
+     * the Translation Manager that was deliberately opened to it.
+     *
+     * Letting the role in does NOT hand it the theme's own resources: those gate
+     * themselves to admin/editor (see Filament\Resources\*::canViewAny), so a
+     * client admin sees the Magnoolia screens and nothing else.
+     */
     public function canAccessPanel(Panel $panel): bool
     {
-        return in_array($this->role, ['magnoolia_admin', 'magnoolia_editor'], true);
+        return in_array($this->role, ['magnoolia_admin', 'magnoolia_editor', 'magnoolia_client_admin'], true);
     }
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;

@@ -67,7 +67,8 @@
 </script>
 
 {{-- ── Hero ─────────────────────────────────────────────────── --}}
-<div class="mg-page-hero" style="background-image:linear-gradient(to right, rgba(29,36,48,.88) 60%, rgba(29,36,48,.5)), url('{{ asset('assets/images/magnoolia/magnoolia_cam07.jpg') }}');background-size:cover;background-position:center;">
+@php $mgHero = mg_slot('header.asukoht'); @endphp
+<div class="mg-page-hero" style="background-image:linear-gradient(to right, rgba(29,36,48,.88) 60%, rgba(29,36,48,.5)), url('{{ $mgHero['src'] }}');background-size:cover;background-position:center;">
   <div class="container">
     @include('partials.seo.breadcrumb', ['items' => [
       ['label' => __('magnoolia.nav.home'), 'url' => route('home')],
@@ -146,16 +147,21 @@
       <h2 class="mg-section-heading__title">{{ __('magnoolia.page.asukoht.siteplan_title') }}</h2>
       <p class="mg-section-heading__subtitle">{{ __('magnoolia.page.asukoht.siteplan_sub') }}</p>
     </div>
+    @php $mgPlan = mg_slot('asukoht.siteplan.image'); @endphp
     <figure style="margin:0;">
-      <a href="{{ asset('assets/magnoolia/asendiplaan/asendiplaan-hires.webp') }}"
+      <a href="{{ $mgPlan['src'] }}"
          target="_blank" rel="noopener noreferrer"
          aria-label="{{ __('magnoolia.page.asukoht.siteplan_open') }}"
          style="display:block;background:#fff;border:1px solid #e8e3da;border-radius:14px;padding:14px;">
-        <img src="{{ asset('assets/magnoolia/asendiplaan/asendiplaan-hires-1200.webp') }}"
+        {{-- Responsive variants only apply to the shipped plan; a slot-bound image
+             is served as uploaded. --}}
+        <img src="{{ $mgPlan['bound'] ? $mgPlan['src'] : asset('assets/magnoolia/asendiplaan/asendiplaan-hires-1200.webp') }}"
+             @if(! $mgPlan['bound'])
              srcset="{{ asset('assets/magnoolia/asendiplaan/asendiplaan-hires-768.webp') }} 768w, {{ asset('assets/magnoolia/asendiplaan/asendiplaan-hires-1200.webp') }} 1200w, {{ asset('assets/magnoolia/asendiplaan/asendiplaan-hires.webp') }} 2400w"
              sizes="(min-width:992px) 900px, 100vw"
-             width="1200" height="1682" loading="lazy" decoding="async"
-             alt="Magnoolia arenduse arhitekti asendiplaan Opmani tee tähisega"
+             @endif
+             loading="lazy" decoding="async"
+             alt="{{ $mgPlan['alt'] }}"
              style="display:block;width:100%;max-width:900px;height:auto;margin:0 auto;">
       </a>
       <figcaption style="text-align:center;font-size:13.5px;color:#6f6a61;margin-top:12px;">

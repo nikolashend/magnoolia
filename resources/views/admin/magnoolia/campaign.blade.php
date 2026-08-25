@@ -68,7 +68,18 @@
             <div><label>Campaign text — ET <span style="color:#b71c1c;">*</span> (required if active)</label><textarea name="campaign_note_et" rows="2">{{ old('campaign_note_et', $settings?->campaign_note_et) }}</textarea></div>
             <div><label>Campaign text — RU</label><textarea name="campaign_note_ru" rows="2">{{ old('campaign_note_ru', $settings?->campaign_note_ru) }}</textarea></div>
             <div><label>Campaign text — EN</label><textarea name="campaign_note_en" rows="2">{{ old('campaign_note_en', $settings?->campaign_note_en) }}</textarea></div>
-            <div><label>Legal note</label><input type="text" name="campaign_legal_note" value="{{ old('campaign_legal_note', $settings?->campaign_legal_note) }}" placeholder="e.g. terms apply"></div>
+
+            {{-- The home-page ribbon is a narrow strip: it needs a one-liner, not the
+                 sentence above. Leaving these blank falls back to the long text. --}}
+            <div style="grid-column:1/-1;margin-top:6px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#c89443;">Lühike tekst avalehe ribale</div>
+            <div><label>Short text — ET</label><input type="text" name="campaign_note_short_et" value="{{ old('campaign_note_short_et', $settings?->campaign_note_short_et) }}" placeholder="20 000 € soodustus — pakkumine kehtib augusti 2026 lõpuni"></div>
+            <div><label>Short text — RU</label><input type="text" name="campaign_note_short_ru" value="{{ old('campaign_note_short_ru', $settings?->campaign_note_short_ru) }}"></div>
+            <div><label>Short text — EN</label><input type="text" name="campaign_note_short_en" value="{{ old('campaign_note_short_en', $settings?->campaign_note_short_en) }}"></div>
+
+            <div style="grid-column:1/-1;margin-top:6px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#c89443;">Väiketekst kampaania kõrval</div>
+            <div><label>Legal note — ET</label><input type="text" name="campaign_legal_note" value="{{ old('campaign_legal_note', $settings?->campaign_legal_note) }}" placeholder="Täpsed tingimused kinnitab Diana."></div>
+            <div><label>Legal note — RU</label><input type="text" name="campaign_legal_note_ru" value="{{ old('campaign_legal_note_ru', $settings?->campaign_legal_note_ru) }}"></div>
+            <div><label>Legal note — EN</label><input type="text" name="campaign_legal_note_en" value="{{ old('campaign_legal_note_en', $settings?->campaign_legal_note_en) }}"></div>
             <div><label>CTA label</label><input type="text" name="campaign_cta_label" value="{{ old('campaign_cta_label', $settings?->campaign_cta_label) }}" placeholder="e.g. Küsi pakkumist"></div>
             <div><label>CTA target (URL or route)</label><input type="text" name="campaign_cta_target" value="{{ old('campaign_cta_target', $settings?->campaign_cta_target) }}" placeholder="/kontakt"></div>
             <div style="grid-column:1/-1;"><button type="submit">Save draft campaign</button></div>

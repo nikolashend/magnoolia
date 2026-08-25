@@ -31,10 +31,35 @@ class MagnooliaPublicationService
             $settings = MagnooliaSetting::query()->latest('id')->first();
             $contentBlocks = MagnooliaContentBlock::query()->orderBy('page')->orderBy('sort_order')->get();
 
+            $mediaSlots = \App\Models\MagnooliaMediaSlot::query()->orderBy('slot_key')->get();
+            $lists = \App\Models\MagnooliaList::query()->orderBy('list_key')->with('items.mediaItem')->get();
+
+            // NB: everything the client can change must be in here. The checksum is
+            // computed from this snapshot, so anything left out makes a publish that
+            // only touched it look like "no changes" and be refused — and rollback
+            // would silently skip it.
             $privateSnapshot = [
                 'units' => $units->map(fn (MagnooliaUnit $u) => $u->toArray())->values()->all(),
                 'settings' => $settings?->toArray(),
                 'content_blocks' => $contentBlocks->map(fn (MagnooliaContentBlock $c) => $c->toArray())->values()->all(),
+                'media_slots' => $mediaSlots->map(fn ($s) => [
+                    'slot_key' => $s->slot_key, 'media_item_id' => $s->media_item_id,
+                ])->values()->all(),
+                'lists' => $lists->map(fn (\App\Models\MagnooliaList $l) => [
+                    'list_key' => $l->list_key,
+                    'type' => $l->type,
+                    'page' => $l->page,
+                    'is_active' => $l->is_active,
+                    'items' => $l->items->map(fn (\App\Models\MagnooliaListItem $i) => [
+                        'sort_order' => $i->sort_order,
+                        'is_active' => $i->is_active,
+                        'media_item_id' => $i->media_item_id,
+                        'payload_et' => $i->payload_et,
+                        'payload_ru' => $i->payload_ru,
+                        'payload_en' => $i->payload_en,
+                        'meta' => $i->meta,
+                    ])->values()->all(),
+                ])->values()->all(),
             ];
 
             // Page-Texts CMS overrides, grouped by locale → key (only active blocks
@@ -93,7 +118,14 @@ class MagnooliaPublicationService
                     'note_et' => $settings->campaign_note_et,
                     'note_ru' => $settings->campaign_note_ru,
                     'note_en' => $settings->campaign_note_en,
+                    // The one-line version for the home-page ribbon — a different
+                    // text, not a truncation of the sentence above.
+                    'note_short_et' => $settings->campaign_note_short_et,
+                    'note_short_ru' => $settings->campaign_note_short_ru,
+                    'note_short_en' => $settings->campaign_note_short_en,
                     'legal_note' => $settings->campaign_legal_note,
+                    'legal_note_ru' => $settings->campaign_legal_note_ru,
+                    'legal_note_en' => $settings->campaign_legal_note_en,
                     'cta_label' => $settings->campaign_cta_label,
                     'cta_target' => $settings->campaign_cta_target,
                 ] : ['active' => false],
@@ -120,14 +152,51 @@ class MagnooliaPublicationService
                     ];
                 })->values()->all();
 
+            // Phase 36 Module C — editable repeating blocks. A list with no active
+            // entries is omitted entirely, so mg_list() returns [] and the template
+            // keeps the array it ships with.
+            $publicLists = [];
+            foreach ($lists->where('is_active', true) as $list) {
+                $entries = [];
+                foreach ($list->items->where('is_active', true) as $item) {
+                    $media = $item->mediaItem;
+                    $entries[] = array_filter([
+                        'image'        => $media?->public_path,
+                        'image_alt_et' => $media?->alt_et,
+                        'image_alt_ru' => $media?->alt_ru,
+                        'image_alt_en' => $media?->alt_en,
+                        'meta'         => $item->meta ?: [],
+                        'et'           => $item->payload_et ?: [],
+                        'ru'           => $item->payload_ru ?: [],
+                        'en'           => $item->payload_en ?: [],
+                    ], fn ($v) => $v !== null && $v !== []);
+                }
+                if ($entries !== []) {
+                    $publicLists[$list->list_key] = $entries;
+                }
+            }
+
             $publicPayload = [
                 'meta' => [
                     'generated_at' => now()->toIso8601String(),
                 ],
+                'lists' => $publicLists,
                 'units' => $publicUnits,
                 'settings' => $publicSettings,
                 'content' => $publicContent,
                 'gallery' => $gallery,
+                // Phase 36 Module B — image-slot bindings travel with the publication
+                // (decision 2), so preview and rollback cover pictures like they do texts.
+                'slots' => \App\Models\MagnooliaMediaSlot::query()->with('mediaItem')->get()
+                    ->filter(fn ($slot) => $slot->mediaItem && $slot->mediaItem->public_path)
+                    ->mapWithKeys(fn ($slot) => [$slot->slot_key => [
+                        'src'    => $slot->mediaItem->public_path,
+                        'alt_et' => $slot->mediaItem->alt_et,
+                        'alt_ru' => $slot->mediaItem->alt_ru,
+                        'alt_en' => $slot->mediaItem->alt_en,
+                        'width'  => $slot->mediaItem->width,
+                        'height' => $slot->mediaItem->height,
+                    ]])->all(),
             ];
 
             $checksum = hash('sha256', json_encode($privateSnapshot, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
@@ -217,6 +286,49 @@ class MagnooliaPublicationService
                         ['key' => $cb['key']],
                         collect($cb)->only(['page', 'label', 'group', 'et', 'ru', 'en', 'is_active', 'sort_order', 'updated_by'])->all()
                     );
+                }
+            }
+
+            // Phase 36 Module B — picture assignments go back too, otherwise a rollback
+            // restores the old text next to the new photo.
+            if (array_key_exists('media_slots', $snapshot)) {
+                foreach (($snapshot['media_slots'] ?? []) as $slot) {
+                    \App\Models\MagnooliaMediaSlot::query()->updateOrCreate(
+                        ['slot_key' => $slot['slot_key']],
+                        ['media_item_id' => $slot['media_item_id'], 'updated_by' => $adminUserId]
+                    );
+                }
+            }
+
+            // Phase 36 Module C — lists. Entries are replaced wholesale rather than
+            // matched one by one: they have no stable key of their own (the client
+            // adds, deletes and reorders them), so "restore exactly this sequence"
+            // is the only meaning rollback can honestly have.
+            foreach (($snapshot['lists'] ?? []) as $listRow) {
+                if (empty($listRow['list_key'])) {
+                    continue;
+                }
+                $list = \App\Models\MagnooliaList::query()->updateOrCreate(
+                    ['list_key' => $listRow['list_key']],
+                    [
+                        'type' => $listRow['type'],
+                        'page' => $listRow['page'] ?? null,
+                        'is_active' => $listRow['is_active'] ?? true,
+                        'updated_by' => $adminUserId,
+                    ]
+                );
+                $list->items()->delete();
+                foreach (($listRow['items'] ?? []) as $i => $item) {
+                    $list->items()->create([
+                        'sort_order' => $item['sort_order'] ?? $i,
+                        'is_active' => $item['is_active'] ?? true,
+                        'media_item_id' => $item['media_item_id'] ?? null,
+                        'payload_et' => $item['payload_et'] ?? null,
+                        'payload_ru' => $item['payload_ru'] ?? null,
+                        'payload_en' => $item['payload_en'] ?? null,
+                        'meta' => $item['meta'] ?? null,
+                        'updated_by' => $adminUserId,
+                    ]);
                 }
             }
 

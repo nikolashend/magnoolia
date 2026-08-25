@@ -17,10 +17,20 @@ class TranslationManager extends Page
 
     public function getView(): string { return 'filament.pages.translation-manager'; }
 
-    /** Phase 33.3 — advanced section: full system admin (ADME) only. */
+    /**
+     * Phase 36 — the client edits texts here too.
+     *
+     * This was ADME-only (Phase 33.3). Phase 35.1 showed why that does not hold:
+     * of Indrek's 21 requested corrections, ~60% were plain lang strings he could
+     * not touch, and a wrong figure ("143,2 m²") stayed live for months only
+     * because nobody but a developer could change it.
+     *
+     * Editing is safe to hand over because every save writes a TranslationSnapshot
+     * and the page offers preview + restore, so a bad edit is one click to undo.
+     */
     public static function canAccess(): bool
     {
-        return optional(auth()->user())->role === 'magnoolia_admin';
+        return in_array(optional(auth()->user())->role, ['magnoolia_admin', 'magnoolia_client_admin'], true);
     }
 
     public string $locale  = 'et';

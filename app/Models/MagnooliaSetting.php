@@ -14,7 +14,14 @@ class MagnooliaSetting extends Model
         'campaign_note_et',
         'campaign_note_ru',
         'campaign_note_en',
+        // The site shows a long campaign sentence AND a one-line version; they are
+        // different texts and the ribbon is sized for the short one.
+        'campaign_note_short_et',
+        'campaign_note_short_ru',
+        'campaign_note_short_en',
         'campaign_legal_note',
+        'campaign_legal_note_ru',
+        'campaign_legal_note_en',
         'campaign_cta_label',
         'campaign_cta_target',
         'stage_1_completion',

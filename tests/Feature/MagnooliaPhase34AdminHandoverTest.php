@@ -44,12 +44,16 @@ class MagnooliaPhase34AdminHandoverTest extends TestCase
         }
     }
 
-    public function test_client_blocked_from_advanced_and_filament(): void
+    /**
+     * Narrowed in Phase 36 — see the note in MagnooliaPhase333ClientRoleTest.
+     * The client signs in through the Filament login, so the panel root and the
+     * Translation Manager are open to it on purpose; the system-admin screens
+     * are not.
+     */
+    public function test_client_blocked_from_advanced_screens(): void
     {
         $client = $this->user('magnoolia_client_admin');
         $this->actingAs($client)->get('/admin/magnoolia/audit')->assertForbidden();
-        $this->actingAs($client)->get('/admin')->assertForbidden();
-        $this->actingAs($client)->get('/admin/translation-manager')->assertForbidden();
         $this->actingAs($client)->get('/admin/language-settings')->assertForbidden();
     }
 

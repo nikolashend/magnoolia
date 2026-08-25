@@ -27,7 +27,7 @@
             <div class="status status-ok">No inquiries yet. New leads from the public forms will appear here.</div>
         @else
         <table>
-            <thead><tr><th>When</th><th>Name</th><th>Contact</th><th>Home</th><th>Locale</th><th>Source</th><th>Status</th></tr></thead>
+            <thead><tr><th>When</th><th>Name</th><th>Contact</th><th>Home</th><th>Locale</th><th>Source</th><th>E-mail</th><th>Status</th></tr></thead>
             <tbody>
             @foreach($leads as $lead)
                 @php $ls = $lead->lead_status ?? 'new'; @endphp
@@ -38,6 +38,20 @@
                     <td style="font-size:12px;">{{ $lead->unit_address ?? '—' }}</td>
                     <td>{{ strtoupper($lead->locale) }}</td>
                     <td style="font-size:11px;color:#888;">{{ $lead->source_component ?? $lead->source_page }}</td>
+                    {{-- Phase 36 — delivery status. The lead is always stored, but the
+                         mail can fail silently (wrong SMTP, SPF, mailtrap left in .env).
+                         Without this column there is no way to tell "nobody enquired"
+                         from "the e-mail never reached the sales contact". --}}
+                    <td style="font-size:11px;white-space:nowrap;">
+                        @php $ms = $lead->mail_status ?? 'sent'; @endphp
+                        @if($ms === 'sent')
+                            <span title="E-mail sent to the sales contact" style="color:#2e7d32;">&#10003; sent</span>
+                        @elseif($ms === 'failed')
+                            <span title="Sending failed — check the mail settings and storage/logs/laravel.log" style="color:#c0392b;font-weight:700;">&#9888; failed</span>
+                        @else
+                            <span title="Sending was skipped" style="color:#9a948a;">skipped</span>
+                        @endif
+                    </td>
                     <td>
                         <form method="POST" action="{{ route('admin.magnoolia.leads.status', $lead) }}" style="display:inline;">
                             @csrf @method('PATCH')

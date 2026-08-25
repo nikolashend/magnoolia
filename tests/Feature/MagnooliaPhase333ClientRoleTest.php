@@ -51,17 +51,38 @@ class MagnooliaPhase333ClientRoleTest extends TestCase
         }
     }
 
-    public function test_client_role_cannot_reach_advanced_or_filament(): void
+    /**
+     * Phase 36 supersedes part of this rule.
+     *
+     * Phase 33.3 denied the client the whole Filament panel. That could not stand:
+     * the Filament login is the only login there is, so the ban meant the role
+     * could not sign in at all and every screen built for it was unreachable. The
+     * panel root is now open — it lands on a dashboard whose only content is a link
+     * into the Magnoolia control centre — and the Translation Manager was opened
+     * deliberately (Phase 36, stage 1).
+     *
+     * What still must hold: the audit log and the language settings stay with the
+     * system admin, and the template's own resources stay hidden.
+     */
+    public function test_client_role_cannot_reach_advanced_screens(): void
     {
         $client = $this->user('magnoolia_client_admin');
 
-        // Advanced control-center section (audit) — system admin only.
         $this->actingAs($client)->get('/admin/magnoolia/audit')->assertForbidden();
-
-        // Whole Filament panel (root + advanced pages) — denied for client.
-        $this->actingAs($client)->get('/admin')->assertForbidden();
-        $this->actingAs($client)->get('/admin/translation-manager')->assertForbidden();
         $this->actingAs($client)->get('/admin/language-settings')->assertForbidden();
+
+        $this->actingAs($client);
+        $this->assertFalse(\App\Filament\Resources\BlogPostResource::canViewAny());
+        $this->assertFalse(\App\Filament\Resources\ApartmentResource::canViewAny());
+    }
+
+    public function test_client_role_can_sign_in_and_reach_the_texts_editor(): void
+    {
+        $client = $this->user('magnoolia_client_admin');
+
+        $this->assertTrue($client->canAccessPanel(\Filament\Facades\Filament::getPanel('admin')),
+            'Blocking the panel blocks the only login form, and with it the whole control centre.');
+        $this->actingAs($client)->get('/admin/translation-manager')->assertOk();
     }
 
     public function test_full_admin_retains_advanced_access(): void

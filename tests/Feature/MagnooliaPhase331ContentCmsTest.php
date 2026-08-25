@@ -33,7 +33,9 @@ class MagnooliaPhase331ContentCmsTest extends TestCase
     {
         $this->artisan('magnoolia:seed-content')->assertSuccessful();
         // Phase 33.2: comprehensive coverage across all public pages (12 pages).
-        $this->assertSame(34, MagnooliaContentBlock::count());
+        // Phase 36 Module A: the editable set is no longer a fixed 34 — it is whatever
+        // config/magnoolia_editable.php registers, so assert against the registry.
+        $this->assertSame($this->editableKeyCount(), MagnooliaContentBlock::count());
         $this->assertNotNull(MagnooliaContentBlock::where('key', 'page.kodudjahinnad.note')->value('et'));
         // Every required page is represented.
         foreach (['home', 'kodud', 'asendiplaan', 'asukoht', 'ehitusinfo', 'sisedisain', 'galerii', 'ostuprotsess', 'finantseerimine', 'kkk', 'kontakt', 'footer'] as $page) {
@@ -84,5 +86,18 @@ class MagnooliaPhase331ContentCmsTest extends TestCase
         MagnooliaContentBlock::where('key', 'page.kontakt.lead')->update(['et' => null, 'is_active' => true]);
         $v = app(MagnooliaValidationService::class)->validateDraft();
         $this->assertNotEmpty(array_filter($v['blockers'], fn ($b) => str_contains($b, 'Estonian')), 'missing ET must block');
+    }
+
+    /** Number of texts offered in the editor, read from the registry itself. */
+    private function editableKeyCount(): int
+    {
+        $n = 0;
+        foreach (config('magnoolia_editable', []) as $definition) {
+            foreach ($definition['groups'] ?? [] as $keys) {
+                $n += count($keys);
+            }
+        }
+
+        return $n;
     }
 }

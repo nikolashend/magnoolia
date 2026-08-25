@@ -99,19 +99,49 @@
       <h2 class="mg-section-heading__title">{{ __('magnoolia.page.arhitektuur.feat_title') }}</h2>
     </div>
 
-    @foreach(__('magnoolia.page.arhitektuur.features') as $row)
+    @php
+      // Phase 36 Module C — published list wins, otherwise the shipped array.
+      // Both shapes are normalised to one, so the markup below stays single-source.
+      $mgFeatures = [];
+      foreach (mg_list('arhitektuur.exterior_elements') as $row) {
+          $mgFeatures[] = [
+              'path'    => $row['image_path'] ?? '',
+              'alt'     => $row['image_alt'] ?? ($row['title'] ?? 'Magnoolia'),
+              'kicker'  => $row['kicker'] ?? '',
+              'title'   => $row['title'] ?? '',
+              'body'    => $row['body'] ?? '',
+              'list'    => (array) ($row['list'] ?? []),
+              'reverse' => (bool) ($row['reverse'] ?? false),
+          ];
+      }
+      if ($mgFeatures === []) {
+          foreach (__('magnoolia.page.arhitektuur.features') as $row) {
+              $mgFeatures[] = [
+                  'path'    => 'assets/images/magnoolia/' . $row['img'],
+                  'alt'     => $row['alt'] ?? $row['title'] ?? 'Magnoolia',
+                  'kicker'  => $row['kicker'],
+                  'title'   => $row['title'],
+                  'body'    => $row['body'],
+                  'list'    => $row['list'],
+                  'reverse' => (bool) $row['reverse'],
+              ];
+          }
+      }
+    @endphp
+
+    @foreach($mgFeatures as $row)
     <div class="mg-feature-row {{ $row['reverse'] ? 'mg-feature-row--reverse' : '' }}" style="margin-bottom:60px;">
       <div class="mg-feature-row__img">
-        @php $fb = 'assets/images/magnoolia/' . preg_replace('/\.jpe?g$/i', '', $row['img']); @endphp
+        @php $fb = preg_replace('/\.(jpe?g|png|webp)$/i', '', $row['path']); @endphp
         @if(file_exists(public_path($fb.'-768w.webp')))
         <img src="{{ asset($fb.'-768w.webp') }}"
              srcset="{{ asset($fb.'-480w.webp') }} 480w, {{ asset($fb.'-768w.webp') }} 768w, {{ asset($fb.'-1200w.webp') }} 1200w"
              sizes="(min-width:992px) 560px, 100vw"
-             alt="{{ $row['alt'] ?? $row['title'] ?? 'Magnoolia' }}"
+             alt="{{ $row['alt'] }}"
              loading="lazy" decoding="async" width="560" height="400">
         @else
-        <img src="{{ asset('assets/images/magnoolia/' . $row['img']) }}"
-             alt="{{ $row['alt'] ?? $row['title'] ?? 'Magnoolia' }}"
+        <img src="{{ str_replace(' ', '%20', asset($row['path'])) }}"
+             alt="{{ $row['alt'] }}"
              loading="lazy" width="560" height="400">
         @endif
       </div>
@@ -164,7 +194,9 @@
   'eyebrow' => __('magnoolia.page.arhitektuur.faq_eyebrow'),
   'title'   => __('magnoolia.page.arhitektuur.faq_title'),
   'bg'      => 'cream',
-  'faqs'    => __('magnoolia.page.arhitektuur.faq_items'),
+  {{-- Phase 36 Module C — the published list, else the shipped questions.
+       mg_faq() is also what the page's JSON-LD reads, so the two cannot drift. --}}
+  'faqs'    => mg_faq('arhitektuur.faq', 'magnoolia.page.arhitektuur.faq_items'),
 ])
 
 {{-- ── Internal links ──────────────────────────────────────── --}}

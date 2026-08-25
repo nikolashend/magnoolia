@@ -223,6 +223,21 @@ Route::prefix('admin/magnoolia')
         Route::post('/media', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaMediaController::class, 'store'])->name('media.store');
         Route::patch('/media/{item}', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaMediaController::class, 'update'])->name('media.update');
         Route::delete('/media/{item}', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaMediaController::class, 'destroy'])->name('media.destroy');
+        // Phase 36 Module B — bind media items to named positions on the site.
+        Route::get('/media-slots', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaMediaController::class, 'slots'])->name('media.slots');
+        Route::patch('/media-slots/{slotKey}', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaMediaController::class, 'assignSlot'])
+            ->where('slotKey', '[A-Za-z0-9._-]+')->name('media.slots.assign');
+
+        // Phase 36 Module C — editable repeating blocks (cards, FAQ, spec lists, gallery order).
+        Route::get('/lists', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaListController::class, 'index'])->name('lists.index');
+        Route::get('/lists/{listKey}', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaListController::class, 'edit'])
+            ->where('listKey', '[A-Za-z0-9._-]+')->name('lists.edit');
+        Route::put('/lists/{listKey}', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaListController::class, 'update'])
+            ->where('listKey', '[A-Za-z0-9._-]+')->name('lists.update');
+        Route::post('/lists/{listKey}/items', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaListController::class, 'addItem'])
+            ->where('listKey', '[A-Za-z0-9._-]+')->name('lists.items.add');
+        Route::delete('/lists/{listKey}/items/{item}', [\App\Http\Controllers\Admin\Magnoolia\MagnooliaListController::class, 'destroyItem'])
+            ->where('listKey', '[A-Za-z0-9._-]+')->name('lists.items.destroy');
 
         Route::get('/validate', [MagnooliaAdminController::class, 'validateDraft'])->name('validate');
         Route::get('/preview', [MagnooliaAdminController::class, 'preview'])->name('preview');

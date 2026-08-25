@@ -62,7 +62,9 @@ class MagnooliaPhase333AdminUxTest extends TestCase
         $res = $this->actingAs($this->admin())->get('/admin/magnoolia/content');
         $res->assertOk();
         // Human label shown as the primary heading…
-        $res->assertSee('Homepage — hero headline (H1)', false);
+        // Phase 36 Module A: labels are now written for the Estonian client and say
+        // where the text appears, not what the key is called.
+        $res->assertSee('Suur pealkiri', false);
         // …and page groups anchored for the page map.
         $res->assertSee('id="page-home"', false);
     }

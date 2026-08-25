@@ -61,7 +61,10 @@
             <h4>Content</h4>
             <div class="links">
                 <a href="{{ route('admin.magnoolia.content.index') }}" class="{{ str_contains((string)$rn,'content')?'active':'' }}">Page Texts</a>
-                <a href="{{ route('admin.magnoolia.media.index') }}" class="{{ str_contains((string)$rn,'media')?'active':'' }}">Images &amp; Media</a>
+                <a href="{{ route('admin.magnoolia.media.index') }}" class="{{ $rn === 'admin.magnoolia.media.index' ? 'active' : '' }}">Images &amp; Media</a>
+                {{-- Phase 36 Module B — where each picture appears on the site --}}
+                <a href="{{ route('admin.magnoolia.media.slots') }}" class="{{ str_contains((string)$rn,'media.slots') ? 'active' : '' }}">Piltide asukohad</a>
+                <a href="{{ route('admin.magnoolia.lists.index') }}" class="{{ str_contains((string)$rn,'lists') ? 'active' : '' }}">Nimekirjad</a>
             </div>
         </div>
         <div class="navgroup">

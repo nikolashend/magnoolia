@@ -117,7 +117,14 @@ class MagnooliaController extends Controller
             'consent'       => 'accepted',
         ]);
 
-        $toEmail    = config('magnoolia.project.contact_email', 'diana@estlanda.ee');
+        // Phase 36 — the sales contact is already a published setting and is already
+        // shown on the site; only the mailer still ignored it, so changing the
+        // recipient in admin had no effect on where enquiries actually went.
+        // Config stays as the fallback for a site with nothing published yet.
+        $publishedEmail = $this->publicDataRepository->getSettings()['sales_contact_email'] ?? null;
+        $toEmail    = filled($publishedEmail)
+            ? $publishedEmail
+            : config('magnoolia.project.contact_email', 'diana@estlanda.ee');
         $unitLabel  = ($validated['selected_unit'] ?? '') ?: __('magnoolia.forms.unit_none');
         $locale     = app()->getLocale();
         $sourceUrl  = $request->headers->get('referer', $request->url());

@@ -1,0 +1,50 @@
+Live capture — Phase 35.0
+Each entry starts at the requested URL and records where the browser actually ended up.
+
+https://magnoolia.ee/
+    final URL : https://magnoolia.estlanda.ee/
+    status    : 200
+    robots    : noindex,nofollow
+    canonical : https://magnoolia.ee/
+    title     : Magnoolia — A-energiaklassi ridaelamukodud Tallinna lähedal
+    screenshot: magnoolia-ee-home-desktop.png
+
+https://magnoolia.ee/
+    final URL : https://magnoolia.estlanda.ee/
+    status    : 200
+    robots    : noindex,nofollow
+    canonical : https://magnoolia.ee/
+    title     : Magnoolia — A-energiaklassi ridaelamukodud Tallinna lähedal
+    screenshot: magnoolia-ee-home-mobile.png
+
+https://magnoolia.ee/kodud-ja-hinnad
+    final URL : https://magnoolia.estlanda.ee/kodud-ja-hinnad
+    status    : 200
+    robots    : noindex,nofollow
+    canonical : https://magnoolia.ee/kodud-ja-hinnad
+    title     : Magnoolia kodud ja hinnad — 19 ridaelamukodu Vaelas
+    screenshot: magnoolia-ee-kodud-ja-hinnad.png
+
+https://magnoolia.ee/asukoht
+    final URL : https://magnoolia.estlanda.ee/asukoht
+    status    : 200
+    robots    : noindex,nofollow
+    canonical : https://magnoolia.ee/asukoht
+    title     : Magnoolia asukoht — Vaela küla, Kiili vald, Tallinna lähedal
+    screenshot: magnoolia-ee-asukoht.png
+
+https://magnoolia.ee/kontakt
+    final URL : https://magnoolia.estlanda.ee/kontakt
+    status    : 200
+    robots    : noindex,nofollow
+    canonical : https://magnoolia.ee/kontakt
+    title     : Kontakt — küsi Magnoolia vaba kodu kohta pakkumist
+    screenshot: magnoolia-ee-contact.png
+
+https://estlanda.ee/magnoolia/
+    final URL : https://estlanda.ee/magnoolia/
+    status    : 200
+    robots    : max-image-preview:large
+    canonical : https://estlanda.ee/magnoolia/
+    title     : Kinnisvara Müük
+    screenshot: duplicate-estlanda-ee-magnoolia.png

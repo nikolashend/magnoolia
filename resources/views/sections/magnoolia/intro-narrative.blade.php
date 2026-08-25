@@ -39,10 +39,11 @@
     <div class="row align-items-center gutter-y-40">
       <div class="col-lg-6">
         <div class="hover:shine" style="border-radius:20px;overflow:hidden;">
-          {{-- Phase 35.1 item 3 (corrected placement): Indrek asked for the evening
-               LED facade view in this Tutvustus block, not in the facts block above.
-               Source: materials/24.08.2026/Lisa Cam_20 lükandaken.jpg (4500×2250). --}}
-          <img {!! mg_img('Cam020.0000.jpg', '(max-width:991px) 100vw, 560px') !!} alt="{{ $n['alt'] }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;">
+          {{-- Phase 36 Module B — this picture is now an assignable slot
+               ('home.intro.image'). Until the client binds one in admin it serves
+               exactly the file it shipped with, so nothing changes on its own. --}}
+          @php $mgIntroImg = mg_slot('home.intro.image'); @endphp
+          <img src="{{ $mgIntroImg['src'] }}" alt="{{ $mgIntroImg['bound'] ? $mgIntroImg['alt'] : $n['alt'] }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;">
         </div>
       </div>
       <div class="col-lg-6">

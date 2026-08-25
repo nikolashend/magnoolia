@@ -118,6 +118,9 @@
             'Edit a page headline / notice' => 'Page Texts → edit ET (RU/EN optional). Empty fields fall back to the built-in text. Then Publish.',
             'Replace or add an image' => 'Images &amp; Media → upload (auto-optimized), add alt text (ET/RU/EN), and assign a floor plan to a home. Then Publish.',
             'See who changed what' => 'Change History — every edit, publish and rollback is logged with the user and time.',
+            // Phase 36 — the two screens that replace "ask the developer to change it".
+            'Swap a photo on a page' => 'Piltide asukohad → find the position (page hero, intro block, site plan, the black finish sheets) → pick an image from the Media Library → Save. A position left unset keeps the photo the page ships with. Then Publish.',
+            'Edit a repeating block' => 'Nimekirjad → home-page cards, the four exterior elements, the equipment lists, FAQ, developer projects, gallery order. Add, delete, drag to reorder, three languages (ET required, RU/EN fall back to ET). Then Publish.',
         ]; @endphp
         @foreach($how as $title => $body)
             <div class="card"><strong>{{ $title }}</strong><p style="margin:6px 0 0;font-size:13px;color:#5b5446;">{!! $body !!}</p></div>

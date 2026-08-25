@@ -54,7 +54,9 @@ class MagnooliaPhase332HandoverTest extends TestCase
     public function test_content_blocks_cover_all_pages_and_admin_shows_them(): void
     {
         $this->seedAll();
-        $this->assertSame(34, MagnooliaContentBlock::count());
+        // Phase 36 Module A: the editable set is no longer a fixed 34 — it is whatever
+        // config/magnoolia_editable.php registers, so assert against the registry.
+        $this->assertSame($this->editableKeyCount(), MagnooliaContentBlock::count());
 
         $res = $this->actingAs($this->admin())->get('/admin/magnoolia/content');
         $res->assertOk()->assertSee('Page Texts');
@@ -147,5 +149,18 @@ class MagnooliaPhase332HandoverTest extends TestCase
         $res = $this->actingAs($this->admin())->get('/admin/magnoolia');
         $res->assertOk();
         $res->assertDontSee('php artisan', false);
+    }
+
+    /** Number of texts offered in the editor, read from the registry itself. */
+    private function editableKeyCount(): int
+    {
+        $n = 0;
+        foreach (config('magnoolia_editable', []) as $definition) {
+            foreach ($definition['groups'] ?? [] as $keys) {
+                $n += count($keys);
+            }
+        }
+
+        return $n;
     }
 }

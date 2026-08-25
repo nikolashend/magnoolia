@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin\Magnoolia;
 
 use App\Http\Controllers\Controller;
+use App\Models\MagnooliaContentBlock;
 use App\Models\MagnooliaMediaItem;
+use App\Models\MagnooliaMediaSlot;
 use App\Models\MagnooliaUnit;
 use App\Services\Magnoolia\MagnooliaAuditService;
 use App\Services\Magnoolia\MagnooliaMediaService;
@@ -101,6 +103,49 @@ class MagnooliaMediaController extends Controller
             'Media metadata updated', $request->ip(), $request->userAgent());
 
         return back()->with('status', "Saved \"{$item->title}\".{$assignNote}");
+    }
+
+    /**
+     * Phase 36, Module B — assign media-library items to named positions on the site.
+     *
+     * Slots are defined in config/magnoolia_slots.php; this screen only records the
+     * binding. Unassigned slots keep serving the file the template shipped with, so
+     * the page never breaks because something was left unset.
+     */
+    public function slots()
+    {
+        $definitions = MagnooliaMediaSlot::definitions();
+        $bindings = MagnooliaMediaSlot::query()->with('mediaItem')->get()->keyBy('slot_key');
+        $library = MagnooliaMediaItem::query()
+            ->whereNotNull('public_path')
+            ->orderBy('category')->orderBy('title')
+            ->get();
+
+        $grouped = [];
+        foreach ($definitions as $key => $definition) {
+            $grouped[$definition['page']][$definition['group'] ?? '—'][$key] = $definition;
+        }
+
+        $pages = MagnooliaContentBlock::PAGES;
+
+        return view('admin.magnoolia.media-slots', compact('grouped', 'bindings', 'library', 'pages'));
+    }
+
+    public function assignSlot(Request $request, string $slotKey)
+    {
+        abort_unless(array_key_exists($slotKey, MagnooliaMediaSlot::definitions()), 404);
+
+        $validated = $request->validate([
+            'media_item_id' => 'nullable|integer|exists:magnoolia_media_items,id',
+        ]);
+
+        MagnooliaMediaSlot::query()->updateOrCreate(
+            ['slot_key' => $slotKey],
+            ['media_item_id' => $validated['media_item_id'] ?: null, 'updated_by' => $request->user()?->id],
+        );
+
+        // Draft only — the picture reaches the public site with the next publish.
+        return back()->with('status', 'Pilt määratud. Muudatus jõuab avalikule lehele pärast avaldamist.');
     }
 
     public function destroy(Request $request, MagnooliaMediaItem $item)
