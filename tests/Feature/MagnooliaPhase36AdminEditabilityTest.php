@@ -370,52 +370,39 @@ class MagnooliaPhase36AdminEditabilityTest extends TestCase
         return $view->getData()['mgPublic']['campaign'];
     }
 
-    public function test_validation_warns_when_publishing_would_remove_the_offer(): void
+    public function test_an_empty_campaign_screen_is_reported_but_never_blocks(): void
     {
-        // An untouched settings row plus a first publish used to make the campaign
-        // vanish from the site with nothing on screen to explain why.
+        // The notice is INFO on purpose. Publishing is refused while any warning is
+        // unconfirmed, and this one cannot be cleared by a client who wants the offer
+        // retired — they cannot edit config. As a warning it would have to be ticked
+        // past on every publish, which trains people to ignore the real ones.
         \App\Models\MagnooliaSetting::query()->create([]);
 
-        $warnings = app(\App\Services\Magnoolia\MagnooliaValidationService::class)->validateDraft()['warnings'];
+        $v = app(\App\Services\Magnoolia\MagnooliaValidationService::class)->validateDraft();
 
-        $this->assertNotEmpty(array_filter($warnings, fn ($w) => str_contains($w, 'removes the offer')),
-            'Validate must say that publishing an empty campaign removes the visible offer.');
-        $this->assertNotEmpty(array_filter($warnings, fn ($w) => str_contains($w, 'magnoolia:seed-campaign')),
-            'The warning should say how to fix it.');
+        $this->assertNotEmpty(array_filter($v['info'], fn ($i) => str_contains($i, 'no special offer is shown')));
+        $this->assertEmpty(array_filter($v['warnings'], fn ($w) => stripos($w, 'special offer') !== false));
+        $this->assertEmpty(array_filter($v['blockers'], fn ($b) => stripos($b, 'special offer') !== false));
     }
 
-    public function test_validation_warns_when_the_campaign_is_switched_off(): void
-    {
-        \App\Models\MagnooliaSetting::query()->create([
-            'campaign_active' => false, 'campaign_note_et' => 'Kampaania tekst alles',
-        ]);
-
-        $warnings = app(\App\Services\Magnoolia\MagnooliaValidationService::class)->validateDraft()['warnings'];
-
-        $this->assertNotEmpty(array_filter($warnings, fn ($w) => str_contains($w, 'switched OFF')));
-    }
-
-    public function test_validation_is_quiet_once_the_campaign_is_set(): void
+    public function test_the_notice_clears_once_a_campaign_is_set(): void
     {
         $this->artisan('magnoolia:seed-campaign')->assertSuccessful();
 
-        $warnings = app(\App\Services\Magnoolia\MagnooliaValidationService::class)->validateDraft()['warnings'];
+        $v = app(\App\Services\Magnoolia\MagnooliaValidationService::class)->validateDraft();
 
-        $this->assertEmpty(array_filter($warnings, fn ($w) => str_contains($w, 'removes the offer')));
-        $this->assertEmpty(array_filter($warnings, fn ($w) => str_contains($w, 'switched OFF')));
+        $this->assertEmpty(array_filter($v['info'], fn ($i) => str_contains($i, 'no special offer is shown')));
     }
 
-    public function test_validation_warns_about_a_deadline_that_has_passed(): void
+    public function test_no_admin_message_ever_tells_the_client_to_run_a_command(): void
     {
-        \App\Models\MagnooliaSetting::query()->create([
-            'campaign_active' => true,
-            'campaign_note_et' => 'Kampaania',
-            'campaign_deadline' => now()->subDay()->toDateString(),
-        ]);
+        \App\Models\MagnooliaSetting::query()->create([]);
 
-        $warnings = app(\App\Services\Magnoolia\MagnooliaValidationService::class)->validateDraft()['warnings'];
+        $v = app(\App\Services\Magnoolia\MagnooliaValidationService::class)->validateDraft();
 
-        $this->assertNotEmpty(array_filter($warnings, fn ($w) => str_contains($w, 'deadline')));
+        foreach (array_merge($v['info'], $v['warnings'], $v['blockers']) as $message) {
+            $this->assertStringNotContainsString('artisan', $message);
+        }
     }
 
     // ── The client has to be able to sign in ───────────────────────────

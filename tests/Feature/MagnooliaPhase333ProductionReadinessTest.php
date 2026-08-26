@@ -43,11 +43,17 @@ class MagnooliaPhase333ProductionReadinessTest extends TestCase
         $this->seedAll();
 
         $this->assertSame(19, MagnooliaUnit::count(), 'must have 19 homes');
-        // A fresh seed-gallery imports the 29 public gallery renders (the "31" in the
-        // 33.2 report additionally counted 2 pre-existing local manual uploads that
-        // the seed does not create). 29 real items = populated, not empty.
-        $this->assertGreaterThanOrEqual(29, MagnooliaMediaItem::count(), 'media >= 29 (populated)');
-        $this->assertGreaterThanOrEqual(29, MagnooliaMediaItem::where('category', 'gallery')->count(), 'gallery >= 29');
+        // The old thresholds (29 / 31) counted the same photo twice: every render is
+        // stored as both .jpg and .webp and the importer created a row per file. It
+        // now creates one row per picture, so the real number is lower — and "no
+        // duplicates" is the property worth asserting, not a raw count.
+        $gallery = MagnooliaMediaItem::query()->where('category', 'gallery')->pluck('public_path');
+        $this->assertGreaterThanOrEqual(15, $gallery->count(), 'gallery populated');
+        $this->assertSame(
+            $gallery->map(fn ($p) => preg_replace('~\.[a-z0-9]+$~i', '', (string) $p))->unique()->count(),
+            $gallery->count(),
+            'one media entry per picture, not one per file format'
+        );
         $this->assertGreaterThanOrEqual(34, MagnooliaContentBlock::count(), 'content blocks >= 34');
     }
 

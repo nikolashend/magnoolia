@@ -127,29 +127,30 @@ class MagnooliaValidationService
             }
         }
 
-        // Campaign: publishing an empty admin campaign silently removes an offer the
-        // site is still advertising from config. That is a real content loss and it
-        // is invisible on the Campaign screen, so say it out loud before publishing.
-        // A warning, not a blocker — deliberately retiring the offer is legitimate,
-        // and blocking it would recreate the problem Phase 35.1 fixed.
+        // Campaign: the site ships an offer in config/magnoolia.php, and Phase 35.1
+        // made the admin Campaign screen the only source once anything is published.
+        // With the screen left empty the offer simply disappears, which is what
+        // happened on production — and it is invisible from the admin, so it is worth
+        // stating.
+        //
+        // INFO, deliberately, not a warning. The publish screen refuses to publish
+        // while any warning is unconfirmed, so a warning nobody can clear — and this
+        // one cannot be cleared by a client who genuinely wants the offer retired,
+        // because they cannot edit config — would have to be ticked past on every
+        // publish. That is how people are trained to ignore warnings, and there are
+        // real warnings here (missing floor plans, missing translations) worth
+        // noticing. An active campaign with no text or a past deadline is already a
+        // hard blocker above, so nothing actionable is lost.
         $configCampaign = config('magnoolia.campaign', []);
         $configAdvertises = ($configCampaign['enabled'] ?? false) && filled($configCampaign['body_et'] ?? null);
         $adminHasCampaign = $settings && $settings->campaign_active && filled($settings->campaign_note_et);
 
         if ($configAdvertises && ! $adminHasCampaign) {
-            $errors['warnings'][] = $settings && filled($settings->campaign_note_et)
-                ? 'The campaign is switched OFF in admin — the offer will disappear from every page.'
-                : 'No campaign is set in admin, so publishing removes the offer the site currently shows. '
-                  . 'Run "php artisan magnoolia:seed-campaign" to load the current wording into the Campaign screen, or set it there by hand.';
-        }
-
-        if ($settings && $settings->campaign_active && blank($settings->campaign_note_et)) {
-            $errors['warnings'][] = 'The campaign is active but has no Estonian text, so nothing will be shown.';
-        }
-
-        if ($settings && $settings->campaign_active && $settings->campaign_deadline
-            && $settings->campaign_deadline->isPast()) {
-            $errors['warnings'][] = 'The campaign deadline (' . $settings->campaign_deadline->toDateString() . ') has passed.';
+            // Client-facing wording: this appears in the admin, so it must not tell a
+            // non-technical user to run a console command — a handover test guards
+            // exactly that. The CLI shortcut belongs in the deploy notes.
+            $errors['info'][] = 'The Campaign screen is empty or switched off, so no special offer is shown on the site. '
+                . 'Open Campaign to bring one back.';
         }
 
         return $errors;

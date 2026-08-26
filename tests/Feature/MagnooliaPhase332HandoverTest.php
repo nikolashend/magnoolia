@@ -74,8 +74,17 @@ class MagnooliaPhase332HandoverTest extends TestCase
             $this->markTestSkipped('Public gallery assets not present in this environment.');
         }
         $this->seedAll();
-        $this->assertGreaterThanOrEqual(20, MagnooliaMediaItem::count());
-        $this->assertGreaterThan(0, MagnooliaMediaItem::where('category', 'gallery')->count());
+        // The threshold used to be 20, which only held because every photo was
+        // imported twice — once as .jpg and once as .webp. The import now creates one
+        // entry per picture, so the real number is lower and the duplicate-free
+        // property is what is worth asserting.
+        $items = MagnooliaMediaItem::query()->where('category', 'gallery')->pluck('public_path');
+        $this->assertGreaterThanOrEqual(15, $items->count());
+        $this->assertSame(
+            $items->map(fn ($p) => preg_replace('~\.[a-z0-9]+$~i', '', (string) $p))->unique()->count(),
+            $items->count(),
+            'One media entry per picture, not one per file format.'
+        );
 
         $res = $this->actingAs($this->admin())->get('/admin/magnoolia/media');
         $res->assertOk()->assertSee('Upload and manage images', false);
