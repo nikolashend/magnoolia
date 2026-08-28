@@ -405,6 +405,92 @@ class MagnooliaPhase36AdminEditabilityTest extends TestCase
         }
     }
 
+    // ── Main navigation: the front page marks nothing ──────────────────
+
+    public function test_the_front_page_marks_no_menu_item_as_current(): void
+    {
+        // Server-side this has always been right; the template's JS was adding the
+        // class on top. Asserted here so the server side cannot regress either.
+        foreach (['/', '/ru', '/en'] as $uri) {
+            $html = $this->get($uri)->assertOk()->getContent();
+            $this->assertSame(0, substr_count($html, '<li class="current">'),
+                "The front page {$uri} must not mark a navigation item as current.");
+        }
+
+        $this->assertSame(1, substr_count($this->get('/asukoht')->getContent(), '<li class="current">'));
+    }
+
+    public function test_the_template_does_not_highlight_the_first_menu_item_by_default(): void
+    {
+        // zoomvilla.js shipped a static-site fallback: with no file name in the URL it
+        // marked the first menu entry as current. Every front page URL ends in "/", so
+        // Asukoht lit up as though the visitor were on the location page. If a theme
+        // update reintroduces this line, the bug comes back silently.
+        $js = file_get_contents(public_path('assets/js/zoomvilla.js'));
+
+        $this->assertStringNotContainsString(
+            'selector.find("li").eq(0).addClass("current")',
+            $js,
+            'The template is highlighting the first menu item again.'
+        );
+    }
+
+    // ── Plan A / plan B: one wording, both pages ───────────────────────
+
+    public function test_the_plan_cards_say_the_same_thing_on_both_pages(): void
+    {
+        // The client reported the home page describing the plans as "3-kodune
+        // terrassmaja" / "4-kodune terrassmaja" while Kodud ja hinnad described the
+        // home types. The block groups homes by plan_type and lists their addresses,
+        // so the home-type wording is the correct one — and both blocks now read it
+        // from the same keys.
+        $home = $this->get('/')->assertOk()->getContent();
+        $subpage = $this->get('/kodud-ja-hinnad')->assertOk()->getContent();
+
+        foreach ([
+            __('magnoolia.page.kodudjahinnad.plan_a_title'),
+            __('magnoolia.page.kodudjahinnad.plan_b_title'),
+        ] as $wording) {
+            $this->assertStringContainsString($wording, $home);
+            $this->assertStringContainsString($wording, $subpage);
+        }
+    }
+
+    public function test_the_building_typology_wording_is_gone_everywhere(): void
+    {
+        foreach (['/', '/kodud-ja-hinnad', '/ru/', '/en/'] as $uri) {
+            $this->assertStringNotContainsString(
+                'kodune terrassmaja',
+                $this->get($uri)->assertOk()->getContent(),
+                "The stale building-typology label is still on {$uri}."
+            );
+        }
+    }
+
+    public function test_editing_the_plan_wording_once_changes_both_pages(): void
+    {
+        $this->publishContent(['et' => ['page.kodudjahinnad.plan_a_title' => 'Muudetud plaani nimi']]);
+        $this->bootOverrides();
+        app()->setLocale('et');
+
+        $this->assertStringContainsString('Muudetud plaani nimi', $this->get('/')->getContent());
+        $this->assertStringContainsString('Muudetud plaani nimi', $this->get('/kodud-ja-hinnad')->getContent());
+    }
+
+    public function test_the_floor_plan_section_texts_are_editable(): void
+    {
+        $registry = [];
+        foreach (config('magnoolia_editable', []) as $definition) {
+            foreach ($definition['groups'] ?? [] as $keys) {
+                $registry += $keys;
+            }
+        }
+
+        foreach (['floorplan.title', 'floorplan.subtitle', 'floorplan.eyebrow'] as $key) {
+            $this->assertArrayHasKey($key, $registry, "The plan block's {$key} is not offered in Page Texts.");
+        }
+    }
+
     // ── The client has to be able to sign in ───────────────────────────
 
     public function test_the_client_admin_can_reach_the_login_panel(): void

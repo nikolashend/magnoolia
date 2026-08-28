@@ -233,10 +233,16 @@
         $(this).addClass("current");
       }
     });
-    // if no file name return
-    if ("" === FileName) {
-      selector.find("li").eq(0).addClass("current");
-    }
+    // The template's "no file name → highlight the first item" fallback is removed.
+    //
+    // It was written for a static site where the first menu entry was Home and every
+    // URL ended in a file name. Here the front page URL ends in "/", so FileName is
+    // "" on every home page (/, /ru/, /en/) and the first entry — Asukoht — lit up as
+    // if the visitor were on the location page.
+    //
+    // Nothing is needed in its place: partials/header.blade.php already marks the
+    // current item server-side by comparing the route name, which is correct on every
+    // page including the front page (where nothing should be marked).
   }
 
   if ($(".main-menu__list").length) {

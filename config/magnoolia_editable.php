@@ -46,6 +46,19 @@ return [
                 'section.why_title'   => 'Ploki pealkiri',
                 'section.why_desc'    => 'Ploki tekst',
             ],
+            // The same block also sits on Kodud ja hinnad, so editing these changes
+            // both pages. The two plan cards inside it take their text from
+            // "Kodud ja hinnad → Planeeringutüübid", which is the single source for
+            // plan A / plan B wording.
+            'Korrusplaanid' => [
+                'floorplan.eyebrow'     => 'Väike pealkiri (eyebrow)',
+                'floorplan.title'       => 'Ploki pealkiri',
+                'floorplan.subtitle'    => 'Ploki sissejuhatus',
+                'floorplan.disclaimer'  => 'Märkus plaanide all',
+                'floorplan.cta_homes'   => 'Nupp: vaata vabu kodusid',
+                'floorplan.cta_ask'     => 'Nupp: küsi plaani kohta',
+                'floorplan.addresses_label' => 'Aadresside silt',
+            ],
         ],
     ],
 

@@ -30,13 +30,22 @@
     $floorB1 = asset($fpDir.'plan-b-1korrus.webp');  $floorB1Disp = asset($fpDir.'plan-b-1korrus-1200w.webp');
     $floorB2 = asset($fpDir.'plan-b-2korrus.webp');  $floorB2Disp = asset($fpDir.'plan-b-2korrus-1200w.webp');
 
+    // The two cards describe the two HOME plan types (they list the addresses of the
+    // homes in each), so their text comes from the plan-type copy on Kodud ja hinnad
+    // — the same keys the comparison cards there use.
+    //
+    // They used to have their own strings under magnoolia.floorplan.*, left over from
+    // the Phase 11 layout, which described the *building* instead: "3-kodune
+    // terrassmaja" / "4-kodune terrassmaja". That was wrong on its own terms — type A
+    // covers 7 homes and type B 12 — and it contradicted the subpage, which the client
+    // reported. One source now, so the two blocks cannot drift apart again.
     $plans = [
         [
             'id'         => 'plaan-a',
-            'label'      => 'Plaan A',
-            'badge'      => __('magnoolia.floorplan.plan_a_badge'),
+            'label'      => __('magnoolia.page.kodudjahinnad.plan_a_name'),
+            'badge'      => __('magnoolia.page.kodudjahinnad.plan_a_title'),
             'badge_css'  => 'mg-plan-badge--a',
-            'desc'       => __('magnoolia.floorplan.plan_a_desc'),
+            'desc'       => __('magnoolia.page.kodudjahinnad.plan_a_pitch'),
             'units'      => $typeAUnits,
             'floor1_src' => $floorA1,
             'floor2_src' => $floorA2,
@@ -47,10 +56,10 @@
         ],
         [
             'id'         => 'plaan-b',
-            'label'      => 'Plaan B',
-            'badge'      => __('magnoolia.floorplan.plan_b_badge'),
+            'label'      => __('magnoolia.page.kodudjahinnad.plan_b_name'),
+            'badge'      => __('magnoolia.page.kodudjahinnad.plan_b_title'),
             'badge_css'  => 'mg-plan-badge--b',
-            'desc'       => __('magnoolia.floorplan.plan_b_desc'),
+            'desc'       => __('magnoolia.page.kodudjahinnad.plan_b_pitch'),
             'units'      => $typeBUnits,
             'floor1_src' => $floorB1,
             'floor2_src' => $floorB2,
@@ -121,7 +130,7 @@
                                 <div class="mg-plan-floor__overlay">
                                     <button type="button"
                                             class="mg-plan-enlarge"
-                                            onclick="mgOpenPlanLightbox('{{ $plan['label'] }}','{{ __('magnoolia.floorplan.floor_1') }}','{{ $plan['floor1_src'] }}','{{ $plan['floor1_alt'] }}')"
+                                            onclick="mgOpenPlanLightbox({{ Illuminate\Support\Js::from($plan['label']) }},{{ Illuminate\Support\Js::from(__('magnoolia.floorplan.floor_1')) }},{{ Illuminate\Support\Js::from($plan['floor1_src']) }},{{ Illuminate\Support\Js::from($plan['floor1_alt']) }})"
                                             aria-label="{{ sprintf(__('magnoolia.floorplan.enlarge_aria_1'), $plan['label']) }}">
                                         <i class="icon-zoom-1" aria-hidden="true"></i>
                                         {{ __('magnoolia.floorplan.enlarge') }}
@@ -152,7 +161,7 @@
                                 <div class="mg-plan-floor__overlay">
                                     <button type="button"
                                             class="mg-plan-enlarge"
-                                            onclick="mgOpenPlanLightbox('{{ $plan['label'] }}','{{ __('magnoolia.floorplan.floor_2') }}','{{ $plan['floor2_src'] }}','{{ $plan['floor2_alt'] }}')"
+                                            onclick="mgOpenPlanLightbox({{ Illuminate\Support\Js::from($plan['label']) }},{{ Illuminate\Support\Js::from(__('magnoolia.floorplan.floor_2')) }},{{ Illuminate\Support\Js::from($plan['floor2_src']) }},{{ Illuminate\Support\Js::from($plan['floor2_alt']) }})"
                                             aria-label="{{ sprintf(__('magnoolia.floorplan.enlarge_aria_2'), $plan['label']) }}">
                                         <i class="icon-zoom-1" aria-hidden="true"></i>
                                         {{ __('magnoolia.floorplan.enlarge') }}
