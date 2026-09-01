@@ -77,9 +77,9 @@
         @php $edBase = 'assets/images/magnoolia/Cam001.0000'; @endphp
         <img src="{{ asset($edBase.'-768w.webp') }}"
              srcset="{{ asset($edBase.'-480w.webp') }} 480w, {{ asset($edBase.'-768w.webp') }} 768w, {{ asset($edBase.'-1200w.webp') }} 1200w"
-             sizes="(min-width:768px) 580px, 100vw"
+             sizes="(min-width:768px) 680px, 100vw"
              alt="Magnoolia ridaelamukodude välisvaade"
-             width="580" height="420" loading="lazy" decoding="async">
+             width="680" height="453" loading="lazy" decoding="async">
       </div>
       <div class="mg-editorial-row__content">
       <div class="mg-editorial-row__kicker">{{ __('magnoolia.page.arhitektuur.ed_kicker') }}</div>
@@ -136,13 +136,13 @@
         @if(file_exists(public_path($fb.'-768w.webp')))
         <img src="{{ asset($fb.'-768w.webp') }}"
              srcset="{{ asset($fb.'-480w.webp') }} 480w, {{ asset($fb.'-768w.webp') }} 768w, {{ asset($fb.'-1200w.webp') }} 1200w"
-             sizes="(min-width:992px) 560px, 100vw"
+             sizes="(min-width:992px) 700px, 100vw"
              alt="{{ $row['alt'] }}"
-             loading="lazy" decoding="async" width="560" height="400">
+             loading="lazy" decoding="async" width="700" height="525">
         @else
         <img src="{{ str_replace(' ', '%20', asset($row['path'])) }}"
              alt="{{ $row['alt'] }}"
-             loading="lazy" width="560" height="400">
+             loading="lazy" width="700" height="525">
         @endif
       </div>
       <div class="mg-feature-row__content">

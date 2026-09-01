@@ -3338,8 +3338,10 @@ body {
 /* ?? Editorial grid (2-col text + image) ????????????????????? */
 .mg-editorial-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 56px;
+  /* Same treatment as the feature rows below: the photo takes the larger share.
+     --reverse flips via direction:rtl, so one ratio serves both directions. */
+  grid-template-columns: 1.45fr 1fr;
+  gap: 48px;
   align-items: center;
 }
 /* Let grid cells shrink below their content's intrinsic size so a fixed-width
@@ -3347,6 +3349,11 @@ body {
 .mg-editorial-row > * { min-width: 0; }
 .mg-editorial-row__img img {
   width: 100%;
+  /* The render is a wide panorama, so filling the column still left a thin strip
+     (557x279 on a 1440 screen). A 3:2 box gives it real presence without the
+     heavy side-cropping a 4:3 box would cause on this crop. */
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
   height: auto;
   display: block;
   border-radius: 16px;
@@ -3440,8 +3447,10 @@ body {
 /* ?? Gallery grid ???????????????????????????????????????????? */
 .mg-gallery-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  /* Two per row, not three: the renders were 379px wide on a 1440 screen, small
+     for the page whose whole purpose is the visuals. */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
 @media (max-width: 1024px) { .mg-gallery-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 576px)  { .mg-gallery-grid { grid-template-columns: 1fr; } }
@@ -3698,11 +3707,14 @@ body {
   /* Phase 35.1 item 14 — the columns used to alternate 1.1fr/1fr, so every second
      photo came out ~4% narrower. Equal columns give all four elements the exact
      same image size, which is what Indrek asked for. */
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  /* The client asked twice for these to be larger ("rohkelt visuaali oli
+     eesmärk"), so the photo takes the larger share. Mirrored on reverse rows so
+     all four elements stay exactly the same size — the property Phase 35.1 set. */
+  grid-template-columns: 1.45fr 1fr;
+  gap: 48px;
   align-items: center;
 }
-.mg-feature-row--reverse { grid-template-columns: 1fr 1fr; }
+.mg-feature-row--reverse { grid-template-columns: 1.45fr 1fr; }
 @media (max-width: 991px) {
   .mg-feature-row,
   .mg-feature-row--reverse { grid-template-columns: 1fr; gap: 36px; }
@@ -3717,7 +3729,6 @@ body {
      photo than its neighbours. A fixed 4:3 box makes every element identical and
      larger than the old 340px floor. */
   aspect-ratio: 4 / 3;
-  min-height: 420px;
   align-self: center;
 }
 .mg-feature-row__img img {
@@ -3726,7 +3737,7 @@ body {
   object-fit: cover;
   display: block;
 }
-.mg-feature-row__img--tall { min-height: 480px; }
+.mg-feature-row__img--tall { aspect-ratio: 7 / 6; }
 /* On mobile the single-column image is width-bound, so its natural height is
    shorter than the desktop min-height — drop min-height so the container hugs
    the image (no grey background below it). Placed AFTER the base rules so it
@@ -4707,3 +4718,10 @@ button.mg-faq-card__q[aria-expanded="true"] i {
   .custom-cursor__cursor,
   .custom-cursor__cursor-two { display: none !important; }
 }
+
+/* Homepage TUTVUSTUS collage — bind the overlapping photo to its own column.
+   .about-one__image__item-two is absolutely positioned, and without a positioned
+   ancestor its containing block was the section, so a percentage width resolved
+   against the full page and the photo rode onto the text column. Making the
+   photo group the containing block keeps both photos inside their half. */
+.about-one__image { position: relative; }

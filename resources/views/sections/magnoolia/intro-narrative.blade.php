@@ -37,8 +37,11 @@
 <section class="section-space" style="background:#ffffff;" id="tutvustus">
   <div class="container">
     <div class="row align-items-center gutter-y-40">
-      <div class="col-lg-6">
-        <div class="hover:shine" style="border-radius:20px;overflow:hidden;">
+      <div class="col-lg-7">
+        {{-- The render is a wide landscape crop, so filling the column left a
+             570x285 strip next to 691px of text. A 4:3 box gives it the same
+             presence as the Arhitektuur blocks. --}}
+        <div class="hover:shine" style="border-radius:20px;overflow:hidden;aspect-ratio:4/3;">
           {{-- Phase 36 Module B — this picture is now an assignable slot
                ('home.intro.image'). Until the client binds one in admin it serves
                exactly the file it shipped with, so nothing changes on its own. --}}
@@ -46,7 +49,7 @@
           <img src="{{ $mgIntroImg['src'] }}" alt="{{ $mgIntroImg['bound'] ? $mgIntroImg['alt'] : $n['alt'] }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;">
         </div>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-5">
         <div class="sec-title text-start" style="margin-bottom:20px;">
           <div class="sec-title__top justify-content-start">
             <span class="line-left"></span>
