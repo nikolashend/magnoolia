@@ -224,6 +224,26 @@ class RowhouseSelectionService
         $pricePublic = (bool) ($liveRow['price_public'] ?? false);
         $price       = $pricePublic ? ($liveRow['price'] ?? null) : null;
 
+        /**
+         * Measurements come from the publication when there is one.
+         *
+         * This mapper took every number from config/magnoolia_units.php and only the
+         * status and price from the published payload. So a terrace corrected in the
+         * admin from 47,1 to 37,5 was saved and published — the price table showed
+         * the new value, but this view model (the home-detail modal) kept showing the
+         * config one. Same for rooms, net area, balcony, storage, plot and parking.
+         *
+         * `array_key_exists` rather than `??`: a field the client deliberately
+         * cleared must read as unknown, not silently fall back to the config number
+         * it was corrected away from. A publication that predates a field simply
+         * lacks the key, and the config value is used.
+         */
+        $live = fn (string $field, mixed $fallback): mixed => is_array($liveRow) && array_key_exists($field, $liveRow)
+            ? $liveRow[$field]
+            : $fallback;
+
+        $area = fn (mixed $v): ?float => ($v === null || $v === '') ? null : (float) $v;
+
         $cta = $this->discovery->ctaContext([
             'unit_key'     => $unitKey,
             'slug'         => $slug,
@@ -269,19 +289,19 @@ class RowhouseSelectionService
             'stage'             => $stage,
             'completion'        => $canon['completion'] ?? null,
             'status'            => $status,
-            'plan_type'         => $canon['plan_type'] ?? null,
-            'plan_label'        => MagnooliaUnitDiscoveryService::planLabel($canon['plan_type'] ?? null),
-            'rooms'             => $canon['rooms'] ?? null,
-            'net_area'          => isset($canon['net_area']) ? (float) $canon['net_area'] : null,
-            'terrace_area'      => isset($canon['terrace_area']) ? (float) $canon['terrace_area'] : null,
-            'balcony_area'      => isset($canon['balcony_area']) ? (float) $canon['balcony_area'] : null,
+            'plan_type'         => $live('plan_type', $canon['plan_type'] ?? null),
+            'plan_label'        => MagnooliaUnitDiscoveryService::planLabel($live('plan_type', $canon['plan_type'] ?? null)),
+            'rooms'             => $live('rooms', $canon['rooms'] ?? null),
+            'net_area'          => $area($live('net_area', $canon['net_area'] ?? null)),
+            'terrace_area'      => $area($live('terrace_area', $canon['terrace_area'] ?? null)),
+            'balcony_area'      => $area($live('balcony_area', $canon['balcony_area'] ?? null)),
             // Phase 35.1 item 11 — storage_area was the one area field this mapper
             // dropped, so "panipaiga pind" was filled in the admin but invisible on
             // the public site, and "Netopind kokku" (köetav + panipaiga) could not
             // be computed for the price table.
-            'storage_area'      => isset($canon['storage_area']) ? (float) $canon['storage_area'] : null,
-            'private_yard_area' => isset($canon['private_yard_area']) ? (float) $canon['private_yard_area'] : null,
-            'parking_spaces'    => $canon['parking_spaces'] ?? null,
+            'storage_area'      => $area($live('storage_area', $canon['storage_area'] ?? null)),
+            'private_yard_area' => $area($live('private_yard_area', $canon['private_yard_area'] ?? null)),
+            'parking_spaces'    => $live('parking_spaces', $canon['parking_spaces'] ?? null),
             'price'             => $price,
             'price_public'      => $pricePublic,
             'floorplan_1_pdf'   => $canon['floorplan_1_pdf'] ?? null,
@@ -317,13 +337,24 @@ class RowhouseSelectionService
             if ($b === 0) {
                 continue;
             }
-            $index[$b . '-' . $s] = [
+            $row = [
                 'status'       => $u['status'] ?? null,
                 'unit_key'     => $u['unit_key'] ?? null,
                 'slug'         => $u['slug'] ?? null,
                 'price_public' => $u['price_public'] ?? null,
                 'price'        => $u['price'] ?? null,
             ];
+
+            // The measurements are editable in admin, so they travel with the
+            // publication too. Only keys the payload actually has are copied.
+            foreach (['rooms', 'net_area', 'terrace_area', 'balcony_area',
+                      'storage_area', 'private_yard_area', 'parking_spaces', 'plan_type'] as $field) {
+                if (array_key_exists($field, $u)) {
+                    $row[$field] = $u[$field];
+                }
+            }
+
+            $index[$b . '-' . $s] = $row;
         }
         return $index;
     }
