@@ -48,6 +48,13 @@ Route::get('/privaatsus',       [MagnooliaController::class, 'privacy'])       -
 Route::get('/tingimused',       [MagnooliaController::class, 'terms'])         ->name('magnoolia.terms');
 Route::get('/arendajast',       [MagnooliaController::class, 'developer'])     ->name('magnoolia.developer');
 
+// ── Legacy short paths (GSC QA) ─────────────────────────────────────────────
+// Both were live URLs at some point and are still linked to from outside, so
+// they were returning 404 to Google. Permanent redirects to the canonical page:
+// no new page, no canonical change, and they stay out of the sitemap.
+Route::permanentRedirect('/arhitektuur', '/arhitektuur-ja-valisdisain');
+Route::permanentRedirect('/arendaja',    '/arendajast');
+
 // ── Phase 34.2: SEO / Google Ads commercial landing pages (ET, indexable) ────
 $mgLandingsEt = [
     'ridaelamud-harjumaa', 'ridamajad-harjumaa', 'uusarendus-kiili', 'uusarendus-harjumaa',
@@ -126,6 +133,11 @@ foreach (['ru', 'en'] as $_loc) {
                 ->name($_loc . '.magnoolia.terms');
             Route::get('/arendajast',       [MagnooliaController::class, 'developer'])
                 ->name($_loc . '.magnoolia.developer');
+
+            // Legacy short paths, same as the ET ones above. The destination is
+            // written out in full: a redirect target is not prefixed by the group.
+            Route::permanentRedirect('/arhitektuur', "/{$_loc}/arhitektuur-ja-valisdisain");
+            Route::permanentRedirect('/arendaja',    "/{$_loc}/arendajast");
         });
 }
 

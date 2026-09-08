@@ -21,6 +21,7 @@
         ['ostuprotsess',      '0.6',    'monthly'],
         ['finantseerimine',   '0.5',    'monthly'],
         ['kkk',               '0.7',    'monthly'],
+        ['arendajast',        '0.5',    'monthly'],
     ];
 @endphp
   {{-- ── Homepage ── --}}
