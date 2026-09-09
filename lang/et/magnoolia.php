@@ -1318,7 +1318,7 @@ return [
         'email'               => 'E-post',
         'message'             => 'Sõnum',
         'message_placeholder' => 'Küsi küsimust, täpsusta kodu ...',
-        'consent_html'        => 'Nõustun oma andmete töötlemisega, et saada vastust päringule. <a href="/privaatsuspoliitika" style="color:#c89443;">Privaatsuspoliitika</a>.',
+        'consent_html'        => 'Nõustun oma andmete töötlemisega, et saada vastust päringule. <a href="/privaatsus" style="color:#c89443;">Privaatsuspoliitika</a>.',
         'submit_error'        => 'Saatmine ebaõnnestus. Proovige uuesti või helistage meile.',
     ],
 

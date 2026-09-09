@@ -1271,7 +1271,7 @@ return [
         'email'               => 'Email',
         'message'             => 'Message',
         'message_placeholder' => 'Your question or request...',
-        'consent_html'        => 'I consent to my data being processed to receive a response. <a href="/privaatsuspoliitika" style="color:#c89443;">Privacy Policy</a>.',
+        'consent_html'        => 'I consent to my data being processed to receive a response. <a href="/en/privaatsus" style="color:#c89443;">Privacy Policy</a>.',
         'submit_error'        => 'Sending failed. Please try again or call us.',
     ],
 

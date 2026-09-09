@@ -54,6 +54,7 @@ Route::get('/arendajast',       [MagnooliaController::class, 'developer'])     -
 // no new page, no canonical change, and they stay out of the sitemap.
 Route::permanentRedirect('/arhitektuur', '/arhitektuur-ja-valisdisain');
 Route::permanentRedirect('/arendaja',    '/arendajast');
+Route::permanentRedirect('/privaatsuspoliitika', '/privaatsus');
 
 // ── Phase 34.2: SEO / Google Ads commercial landing pages (ET, indexable) ────
 $mgLandingsEt = [
@@ -138,6 +139,7 @@ foreach (['ru', 'en'] as $_loc) {
             // written out in full: a redirect target is not prefixed by the group.
             Route::permanentRedirect('/arhitektuur', "/{$_loc}/arhitektuur-ja-valisdisain");
             Route::permanentRedirect('/arendaja',    "/{$_loc}/arendajast");
+            Route::permanentRedirect('/privaatsuspoliitika', "/{$_loc}/privaatsus");
         });
 }
 
