@@ -20,6 +20,9 @@ return [
 
     'canonical_domain' => env('MAGNOOLIA_CANONICAL_DOMAIN', 'https://magnoolia.ee'),
 
+    // Google Ads tag (gtag.js); set MAGNOOLIA_GOOGLE_ADS_ID= (empty) to switch it off on local/staging.
+    'google_ads_id' => env('MAGNOOLIA_GOOGLE_ADS_ID', 'AW-16711711243'),
+
     'project' => [
         'name'          => 'Magnoolia Kodud',
         'brand_name'    => 'Magnoolia',
