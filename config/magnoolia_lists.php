@@ -106,6 +106,14 @@ return [
         'source'      => ['kind' => 'config', 'key' => 'magnoolia_interiors.categories.paid.items'],
     ],
 
+    'hinnad.extras' => [
+        'type'        => 'price_extras',
+        'page'        => 'hinnad',
+        'label'       => 'Võimalik tellida lisaks',
+        'description' => 'Lisatööd ja nende hinnad hinnakirja all (Kodud ja hinnad).',
+        'source'      => ['kind' => 'config', 'key' => 'magnoolia.commercial.extras', 'shape' => 'price_extras'],
+    ],
+
     'galerii.items' => [
         'type'        => 'gallery',
         'page'        => 'galerii',

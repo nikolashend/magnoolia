@@ -157,12 +157,41 @@ class MagnooliaSeedListsCommand extends Command
     private function fromConfig(array $source): array
     {
         $items = config($source['key'], []);
+        if (($source['shape'] ?? null) === 'price_extras') {
+            return $this->fromPriceExtras($items);
+        }
+
         $out = [];
         foreach ($items as $item) {
             $out[] = [
                 'meta' => ['name' => $item['name'] ?? '', 'type' => $item['type'] ?? 'standard'],
                 'et'   => [],
             ];
+        }
+
+        return $out;
+    }
+
+    /** Estonian names come from config; RU/EN from the lang translations of the same rows, by position. */
+    private function fromPriceExtras(array $items): array
+    {
+        $translated = [];
+        foreach (['ru', 'en'] as $locale) {
+            $rows = __('magnoolia.pricing.extras_items', [], $locale);
+            $translated[$locale] = is_array($rows) && count($rows) === count($items) ? array_values($rows) : [];
+        }
+
+        $out = [];
+        foreach (array_values($items) as $i => $item) {
+            $entry = [
+                'meta' => ['price' => (string) ($item['price'] ?? '')],
+                'et'   => ['name' => $item['name'] ?? ''],
+            ];
+            foreach (['ru', 'en'] as $locale) {
+                $name = $translated[$locale][$i]['name'] ?? null;
+                $entry[$locale] = filled($name) ? ['name' => $name] : [];
+            }
+            $out[] = $entry;
         }
 
         return $out;

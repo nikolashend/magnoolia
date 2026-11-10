@@ -253,6 +253,7 @@ class MagnooliaListController extends Controller
     {
         return [
             'home'         => 'Avaleht',
+            'hinnad'       => 'Kodud ja hinnad',
             'arhitektuur'  => 'Arhitektuur',
             'sisedisain'   => 'Siseviimistlus',
             'galerii'      => 'Galerii',

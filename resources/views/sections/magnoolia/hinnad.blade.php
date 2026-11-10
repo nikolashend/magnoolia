@@ -349,10 +349,11 @@
             <div style="flex:1;min-width:240px;">
                 <h4 style="font-size:15px;font-weight:700;color:#1d2430;margin-bottom:14px;">{{ __('magnoolia.pricing.extras_title') }}</h4>
                 <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;">
-                    @foreach((!empty($commercial['extras']) ? $commercial['extras'] : __('magnoolia.pricing.extras_items')) as $extra)
+                    {{-- Admin "Lists" → hinnad.extras when published; otherwise the shipped config/lang rows. --}}
+                    @foreach((mg_list('hinnad.extras') ?: (!empty($commercial['extras']) ? $commercial['extras'] : __('magnoolia.pricing.extras_items'))) as $extra)
                     <li style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;font-size:13px;color:#6f6a61;">
-                        <span>{{ $extra['name'] }}</span>
-                        <strong style="color:#1d2430;white-space:nowrap;">€ {{ number_format((int) ($extra['price'] ?? 0), 0, ',', ' ') }}</strong>
+                        <span>{{ $extra['name'] ?? '' }}</span>
+                        <strong style="color:#1d2430;white-space:nowrap;">€ {{ number_format((int) preg_replace('/\D/', '', (string) ($extra['price'] ?? 0)), 0, ',', ' ') }}</strong>
                     </li>
                     @endforeach
                 </ul>

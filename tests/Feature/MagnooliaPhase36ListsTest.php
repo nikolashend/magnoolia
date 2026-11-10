@@ -449,6 +449,31 @@ class MagnooliaPhase36ListsTest extends TestCase
         $this->assertTrue($spec->items->contains(fn ($i) => str_contains((string) ($i->meta['name'] ?? ''), 'Schneider Sedna')));
     }
 
+    public function test_the_seed_command_imports_the_price_extras_with_prices_and_translations(): void
+    {
+        $this->artisan('magnoolia:seed-lists', ['--list' => 'hinnad.extras'])->assertSuccessful();
+
+        $items = MagnooliaList::query()->where('list_key', 'hinnad.extras')->first()->items;
+        $this->assertCount(count(config('magnoolia.commercial.extras')), $items);
+        $this->assertSame('Delux viimistluspaketi hinnalisa', $items[0]->payload_et['name']);
+        $this->assertSame('8200', $items[0]->meta['price']);
+        $this->assertNotEmpty($items[0]->payload_ru['name'] ?? null);
+    }
+
+    public function test_the_price_list_shows_the_published_extras(): void
+    {
+        $this->publishLists([
+            'hinnad.extras' => [
+                ['meta' => ['price' => '2600'], 'et' => ['name' => 'Videovalve proovirida']],
+            ],
+        ]);
+
+        $this->get('/kodud-ja-hinnad')->assertOk()
+            ->assertSee('Videovalve proovirida')
+            ->assertSee('€ 2 600')
+            ->assertDontSee('Delux viimistluspaketi hinnalisa');
+    }
+
     public function test_the_seed_command_does_not_overwrite_existing_entries(): void
     {
         $list = MagnooliaList::query()->create(['list_key' => 'arhitektuur.faq', 'type' => 'faq', 'page' => 'arhitektuur']);

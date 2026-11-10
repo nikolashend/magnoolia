@@ -76,6 +76,16 @@ return [
         ],
     ],
 
+    'price_extras' => [
+        'label'      => 'Hinnakirja lisatööd (nimetus + hind)',
+        'item_label' => 'Lisatöö',
+        'fields'     => [
+            'name'  => ['kind' => 'text', 'label' => 'Nimetus', 't' => true, 'required' => true],
+            // Shared across languages: a price is the same number on every page.
+            'price' => ['kind' => 'text', 'label' => 'Hind (€)', 'help' => 'Ainult number, nt 2600.'],
+        ],
+    ],
+
     'projects' => [
         'label'      => 'Arendaja projektid (pilt + nimi + link)',
         'item_label' => 'Projekt',
