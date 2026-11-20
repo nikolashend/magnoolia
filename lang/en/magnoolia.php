@@ -1355,7 +1355,6 @@ return [
         'view_next'         => 'Next view',
         'sinu_valik'        => 'Your choice',
         'open_larger'       => 'Open larger',
-        'offer_inline'      => '−20 000 € before end of August 2026',
         'cta_pricelist'     => 'View price list',
         'cta_similar'       => 'Ask about a similar home',
         'detail_desc'       => 'Private yard, A-energy class and detached-home privacy with rowhouse comfort — close to Tallinn.',

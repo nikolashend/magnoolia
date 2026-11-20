@@ -128,7 +128,6 @@
           {{-- Phase 35: prominent price --}}
           <div id="mg-hd-price-wrap" style="display:none;margin-bottom:16px;">
             <div id="mg-hd-price" style="font-size:30px;font-weight:800;color:#1d2430;line-height:1;"></div>
-            <div style="font-size:12px;color:#c0392b;font-weight:700;text-transform:uppercase;margin-top:6px;">{{ __('magnoolia.rowhouse.offer_inline') }}</div>
           </div>
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
             <span id="mg-hd-status-dot" style="width:10px;height:10px;border-radius:50%;background:#4caf50;"></span>

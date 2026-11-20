@@ -1402,7 +1402,6 @@ return [
         'view_next'         => 'Järgmine vaade',
         'sinu_valik'        => 'Sinu valik',
         'open_larger'       => 'Ava suuremalt',
-        'offer_inline'      => '−20 000 € enne augusti 2026 lõppu',
         'cta_pricelist'     => 'Vaata hinnakirja',
         'cta_similar'       => 'Küsi sarnast kodu',
         'detail_desc'       => 'Privaatne hooviala, A-energiaklass ja eramu privaatsus ridaelamukodu mugavusega — Tallinna lähedal.',
