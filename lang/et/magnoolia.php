@@ -1017,9 +1017,10 @@ return [
             'cta_gallery'    => 'Vaata vaateid',
             'cta_galerii'    => 'Galerii',
             'ed_kicker'      => 'Arhitektuurikontseptsioon',
-            'ed_title'       => 'Ridaelamu mugavus, eramaja kogemus',
-            'ed_body1'       => 'Magnoolia kodud on projekteeritud kahekorruseliste eraldiseisvate sektsioonidena. Iga kodu juurde kuulub privaatne terrass, hooviala ja oma sissepääs — see on ridaelamu kui päris kodu.',
-            'ed_body2'       => 'Kaasaegne arhitektuur harmoneerub Vaela küla looduskeskkonnaga. Fassaadiviimistluses kasutatakse materjale, mis vananevad ajaga ilusasti.',
+            'ed_title'       => 'Moderne arhitektuur, avarad planeeringud ja looduskaunid vaated',
+            'ed_body1'       => 'Hooneid iseloomustab trendikas eenduva räästaga ja liigendatud fassaadiga arhitektuur ning funktsionaalsed planeeringud. Samuti kaasaegsed ja väga ökonoomsed tehnilised lahendused ning ainult parima kvaliteediga viimistlusmaterjalid.',
+            'ed_body2'       => 'Põrandalt algavad suured aknad, samuti elutuba terrassile avardav suur lükandaken ja klaasitud rõdud rõhutavad kaasaegset arhitektuurikeelt. Looduslikult tõusval maastikul paiknevad kodud pakuvad avaraid vaateid ümbritsevale rohelusele. Samas tagab hoonete läbimõeldud asetus piisava distantsi ja privaatsuse naabrite vahel.',
+            'ed_body3'       => 'Fassaadi ilmestavad naturaalse puidu soojust ja rütmilist reljeefsust esile toov rihveldatud pinnaga ribilise motiiviga puitlaudis ning ehituslikud dekoratiivsed fassaadiplaadid. Nende materjalide ja pinnastruktuuride kontrast loob hoonetele elegantse, omanäolise ja ajatu arhitektuurse ilme.',
             'feat_eyebrow'   => 'Välislahendused',
             'feat_title'     => 'Neli välisruumi elementi',
             'features'       => [

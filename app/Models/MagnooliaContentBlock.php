@@ -23,6 +23,7 @@ class MagnooliaContentBlock extends Model
         'home' => 'Avaleht (Homepage)',
         'kodud' => 'Kodud ja hinnad',
         'asendiplaan' => 'Asendiplaan',
+        'arhitektuur' => 'Arhitektuur ja välisdisain',
         'asukoht' => 'Asukoht',
         'ehitusinfo' => 'Ehitusinfo',
         'sisedisain' => 'Siseviimistlus (Sisedisain)',

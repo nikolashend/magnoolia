@@ -265,6 +265,21 @@ class MagnooliaPhase36ListsTest extends TestCase
         $this->assertTrue($item->meta['reverse']);
     }
 
+    public function test_a_russian_bullet_field_keeps_its_letters_intact(): void
+    {
+        // "х" is D1 85 in UTF-8; a byte-mode \R split cut it in half and the save threw a 500.
+        $this->actingAs($this->clientAdmin())
+            ->put('/admin/magnoolia/lists/arhitektuur.exterior_elements', ['items' => [[
+                'is_active' => 1,
+                'et' => ['title' => 'Panipaik'],
+                'ru' => ['list' => "Хороший вход\nТихий двор"],
+            ]]])->assertRedirect();
+
+        $item = MagnooliaList::query()->where('list_key', 'arhitektuur.exterior_elements')->first()->items->first();
+
+        $this->assertSame(['Хороший вход', 'Тихий двор'], $item->payload_ru['list']);
+    }
+
     public function test_an_entry_left_completely_blank_is_not_stored(): void
     {
         $this->actingAs($this->clientAdmin())

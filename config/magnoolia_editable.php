@@ -155,6 +155,24 @@ return [
         ],
     ],
 
+    'arhitektuur' => [
+        'label' => 'Arhitektuur ja välisdisain',
+        'groups' => [
+            'Lehe päis' => [
+                'page.arhitektuur.page_h1' => 'Lehe pealkiri',
+                'page.arhitektuur.eyebrow' => 'Väike tekst pealkirja kohal',
+                'page.arhitektuur.lead'    => 'Sissejuhatus',
+            ],
+            'Arhitektuuri tutvustus (pildi kõrval)' => [
+                'page.arhitektuur.ed_kicker' => 'Väike pealkiri (eyebrow)',
+                'page.arhitektuur.ed_title'  => 'Ploki pealkiri',
+                'page.arhitektuur.ed_body1'  => '1. lõik',
+                'page.arhitektuur.ed_body2'  => '2. lõik',
+                'page.arhitektuur.ed_body3'  => '3. lõik',
+            ],
+        ],
+    ],
+
     'sisedisain' => [
         'label' => 'Siseviimistlus (Sisedisain)',
         'groups' => [

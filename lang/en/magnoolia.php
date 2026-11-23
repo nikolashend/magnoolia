@@ -967,9 +967,10 @@ return [
             'cta_gallery'    => 'View exterior renders',
             'cta_galerii'    => 'Gallery',
             'ed_kicker'      => 'Architectural concept',
-            'ed_title'       => 'Rowhouse comfort, private-house experience',
-            'ed_body1'       => 'Magnoolia townhomes are designed as two-storey freestanding sections. Each home comes with a private terrace, yard and its own entrance — a townhouse that feels like a real house.',
-            'ed_body2'       => 'The contemporary architecture fits naturally into the village setting of Vaela. Facade materials are chosen to age beautifully over the years.',
+            'ed_title'       => 'Modern architecture, spacious layouts and scenic views',
+            'ed_body1'       => 'The buildings are defined by on-trend architecture with projecting eaves and an articulated facade, together with functional layouts. They also feature modern, highly economical technical solutions and only top-quality finishing materials.',
+            'ed_body2'       => 'Floor-to-ceiling windows, a large sliding window that opens the living room onto the terrace, and glazed balconies emphasise the contemporary architectural language. Set on naturally rising ground, the homes offer wide views of the surrounding greenery, while the carefully considered placement of the buildings ensures ample distance and privacy between neighbours.',
+            'ed_body3'       => 'The facade is brought to life by ribbed timber cladding with a fluted surface, which brings out the warmth and rhythmic relief of natural wood, together with decorative facade panels. The contrast of these materials and textures gives the buildings an elegant, distinctive and timeless architectural character.',
             'feat_eyebrow'   => 'Exterior features',
             'feat_title'     => 'Four outdoor space elements',
             'features'       => [

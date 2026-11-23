@@ -246,7 +246,8 @@ class MagnooliaListController extends Controller
             return array_values(array_filter(array_map('trim', $value), 'strlen'));
         }
 
-        return array_values(array_filter(array_map('trim', preg_split('/\R/', (string) $value) ?: []), 'strlen'));
+        // /u is required: without it \R matches byte 0x85, which is inside Cyrillic letters (х = D1 85).
+        return array_values(array_filter(array_map('trim', preg_split('/\R/u', (string) $value) ?: []), 'strlen'));
     }
 
     private function pageLabels(): array

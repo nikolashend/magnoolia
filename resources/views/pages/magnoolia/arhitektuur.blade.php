@@ -86,6 +86,7 @@
         <h2 class="mg-editorial-row__title">{{ __('magnoolia.page.arhitektuur.ed_title') }}</h2>
         <p class="mg-editorial-row__body">{{ __('magnoolia.page.arhitektuur.ed_body1') }}</p>
         <p class="mg-editorial-row__body">{{ __('magnoolia.page.arhitektuur.ed_body2') }}</p>
+        <p class="mg-editorial-row__body">{{ __('magnoolia.page.arhitektuur.ed_body3') }}</p>
       </div>
     </div>
   </div>
@@ -162,6 +163,9 @@
 
 {{-- ── Planeering – disain – miljöö (prepared client copy) ──── --}}
 @include('sections.magnoolia.planeering-miljoo')
+
+{{-- ── Energiasäästlikkus ja tehnosüsteemid (prepared client copy) ── --}}
+@include('sections.magnoolia.energia-tehnosusteemid')
 
 {{-- ── More exterior renders ───────────────────────────────── --}}
 <section class="mg-page-section mg-page-section--white">
