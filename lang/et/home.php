@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'meta_title' => 'Magnoolia — A-energiaklassi ridaelamukodud Tallinna lähedal',
-    'meta_description' => 'Magnoolia Kodud on 19 A-energiaklassi ridaelamukodu Vaela külas, Kiili vallas. Privaatne hooviala, terrass, rõdu, maasoojuspump ja uusarenduse kindlus ~20 minutit Tallinnast.',
+    'meta_title' => 'Magnoolia — uusarendus Kiili vallas | A-energiaklassi ridaelamud Vaelas',
+    'meta_description' => 'Uusarendus Vaela külas, Kiili vallas: 19 A-energiaklassi ridaelamukodu (ridamaja) privaatse hoovi, terrassi ja maasoojuspumbaga, ~20 min Tallinnast.',
     'slider' => [
         'subtitle' => 'Tere tulemast Magnooliale!',
         'title_1' => 'Suurepärased Kinnisvara <span>Pakkumised <img src="/assets/images/shapes/hero-shape-1-3.png" alt="line"></span> Teie unistuste kodu.',
